@@ -1,0 +1,1651 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Tu hogar en el Caribe. Sin itinerarios, sin apuros. Una casa privada en Casa de Campo Resort con todo lo que necesitás — a tu manera.">
+<title>MG Experiences — Casa de Campo, República Dominicana</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+:root{
+  --v:#AE8560;--vl:#D4B89A;--vd:#8A6540;
+  --g:#1D4D3A;--gm:#2E6B50;
+  --teal:#6DC3CD;
+  --bk:#1C1E17;--wh:#FDFAF6;
+  --sand:#111310;
+}
+body{background:var(--bk);color:var(--wh);font-family:'Cormorant Garamond',Georgia,serif;font-size:18px;line-height:1.6;overflow-x:hidden}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 3rem;transition:all .5s}
+nav.solid{background:rgba(28,30,23,.96);backdrop-filter:blur(20px);border-bottom:.5px solid rgba(174,133,96,.18);padding:1rem 3rem}
+.nlinks{display:flex;gap:2.5rem;list-style:none}
+.nlinks a{font-family:'Cinzel',serif;font-size:.56rem;letter-spacing:.22em;color:rgba(253,250,246,.65);text-decoration:none;transition:color .3s;text-transform:uppercase}
+.nlinks a:hover{color:var(--vl)}
+.logo{display:flex;align-items:center;gap:.7rem;text-decoration:none}
+.logo-n{font-family:'Cinzel',serif;font-size:.78rem;letter-spacing:.2em;color:var(--wh);display:block}
+.logo-t{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.64rem;color:var(--vl);display:block}
+.nwa{font-family:'Cinzel',serif;font-size:.56rem;letter-spacing:.2em;text-transform:uppercase;color:var(--bk);background:var(--vl);padding:.65rem 1.6rem;text-decoration:none;transition:all .3s;border:none;cursor:pointer}
+.nwa:hover{background:var(--wh)}
+
+/* ── HERO ── */
+.hero{position:relative;height:100vh;min-height:680px;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden}
+.hbg{position:absolute;inset:0;background:url('https://img1.wsimg.com/isteam/ip/28e700c9-c37b-485d-b636-01fcfc9acb86/iStock-475654823-4f7d479.jpg') center/cover no-repeat;transform:scale(1.06);animation:zo 9s ease forwards}
+@keyframes zo{to{transform:scale(1)}}
+.hov{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(28,30,23,.3) 0%,rgba(28,30,23,.45) 55%,rgba(28,30,23,.92) 100%)}
+.hb{position:relative;z-index:2;padding:0 2rem}
+.hpre{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.4em;color:rgba(212,184,154,.75);margin-bottom:2rem;text-transform:uppercase;animation:fu .9s ease .4s both}
+.hh1{font-family:'Cinzel',serif;font-weight:400;font-size:clamp(2.8rem,6.5vw,6rem);line-height:1.08;letter-spacing:.04em;color:var(--wh);animation:fu .9s ease .6s both}
+.hh1 em{display:block;font-family:'Playfair Display',serif;font-style:italic;font-weight:400;color:var(--vl);font-size:.58em;letter-spacing:.1em;margin-top:.4rem}
+.hsub{font-size:clamp(.95rem,1.6vw,1.2rem);font-style:italic;color:rgba(253,250,246,.65);max-width:520px;margin:2rem auto 3rem;line-height:1.8;animation:fu .9s ease .8s both}
+.hbtns{display:flex;gap:1rem;justify-content:center;animation:fu .9s ease 1s both}
+.btn{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;padding:.9rem 2.2rem;text-decoration:none;transition:all .35s;display:inline-block;cursor:pointer;border:none}
+.bf{color:var(--bk);background:var(--vl)}.bf:hover{background:var(--wh)}
+.bo{color:var(--wh);background:transparent;border:1px solid rgba(253,250,246,.38)}.bo:hover{border-color:var(--wh)}
+.scue{position:absolute;bottom:2.2rem;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:.4rem;animation:fu .9s ease 1.4s both}
+.scue span{font-family:'Cinzel',serif;font-size:.48rem;letter-spacing:.3em;color:rgba(253,250,246,.35)}
+.sln{width:1px;height:36px;background:rgba(253,250,246,.25);animation:pulse 2.2s ease-in-out infinite}
+
+@keyframes fu{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:.25}50%{opacity:.7}}
+.rv{opacity:0;transform:translateY(32px);transition:opacity .9s ease,transform .9s ease}
+.rv.in{opacity:1;transform:translateY(0)}
+.rv2{transition-delay:.18s}.rv3{transition-delay:.36s}
+
+/* ── SHARED ── */
+.lbl{font-family:'Cinzel',serif;font-size:.53rem;letter-spacing:.38em;color:var(--v);text-transform:uppercase;display:block;margin-bottom:.8rem}
+.bigt{font-family:'Cinzel',serif;font-weight:400;font-size:clamp(1.9rem,3.8vw,3.6rem);line-height:1.15;letter-spacing:.04em}
+.bigt em{font-family:'Playfair Display',serif;font-style:italic;font-weight:400;color:var(--vl)}
+.rule{width:44px;height:1px;background:var(--v);margin:1.4rem 0}
+.rc{margin:1.4rem auto}
+.prose{font-size:.98rem;color:rgba(253,250,246,.55);line-height:1.95;max-width:500px}
+.sec{padding:8rem 4rem}
+
+/* ── BAND ── */
+.band{background:var(--g);padding:3.2rem 4rem;display:flex;justify-content:center}
+.bi{flex:1;max-width:240px;text-align:center;border-right:.5px solid rgba(253,250,246,.1)}
+.bi:last-child{border-right:none}
+.bn{font-family:'Cinzel',serif;font-size:2.8rem;color:var(--wh);display:block}
+.bl{font-size:.82rem;font-style:italic;color:rgba(253,250,246,.5);margin-top:.25rem}
+
+/* ── SERVICES SCROLL ── */
+.svcs{padding:8rem 0;background:var(--bk);overflow:hidden}
+.si{text-align:center;padding:0 4rem 5rem}
+.ss{display:flex;gap:1.5rem;padding:0 4rem 2rem;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;cursor:grab;-ms-overflow-style:none}
+.ss::-webkit-scrollbar{display:none}
+.ss.grab{cursor:grabbing}
+.sc{min-width:370px;height:460px;border-radius:3px;position:relative;overflow:hidden;flex-shrink:0;scroll-snap-align:start;transition:transform .4s,box-shadow .4s}
+.sc:hover{transform:scale(1.025);box-shadow:0 28px 56px rgba(0,0,0,.5)}
+.sc img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s}
+.sc:hover img{transform:scale(1.07)}
+.scov{position:absolute;inset:0;background:linear-gradient(to top,rgba(28,30,23,.93) 0%,rgba(28,30,23,.15) 55%,transparent 100%)}
+.scb{position:absolute;bottom:0;left:0;right:0;padding:2rem}
+.scat{font-family:'Cinzel',serif;font-size:.53rem;letter-spacing:.28em;color:var(--vl);text-transform:uppercase;margin-bottom:.5rem}
+.stitle{font-family:'Playfair Display',serif;font-style:italic;font-size:1.55rem;color:var(--wh);margin-bottom:.5rem}
+.sitems{font-size:.82rem;color:rgba(253,250,246,.52);line-height:1.8}
+.slink{display:inline-block;margin-top:1rem;font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.2em;color:var(--vl);text-decoration:none;text-transform:uppercase;border-bottom:1px solid rgba(212,184,154,.3);padding-bottom:.12rem;transition:all .3s}
+.slink:hover{color:var(--wh);border-color:var(--wh)}
+.sh{text-align:center;padding:1.5rem;font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.22em;color:rgba(253,250,246,.22);text-transform:uppercase}
+
+/* ── VILLAS PREVIEW ── */
+.villas{padding:8rem 4rem;background:var(--sand)}
+.vh{display:flex;align-items:flex-end;justify-content:space-between;max-width:1200px;margin:0 auto 4rem;flex-wrap:wrap;gap:2rem}
+.vg{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5px;background:rgba(174,133,96,.12);max-width:1200px;margin:0 auto}
+.vc{position:relative;overflow:hidden;cursor:pointer;transition:all .4s}
+.vc:hover{z-index:2}
+.vc:hover .vi{transform:scale(1.07)}
+.vc:hover .vfoot{opacity:1;transform:translateY(0)}
+.vi{width:100%;aspect-ratio:3/4;object-fit:cover;display:block;transition:transform .6s}
+.vpc{width:100%;aspect-ratio:3/4;display:block}
+.vov{position:absolute;inset:0;background:linear-gradient(to top,rgba(28,30,23,.95) 0%,rgba(28,30,23,.08) 60%,transparent 100%)}
+.vinfo{position:absolute;bottom:0;left:0;right:0;padding:1.4rem}
+.vname{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.18em;color:var(--wh);text-transform:uppercase;margin-bottom:.25rem}
+.vdet{font-size:.76rem;color:rgba(253,250,246,.45)}
+.vfoot{position:absolute;inset:0;background:rgba(29,77,58,.93);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem;opacity:0;transform:translateY(6px);transition:all .38s}
+.vprice-l{font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.15em;color:var(--vl);text-transform:uppercase;margin-bottom:.35rem}
+.vprice-v{font-family:'Playfair Display',serif;font-style:italic;font-size:1.75rem;color:var(--wh);margin-bottom:.3rem}
+.vprice-x{font-size:.76rem;color:rgba(253,250,246,.5);text-align:center;margin-bottom:1.2rem}
+.vbtn{font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:var(--g);background:var(--vl);padding:.55rem 1.3rem;text-decoration:none;transition:background .3s}
+.vbtn:hover{background:var(--wh)}
+
+/* ── BOATS ── */
+.boats{min-height:90vh;display:flex;align-items:center;position:relative;overflow:hidden;padding:8rem 4rem}
+.bbg{position:absolute;inset:0;background:url('https://img1.wsimg.com/isteam/ip/28e700c9-c37b-485d-b636-01fcfc9acb86/blob-d80dc22.png') center/cover no-repeat;filter:brightness(.28)}
+.bb{position:relative;z-index:2;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center}
+.fleet{display:flex;flex-direction:column;gap:1px;background:rgba(253,250,246,.07)}
+.frow{background:rgba(253,250,246,.04);padding:1.4rem 1.8rem;display:flex;justify-content:space-between;align-items:center;transition:background .3s}
+.frow:hover{background:rgba(253,250,246,.09)}
+.fn{font-family:'Playfair Display',serif;font-style:italic;font-size:1.15rem;color:var(--wh)}
+.fs2{font-size:.73rem;color:rgba(253,250,246,.38);margin-top:.12rem}
+.fc{font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.2em;color:var(--teal);text-transform:uppercase}
+.ibox{margin-top:2.2rem;padding:1.6rem;border:1px solid rgba(109,195,205,.18)}
+.ibt{font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.28em;color:var(--teal);text-transform:uppercase;margin-bottom:.9rem}
+.ibg{display:grid;grid-template-columns:1fr 1fr;gap:.45rem}
+.ii{font-size:.8rem;color:rgba(253,250,246,.48);display:flex;align-items:center;gap:.45rem}
+.ii::before{content:'';width:3px;height:3px;background:var(--teal);border-radius:50%;flex-shrink:0}
+
+/* ── GOLF ── */
+.golf{position:relative;padding:8rem 4rem;background:#0a1510;overflow:hidden}
+.gbg{position:absolute;inset:0;background:url('https://img1.wsimg.com/isteam/ip/28e700c9-c37b-485d-b636-01fcfc9acb86/iStock-475654823.jpg') center/cover no-repeat;opacity:.09}
+.gbody{position:relative;z-index:2;max-width:1200px;margin:0 auto}
+.gq{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(1.05rem,2vw,1.8rem);color:rgba(253,250,246,.75);max-width:760px;line-height:1.75;margin:0 auto 1rem;text-align:center}
+.gattr{font-family:'Cinzel',serif;font-size:.54rem;letter-spacing:.3em;color:var(--v);text-transform:uppercase;text-align:center;margin-bottom:3.5rem}
+.gcs{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:3.5rem}
+.gc{border-top:1px solid rgba(174,133,96,.35);padding-top:1.8rem}
+.gcn{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.18em;color:var(--wh);text-transform:uppercase;margin-bottom:.7rem}
+.gcd{font-size:.84rem;color:rgba(253,250,246,.45);line-height:1.85}
+.gam{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem;margin-top:3rem;padding-top:3rem;border-top:.5px solid rgba(253,250,246,.07)}
+.gai{display:flex;gap:.7rem}
+.gdot{width:4px;height:4px;background:var(--v);border-radius:50%;margin-top:.45rem;flex-shrink:0}
+.gan{font-family:'Cinzel',serif;font-size:.56rem;letter-spacing:.15em;color:var(--wh);text-transform:uppercase;margin-bottom:.2rem}
+.gat{font-size:.76rem;color:rgba(253,250,246,.38);line-height:1.6}
+
+/* ── TRANSFERS ── */
+.trsf{padding:7rem 4rem;background:var(--bk)}
+.trb{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1.2fr;gap:6rem;align-items:start}
+.tg{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(174,133,96,.1)}
+.tc{background:rgba(253,250,246,.02);padding:1.8rem 1.4rem;transition:background .3s}
+.tc:hover{background:rgba(29,77,58,.28)}
+.tt{font-family:'Cinzel',serif;font-size:.48rem;letter-spacing:.22em;color:var(--v);text-transform:uppercase;margin-bottom:.38rem}
+.tn{font-family:'Playfair Display',serif;font-style:italic;font-size:1.1rem;color:var(--wh);margin-bottom:.25rem}
+.td{font-size:.76rem;color:rgba(253,250,246,.38)}
+.carimg{width:100%;height:240px;object-fit:cover;border:.5px solid rgba(174,133,96,.18);margin-bottom:1rem}
+
+/* ── VIP ── */
+.vip{padding:8rem 4rem;background:var(--g);position:relative;overflow:hidden}
+.vipbg{position:absolute;right:-3%;top:0;bottom:0;font-family:'Cinzel',serif;font-size:18rem;color:rgba(255,255,255,.035);display:flex;align-items:center;pointer-events:none;user-select:none}
+.vipb{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center;position:relative;z-index:1}
+.vbs{display:flex;flex-direction:column;gap:2.3rem}
+.vbi{display:flex;gap:1.4rem;align-items:flex-start}
+.vbn{font-family:'Cinzel',serif;font-size:2rem;color:rgba(253,250,246,.12);line-height:1;min-width:2.2rem}
+.vbt{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.18em;color:rgba(253,250,246,.78);text-transform:uppercase;margin-bottom:.3rem}
+.vbd{font-size:.84rem;color:rgba(253,250,246,.46);line-height:1.75}
+
+/* ── CLIMATE ── */
+.clm{padding:3.5rem 4rem;background:rgba(29,77,58,.18);border-top:.5px solid rgba(174,133,96,.13);border-bottom:.5px solid rgba(174,133,96,.13);display:flex;align-items:center;justify-content:center;gap:2.5rem;text-align:center}
+.clm-t{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.2em;color:var(--wh);text-transform:uppercase;margin-bottom:.3rem}
+.clm-s{font-size:.84rem;color:rgba(253,250,246,.48);font-style:italic;max-width:440px}
+.clm-a{font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.2em;color:var(--teal);text-decoration:none;text-transform:uppercase;border-bottom:1px solid rgba(109,195,205,.3);padding-bottom:.1rem;margin-top:.5rem;display:inline-block}
+.clm-a:hover{color:var(--vl)}
+
+/* ── FOUNDERS ── */
+.founders{display:grid;grid-template-columns:1fr 1fr;overflow:hidden}
+.fimg{background:url('https://img1.wsimg.com/isteam/ip/28e700c9-c37b-485d-b636-01fcfc9acb86/25FEB441-32E0-49ED-878A-CA88687EE6BB.jpeg') center/cover no-repeat;min-height:580px}
+.ftxt{background:#0e100b;padding:5.5rem;display:flex;flex-direction:column;justify-content:center}
+.fnames{font-family:'Cinzel',serif;font-size:.56rem;letter-spacing:.2em;color:var(--v);text-transform:uppercase;margin-bottom:.5rem}
+.fh{font-family:'Playfair Display',serif;font-style:italic;font-size:2.3rem;color:var(--wh);margin-bottom:1.4rem;line-height:1.3}
+.frule{width:44px;height:1px;background:var(--v);margin-bottom:1.4rem}
+.fp{font-size:.92rem;color:rgba(253,250,246,.48);line-height:1.92;margin-bottom:.9rem}
+.fquote{margin-top:1.8rem;padding:1.4rem 1.7rem;border-left:2px solid var(--v);font-style:italic;font-size:1.02rem;color:rgba(253,250,246,.65);line-height:1.72}
+
+/* ─────────────────────────────────────────
+   CONFIGURADOR DE EXPERIENCIA
+───────────────────────────────────────── */
+.config{padding:8rem 4rem;background:var(--sand);overflow:hidden}
+.config-inner{max-width:1000px;margin:0 auto}
+.config-head{text-align:center;margin-bottom:4rem}
+.config-head .rule{margin:1.4rem auto}
+
+/* Steps */
+.steps-bar{display:flex;align-items:center;justify-content:center;gap:0;margin-bottom:4rem}
+.step-item{display:flex;align-items:center;gap:0}
+.step-dot{width:32px;height:32px;border-radius:50%;border:1px solid rgba(174,133,96,.3);display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:.52rem;color:rgba(253,250,246,.35);transition:all .4s;cursor:pointer;background:transparent}
+.step-dot.active{border-color:var(--v);color:var(--vl);background:rgba(174,133,96,.12)}
+.step-dot.done{border-color:var(--g);background:var(--g);color:var(--wh)}
+.step-label{font-family:'Cinzel',serif;font-size:.46rem;letter-spacing:.18em;color:rgba(253,250,246,.3);text-transform:uppercase;margin-left:.6rem;transition:color .4s}
+.step-label.active{color:var(--vl)}
+.step-label.done{color:rgba(253,250,246,.5)}
+.step-line{width:40px;height:1px;background:rgba(174,133,96,.2);margin:0 .8rem;flex-shrink:0}
+
+/* Panels */
+.cpanel{display:none;animation:fadePanel .5s ease both}
+.cpanel.active{display:block}
+@keyframes fadePanel{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+.cpanel-title{font-family:'Playfair Display',serif;font-style:italic;font-size:1.7rem;color:var(--wh);margin-bottom:.5rem;text-align:center}
+.cpanel-sub{font-size:.9rem;color:rgba(253,250,246,.45);text-align:center;margin-bottom:2.5rem;font-style:italic}
+
+/* Date inputs */
+.date-row{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;max-width:520px;margin:0 auto 2rem}
+.date-group{display:flex;flex-direction:column;gap:.4rem}
+.date-label{font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.2em;color:rgba(253,250,246,.42);text-transform:uppercase}
+.date-input{background:rgba(253,250,246,.04);border:1px solid rgba(174,133,96,.2);padding:.9rem 1rem;font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--wh);outline:none;transition:border-color .3s;width:100%}
+.date-input:focus{border-color:rgba(174,133,96,.55)}
+
+/* Guest count */
+.guest-row{display:flex;align-items:center;justify-content:center;gap:1.5rem;margin:0 auto 2rem}
+.guest-btn{width:44px;height:44px;border:1px solid rgba(174,133,96,.3);background:transparent;color:var(--vl);font-size:1.4rem;cursor:pointer;transition:all .3s;font-family:'Cinzel',serif;display:flex;align-items:center;justify-content:center}
+.guest-btn:hover{border-color:var(--v);background:rgba(174,133,96,.1)}
+.guest-num{font-family:'Cinzel',serif;font-size:3rem;color:var(--wh);min-width:3rem;text-align:center;line-height:1}
+.guest-label{font-size:.82rem;color:rgba(253,250,246,.4);font-style:italic;text-align:center;margin-top:.3rem}
+
+/* Villa selector */
+.villa-sel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem}
+.villa-opt{border:1px solid rgba(174,133,96,.18);padding:1.2rem;cursor:pointer;transition:all .3s;position:relative;text-align:center}
+.villa-opt:hover{border-color:rgba(174,133,96,.5);background:rgba(174,133,96,.06)}
+.villa-opt.selected{border-color:var(--g);background:rgba(29,77,58,.25)}
+.villa-opt.disabled{opacity:.3;cursor:not-allowed;pointer-events:none}
+.villa-opt.selected::after{content:'✓';position:absolute;top:.5rem;right:.7rem;font-size:.8rem;color:var(--teal)}
+.vo-name{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.15em;color:var(--wh);text-transform:uppercase;margin-bottom:.3rem}
+.vo-spec{font-size:.76rem;color:rgba(253,250,246,.42);margin-bottom:.4rem}
+.vo-price{font-family:'Playfair Display',serif;font-style:italic;font-size:.95rem;color:var(--vl)}
+.filter-note{text-align:center;font-size:.8rem;color:rgba(253,250,246,.3);font-style:italic;margin-bottom:1.5rem}
+
+/* Service options */
+.svc-opts{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-bottom:2rem}
+.svc-opt{border:1px solid rgba(174,133,96,.18);padding:1.4rem 1.6rem;cursor:pointer;transition:all .3s;display:flex;align-items:flex-start;gap:1rem;position:relative}
+.svc-opt:hover{border-color:rgba(174,133,96,.45);background:rgba(174,133,96,.05)}
+.svc-opt.selected{border-color:var(--g);background:rgba(29,77,58,.22)}
+.svc-opt.selected .svc-check{border-color:var(--teal);background:var(--teal)}
+.svc-check{width:18px;height:18px;border:1px solid rgba(174,133,96,.35);border-radius:2px;flex-shrink:0;margin-top:.15rem;transition:all .3s;display:flex;align-items:center;justify-content:center}
+.svc-check::after{content:'';display:none;width:10px;height:7px;border-left:2px solid var(--bk);border-bottom:2px solid var(--bk);transform:rotate(-45deg) translateY(-1px)}
+.svc-opt.selected .svc-check::after{display:block}
+.svc-opt-name{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.15em;color:var(--wh);text-transform:uppercase;margin-bottom:.25rem}
+.svc-opt-desc{font-size:.78rem;color:rgba(253,250,246,.42);line-height:1.6}
+.svc-opt-price{font-family:'Playfair Display',serif;font-style:italic;font-size:.88rem;color:var(--vl);margin-top:.3rem}
+
+/* Summary */
+.summary-box{border:1px solid rgba(174,133,96,.22);padding:2.5rem;margin-bottom:2rem;background:rgba(253,250,246,.02)}
+.summary-title{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.25em;color:var(--v);text-transform:uppercase;margin-bottom:1.5rem}
+.summary-line{display:flex;justify-content:space-between;align-items:baseline;padding:.5rem 0;border-bottom:.5px solid rgba(253,250,246,.06)}
+.summary-line:last-child{border-bottom:none}
+.sl-name{font-size:.88rem;color:rgba(253,250,246,.6)}
+.sl-val{font-family:'Playfair Display',serif;font-style:italic;font-size:.95rem;color:var(--wh)}
+.summary-total{display:flex;justify-content:space-between;align-items:baseline;padding:1.2rem 0 0;margin-top:.8rem;border-top:1px solid rgba(174,133,96,.25)}
+.st-label{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.2em;color:var(--vl);text-transform:uppercase}
+.st-val{font-family:'Cinzel',serif;font-size:1.6rem;color:var(--wh)}
+.st-note{font-size:.72rem;color:rgba(253,250,246,.3);font-style:italic;margin-top:.3rem}
+
+/* Nav buttons */
+.cnav{display:flex;justify-content:space-between;align-items:center;margin-top:2rem}
+.cbtn-back{font-family:'Cinzel',serif;font-size:.54rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(253,250,246,.4);background:transparent;border:none;cursor:pointer;padding:.8rem 0;transition:color .3s}
+.cbtn-back:hover{color:var(--vl)}
+.cbtn-next{font-family:'Cinzel',serif;font-size:.56rem;letter-spacing:.22em;text-transform:uppercase;color:var(--bk);background:var(--vl);border:none;padding:.9rem 2rem;cursor:pointer;transition:background .3s}
+.cbtn-next:hover{background:var(--wh)}
+.cbtn-wa{font-family:'Cinzel',serif;font-size:.56rem;letter-spacing:.22em;text-transform:uppercase;color:var(--bk);background:var(--vl);border:none;padding:1rem 2.2rem;cursor:pointer;transition:background .3s;display:flex;align-items:center;gap:.6rem;text-decoration:none}
+.cbtn-wa:hover{background:var(--wh)}
+
+/* ── CONTACT ── */
+.contact{padding:7rem 4rem;background:var(--bk)}
+.cb{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:6rem}
+.ci-list{margin-top:2.5rem;display:flex;flex-direction:column;gap:1.4rem}
+.cii{display:flex;gap:.9rem;align-items:flex-start}
+.cic{width:33px;height:33px;border:.5px solid rgba(174,133,96,.32);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cil{font-family:'Cinzel',serif;font-size:.48rem;letter-spacing:.18em;color:var(--v);text-transform:uppercase;margin-bottom:.12rem}
+.civ{font-size:.86rem;color:rgba(253,250,246,.5)}
+.civ a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(174,133,96,.25);transition:color .3s}
+.civ a:hover{color:var(--vl)}
+.cform{display:flex;flex-direction:column;gap:.9rem}
+.fr2{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+.fg{display:flex;flex-direction:column;gap:.32rem}
+.fl{font-family:'Cinzel',serif;font-size:.48rem;letter-spacing:.2em;color:rgba(253,250,246,.38);text-transform:uppercase}
+.fi,.fsel,.fta{background:rgba(253,250,246,.03);border:1px solid rgba(174,133,96,.18);padding:.85rem 1rem;font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--wh);outline:none;transition:border-color .3s;width:100%}
+.fi:focus,.fsel:focus,.fta:focus{border-color:rgba(174,133,96,.55)}
+.fta{resize:vertical;min-height:100px}
+.fsel option{background:var(--bk)}
+.fsub{font-family:'Cinzel',serif;font-size:.56rem;letter-spacing:.22em;text-transform:uppercase;color:var(--bk);background:var(--vl);border:none;padding:1rem 2.3rem;cursor:pointer;transition:background .3s;align-self:flex-start}
+.fsub:hover{background:var(--wh)}
+
+/* ── NEWSLETTER ── */
+.nl-sec{padding:5rem 4rem;background:var(--g);text-align:center}
+.nl-t{font-family:'Cinzel',serif;font-size:clamp(1.1rem,2.2vw,1.8rem);color:var(--wh);margin-bottom:.7rem}
+.nl-s{font-size:.92rem;font-style:italic;color:rgba(253,250,246,.52);margin-bottom:2.2rem;max-width:440px;margin-left:auto;margin-right:auto}
+.nl-f{display:flex;max-width:440px;margin:0 auto}
+.nl-in{flex:1;background:rgba(253,250,246,.07);border:1px solid rgba(174,133,96,.27);border-right:none;padding:.9rem 1.1rem;font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--wh);outline:none}
+.nl-in::placeholder{color:rgba(253,250,246,.28)}
+.nl-btn{font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:var(--bk);background:var(--vl);border:none;padding:.9rem 1.5rem;cursor:pointer;transition:background .3s;white-space:nowrap}
+.nl-btn:hover{background:var(--wh)}
+
+/* ── FOOTER ── */
+footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
+.ftg{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem;padding-bottom:3rem;border-bottom:.5px solid rgba(253,250,246,.07)}
+.fbn{font-family:'Cinzel',serif;font-size:.95rem;letter-spacing:.18em;color:var(--wh);margin-bottom:.2rem}
+.fbt{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.82rem;color:var(--vl);display:block;margin-bottom:1.1rem}
+.fdesc{font-size:.76rem;color:rgba(253,250,246,.28);line-height:1.85;max-width:260px}
+.fct{font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.28em;color:var(--v);text-transform:uppercase;margin-bottom:1.1rem}
+.flinks{list-style:none;display:flex;flex-direction:column;gap:.55rem}
+.flinks a{font-size:.78rem;color:rgba(253,250,246,.35);text-decoration:none;transition:color .3s}
+.flinks a:hover{color:var(--wh)}
+.ftbot{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.fcopy{font-size:.68rem;color:rgba(253,250,246,.18);font-style:italic}
+.fsoc{display:flex;gap:.7rem}
+.soc{width:30px;height:30px;border:.5px solid rgba(253,250,246,.13);border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;transition:all .3s}
+.soc:hover{border-color:var(--vl)}
+.soc svg{width:12px;height:12px;fill:rgba(253,250,246,.38)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  nav{padding:1rem 1.5rem}.nlinks{display:none}nav.solid{padding:.8rem 1.5rem}
+  .vh{flex-direction:column}
+  .vg{grid-template-columns:repeat(2,1fr)}
+  .bb,.vipb,.founders,.cb,.trb{grid-template-columns:1fr}
+  .fimg{min-height:300px}.ftxt{padding:3rem 1.5rem}
+  .gcs,.gam{grid-template-columns:1fr}
+  .tg{grid-template-columns:1fr}
+  .band{flex-wrap:wrap}.bi{min-width:50%;border-right:none;border-bottom:.5px solid rgba(253,250,246,.07);padding:1.3rem}
+  .ftg{grid-template-columns:1fr 1fr}
+  .svcs,.villas,.boats,.golf,.trsf,.vip,.config,.contact,.nl-sec,.sec{padding:5rem 1.5rem}
+  .si{padding:0 1.5rem 3rem}.ss{padding:0 1.5rem 2rem}.sc{min-width:300px}
+  .clm{flex-direction:column;gap:1rem;padding:2.5rem 1.5rem}
+  .nl-f{flex-direction:column}.nl-in{border-right:1px solid rgba(174,133,96,.27);border-bottom:none}
+  .fr2,.villa-sel-grid,.svc-opts,.date-row{grid-template-columns:1fr}
+  .steps-bar{gap:0;flex-wrap:nowrap;overflow-x:auto;padding-bottom:.5rem}
+  .step-line{width:20px}
+  footer{padding:3rem 1.5rem 2rem}
+}
+</style>
+
+<!-- Verification modal styles -->
+<style>
+/* ── GATE OVERLAY ── */
+.gate-overlay{
+  position:fixed;inset:0;z-index:500;
+  background:rgba(18,20,15,.92);
+  backdrop-filter:blur(18px);
+  display:flex;align-items:center;justify-content:center;
+  padding:2rem;
+  opacity:0;pointer-events:none;
+  transition:opacity .4s ease;
+}
+.gate-overlay.show{opacity:1;pointer-events:all}
+
+.gate-box{
+  background:#111310;
+  border:1px solid rgba(174,133,96,.25);
+  padding:3rem;
+  max-width:500px;
+  width:100%;
+  position:relative;
+  animation:gateIn .4s ease both;
+}
+@keyframes gateIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+.gate-close{
+  position:absolute;top:1rem;right:1.2rem;
+  background:none;border:none;color:rgba(253,250,246,.3);
+  font-size:1.2rem;cursor:pointer;transition:color .3s;
+  line-height:1;
+}
+.gate-close:hover{color:var(--vl)}
+
+.gate-logo{
+  font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.3em;
+  color:var(--v);text-transform:uppercase;margin-bottom:.6rem;
+}
+.gate-title{
+  font-family:'Playfair Display',serif;font-style:italic;
+  font-size:1.8rem;color:var(--wh);margin-bottom:.4rem;line-height:1.3;
+}
+.gate-sub{
+  font-size:.88rem;color:rgba(253,250,246,.45);font-style:italic;
+  margin-bottom:2rem;line-height:1.7;
+}
+
+.gate-form{display:flex;flex-direction:column;gap:.8rem}
+.gate-row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+.gate-group{display:flex;flex-direction:column;gap:.3rem}
+.gate-label{
+  font-family:'Cinzel',serif;font-size:.46rem;letter-spacing:.2em;
+  color:rgba(253,250,246,.38);text-transform:uppercase;
+}
+.gate-input,.gate-select{
+  background:rgba(253,250,246,.04);
+  border:1px solid rgba(174,133,96,.2);
+  padding:.75rem .9rem;
+  font-family:'Cormorant Garamond',serif;font-size:1rem;
+  color:var(--wh);outline:none;transition:border-color .3s;width:100%;
+}
+.gate-input:focus,.gate-select:focus{border-color:rgba(174,133,96,.55)}
+.gate-select option{background:#111310}
+.gate-input::placeholder{color:rgba(253,250,246,.25)}
+
+.gate-btn{
+  font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--bk);background:var(--vl);
+  border:none;padding:1rem;cursor:pointer;transition:all .3s;
+  margin-top:.4rem;
+}
+.gate-btn:hover{background:var(--wh)}
+.gate-btn:disabled{opacity:.4;cursor:not-allowed}
+
+.gate-error{
+  font-size:.82rem;color:#e07070;font-style:italic;
+  text-align:center;min-height:1.2rem;
+}
+.gate-success{color:#70c9a0}
+
+/* Code step */
+.code-inputs{
+  display:flex;gap:.5rem;justify-content:center;margin:.8rem 0;
+}
+.code-digit{
+  width:48px;height:56px;text-align:center;
+  font-family:'Cinzel',serif;font-size:1.4rem;color:var(--wh);
+  background:rgba(253,250,246,.05);
+  border:1px solid rgba(174,133,96,.25);outline:none;
+  transition:border-color .3s;
+}
+.code-digit:focus{border-color:rgba(174,133,96,.7)}
+
+/* Price gate on items */
+.price-locked{
+  display:inline-block;
+  font-family:'Cinzel',serif;font-size:.48rem;letter-spacing:.15em;
+  color:rgba(174,133,96,.45);text-transform:uppercase;cursor:pointer;
+  border-bottom:1px dashed rgba(174,133,96,.3);transition:color .3s;
+}
+.price-locked:hover{color:var(--vl)}
+
+/* Unlocked badge */
+.unlocked-badge{
+  position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);
+  z-index:300;background:var(--g);color:var(--wh);
+  font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.2em;
+  padding:.6rem 1.6rem;text-transform:uppercase;
+  animation:badgeIn .5s ease both;pointer-events:none;
+}
+@keyframes badgeIn{from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+
+@media(max-width:600px){
+  .gate-box{padding:2rem 1.5rem}
+  .gate-row{grid-template-columns:1fr}
+  .code-digit{width:40px;height:48px;font-size:1.1rem}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ VERIFICATION GATE MODAL ══ -->
+<div class="gate-overlay" id="gateOverlay">
+  <div class="gate-box">
+    <button class="gate-close" onclick="closeGate()">✕</button>
+
+    <!-- STEP A: Formulario de datos -->
+    <div id="gateStepA">
+      <div class="gate-logo">MG Experiences</div>
+      <h2 class="gate-title">Para ver los precios,<br>necesitamos conocerte</h2>
+      <p class="gate-sub">Ingresá tus datos y te enviamos un código de verificación. Sin spam — solo para confirmar que sos una persona real.</p>
+      <form class="gate-form" onsubmit="sendCode(event)">
+        <div class="gate-row">
+          <div class="gate-group">
+            <label class="gate-label">Nombre</label>
+            <input class="gate-input" id="gNombre" type="text" placeholder="Luciano" required>
+          </div>
+          <div class="gate-group">
+            <label class="gate-label">Apellido</label>
+            <input class="gate-input" id="gApellido" type="text" placeholder="García" required>
+          </div>
+        </div>
+        <div class="gate-group">
+          <label class="gate-label">Email</label>
+          <input class="gate-input" id="gEmail" type="email" placeholder="luciano@email.com" required>
+        </div>
+        <div class="gate-row">
+          <div class="gate-group">
+            <label class="gate-label">Teléfono / WhatsApp</label>
+            <input class="gate-input" id="gTel" type="tel" placeholder="+54 11 1234 5678" required>
+          </div>
+          <div class="gate-group">
+            <label class="gate-label">País</label>
+            <select class="gate-select" id="gPais" required>
+              <option value="">Seleccioná...</option>
+              <option>Argentina</option>
+              <option>Uruguay</option>
+              <option>Chile</option>
+              <option>Brasil</option>
+              <option>Colombia</option>
+              <option>México</option>
+              <option>Venezuela</option>
+              <option>Paraguay</option>
+              <option>Bolivia</option>
+              <option>Perú</option>
+              <option>Ecuador</option>
+              <option>Estados Unidos</option>
+              <option>España</option>
+              <option>Otro</option>
+            </select>
+          </div>
+        </div>
+        <div class="gate-error" id="gateErrorA"></div>
+        <button class="gate-btn" type="submit" id="gateBtnA">Recibir código →</button>
+      </form>
+    </div>
+
+    <!-- STEP B: Verificación de código -->
+    <div id="gateStepB" style="display:none">
+      <div class="gate-logo">MG Experiences</div>
+      <h2 class="gate-title">Revisá<br>tu correo</h2>
+      <p class="gate-sub" id="gateSubB">Te enviamos un código de 6 dígitos a <strong id="gateEmailDisplay"></strong>. Ingresálo acá para desbloquear los precios.</p>
+      <div class="code-inputs">
+        <input class="code-digit" maxlength="1" type="text" inputmode="numeric" id="c0" oninput="codeInput(0)">
+        <input class="code-digit" maxlength="1" type="text" inputmode="numeric" id="c1" oninput="codeInput(1)">
+        <input class="code-digit" maxlength="1" type="text" inputmode="numeric" id="c2" oninput="codeInput(2)">
+        <input class="code-digit" maxlength="1" type="text" inputmode="numeric" id="c3" oninput="codeInput(3)">
+        <input class="code-digit" maxlength="1" type="text" inputmode="numeric" id="c4" oninput="codeInput(4)">
+        <input class="code-digit" maxlength="1" type="text" inputmode="numeric" id="c5" oninput="codeInput(5)">
+      </div>
+      <div class="gate-error" id="gateErrorB"></div>
+      <button class="gate-btn" onclick="verifyCode()" id="gateBtnB">Verificar →</button>
+      <p style="text-align:center;margin-top:1rem;font-size:.8rem;color:rgba(253,250,246,.3);font-style:italic">
+        ¿No llegó? <span style="color:var(--vl);cursor:pointer;border-bottom:1px solid rgba(212,184,154,.3)" onclick="resendCode()">Reenviar código</span>
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="logo">
+    <svg width="38" height="38" viewBox="0 0 38 38" fill="none">
+      <circle cx="19" cy="19" r="17.5" stroke="#AE8560" stroke-width=".8"/>
+      <text x="19" y="15.5" font-family="Cinzel,serif" font-size="8" fill="#FDFAF6" text-anchor="middle" letter-spacing="1.5">MG</text>
+      <line x1="19" y1="21" x2="19" y2="29" stroke="#AE8560" stroke-width=".8"/>
+      <path d="M19 21 Q15 17 12 13 Q16 15 19 21" fill="#D4B89A" opacity=".7"/>
+      <path d="M19 21 Q23 17 26 13 Q22 15 19 21" fill="#D4B89A" opacity=".7"/>
+    </svg>
+    <div><span class="logo-n">MG EXPERIENCES</span><span class="logo-t">Elevate your travel experience</span></div>
+  </a>
+  <ul class="nlinks">
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#villas">Villas</a></li>
+    <li><a href="#embarcaciones">Embarcaciones</a></li>
+    <li><a href="#golf">Golf</a></li>
+    <li><a href="#tu-experiencia">Diseñá tu estadía</a></li>
+    <li><a href="#nosotros">Nosotros</a></li>
+  </ul>
+  <a href="https://wa.me/541164388699" target="_blank" class="nwa">WhatsApp →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hbg"></div>
+  <div class="hov"></div>
+  <div class="hb">
+    <p class="hpre">Casa de Campo · La Romana, República Dominicana</p>
+    <h1 class="hh1">Llegás.<br>Todo está listo.<em>El Caribe, a tu manera.</em></h1>
+    <p class="hsub">Sin itinerarios. Sin apuros. Sin que nadie te marque la agenda.<br>Una casa en el Caribe donde el tiempo es tuyo.</p>
+    <div class="hbtns">
+      <a href="#tu-experiencia" class="btn bf">Diseñá tu estadía</a>
+      <a href="https://wa.me/541164388699" target="_blank" class="btn bo">Hablemos</a>
+    </div>
+  </div>
+  <div class="scue"><span>Descubrí</span><div class="sln"></div></div>
+</section>
+
+<!-- BAND -->
+<div class="band rv">
+  <div class="bi"><span class="bn">50</span><span class="bl">años de historia en la isla</span></div>
+  <div class="bi"><span class="bn">3</span><span class="bl">campos de golf diseñados por Pete Dye</span></div>
+  <div class="bi"><span class="bn">12+</span><span class="bl">casas privadas disponibles</span></div>
+  <div class="bi"><span class="bn">15</span><span class="bl">años conociéndola de adentro</span></div>
+</div>
+
+<!-- SERVICES -->
+<section class="svcs" id="servicios">
+  <div class="si rv">
+    <span class="lbl">Cómo funciona</span>
+    <h2 class="bigt">Todo está,<br><em>nada sobra</em></h2>
+    <div class="rule rc"></div>
+    <p class="prose" style="margin:0 auto">Pensamos en cada detalle antes de que llegués. Lo que querés agregar, lo agregamos. Lo que no, no existe.</p>
+  </div>
+  <div class="ss" id="svcScroll">
+    <div class="sc"><img src="https://img1.wsimg.com/isteam/ip/28e700c9-c37b-485d-b636-01fcfc9acb86/Mar-y-Palma_-Ocean-Front_villa.webp" alt="Villa" loading="lazy"><div class="scov"></div><div class="scb"><div class="scat">Tu base</div><div class="stitle">Una casa propia</div><div class="sitems">Tu espacio, tu cocina, tu piscina. Limpieza diaria, chef y mayordomo incluidos.</div><a href="#villas" class="slink">Ver casas</a></div></div>
+    <div class="sc"><img src="https://img1.wsimg.com/isteam/ip/28e700c9-c37b-485d-b636-01fcfc9acb86/blob-d80dc22.png" alt="Embarcaciones" loading="lazy"><div class="scov"></div><div class="scb"><div class="scat">Un día en el agua</div><div class="stitle">Yacht privado</div><div class="sitems">Capitán, marinero y bebidas. Sin otros pasajeros, sin horarios ajenos.</div><a href="#embarcaciones" class="slink">Las embarcaciones</a></div></div>
+    <div class="sc"><img src="https://img1.wsimg.com/isteam/ip/28e700c9-c37b-485d-b636-01fcfc9acb86/iStock-475654823.jpg" alt="Golf" loading="lazy"><div class="scov"></div><div class="scb"><div class="scat">Para los que lo saben</div><div class="stitle">Golf en el Caribe</div><div class="sitems">Teeth of the Dog, Dye Fore y Links. Tres campos que no se olvidan.</div><a href="#golf" class="slink">Los campos</a></div></div>
+    <div class="sc"><img src="https://img1.wsimg.com/isteam/ip/28e700c9-c37b-485d-b636-01fcfc9acb86/The-Mercedes-Benz-Sprinter-Ready-for-Anything.jpeg" alt="Traslados" loading="lazy"><div class="scov"></div><div class="scb"><div class="scat">Del aeropuerto a la puerta</div><div class="stitle">Traslados</div><div class="sitems">Alguien te espera cuando aterrizás. Y cuando te vas.</div><a href="#traslados" class="slink">Los vehículos</a></div></div>
+    <div class="sc"><img src="https://img1.wsimg.com/isteam/stock/104038" alt="Migración VIP" loading="lazy"><div class="scov"></div><div class="scb"><div class="scat">Antes de pisar la isla</div><div class="stitle">Migración express</div><div class="sitems">Sin filas. Sin maletas en mano. El viaje empieza bien desde el primer momento.</div><a href="#vip" class="slink">Cómo funciona</a></div></div>
+    <div class="sc"><img src="https://img1.wsimg.com/isteam/ip/28e700c9-c37b-485d-b636-01fcfc9acb86/1584544282-golf_cart_header2_4000x1400_0_desk.jpeg" alt="Accesorios" loading="lazy"><div class="scov"></div><div class="scb"><div class="scat">Lo que hace la diferencia</div><div class="stitle">Los detalles</div><div class="sitems">Carritos, bicicletas, motos, buceo. Todo lo que hace que un día sea distinto.</div><a href="#tu-experiencia" class="slink">Armar estadía</a></div></div>
+  </div>
+  <p class="sh">← Deslizá para explorar →</p>
+</section>
+
+<!-- VILLAS PREVIEW -->
+<section class="villas rv" id="villas">
+  <div class="vh">
+    <div>
+      <span class="lbl">Dónde vas a estar</span>
+      <h2 class="bigt">Cada casa,<br><em>su carácter</em></h2>
+      <div class="rule"></div>
+      <p class="prose">Desde tres habitaciones hasta diez. Para grupos chicos o familias grandes. Lo que tienen en común es que cuando cerrás la puerta, el mundo de afuera desaparece.</p>
+    </div>
+    <a href="https://mg-experiences.com/ver-todas-las-villas" target="_blank" class="btn bf rv rv2">Ver catálogo completo</a>
+  </div>
+  <div class="vg">
+    <div class="vc"><img class="vi" src="https://img1.wsimg.com/isteam/ip/28e700c9-c37b-485d-b636-01fcfc9acb86/Mar-y-Palma_-Ocean-Front_villa.webp" alt="Townhouse Marina" loading="lazy"><div class="vov"></div><div class="vinfo"><div class="vname">Townhouse Marina</div><div class="vdet">3 hab · 8 huéspedes</div></div><div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$300/noche</div><div class="vprice-x">3 hab · 3.5 baños · 8 huéspedes</div><a href="https://mg-experiences.com/townhouse-marina" target="_blank" class="vbtn">Ver villa</a></div></div>
+    <div class="vc"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#0d2b22"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".22" fill="rgba(212,184,154,.2)" text-anchor="middle">VISTA MAR</text></svg><div class="vov"></div><div class="vinfo"><div class="vname">Vista Mar</div><div class="vdet">7 hab · 18 huéspedes</div></div><div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$2.500/noche</div><div class="vprice-x">7 hab · 12 baños · 18 huéspedes</div><a href="https://mg-experiences.com/vista-mar" target="_blank" class="vbtn">Ver villa</a></div></div>
+    <div class="vc"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#1a3a50"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".2" fill="rgba(109,195,205,.2)" text-anchor="middle">LA CATALINA</text></svg><div class="vov"></div><div class="vinfo"><div class="vname">La Catalina</div><div class="vdet">8 hab · 20 huéspedes</div></div><div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$4.500/noche</div><div class="vprice-x">8 hab · 10 baños · 20 huéspedes</div><a href="https://mg-experiences.com/la-catalina-1" target="_blank" class="vbtn">Ver villa</a></div></div>
+    <div class="vc"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#3a2510"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".2" fill="rgba(174,133,96,.2)" text-anchor="middle">DU CACIQUE</text></svg><div class="vov"></div><div class="vinfo"><div class="vname">Du Cacique</div><div class="vdet">8 hab · 14 huéspedes</div></div><div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$3.000/noche</div><div class="vprice-x">8 hab · 6 baños · 14 huéspedes</div><a href="https://mg-experiences.com/du-cacique" target="_blank" class="vbtn">Ver villa</a></div></div>
+    <div class="vc"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#0a2016"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".18" fill="rgba(29,77,58,.4)" text-anchor="middle">CLARA ROYALE</text></svg><div class="vov"></div><div class="vinfo"><div class="vname">Clara Royale</div><div class="vdet">10 hab · 20 huéspedes</div></div><div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$15.000/noche</div><div class="vprice-x">10 hab · 12 baños · 20 huéspedes</div><a href="https://mg-experiences.com/clara-royale" target="_blank" class="vbtn">Ver villa</a></div></div>
+    <div class="vc"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#003535"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".2" fill="rgba(0,123,111,.3)" text-anchor="middle">VILLA LAGUNA</text></svg><div class="vov"></div><div class="vinfo"><div class="vname">Villa Laguna</div><div class="vdet">5 hab · 10 huéspedes</div></div><div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$2.800/noche</div><div class="vprice-x">5 hab · 5.5 baños · 10 huéspedes</div><a href="https://mg-experiences.com/villa-laguna" target="_blank" class="vbtn">Ver villa</a></div></div>
+    <div class="vc"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#1a1a2e"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".2" fill="rgba(66,96,122,.4)" text-anchor="middle">MIRALEJOS</text></svg><div class="vov"></div><div class="vinfo"><div class="vname">Miralejos</div><div class="vdet">6 hab · 16 huéspedes</div></div><div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$3.500/noche</div><div class="vprice-x">6 hab · 6.5 baños · 16 huéspedes</div><a href="https://mg-experiences.com/miralejos" target="_blank" class="vbtn">Ver villa</a></div></div>
+    <div class="vc"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#1a0f00"/><text x="1.5" y="1.9" font-family="Cinzel,serif" font-size=".15" fill="rgba(174,133,96,.2)" text-anchor="middle">VILLA BALI · LA PLAYA</text><text x="1.5" y="2.3" font-family="Cinzel,serif" font-size=".13" fill="rgba(174,133,96,.15)" text-anchor="middle">CANARIA · RANCHOS · FARO</text></svg><div class="vov"></div><div class="vinfo"><div class="vname">+5 Villas más</div><div class="vdet">Bali · La Playa · Canaria · Faro</div></div><div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$1.400/noche</div><div class="vprice-x">Para cada tipo de grupo</div><a href="https://mg-experiences.com/ver-todas-las-villas" target="_blank" class="vbtn">Ver catálogo</a></div></div>
+  </div>
+</section>
+
+<!-- BOATS -->
+<section class="boats rv" id="embarcaciones">
+  <div class="bbg"></div>
+  <div class="bb">
+    <div>
+      <span class="lbl">Un día en el agua</span>
+      <h2 class="bigt">Sin otros<br><em>pasajeros</em></h2>
+      <div class="rule"></div>
+      <p class="prose">El barco es tuyo. Elegís el destino, el ritmo, si querés fondear una hora o seguir navegando. Capitán y marinero están ahí — sin interrumpir.</p>
+      <div class="ibox">
+        <div class="ibt">Incluido en toda salida</div>
+        <div class="ibg">
+          <div class="ii">Capitán y Marinero</div>
+          <div class="ii">Aguas y Refrescos</div>
+          <div class="ii">Cervezas</div>
+          <div class="ii">Bolsas de Hielo</div>
+        </div>
+      </div>
+      <p style="font-size:.76rem;color:rgba(253,250,246,.32);font-style:italic;margin-top:1rem">9:00 hs a 18:00 hs · Saona, Palmillas, Isla Catalina</p>
+    </div>
+    <div>
+      <div class="fleet">
+        <div class="frow"><div><div class="fn">Azimuth Flybridge 55</div><div class="fs2">Flybridge · Motor</div></div><div class="fc">16 pas.</div></div>
+        <div class="frow"><div><div class="fn">Tiara 38 LS</div><div class="fs2">Sport Cruiser</div></div><div class="fc">12 pas.</div></div>
+        <div class="frow"><div><div class="fn">Boston Whaler Conquest 305</div><div class="fs2">Open Sport</div></div><div class="fc">9 pas.</div></div>
+      </div>
+      <div style="margin-top:1.8rem"><a href="https://mg-experiences.com/embarcaciones" target="_blank" class="btn bf">Reservar salida</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- GOLF -->
+<section class="golf rv" id="golf">
+  <div class="gbg"></div>
+  <div class="gbody">
+    <span class="lbl" style="text-align:center;display:block">Para los que lo saben apreciar</span>
+    <div class="rule rc"></div>
+    <blockquote class="gq">"Teeth of the Dog es uno de los mejores campos que jugué en mi vida. No es solo un campo — es una experiencia."</blockquote>
+    <p class="gattr">— Jack Nicklaus</p>
+    <div class="gcs">
+      <div class="gc"><div class="gcn">Teeth of the Dog</div><div class="gcd">18 hoyos sobre el Mar Caribe. Diseñado por Pete Dye, con siete hoyos al borde del agua. Hay campos más difíciles — pocos más memorables.</div></div>
+      <div class="gc"><div class="gcn">Dye Fore</div><div class="gcd">27 hoyos con vistas al río Chavón y el mar. 7.740 yardas de recorrido donde el paisaje te distrae tanto como el juego.</div></div>
+      <div class="gc"><div class="gcn">Links</div><div class="gcd">18 hoyos de estilo links, con dunas y viento del mar. El más desafiante de los tres. Sede de torneos internacionales por algo.</div></div>
+    </div>
+    <div class="gam">
+      <div class="gai"><div class="gdot"></div><div><div class="gan">Caddies</div><div class="gat">Equipo experto para mejorar tu juego</div></div></div>
+      <div class="gai"><div class="gdot"></div><div><div class="gan">Alquiler de Equipos</div><div class="gat">Palos y carritos reconocidas</div></div></div>
+      <div class="gai"><div class="gdot"></div><div><div class="gan">Clases</div><div class="gat">Para todos los niveles</div></div></div>
+      <div class="gai"><div class="gdot"></div><div><div class="gan">Práctica</div><div class="gat">Putting, chipping y tiro completo</div></div></div>
+      <div class="gai"><div class="gdot"></div><div><div class="gan">Pro Shop</div><div class="gat">Equipos y ropa seleccionada</div></div></div>
+      <div class="gai"><div class="gdot"></div><div><div class="gan">Restaurantes</div><div class="gat">Cada campo con su propio bar y comedor</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TRANSFERS -->
+<section class="trsf rv" id="traslados">
+  <div class="trb">
+    <div>
+      <span class="lbl">Desde el primer momento</span>
+      <h2 class="bigt">Alguien<br><em>te espera</em></h2>
+      <div class="rule"></div>
+      <p class="prose">Aterrizás y ya hay alguien ahí con tu nombre. Del aeropuerto a la casa, sin maletas que arrastrar, sin apps que abrir. Así empieza bien una estadía.</p>
+      <img class="carimg" src="https://img1.wsimg.com/isteam/ip/28e700c9-c37b-485d-b636-01fcfc9acb86/The-Mercedes-Benz-Sprinter-Ready-for-Anything.jpeg" alt="Traslado" loading="lazy">
+    </div>
+    <div class="tg rv rv2">
+      <div class="tc"><div class="tt">Ejecutivo</div><div class="tn">SUV</div><div class="td">2 personas</div></div>
+      <div class="tc"><div class="tt">Ejecutivo</div><div class="tn">Full Size SUV</div><div class="td">6 personas</div></div>
+      <div class="tc"><div class="tt">Estándar</div><div class="tn">Minivan</div><div class="td">6 personas</div></div>
+      <div class="tc"><div class="tt">Estándar</div><div class="tn">Van</div><div class="td">11 personas</div></div>
+      <div class="tc" style="grid-column:span 2"><div class="tt">Estándar</div><div class="tn">Mini Bus / Sprinter</div><div class="td">16 personas</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- VIP -->
+<section class="vip rv" id="vip">
+  <div class="vipbg">VIP</div>
+  <div class="vipb">
+    <div>
+      <span class="lbl" style="color:rgba(212,184,154,.7)">Antes de pisar la isla</span>
+      <h2 class="bigt" style="color:var(--wh)">El aeropuerto<br><em style="color:var(--teal)">ya quedó atrás</em></h2>
+      <div class="rule"></div>
+      <p class="prose" style="max-width:100%">Nos ocupamos de la burocracia para que vos no tengas que ocuparte de nada. Migraciones, equipaje, salón de espera. Todo resuelto antes de que empiece lo bueno.</p>
+    </div>
+    <div class="vbs">
+      <div class="vbi"><div class="vbn">01</div><div><div class="vbt">Sin filas</div><div class="vbd">Ingresás directo. El tiempo que otros pasan esperando, vos lo pasás en otra parte.</div></div></div>
+      <div class="vbi"><div class="vbn">02</div><div><div class="vbt">Salón de espera privado</div><div class="vbd">Bebidas, comodidad y silencio mientras se resuelve el proceso.</div></div></div>
+      <div class="vbi"><div class="vbn">03</div><div><div class="vbt">Tu equipaje</div><div class="vbd">Alguien lo busca, lo carga y lo lleva. Vos no cargás nada.</div></div></div>
+      <div class="vbi"><div class="vbn">04</div><div><div class="vbt">Asistencia en todo momento</div><div class="vbd">Una persona dedicada para que nunca tengas que preguntar dónde ir.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CLIMATE -->
+<div class="clm rv">
+  <div style="font-size:1.6rem">🌿</div>
+  <div>
+    <div class="clm-t">El lugar que nos recibe merece cuidado</div>
+    <p class="clm-s">Parte de lo que generamos va a tecnologías de captura de CO₂. No como marketing — como convicción.</p>
+    <a href="https://climate.stripe.com/eWFiCh" target="_blank" class="clm-a">Ver nuestro impacto →</a>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     CONFIGURADOR DE EXPERIENCIA
+════════════════════════════════════════ -->
+<section class="config rv" id="tu-experiencia">
+  <div class="config-inner">
+    <div class="config-head">
+      <span class="lbl">Diseñá tu estadía</span>
+      <h2 class="bigt">Contanos<br><em>qué imaginás</em></h2>
+      <div class="rule rc"></div>
+      <p class="prose" style="margin:0 auto">Elegís fechas, casa y lo que querés incluir. Te mostramos un estimado y lo conversamos — sin compromiso.</p>
+    </div>
+
+    <!-- Progress bar -->
+    <div class="steps-bar">
+      <div class="step-item">
+        <div class="step-dot active" id="dot1">1</div>
+        <span class="step-label active" id="lbl1">Fechas</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step-item">
+        <div class="step-dot" id="dot2">2</div>
+        <span class="step-label" id="lbl2">Personas</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step-item">
+        <div class="step-dot" id="dot3">3</div>
+        <span class="step-label" id="lbl3">Villa</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step-item">
+        <div class="step-dot" id="dot4">4</div>
+        <span class="step-label" id="lbl4">Servicios</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step-item">
+        <div class="step-dot" id="dot5">5</div>
+        <span class="step-label" id="lbl5">Resumen</span>
+      </div>
+    </div>
+
+    <!-- STEP 1: Fechas -->
+    <div class="cpanel active" id="panel1">
+      <div class="cpanel-title">¿Cuándo viajan?</div>
+      <p class="cpanel-sub">Las fechas ayudan a ver qué casas están disponibles para ese período.</p>
+      <div class="date-row">
+        <div class="date-group">
+          <label class="date-label">Llegada</label>
+          <input type="date" class="date-input" id="dateIn">
+        </div>
+        <div class="date-group">
+          <label class="date-label">Salida</label>
+          <input type="date" class="date-input" id="dateOut">
+        </div>
+      </div>
+      <div id="nights-display" style="text-align:center;font-family:'Playfair Display',serif;font-style:italic;font-size:1.2rem;color:var(--vl);min-height:1.8rem"></div>
+      <div class="cnav">
+        <span></span>
+        <button class="cbtn-next" onclick="goStep(2)">Siguiente →</button>
+      </div>
+    </div>
+
+    <!-- STEP 2: Personas -->
+    <div class="cpanel" id="panel2">
+      <div class="cpanel-title">¿Cuántos van?</div>
+      <p class="cpanel-sub">Incluyendo chicos — así encontramos la casa que tiene el espacio justo para todos.</p>
+      <div class="guest-row">
+        <button class="guest-btn" onclick="changeGuests(-1)">−</button>
+        <div>
+          <div class="guest-num" id="guestNum">8</div>
+          <div class="guest-label">personas</div>
+        </div>
+        <button class="guest-btn" onclick="changeGuests(1)">+</button>
+      </div>
+      <div class="cnav">
+        <button class="cbtn-back" onclick="goStep(1)">← Volver</button>
+        <button class="cbtn-next" onclick="goStep(3)">Siguiente →</button>
+      </div>
+    </div>
+
+    <!-- STEP 3: Villa -->
+    <div class="cpanel" id="panel3">
+      <div class="cpanel-title">¿Dónde se quedan?</div>
+      <p class="cpanel-sub filter-note" id="filterNote">Casas disponibles para tu grupo</p>
+      <div class="villa-sel-grid" id="villaGrid"></div>
+      <div class="cnav">
+        <button class="cbtn-back" onclick="goStep(2)">← Volver</button>
+        <button class="cbtn-next" onclick="goStep(4)">Siguiente →</button>
+      </div>
+    </div>
+
+    <!-- STEP 4: Servicios -->
+    <div class="cpanel" id="panel4">
+      <div class="cpanel-title">¿Qué querés agregar?</div>
+      <p class="cpanel-sub">Todo es opcional. Sumá lo que tiene sentido para este viaje, dejá afuera lo que no.</p>
+      <div class="svc-opts" id="svcOptsContainer" style="grid-template-columns:1fr 1fr">
+        <!-- Renderizado dinámico desde renderServices() -->
+      </div>
+      <div class="cnav">
+        <button class="cbtn-back" onclick="goStep(3)">← Volver</button>
+        <button class="cbtn-next" onclick="goStep(5)">Ver resumen →</button>
+      </div>
+    </div>
+
+    <!-- STEP 5: Summary -->
+    <div class="cpanel" id="panel5">
+      <div class="cpanel-title">Tu estadía</div>
+      <p class="cpanel-sub">Revisá el detalle. Si querés cambiar algo, volvé atrás — si está bien, lo hablamos por WhatsApp.</p>
+      <div class="summary-box" id="summaryBox"></div>
+      <div class="cnav">
+        <button class="cbtn-back" onclick="goStep(4)">← Modificar</button>
+        <a href="#" class="cbtn-wa" id="waBtn" target="_blank">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zm-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884zm8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Consultar por WhatsApp
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOUNDERS -->
+<div class="founders" id="nosotros">
+  <div class="fimg rv"></div>
+  <div class="ftxt rv rv2">
+    <div class="fnames">Los anfitriones</div>
+    <h2 class="fh">Luciano & Josefina</h2>
+    <div class="frule"></div>
+    <p class="fp">Somos Luciano Macchiavello y Josefina Giardelli. Porteños. Más de 15 años viniendo a la isla — los últimos 5 viviendo Casa de Campo desde adentro, como anfitriones.</p>
+    <p class="fp">No somos una plataforma ni una agencia. Somos las personas que atienden cuando llamás, que saben cuál casa tiene la mejor piscina para chicos, y que conocen al staff del resort por su nombre.</p>
+    <blockquote class="fquote">"Queremos que llegués, te instalés, y no tengas que pensar en nada más. Eso es todo."</blockquote>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section class="contact rv" id="contacto">
+  <div class="cb">
+    <div>
+      <span class="lbl">Una pregunta, una duda, lo que sea</span>
+      <h2 class="bigt">Escribinos,<br><em>respondemos</em></h2>
+      <div class="rule"></div>
+      <p class="prose">Sin formularios automáticos. Te responde una persona real, en menos de 24 horas, con información concreta.</p>
+      <div class="ci-list">
+        <div class="cii"><div class="cic"><svg width="13" height="13" viewBox="0 0 24 24" fill="#AE8560"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zm-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884zm8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></div><div><div class="cil">WhatsApp</div><div class="civ"><a href="https://wa.me/541164388699" target="_blank">+54 11 6438 8699</a></div></div></div>
+        <div class="cii"><div class="cic"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#AE8560" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="1"/><path d="M2 4l10 9 10-9"/></svg></div><div><div class="cil">Email</div><div class="civ"><a href="mailto:info@mg-experiences.com">info@mg-experiences.com</a></div></div></div>
+        <div class="cii"><div class="cic"><svg width="13" height="13" viewBox="0 0 24 24" fill="#AE8560"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></div><div><div class="cil">Instagram</div><div class="civ"><a href="https://www.instagram.com/mgexperiencess/" target="_blank">@mgexperiencess</a></div></div></div>
+      </div>
+    </div>
+    <form class="cform" onsubmit="onSend(event)">
+      <div class="fr2">
+        <div class="fg"><label class="fl">Nombre</label><input class="fi" type="text" placeholder="Luciano"></div>
+        <div class="fg"><label class="fl">Apellido</label><input class="fi" type="text" placeholder="García"></div>
+      </div>
+      <div class="fg"><label class="fl">Email</label><input class="fi" type="email" placeholder="tu@email.com"></div>
+      <div class="fg"><label class="fl">¿Qué te interesa?</label>
+        <select class="fsel">
+          <option value="">Seleccioná...</option>
+          <option>Casa Privada</option><option>Embarcaciones</option><option>Green Fee</option>
+          <option>Traslados</option><option>Migración VIP</option><option>Paquete Completo</option>
+        </select>
+      </div>
+      <div class="fr2">
+        <div class="fg"><label class="fl">Llegada</label><input class="fi" type="date"></div>
+        <div class="fg"><label class="fl">Salida</label><input class="fi" type="date"></div>
+      </div>
+      <div class="fg"><label class="fl">Mensaje</label><textarea class="fta" placeholder="Contanos de tu grupo — cuántos son, edades, qué buscan..."></textarea></div>
+      <button type="submit" class="fsub" id="subBtn">Enviar →</button>
+    </form>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<div class="nl-sec rv">
+  <div class="nl-t">Antes que te vayas</div>
+  <p class="nl-s">Dejá tu mail y te avisamos primero — disponibilidad, casas nuevas, o algo que valga la pena saber.</p>
+  <form class="nl-f" onsubmit="onNl(event)">
+    <input class="nl-in" type="email" placeholder="tu@email.com" required>
+    <button class="nl-btn" type="submit" id="nlBtn">Me apunto</button>
+  </form>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ftg">
+    <div>
+      <div class="fbn">MG EXPERIENCES</div>
+      <span class="fbt">Elevate your travel experience</span>
+      <p class="fdesc">Una casa en el Caribe donde el tiempo es tuyo. Casa de Campo Resort & Villas, La Romana, República Dominicana.</p>
+    </div>
+    <div>
+      <div class="fct">Servicios</div>
+      <ul class="flinks">
+        <li><a href="https://mg-experiences.com/ver-todas-las-villas" target="_blank">Villas</a></li>
+        <li><a href="https://mg-experiences.com/embarcaciones" target="_blank">Embarcaciones</a></li>
+        <li><a href="https://mg-experiences.com/golf" target="_blank">Green Fee</a></li>
+        <li><a href="https://mg-experiences.com/traslados" target="_blank">Traslados</a></li>
+        <li><a href="https://mg-experiences.com/migración-vip" target="_blank">Migración VIP</a></li>
+        <li><a href="https://mg-experiences.com/accesorios" target="_blank">Accesorios</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="fct">El Resort</div>
+      <ul class="flinks">
+        <li><a href="https://mg-experiences.com/la-marina" target="_blank">La Marina</a></li>
+        <li><a href="https://mg-experiences.com/minitas-beach" target="_blank">Minitas Beach</a></li>
+        <li><a href="https://mg-experiences.com/chavon" target="_blank">Chavón</a></li>
+        <li><a href="https://mg-experiences.com/actividades" target="_blank">Actividades</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="fct">Contacto</div>
+      <ul class="flinks">
+        <li><a href="https://wa.me/541164388699" target="_blank">WhatsApp</a></li>
+        <li><a href="mailto:info@mg-experiences.com">Email</a></li>
+        <li><a href="https://www.instagram.com/mgexperiencess/" target="_blank">Instagram</a></li>
+        <li><a href="#tu-experiencia">Diseñá tu estadía</a></li>
+        <li><a href="https://climate.stripe.com/eWFiCh" target="_blank">Impacto Climático</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="ftbot">
+    <p class="fcopy">© 2026 MG Experiences · Casa de Campo, La Romana · República Dominicana</p>
+    <div class="fsoc">
+      <a href="https://www.instagram.com/mgexperiencess/" target="_blank" class="soc"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+      <a href="https://wa.me/541164388699" target="_blank" class="soc"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zm-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884zm8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── NAV
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('solid',scrollY>80));
+
+// ── REVEAL
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:.1});
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+
+// ── SERVICE CARDS DRAG
+const ss=document.getElementById('svcScroll');
+let dragging=false,sx,sl;
+ss.addEventListener('mousedown',e=>{dragging=true;sx=e.pageX-ss.offsetLeft;sl=ss.scrollLeft;ss.classList.add('grab')});
+document.addEventListener('mouseup',()=>{dragging=false;ss.classList.remove('grab')});
+document.addEventListener('mousemove',e=>{if(!dragging)return;e.preventDefault();ss.scrollLeft=sl-(e.pageX-ss.offsetLeft-sx)*1.5});
+
+// ── SMOOTH SCROLL
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'})}
+  });
+});
+
+// ── FORMS
+function onSend(e){e.preventDefault();const b=document.getElementById('subBtn');b.textContent='✓ Enviado';b.style.background='#1D4D3A';b.style.color='#D4B89A';setTimeout(()=>{b.textContent='Enviar →';b.style.background='';b.style.color=''},4000)}
+function onNl(e){e.preventDefault();const b=document.getElementById('nlBtn');b.textContent='✓ Listo';setTimeout(()=>{b.textContent='Me apunto'},3000)}
+
+// ══════════════════════════════════════════
+// TARIFARIO COMPLETO — Columna K del Drive
+// Última sincronización: Mayo 2026
+// ══════════════════════════════════════════
+
+// ── VILLAS (USD/noche)
+const villas = [
+  {id:'townhouse',    name:'Townhouse Marina',    hab:3,  guests:8,  price:427,   url:'https://mg-experiences.com/townhouse-marina'},
+  {id:'altosChavon',  name:'Altos de Chavon',     hab:2,  guests:4,  price:332,   url:'https://mg-experiences.com/altos-de-chavon'},
+  {id:'faro',         name:'Townhouse Faro',      hab:4,  guests:10, price:1326,  url:'https://mg-experiences.com/townhouse-faro'},
+  {id:'loslagos',     name:'Villa Los Lagos',     hab:5,  guests:10, price:1326,  url:'https://mg-experiences.com/villa-laguna'},
+  {id:'lagos94',      name:'Villa Lagos 94',      hab:5,  guests:10, price:1705,  url:'https://mg-experiences.com/villa-laguna'},
+  {id:'canaria',      name:'Canaria',             hab:4,  guests:8,  price:2368,  url:'https://mg-experiences.com/canaria'},
+  {id:'vistamar',     name:'Vista Mar',           hab:7,  guests:18, price:2368,  url:'https://mg-experiences.com/vista-mar'},
+  {id:'laguna',       name:'Villa Laguna',        hab:5,  guests:10, price:2652,  url:'https://mg-experiences.com/villa-laguna'},
+  {id:'cacique',      name:'Du Cacique',          hab:8,  guests:14, price:2842,  url:'https://mg-experiences.com/du-cacique'},
+  {id:'ranchos',      name:'Villa Los Ranchos',   hab:6,  guests:14, price:2842,  url:'https://mg-experiences.com/villa-los-ranchos-1'},
+  {id:'colinas21',    name:'Villa Colinas 21',    hab:4,  guests:10, price:3126,  url:'https://mg-experiences.com/villa-colinas'},
+  {id:'laplaya',      name:'La Playa',            hab:3,  guests:8,  price:3315,  url:'https://mg-experiences.com/la-playa'},
+  {id:'miralejos',    name:'Miralejos',           hab:6,  guests:16, price:3315,  url:'https://mg-experiences.com/miralejos'},
+  {id:'bali',         name:'Villa Bali',          hab:6,  guests:12, price:3789,  url:'https://mg-experiences.com/villa-bali'},
+  {id:'naranjos',     name:'Villa Naranjos',      hab:6,  guests:12, price:3789,  url:'https://mg-experiences.com/villa-naranjos'},
+  {id:'catalina',     name:'La Catalina',         hab:8,  guests:20, price:4262,  url:'https://mg-experiences.com/la-catalina-1'},
+  {id:'puntaminitas', name:'Punta Minitas',       hab:6,  guests:12, price:5209,  url:'https://mg-experiences.com/punta-minitas'},
+  {id:'royale',       name:'Clara Royale',        hab:10, guests:20, price:14206, url:'https://mg-experiences.com/clara-royale'},
+];
+
+// ── SERVICIOS EN VILLA (USD/día)
+const villaServices = [
+  {id:'limpieza',  name:'Limpieza + Desayuno',  price:79,  unit:'día'},
+  {id:'cocinera',  name:'Cocinera',             price:100, unit:'día'},
+  {id:'cocinera2', name:'Cocinera + Nocturno',  price:172, unit:'día'},
+  {id:'chef',      name:'Chef completo',        price:286, unit:'día'},
+  {id:'nineraD',   name:'Niñera (día)',         price:122, unit:'día'},
+  {id:'nineraH',   name:'Niñera (noche)',       price:172, unit:'noche'},
+];
+
+// ── TRASLADOS (USD ida+vuelta)
+const traslados = [
+  {id:'suv2',  name:'SUV',           pax:'2 pax',  price:242},
+  {id:'suv6',  name:'Full Size SUV', pax:'6 pax',  price:471},
+  {id:'van6',  name:'Minivan',       pax:'6 pax',  price:377},
+  {id:'van11', name:'Van',           pax:'11 pax', price:471},
+  {id:'bus16', name:'Mini Bus',      pax:'16 pax', price:530},
+];
+
+// ── CARRITOS (USD/día)
+const carritos = [
+  {id:'carrito4', name:'Carrito de golf — 4 pax', price:69,  unit:'día'},
+  {id:'carrito6', name:'Carrito de golf — 6 pax', price:94,  unit:'día'},
+];
+
+// ── EMBARCACIONES (USD/salida)
+const barcos = [
+  {id:'bw305palm', name:'Boston Whaler 305 — Palmillas', pax:'hasta 9',  price:1553},
+  {id:'bw305cat',  name:'Boston Whaler 305 — Catalina',  pax:'hasta 9',  price:1553},
+  {id:'bw305saon', name:'Boston Whaler 305 — Saona',     pax:'hasta 9',  price:2259},
+  {id:'tiara38p',  name:'Tiara 38LS — Palmillas',        pax:'10 a 12',  price:1765},
+  {id:'tiara38s',  name:'Tiara 38LS — Saona',            pax:'10 a 12',  price:2942},
+  {id:'azimuth',   name:'Azimuth Flybridge 55',          pax:'13 a 16',  price:4706},
+  {id:'catamaran', name:'Catamarán',                     pax:'17 a 35',  price:2589},
+];
+
+// ── ACTIVIDADES — organizadas por subcategoría
+const actividades = {
+  'Golf': [
+    {id:'teeth', name:'Teeth of the Dog', price:732, unit:'persona', note:'18% tax inc.'},
+    {id:'dye',   name:'Dye Fore',         price:620, unit:'persona', note:'18% tax inc.'},
+    {id:'links', name:'Links',            price:509, unit:'persona', note:'18% tax inc.'},
+  ],
+  'Ecuestre': [
+    {id:'cab30',   name:'Paseo a caballo 1/2h',           price:43,  unit:'persona'},
+    {id:'cab60',   name:'Paseo a caballo 1h',             price:79,  unit:'persona'},
+    {id:'cab120',  name:'Paseo a caballo 2h',             price:127, unit:'persona'},
+    {id:'ponies',  name:'Ponies niños 1/2h',              price:37,  unit:'niño'},
+    {id:'equ30',   name:'Lección equitación/salto 1/2h',  price:85,  unit:'persona'},
+    {id:'equ60',   name:'Lección equitación/salto 1h',    price:132, unit:'persona'},
+    {id:'polo',    name:'Lección polo profesional',       price:211, unit:'persona/h'},
+    {id:'poloas',  name:'Asistente polo',                 price:127, unit:'persona/h'},
+    {id:'donkey',  name:'Donkey Polo',                    price:74,  unit:'persona/h'},
+    {id:'ranch',   name:'Tour ranchos',                   price:179, unit:'persona'},
+    {id:'ranchp',  name:'Tour ranchos con picnic',        price:253, unit:'persona'},
+  ],
+  'Tenis': [
+    {id:'ten_dia',  name:'Cancha diurna',                      price:42,  unit:'hora'},
+    {id:'ten_noc',  name:'Cancha nocturna',                    price:52,  unit:'hora'},
+    {id:'ten_dir',  name:'Clase privada con Director',         price:168, unit:'hora'},
+    {id:'ten_pro',  name:'Clase con Pro',                      price:79,  unit:'hora'},
+    {id:'ten_semi', name:'Clase semiprivada con Pro (2 pax)',  price:100, unit:'hora'},
+    {id:'ten_head', name:'Clase con Head Pro (2 pax)',         price:216, unit:'hora'},
+    {id:'ten_comp', name:'Compañero de práctica',              price:69,  unit:'hora'},
+    {id:'ten_clin', name:'Clínica grupal',                     price:48,  unit:'p/hora'},
+    {id:'ten_clinn',name:'Clínica grupal niños',               price:37,  unit:'p/hora'},
+    {id:'ten_maq',  name:'Máquina de pelotas',                 price:31,  unit:'uso'},
+    {id:'ten_raq',  name:'Alquiler raqueta',                   price:20,  unit:'uso'},
+  ],
+  'Pádel': [
+    {id:'pad_dia',  name:'Cancha diurna',                        price:48,  unit:'hora'},
+    {id:'pad_noc',  name:'Cancha nocturna',                      price:52,  unit:'hora'},
+    {id:'pad_dir',  name:'Clase privada con Director',           price:105, unit:'hora'},
+    {id:'pad_pro',  name:'Clase con Pro',                        price:94,  unit:'hora'},
+    {id:'pad_semi', name:'Clase semiprivada con Pro',            price:115, unit:'hora'},
+    {id:'pad_clin', name:'Clínica grupal',                       price:42,  unit:'p/hora'},
+    {id:'pad_clind',name:'Clínica grupal con Director',          price:48,  unit:'p/hora'},
+    {id:'pad_clinn',name:'Clínica grupal niños',                 price:42,  unit:'p/hora'},
+    {id:'pad_comp', name:'Compañero de práctica',                price:42,  unit:'p/hora'},
+    {id:'pad_maq',  name:'Máquina de pelotas',                   price:58,  unit:'uso'},
+    {id:'pad_raq',  name:'Alquiler raqueta',                     price:11,  unit:'uso'},
+  ],
+  'Tiro': [
+    {id:'skeet',  name:'Skeet & Trap',      price:53,  unit:'persona'},
+    {id:'five',   name:'Five Stand',        price:58,  unit:'persona'},
+    {id:'caza',   name:'Simulación cacería',price:137, unit:'persona'},
+  ],
+  'Río Chavón': [
+    {id:'kayak2', name:'Kayak doble', price:64, unit:'persona'},
+    {id:'kayak1', name:'Kayak simple',price:48, unit:'persona'},
+  ],
+  'Cumayasa': [
+    {id:'zip_a',  name:'Zipline adultos', price:92,  unit:'persona'},
+    {id:'zip_n',  name:'Zipline niños',   price:63,  unit:'niño'},
+    {id:'bug1',   name:'Buggies simple',  price:120, unit:'persona'},
+    {id:'bug2',   name:'Buggies doble',   price:92,  unit:'persona'},
+  ],
+  'Mar': [
+    {id:'cat_a',  name:'Isla Catalina tour grupal (adulto)', price:51, unit:'adulto'},
+    {id:'cat_n',  name:'Isla Catalina tour grupal (niño)',   price:32, unit:'niño'},
+    {id:'snork',  name:'Snorkeling Minitas Beach',           price:20, unit:'día'},
+    {id:'kmin',   name:'Kayak Minitas Beach',                price:27, unit:'hora'},
+    {id:'kminm',  name:'Kayak Minitas Beach (máximo)',       price:37, unit:'hora'},
+    {id:'banana', name:'Banana boat',                        price:22, unit:'persona'},
+    {id:'hobie',  name:'Hobie Wave',                         price:53, unit:'hora'},
+  ],
+  'Cigars': [
+    {id:'cigar',  name:'Cigar Factory Tour', price:22, unit:'persona'},
+  ],
+  'Buceo': [
+    {id:'buceo_cat_md',  name:'Excursión medio día Catalina',              price:74,  unit:'persona'},
+    {id:'buceo_bay',     name:'Buceo Catalina doble tanque — Bayahibe',    price:79,  unit:'persona'},
+    {id:'buceo_pca',     name:'Buceo Catalina doble tanque — Punta Cana',  price:122, unit:'persona'},
+    {id:'buceo_upg',     name:'Buceo Bayahibe upgrade desde Punta Cana',   price:91,  unit:'persona'},
+    {id:'buceo_alm',     name:'Buceo Catalina + almuerzo',                 price:200, unit:'persona'},
+    {id:'padi',          name:'Curso PADI Open Water (3 días)',            price:509, unit:'persona'},
+  ],
+  'Spa': [
+    {id:'spa_wj',   name:'Wellness Journeys 110min',      price:492, unit:'persona', note:'tax + serv. inc.'},
+    {id:'spa_love', name:'Art of Self-Love 170min',       price:667, unit:'persona', note:'tax + serv. inc.'},
+    {id:'spa_m50',  name:'Masaje 50min (desde)',          price:250, unit:'persona', note:'tax + serv. inc.'},
+    {id:'spa_m80',  name:'Masaje 80min',                  price:371, unit:'persona', note:'tax + serv. inc.'},
+    {id:'spa_fac',  name:'Faciales (desde)',              price:250, unit:'persona', note:'tax + serv. inc.'},
+    {id:'spa_hfp',  name:'HydraFacial Platinum',         price:573, unit:'persona', note:'tax + serv. inc.'},
+    {id:'spa_hfd',  name:'HydraFacial Deluxe',           price:438, unit:'persona', note:'tax + serv. inc.'},
+    {id:'spa_corp', name:'Tratamientos corporales (desde)',price:250,unit:'persona', note:'tax + serv. inc.'},
+  ],
+};
+
+// ── AEROPUERTO VIP (USD/persona)
+const aeropuerto = [
+  {id:'arr',    name:'Solo llegada VIP',                        price:168},
+  {id:'arrDep', name:'Llegada + Salida VIP',                    price:274},
+  {id:'works',  name:'The Works — llegada + salida + concierge',price:527},
+  {id:'dep',    name:'Solo salida VIP',                         price:116},
+];
+
+// ── FEE CDC (USD/persona/día)
+const feeCDC = 27;
+
+// ── STATE
+let state = {step:1, nights:0, guests:8, villaId:null, svcs:{}, barcoId:null, golfId:null, aeropuertoId:null, openAccordion:null};
+
+// ── STEP NAVIGATION
+function goStep(n){
+  if(n>1){
+    const di=document.getElementById('dateIn').value;
+    const dout=document.getElementById('dateOut').value;
+    if(!di||!dout){alert('Seleccioná las fechas de tu estadía.');return}
+    const nd=Math.round((new Date(dout)-new Date(di))/(1000*60*60*24));
+    if(nd<=0){alert('La salida debe ser posterior a la llegada.');return}
+    state.nights=nd; state.dateIn=di; state.dateOut=dout;
+  }
+  if(n>3&&!state.villaId){alert('Seleccioná una casa para continuar.');return}
+  document.getElementById('panel'+state.step).classList.remove('active');
+  state.step=n;
+  document.getElementById('panel'+n).classList.add('active');
+  updateStepBar();
+  if(n===3) renderVillas();
+  if(n===4) renderServices();
+  if(n===5) renderSummary();
+  document.getElementById('tu-experiencia').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function updateStepBar(){
+  for(let i=1;i<=5;i++){
+    const dot=document.getElementById('dot'+i);
+    const lbl=document.getElementById('lbl'+i);
+    dot.classList.remove('active','done');
+    lbl.classList.remove('active','done');
+    if(i<state.step){dot.classList.add('done');dot.textContent='✓';lbl.classList.add('done')}
+    else if(i===state.step){dot.classList.add('active');dot.textContent=i;lbl.classList.add('active')}
+    else{dot.textContent=i}
+  }
+}
+
+// ── DATES
+document.getElementById('dateIn').addEventListener('change',calcNights);
+document.getElementById('dateOut').addEventListener('change',calcNights);
+function calcNights(){
+  const di=document.getElementById('dateIn').value;
+  const dout=document.getElementById('dateOut').value;
+  if(!di||!dout) return;
+  const n=Math.round((new Date(dout)-new Date(di))/(1000*60*60*24));
+  const el=document.getElementById('nights-display');
+  el.textContent = n>0 ? n+' '+(n===1?'noche':'noches') : '';
+}
+
+// ── GUESTS
+function changeGuests(d){
+  state.guests=Math.max(1,Math.min(50,state.guests+d));
+  document.getElementById('guestNum').textContent=state.guests;
+  state.villaId=null;
+}
+
+// ── STEP 3: VILLAS
+function renderVillas(){
+  const g=state.guests;
+  const grid=document.getElementById('villaGrid');
+  const note=document.getElementById('filterNote');
+  const suitable=villas.filter(v=>v.guests>=g);
+  const toShow=suitable.length>0?suitable:villas;
+  note.textContent = suitable.length>0
+    ? `Casas para ${g} personas o más (${suitable.length} disponibles)`
+    : 'Mostrando todas las casas — consultanos por grupos grandes';
+  grid.innerHTML=toShow.map(v=>`
+    <div class="villa-opt ${v.id===state.villaId?'selected':''}"
+         onclick="selectVilla('${v.id}')">
+      <div class="vo-name">${v.name}</div>
+      <div class="vo-spec">${v.hab} hab · hasta ${v.guests} pers.</div>
+      <div class="vo-price">USD $${v.price.toLocaleString()}/noche</div>
+    </div>`).join('');
+}
+
+function selectVilla(id){
+  state.villaId=id;
+  document.querySelectorAll('.villa-opt').forEach(el=>{
+    el.classList.toggle('selected',el.getAttribute('onclick').includes("'"+id+"'"));
+  });
+}
+
+// ── STEP 4: SERVICES — renderizado dinámico con datos reales
+function renderServices(){
+  const panel=document.getElementById('svcOptsContainer');
+  if(!panel) return;
+  const nights=state.nights||1;
+  const guests=state.guests||1;
+  const cdcTotal=feeCDC*guests*nights;
+
+  // Helper: section header
+  const secHeader = (label) =>
+    `<div style="grid-column:span 2;margin:1.4rem 0 .6rem;padding-bottom:.6rem;border-bottom:.5px solid rgba(174,133,96,.18)">
+      <span style="font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.3em;color:rgba(212,184,154,.55);text-transform:uppercase">${label}</span>
+    </div>`;
+
+  // Helper: radio-style card (single select)
+  const radioCard = (id, name, desc, price, unit, selectedId, onclick) =>
+    `<div class="svc-opt ${selectedId===id?'selected':''}" onclick="${onclick}">
+      <div class="svc-check"></div>
+      <div>
+        <div class="svc-opt-name">${name}</div>
+        ${desc?`<div class="svc-opt-desc">${desc}</div>`:''}
+        <div class="svc-opt-price">USD $${price.toLocaleString()}${unit?' / '+unit:''}</div>
+      </div>
+    </div>`;
+
+  // Helper: checkbox-style card (multi select)
+  const checkCard = (id, name, desc, price, unit, onclick) =>
+    `<div class="svc-opt ${state.svcs[id]?'selected':''}" onclick="${onclick}">
+      <div class="svc-check"></div>
+      <div>
+        <div class="svc-opt-name">${name}</div>
+        ${desc?`<div class="svc-opt-desc">${desc}</div>`:''}
+        <div class="svc-opt-price">USD $${price.toLocaleString()} / ${unit}</div>
+      </div>
+    </div>`;
+
+  // Accordion toggle helper
+  const accHeader = (key, label, emoji) => {
+    const open = state.openAccordion === key;
+    return `<div style="grid-column:span 2;margin:.4rem 0">
+      <button onclick="toggleAccordion('${key}')" style="width:100%;background:rgba(253,250,246,.03);border:.5px solid rgba(174,133,96,${open?'.45':'.18'});padding:.9rem 1.2rem;display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:all .3s">
+        <span style="font-family:'Cinzel',serif;font-size:.56rem;letter-spacing:.2em;color:${open?'var(--vl)':'rgba(253,250,246,.55)'};text-transform:uppercase">${emoji} ${label}</span>
+        <span style="color:var(--v);font-size:.9rem">${open?'−':'+'}</span>
+      </button>
+    </div>`;
+  };
+
+  const accBody = (key, content) => {
+    const open = state.openAccordion === key;
+    return open ? `<div style="grid-column:span 2;display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(174,133,96,.1);margin-bottom:.5rem">${content}</div>` : '';
+  };
+
+  let html = '';
+
+  // ── EMBARCACIONES
+  html += secHeader('Un día en el agua');
+  html += barcos.map(b => radioCard(b.id, b.name, `${b.pax} pasajeros · 9 a 18 hs`, b.price, 'salida', state.barcoId, `selectBarco('${b.id}')`)).join('');
+
+  // ── TRASLADOS
+  html += secHeader('Traslados — ida + vuelta');
+  html += traslados.map(t => radioCard(t.id, t.name, t.pax, t.price, null, state.svcs['traslado'], `selectTraslado('${t.id}',${t.price})`)).join('');
+
+  // ── CARRITOS
+  html += secHeader('Carritos de golf');
+  html += carritos.map(c => checkCard(c.id, c.name, '', c.price, c.unit, `toggleSvcItem('${c.id}',${c.price},'${c.name}','${c.unit}')`)).join('');
+
+  // ── AEROPUERTO VIP
+  html += secHeader('Aeropuerto VIP');
+  html += aeropuerto.map(a => radioCard(a.id, a.name, '', a.price, 'persona', state.aeropuertoId, `selectAeropuerto('${a.id}')`)).join('');
+
+  // ── SERVICIOS EN VILLA
+  html += secHeader('Servicios en la casa');
+  html += villaServices.map(s => checkCard(s.id, s.name, '', s.price, s.unit, `toggleSvcItem('${s.id}',${s.price},'${s.name}','${s.unit}')`)).join('');
+
+  // ── ACTIVIDADES — acordeón por categoría
+  html += secHeader('Actividades en el resort');
+
+  const actEmojis = {
+    'Golf':'⛳', 'Ecuestre':'🐴', 'Tenis':'🎾', 'Pádel':'🏓',
+    'Tiro':'🎯', 'Río Chavón':'🚣', 'Cumayasa':'🌿', 'Mar':'🌊',
+    'Cigars':'🍷', 'Buceo':'🤿', 'Spa':'✨'
+  };
+
+  Object.entries(actividades).forEach(([cat, items]) => {
+    html += accHeader(cat, cat, actEmojis[cat]||'');
+    const bodyHtml = items.map(a =>
+      `<div class="svc-opt ${state.svcs[a.id]?'selected':''}" onclick="toggleActiv('${a.id}',${a.price},'${a.name.replace(/'/g,"\\'")}','${a.unit}')">
+        <div class="svc-check"></div>
+        <div>
+          <div class="svc-opt-name">${a.name}</div>
+          ${a.note?`<div class="svc-opt-desc">${a.note}</div>`:''}
+          <div class="svc-opt-price">USD $${a.price.toLocaleString()} / ${a.unit}</div>
+        </div>
+      </div>`
+    ).join('');
+    html += accBody(cat, bodyHtml);
+  });
+
+  // ── FEE CDC (informativo)
+  html += `<div style="grid-column:span 2;margin-top:1.5rem;padding:1.2rem 1.5rem;border:.5px solid rgba(174,133,96,.2);background:rgba(253,250,246,.02)">
+    <div style="font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.2em;color:var(--v);text-transform:uppercase;margin-bottom:.3rem">Fee Casa de Campo — incluido automáticamente</div>
+    <div style="font-size:.82rem;color:rgba(253,250,246,.4)">USD $${feeCDC}/persona/día · ${guests} personas · ${nights} noches = <strong style="color:rgba(253,250,246,.65)">USD $${cdcTotal.toLocaleString()}</strong></div>
+  </div>`;
+
+  panel.innerHTML = html;
+}
+
+// Selectors para opciones únicas (radio-style)
+function selectBarco(id){
+  const b=barcos.find(x=>x.id===id);
+  if(state.barcoId===id){state.barcoId=null;delete state.svcs['_barco'];}
+  else{state.barcoId=id;state.svcs['_barco']={price:b.price,name:b.name};}
+  renderServices();
+}
+function selectGolf(id){
+  // Kept for legacy — golf is now in actividades
+  toggleActiv(id, 0, id, 'persona');
+}
+function selectTraslado(id,price){
+  const t=traslados.find(x=>x.id===id);
+  if(state.svcs['traslado']===id){delete state.svcs['traslado'];delete state.svcs['_traslado'];}
+  else{state.svcs['traslado']=id;state.svcs['_traslado']={price,name:t.name};}
+  renderServices();
+}
+function selectAeropuerto(id){
+  const a=aeropuerto.find(x=>x.id===id);
+  if(state.aeropuertoId===id){state.aeropuertoId=null;delete state.svcs['_aeropuerto'];}
+  else{state.aeropuertoId=id;state.svcs['_aeropuerto']={price:a.price,name:a.name,perPerson:true};}
+  renderServices();
+}
+function toggleSvcItem(id,price,name,unit){
+  if(state.svcs[id]){delete state.svcs[id];}
+  else{state.svcs[id]={price,name,unit,perNight:unit==='día'||unit==='noche'};}
+  renderServices();
+}
+function toggleActiv(id,price,name,unit){
+  // Find correct price from actividades if not passed
+  if(!price){
+    for(const items of Object.values(actividades)){
+      const found=items.find(a=>a.id===id);
+      if(found){price=found.price;name=found.name;unit=found.unit;break;}
+    }
+  }
+  if(state.svcs[id]){delete state.svcs[id];}
+  else{state.svcs[id]={price,name,unit,perPerson:true};}
+  renderServices();
+}
+function toggleAccordion(key){
+  state.openAccordion = state.openAccordion===key ? null : key;
+  renderServices();
+}
+// Legacy compatibility
+function toggleSvc(el,key,price){
+  el.classList.toggle('selected');
+  if(el.classList.contains('selected'))state.svcs[key]={price,name:key};
+  else delete state.svcs[key];
+}
+
+// ── STEP 5: SUMMARY
+function renderSummary(){
+  const villa=villas.find(v=>v.id===state.villaId);
+  const nights=state.nights;
+  const guests=state.guests;
+  const villaTotal=villa?villa.price*nights:0;
+  const cdcTotal=feeCDC*guests*nights;
+
+  const di=new Date(state.dateIn+'T12:00:00');
+  const dout=new Date(state.dateOut+'T12:00:00');
+  const fmt=d=>d.toLocaleDateString('es-AR',{day:'numeric',month:'long'});
+
+  let html=`<div class="summary-title">Detalle de tu estadía</div>`;
+  html+=`<div class="summary-line"><span class="sl-name">Fechas</span><span class="sl-val">${fmt(di)} → ${fmt(dout)} · ${nights} ${nights===1?'noche':'noches'}</span></div>`;
+  html+=`<div class="summary-line"><span class="sl-name">Personas</span><span class="sl-val">${guests}</span></div>`;
+  if(villa){
+    html+=`<div class="summary-line"><span class="sl-name">${villa.name}</span><span class="sl-val">$${villa.price.toLocaleString()}/noche × ${nights} = $${villaTotal.toLocaleString()}</span></div>`;
+  }
+  html+=`<div class="summary-line"><span class="sl-name">Fee Casa de Campo</span><span class="sl-val">$${cdcTotal.toLocaleString()}</span></div>`;
+
+  let extrasTotal=0;
+  const extras=[];
+  Object.entries(state.svcs).forEach(([k,v])=>{
+    if(k==='traslado'||!v.price) return;
+    let amt=v.price;
+    let label=v.name;
+    if(v.perPerson){amt=v.price*guests;label+=` × ${guests} pers.`}
+    else if(v.perNight){amt=v.price*nights;label+=` × ${nights} ${nights===1?'noche':'noches'}`}
+    extrasTotal+=amt;
+    extras.push({label,amt});
+  });
+  extras.forEach(e=>{
+    html+=`<div class="summary-line"><span class="sl-name">${e.label}</span><span class="sl-val">$${e.amt.toLocaleString()}</span></div>`;
+  });
+
+  const total=villaTotal+cdcTotal+extrasTotal;
+  const perPerson=guests>0?Math.round(total/guests):0;
+  html+=`<div class="summary-total">
+    <div>
+      <div class="st-label">Estimado total</div>
+      <div class="st-note">USD $${perPerson.toLocaleString()} por persona · Sujeto a disponibilidad</div>
+    </div>
+    <div class="st-val">USD $${total.toLocaleString()}</div>
+  </div>`;
+  document.getElementById('summaryBox').innerHTML=html;
+
+  // WhatsApp message
+  let msg=`Hola! Me interesa armar una estadía en Casa de Campo.\n\n`;
+  msg+=`📅 ${fmt(di)} al ${fmt(dout)} · ${nights} noches\n`;
+  msg+=`👥 ${guests} personas\n`;
+  if(villa) msg+=`🏡 ${villa.name}\n`;
+  extras.forEach(e=>{ msg+=`✅ ${e.label}: USD $${e.amt.toLocaleString()}\n`; });
+  msg+=`\n💰 Estimado: USD $${total.toLocaleString()} (USD $${perPerson.toLocaleString()}/persona)\n`;
+  msg+=`\n¿Pueden confirmar disponibilidad?`;
+  document.getElementById('waBtn').href='https://wa.me/541164388699?text='+encodeURIComponent(msg);
+}
+// ══════════════════════════════════════════
+// SISTEMA DE VERIFICACIÓN — Google Apps Script
+// ══════════════════════════════════════════
+
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyOmyl7RCsJg92nL1FBuR4Y37hP2OVHxDj3NguqeQcoeuNYuM_g7YD3SNQw3HLxNFfqLw/exec';
+
+// ── STATE de verificación
+let gateState = {
+  verified: false,
+  code: null,
+  attempts: 0,
+  userData: null,
+  codeExpiry: null,
+};
+
+// ── Mostrar / cerrar gate
+function openGate(){
+  document.getElementById('gateOverlay').classList.add('show');
+  document.getElementById('gNombre').focus();
+}
+function closeGate(){
+  document.getElementById('gateOverlay').classList.remove('show');
+}
+
+// ── Generar código de 6 dígitos
+function generateCode(){
+  return String(Math.floor(100000 + Math.random() * 900000));
+}
+
+// ── STEP A: Enviar código via Apps Script (Gmail)
+async function sendCode(e){
+  e.preventDefault();
+  const btn    = document.getElementById('gateBtnA');
+  const errEl  = document.getElementById('gateErrorA');
+  errEl.textContent = '';
+  btn.disabled = true;
+  btn.textContent = 'Enviando...';
+
+  const nombre   = document.getElementById('gNombre').value.trim();
+  const apellido = document.getElementById('gApellido').value.trim();
+  const email    = document.getElementById('gEmail').value.trim();
+  const tel      = document.getElementById('gTel').value.trim();
+  const pais     = document.getElementById('gPais').value;
+
+  if(!nombre || !apellido || !email || !tel || !pais){
+    errEl.textContent = 'Por favor completá todos los campos.';
+    btn.disabled = false;
+    btn.textContent = 'Recibir código →';
+    return;
+  }
+
+  const code = generateCode();
+  gateState.code      = code;
+  gateState.attempts  = 0;
+  gateState.codeExpiry = Date.now() + 5 * 60 * 1000; // 5 minutos
+  gateState.userData  = { nombre, apellido, email, tel, pais };
+
+  // Llamada al Apps Script
+  try {
+    const params = new URLSearchParams({
+      action:  'sendCode',
+      email:   email,
+      nombre:  nombre,
+      code:    code,
+    });
+
+    const res = await fetch(APPS_SCRIPT_URL + '?' + params.toString(), {
+      method: 'GET',
+      mode:   'no-cors', // Apps Script requiere no-cors
+    });
+
+    // no-cors siempre devuelve opaque — asumimos éxito si no hay error
+    document.getElementById('gateEmailDisplay').textContent = email;
+    document.getElementById('gateStepA').style.display = 'none';
+    document.getElementById('gateStepB').style.display = 'block';
+    document.getElementById('gateErrorB').textContent = '';
+    document.getElementById('c0').focus();
+    btn.disabled = false;
+    btn.textContent = 'Recibir código →';
+
+  } catch(err) {
+    errEl.textContent = 'No pudimos enviar el código. Revisá tu conexión e intentá de nuevo.';
+    btn.disabled = false;
+    btn.textContent = 'Recibir código →';
+  }
+}
+
+// ── Code input — auto-avanzar entre dígitos
+function codeInput(idx){
+  const el=document.getElementById('c'+idx);
+  const val=el.value.replace(/\D/g,'');
+  el.value=val;
+  if(val&&idx<5) document.getElementById('c'+(idx+1)).focus();
+  // Auto-verify when all 6 filled
+  if(idx===5&&val) verifyCode();
+}
+
+// ── STEP B: Verificar código
+function verifyCode(){
+  const entered = [0,1,2,3,4,5].map(i => document.getElementById('c'+i).value).join('');
+  const errEl   = document.getElementById('gateErrorB');
+
+  if(entered.length < 6){ errEl.textContent = 'Ingresá los 6 dígitos.'; return; }
+
+  // Verificar vencimiento (5 minutos)
+  if(Date.now() > gateState.codeExpiry){
+    errEl.textContent = 'El código venció. Pedí uno nuevo.';
+    [0,1,2,3,4,5].forEach(i=>{ document.getElementById('c'+i).value=''; });
+    gateState.code = null;
+    return;
+  }
+
+  gateState.attempts++;
+
+  if(entered === gateState.code){
+    // ✅ Verificado
+    gateState.verified = true;
+    errEl.innerHTML = '<span class="gate-success">✓ Verificado correctamente</span>';
+
+    // Guardar en sessionStorage
+    sessionStorage.setItem('mg_verified', '1');
+    sessionStorage.setItem('mg_user', JSON.stringify(gateState.userData));
+
+    setTimeout(() => {
+      closeGate();
+      unlockPrices();
+      showUnlockedBadge();
+    }, 900);
+
+  } else if(gateState.attempts >= 3){
+    errEl.textContent = 'Demasiados intentos. Pedí un nuevo código.';
+    [0,1,2,3,4,5].forEach(i=>{ document.getElementById('c'+i).value=''; });
+    document.getElementById('c0').focus();
+    gateState.code = null;
+  } else {
+    const restantes = 3 - gateState.attempts;
+    errEl.textContent = `Código incorrecto. Te ${restantes === 1 ? 'queda' : 'quedan'} ${restantes} intento${restantes !== 1 ? 's' : ''}.`;
+    [0,1,2,3,4,5].forEach(i=>{ document.getElementById('c'+i).value=''; });
+    document.getElementById('c0').focus();
+  }
+}
+
+// ── Reenviar código
+function resendCode(){
+  document.getElementById('gateStepB').style.display='none';
+  document.getElementById('gateStepA').style.display='block';
+  document.getElementById('gateErrorA').textContent='';
+  [0,1,2,3,4,5].forEach(i=>{document.getElementById('c'+i).value='';});
+  document.getElementById('gateErrorB').textContent='';
+}
+
+// ── Desbloquear precios en el configurador
+function unlockPrices(){
+  // Re-render the services section with prices visible
+  if(document.getElementById('svcOptsContainer')){
+    renderServices();
+  }
+  // Unlock villa grid prices
+  document.querySelectorAll('.price-locked').forEach(el=>{
+    const price=el.getAttribute('data-price');
+    if(price) el.outerHTML=`<div class="svc-opt-price">USD $${Number(price).toLocaleString()} / noche</div>`;
+  });
+}
+
+// ── Badge de confirmación
+function showUnlockedBadge(){
+  const b=document.createElement('div');
+  b.className='unlocked-badge';
+  const u=gateState.userData;
+  b.textContent=`✓ Bienvenido, ${u.nombre}. Precios desbloqueados.`;
+  document.body.appendChild(b);
+  setTimeout(()=>b.remove(),4000);
+}
+
+// ── Interceptar paso 4 del configurador para pedir verificación
+const _origGoStep=goStep;
+window.goStep=function(n){
+  if(n===4&&!gateState.verified&&sessionStorage.getItem('mg_verified')!=='1'){
+    openGate();
+    return;
+  }
+  if(sessionStorage.getItem('mg_verified')==='1'&&!gateState.verified){
+    gateState.verified=true;
+    const saved=sessionStorage.getItem('mg_user');
+    if(saved) gateState.userData=JSON.parse(saved);
+  }
+  _origGoStep(n);
+};
+
+// ── Cerrar con Escape
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeGate();});
+
+// ── Verificar si ya tenía sesión activa
+if(sessionStorage.getItem('mg_verified')==='1'){
+  gateState.verified=true;
+  const saved=sessionStorage.getItem('mg_user');
+  if(saved) gateState.userData=JSON.parse(saved);
+}
+</script>
+</body>
+</html>
