@@ -120,15 +120,15 @@ nav.solid{background:rgba(28,30,23,.96);backdrop-filter:blur(20px);border-bottom
 .vbtn:hover{background:var(--wh)}
 
 /* ── VILLA DETAIL MODAL ── */
-#vmodal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.82);backdrop-filter:blur(6px);z-index:8000;opacity:0;pointer-events:none;transition:opacity .3s}
+#vmodal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(3px);z-index:8000;opacity:0;pointer-events:none;transition:opacity .3s}
 #vmodal-overlay.open{opacity:1;pointer-events:all}
-#vmodal{position:fixed;top:0;right:0;bottom:0;width:min(640px,100vw);background:rgb(11,17,10);border-left:1px solid rgba(174,133,96,.18);z-index:8001;transform:translateX(100%);transition:transform .38s cubic-bezier(.32,.72,0,1);overflow-y:auto;display:flex;flex-direction:column}
+#vmodal{position:fixed;top:0;right:0;bottom:0;width:min(600px,100vw);background:rgb(11,17,10);border-left:1px solid rgba(174,133,96,.18);z-index:8001;transform:translateX(100%);transition:transform .38s cubic-bezier(.32,.72,0,1);overflow-y:auto;display:flex;flex-direction:column}
 #vmodal.open{transform:translateX(0)}
-.vm-img{width:100%;height:320px;object-fit:cover;flex-shrink:0}
-.vm-img-placeholder{width:100%;height:280px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.vm-img{width:100%;height:300px;object-fit:cover;flex-shrink:0;display:block}
+.vm-img-placeholder{width:100%;height:240px;flex-shrink:0;position:relative;overflow:hidden}
 .vm-body{padding:2.5rem 2.8rem;flex:1}
-.vm-close{position:sticky;top:0;z-index:10;display:flex;justify-content:flex-end;padding:.8rem 1rem .4rem;background:linear-gradient(rgb(11,17,10),transparent);margin-bottom:-1rem}
-.vm-close-btn{background:none;border:1px solid rgba(174,133,96,.25);color:rgba(174,133,96,.6);width:36px;height:36px;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.vm-close{position:sticky;top:0;z-index:10;display:flex;justify-content:flex-end;padding:.6rem .8rem;background:transparent;pointer-events:none}
+.vm-close-btn{pointer-events:all;background:rgba(11,17,10,.85);border:1px solid rgba(174,133,96,.3);color:rgba(174,133,96,.7);width:34px;height:34px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all .2s;backdrop-filter:blur(4px)}
 .vm-close-btn:hover{border-color:rgba(174,133,96,.7);color:var(--vl)}
 .vm-label{font-family:'Cinzel',serif;font-size:.48rem;letter-spacing:.22em;color:var(--vl);text-transform:uppercase;margin-bottom:.6rem}
 .vm-title{font-family:'Playfair Display',serif;font-size:2.1rem;font-style:italic;color:var(--wh);margin-bottom:1.6rem;line-height:1.2}
@@ -157,7 +157,24 @@ nav.solid{background:rgba(28,30,23,.96);backdrop-filter:blur(20px);border-bottom
 .vm-cta-sec:hover{border-color:var(--vl);background:rgba(174,133,96,.06)}
 @media(max-width:640px){#vmodal{width:100vw;border-left:none}.vm-body{padding:1.5rem 1.3rem}.vm-stats{grid-template-columns:repeat(3,1fr)}.vm-amenities{grid-template-columns:1fr}.vm-ctas{grid-template-columns:1fr}}
 
-/* ── BOATS ── */
+/* ── RESORT SECTIONS ── */
+.resort-section{padding:6rem 4rem;background:transparent}
+.rs-inner{max-width:1200px;margin:0 auto}
+.rs-head{margin-bottom:3.5rem;max-width:680px}
+.rs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.rs-card{padding:1.8rem 1.6rem;border:1px solid rgba(174,133,96,.13);background:rgba(253,250,246,.02);transition:border-color .25s}
+.rs-card:hover{border-color:rgba(174,133,96,.3)}
+.rs-card-cta{border-color:rgba(174,133,96,.2);background:rgba(174,133,96,.04);display:flex;flex-direction:column;align-items:flex-start}
+.rs-icon{font-size:1.8rem;margin-bottom:.8rem}
+.rs-ct{font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.16em;color:var(--vl);text-transform:uppercase;margin-bottom:.6rem}
+.rs-cd{font-family:'Cormorant Garamond',serif;font-size:.95rem;color:rgba(253,250,246,.55);line-height:1.75}
+.rs-beach{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center}
+.rs-beach-facts{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.rs-fact{padding:1.2rem;border:1px solid rgba(174,133,96,.12)}
+.rs-fn{font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.16em;color:var(--vl);text-transform:uppercase;margin-bottom:.4rem}
+.rs-fd{font-family:'Cormorant Garamond',serif;font-size:.88rem;color:rgba(253,250,246,.5);line-height:1.6}
+@media(max-width:1024px){.rs-grid{grid-template-columns:repeat(2,1fr)}.rs-beach{grid-template-columns:1fr}}
+@media(max-width:640px){.resort-section{padding:4rem 1.5rem}.rs-grid{grid-template-columns:1fr}.rs-beach-facts{grid-template-columns:1fr}}
 .boats{min-height:90vh;display:flex;align-items:center;position:relative;overflow:hidden;padding:8rem 4rem}
 .bbg{position:absolute;inset:0;background:url('https://img1.wsimg.com/isteam/ip/28e700c9-c37b-485d-b636-01fcfc9acb86/blob-d80dc22.png') center/cover no-repeat;filter:brightness(.28)}
 .bb{position:relative;z-index:2;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center}
@@ -1060,6 +1077,110 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
   </div>
 </section>
 
+<!-- RESORT INFO: ACCESORIOS -->
+<section class="resort-section rv" id="accesorios">
+  <div class="rs-inner">
+    <div class="rs-head">
+      <span class="lbl">Servicios complementarios</span>
+      <h2 class="bigt">Todo lo que<br><em>necesitás</em></h2>
+      <div class="rule"></div>
+      <p class="prose">Nos complace ofrecer una variedad de servicios complementarios para hacer que tu estadía sea aún más cómoda, lujosa y memorable.</p>
+    </div>
+    <div class="rs-grid">
+      <div class="rs-card"><div class="rs-icon">⛳</div><div class="rs-ct">Carritos de Golf</div><div class="rs-cd">Alquiler a combustión y baterías recargables. Velocidad máxima 25 km/h, neumáticos grandes para conducción segura y cómoda por todo el resort.</div></div>
+      <div class="rs-card"><div class="rs-icon">🚲</div><div class="rs-ct">Bicicletas</div><div class="rs-cd">De montaña, carretera, para niños y eléctricas. La forma ideal de explorar el resort a tu ritmo.</div></div>
+      <div class="rs-card"><div class="rs-icon">👨‍🍳</div><div class="rs-ct">Chef Privado</div><div class="rs-cd">Chef altamente capacitado que prepara comidas personalizadas en tu villa con ingredientes de alta calidad y menús únicos.</div></div>
+      <div class="rs-card"><div class="rs-icon">🤿</div><div class="rs-ct">Buceo</div><div class="rs-cd">Atención personalizada, equipo de primera calidad y buzos expertos en las aguas cristalinas del Caribe dominicano.</div></div>
+      <div class="rs-card"><div class="rs-icon">🛵</div><div class="rs-ct">Scooters</div><div class="rs-cd">Entrega del vehículo en tu residencia para explorar el barrio y sus actividades con estilo y libertad total.</div></div>
+      <div class="rs-card rs-card-cta"><div class="rs-icon">✦</div><div class="rs-ct">¿Necesitás algo más?</div><div class="rs-cd">Nuestro equipo puede organizar cualquier servicio adicional para que tu estadía sea perfecta.</div><a href="https://wa.me/541164388699" target="_blank" class="btn bf" style="margin-top:1.2rem;font-size:.45rem;display:inline-block">Consultar</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- RESORT INFO: LA MARINA -->
+<section class="resort-section rv" id="marina" style="background:rgba(0,0,0,.25)">
+  <div class="rs-inner">
+    <div class="rs-head">
+      <span class="lbl">Puerto deportivo</span>
+      <h2 class="bigt">La Marina de<br><em>Casa de Campo</em></h2>
+      <div class="rule"></div>
+      <p class="prose">Un prestigioso puerto deportivo con servicios náuticos y de entretenimiento de alta calidad, tiendas exclusivas y los mejores restaurantes del resort con vista al mar.</p>
+    </div>
+    <div class="rs-grid">
+      <div class="rs-card"><div class="rs-ct">SBG</div><div class="rs-cd">Famoso por su sushi y mariscos frescos. El más reconocido por su increíble vista al mar, especialmente durante la puesta del sol.</div></div>
+      <div class="rs-card"><div class="rs-ct">La Casita</div><div class="rs-cd">Cocina dominicana y mariscos frescos con hermosa vista al puerto deportivo. Ambiente auténtico y acogedor.</div></div>
+      <div class="rs-card"><div class="rs-ct">Peperoni</div><div class="rs-cd">Restaurante italiano con amplia variedad de pizzas, pastas y clásicos de la gastronomía italiana.</div></div>
+      <div class="rs-card"><div class="rs-ct">The Beach Club by Le Cirque</div><div class="rs-cd">Fusión internacional y mediterránea frente a la playa con amplia selección de vinos.</div></div>
+      <div class="rs-card"><div class="rs-ct">La Piazzetta</div><div class="rs-cd">Pizzas, pastas y gastronomía italiana con cócteles y vinos seleccionados. Ambiente sofisticado.</div></div>
+      <div class="rs-card"><div class="rs-ct">El Pescador</div><div class="rs-cd">Mariscos frescos y platos de cocina mediterránea. Ideal para los amantes del mar.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- RESORT INFO: MINITAS BEACH -->
+<section class="resort-section rv" id="minitas">
+  <div class="rs-inner rs-beach">
+    <div>
+      <span class="lbl">Playa privada del resort</span>
+      <h2 class="bigt">Minitas<br><em>Beach Club</em></h2>
+      <div class="rule"></div>
+      <p class="prose">Con su suave arena blanca, Minitas Beach ofrece una experiencia gastronómica única con vistas al mar. Menú variado con platos locales e internacionales en un ambiente relajante — el lugar perfecto para un aperitivo o una comida completa con los pies en la arena.</p>
+      <div style="display:flex;gap:1rem;margin-top:2rem;flex-wrap:wrap">
+        <a href="https://qrcodes.pro/ViS8IV" target="_blank" class="btn bf">Ver el menú</a>
+        <a href="#tu-experiencia" class="btn bo">Armá tu estadía</a>
+      </div>
+    </div>
+    <div class="rs-beach-facts">
+      <div class="rs-fact"><div class="rs-fn">Arena blanca</div><div class="rs-fd">Playa privada exclusiva para huéspedes del resort</div></div>
+      <div class="rs-fact"><div class="rs-fn">Gastronomía</div><div class="rs-fd">Cocina local e internacional con vistas al mar</div></div>
+      <div class="rs-fact"><div class="rs-fn">Ambiente</div><div class="rs-fd">Relajante y acogedor para veladas únicas</div></div>
+      <div class="rs-fact"><div class="rs-fn">Deportes</div><div class="rs-fd">Kayak, paddleboard, snorkeling y más</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- RESORT INFO: ALTOS DE CHAVÓN -->
+<section class="resort-section rv" id="chavon" style="background:rgba(0,0,0,.25)">
+  <div class="rs-inner">
+    <div class="rs-head">
+      <span class="lbl">Pueblo medieval · Arquitectura única</span>
+      <h2 class="bigt">Altos de<br><em>Chavón</em></h2>
+      <div class="rule"></div>
+      <p class="prose">Construido en los años 70 por Roberto Copa y Oscar de la Renta. Reconocido mundialmente por su singular arquitectura, anfiteatro para conciertos internacionales, galerías de arte y los mejores restaurantes con vista al río Chavón.</p>
+    </div>
+    <div class="rs-grid">
+      <div class="rs-card"><div class="rs-ct">La Piazzetta</div><div class="rs-cd">Auténtica cocina italiana con vista espectacular al río Chavón. Amplia selección de vinos.</div></div>
+      <div class="rs-card"><div class="rs-ct">Café Marietta</div><div class="rs-cd">Pizzas y pastas en ambiente acogedor. Perfecto para cenas románticas. Visita obligada.</div></div>
+      <div class="rs-card"><div class="rs-ct">La Cantina</div><div class="rs-cd">Comida dominicana tradicional con bebidas tropicales y música en vivo los fines de semana.</div></div>
+      <div class="rs-card"><div class="rs-ct">Onno's</div><div class="rs-cd">Cocina internacional variada — sushi, hamburguesas y pizzas. Gran selección de cócteles.</div></div>
+      <div class="rs-card"><div class="rs-ct">Alegria</div><div class="rs-cd">Cocina dominicana innovadora junto al Río Chavón. Ingredientes frescos y calidad excepcional.</div></div>
+      <div class="rs-card"><div class="rs-ct">Anfiteatro & Galerías</div><div class="rs-cd">Conciertos internacionales, galerías de arte y boutiques de diseño en entorno único.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- RESORT INFO: ACTIVIDADES -->
+<section class="resort-section rv" id="actividades-resort">
+  <div class="rs-inner">
+    <div class="rs-head">
+      <span class="lbl">3.000 hectáreas de experiencias</span>
+      <h2 class="bigt">Actividades<br><em>en el resort</em></h2>
+      <div class="rule"></div>
+      <p class="prose">Casa de Campo es uno de los destinos más completos del Caribe. Deportes de élite, experiencias culturales únicas y entretenimiento para toda la familia — todo dentro del resort.</p>
+    </div>
+    <div class="rs-grid">
+      <div class="rs-card"><div class="rs-icon">🌊</div><div class="rs-ct">Deportes Acuáticos</div><div class="rs-cd">Esquí acuático, windsurf, kayak, paddleboard, vela y mucho más en aguas cristalinas del Caribe.</div></div>
+      <div class="rs-card"><div class="rs-icon">🐎</div><div class="rs-ct">Polo</div><div class="rs-cd">Uno de los pocos lugares del mundo donde podés ver y jugar polo profesional. Clases y partidos disponibles.</div></div>
+      <div class="rs-card"><div class="rs-icon">🏇</div><div class="rs-ct">Equitación</div><div class="rs-cd">Establo con más de 50 caballos de pura raza. Paseos en carruaje, lecciones y cabalgatas en la playa.</div></div>
+      <div class="rs-card"><div class="rs-icon">🎯</div><div class="rs-ct">Tiro al Plato</div><div class="rs-cd">Gran variedad de trampas y platos. Clases para principiantes y torneos para experimentados.</div></div>
+      <div class="rs-card"><div class="rs-icon">🎾</div><div class="rs-ct">Tenis y Pádel</div><div class="rs-cd">13 canchas de tenis en polvo de ladrillo, sede de torneos internacionales. Canchas de pádel de acrílico (2022).</div></div>
+      <div class="rs-card"><div class="rs-icon">👶</div><div class="rs-ct">Para Niños</div><div class="rs-cd">Pileta exclusiva, parque infantil y programa de actividades supervisadas para todas las edades.</div></div>
+      <div class="rs-card"><div class="rs-icon">🌙</div><div class="rs-ct">Vida Nocturna</div><div class="rs-cd">Bares, discotecas y el Anfiteatro Altos de Chavón con conciertos de artistas internacionales.</div></div>
+      <div class="rs-card"><div class="rs-icon">🛍️</div><div class="rs-ct">Compras</div><div class="rs-cd">Marina Casa de Campo, boutiques de alta gama y galerías de arte en Altos de Chavón.</div></div>
+    </div>
+  </div>
+</section>
+
 <!-- CLIMATE -->
 <div class="clm rv">
   <div style="font-size:1.6rem">🌿</div>
@@ -1152,10 +1273,12 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
     <div>
       <div class="fct">El Resort</div>
       <ul class="flinks">
-        <li><a href="#servicios">Cómo funciona</a></li>
+        <li><a href="#marina">La Marina</a></li>
+        <li><a href="#minitas">Minitas Beach</a></li>
+        <li><a href="#chavon">Altos de Chavón</a></li>
+        <li><a href="#actividades-resort">Actividades</a></li>
+        <li><a href="#accesorios">Accesorios</a></li>
         <li><a href="#golf">Golf</a></li>
-        <li><a href="#embarcaciones">Marina</a></li>
-        <li><a href="#nosotros">Quiénes somos</a></li>
       </ul>
     </div>
     <div>
@@ -2201,7 +2324,6 @@ if(sessionStorage.getItem('mg_verified')==='1'){
 <!-- ══ VILLA DETAIL MODAL ══ -->
 <div id="vmodal-overlay" onclick="closeVModal()"></div>
 <div id="vmodal">
-  <div class="vm-close"><button class="vm-close-btn" onclick="closeVModal()">✕</button></div>
   <div id="vmodal-content"></div>
 </div>
 
@@ -2501,7 +2623,10 @@ function openVModal(id) {
   const imgHtml = d.img
     ? `<img class="vm-img" src="${d.img}" alt="${d.name}">`
     : `<div class="vm-img-placeholder" style="background:${d.bgcolor||'#0f1f17'}">
-         <svg viewBox="0 0 3 4" width="100%" height="100%" style="position:absolute;inset:0"><rect width="3" height="4" fill="${d.bgcolor||'#0f1f17'}"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".22" fill="rgba(174,133,96,.18)" text-anchor="middle">${d.name.toUpperCase()}</text></svg>
+         <svg viewBox="0 0 300 240" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" style="position:absolute;inset:0;width:100%;height:100%">
+           <rect width="300" height="240" fill="${d.bgcolor||'#0f1f17'}"/>
+           <text x="150" y="130" font-family="Cinzel,serif" font-size="14" fill="rgba(174,133,96,.3)" text-anchor="middle" letter-spacing="6">${d.name.toUpperCase()}</text>
+         </svg>
        </div>`;
 
   // Amenities grid
@@ -2513,7 +2638,10 @@ function openVModal(id) {
   ).join('');
 
   content.innerHTML = `
-    ${imgHtml}
+    <div style="position:relative;flex-shrink:0">
+      ${imgHtml}
+      <button class="vm-close-btn" onclick="closeVModal()" style="position:absolute;top:.7rem;right:.7rem;z-index:10" aria-label="Cerrar">✕</button>
+    </div>
     <div class="vm-body">
       <div class="vm-label">${d.label}</div>
       <h2 class="vm-title">${d.name}</h2>
