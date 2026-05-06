@@ -215,6 +215,34 @@ nav.solid{background:rgba(28,30,23,.96);backdrop-filter:blur(20px);border-bottom
 .date-label{font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.2em;color:rgba(253,250,246,.42);text-transform:uppercase}
 .date-input{background:rgba(253,250,246,.04);border:1px solid rgba(174,133,96,.2);padding:.9rem 1rem;font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--wh);outline:none;transition:border-color .3s;width:100%}
 .date-input:focus{border-color:rgba(174,133,96,.55)}
+/* ── Custom Calendar ── */
+.cal-wrap{position:relative;max-width:480px;margin:0 auto 1.5rem}
+.cal-fields{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:.8rem;margin-bottom:.5rem}
+.cal-arrow{color:rgba(174,133,96,.35);font-size:1.1rem;text-align:center}
+.cal-field{padding:1rem 1.2rem;border:1px solid rgba(174,133,96,.2);cursor:pointer;transition:border-color .25s,background .25s;background:rgba(253,250,246,.03)}
+.cal-field:hover,.cal-field.active{border-color:rgba(174,133,96,.5);background:rgba(174,133,96,.06)}
+.cal-flabel{font-family:'Cinzel',serif;font-size:.48rem;letter-spacing:.2em;color:rgba(253,250,246,.38);text-transform:uppercase;margin-bottom:.35rem}
+.cal-fval{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--wh)}
+.cal-fval.empty{color:rgba(253,250,246,.3);font-style:italic}
+.cal-drop{display:none;position:absolute;top:calc(100% + 6px);left:0;right:0;background:rgb(14,20,13);border:1px solid rgba(174,133,96,.22);box-shadow:0 20px 60px rgba(0,0,0,.7);z-index:200;padding:1.2rem}
+.cal-drop.open{display:block}
+.cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.cal-nav-btn{background:none;border:1px solid rgba(174,133,96,.2);color:rgba(174,133,96,.7);width:32px;height:32px;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.cal-nav-btn:hover{border-color:rgba(174,133,96,.6);color:var(--vl)}
+.cal-month-label{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.18em;color:var(--vl);text-transform:uppercase}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:4px}
+.cal-dow{font-family:'Cinzel',serif;font-size:.45rem;letter-spacing:.12em;color:rgba(253,250,246,.28);text-align:center;padding:.3rem 0;text-transform:uppercase}
+.cal-dow-wk{color:rgba(174,133,96,.35)}
+.cal-days{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.cal-day{height:36px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:.9rem;color:rgba(253,250,246,.65);cursor:pointer;transition:all .15s;position:relative}
+.cal-day:hover:not(.empty):not(.past){background:rgba(174,133,96,.12);color:var(--wh)}
+.cal-day.empty{cursor:default}
+.cal-day.past{color:rgba(253,250,246,.18);cursor:default}
+.cal-day.selected-in,.cal-day.selected-out{background:var(--vl);color:var(--bk);font-weight:600}
+.cal-day.in-range{background:rgba(174,133,96,.12);color:var(--wh)}
+.cal-day.selected-in{border-radius:4px 0 0 4px}
+.cal-day.selected-out{border-radius:0 4px 4px 0}
+.cal-hint{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.82rem;color:rgba(253,250,246,.3);text-align:center;margin-top:.8rem;min-height:1.2rem}
 
 /* Guest count */
 .guest-row{display:flex;align-items:center;justify-content:center;gap:1.5rem;margin:0 auto 2rem}
@@ -628,17 +656,39 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
     <div class="cpanel active" id="panel1">
       <div class="cpanel-title">¿Cuándo viajan?</div>
       <p class="cpanel-sub">Las fechas ayudan a ver qué casas están disponibles para ese período.</p>
-      <div class="date-row">
-        <div class="date-group">
-          <label class="date-label">Llegada</label>
-          <input type="date" class="date-input" id="dateIn">
+
+      <!-- Custom date picker -->
+      <div class="cal-wrap">
+        <div class="cal-fields">
+          <div class="cal-field" id="cfIn" onclick="openCal('in')">
+            <div class="cal-flabel">Llegada</div>
+            <div class="cal-fval" id="cfInVal">Seleccioná</div>
+          </div>
+          <div class="cal-arrow">→</div>
+          <div class="cal-field" id="cfOut" onclick="openCal('out')">
+            <div class="cal-flabel">Salida</div>
+            <div class="cal-fval" id="cfOutVal">Seleccioná</div>
+          </div>
         </div>
-        <div class="date-group">
-          <label class="date-label">Salida</label>
-          <input type="date" class="date-input" id="dateOut">
+
+        <!-- Calendar dropdown -->
+        <div class="cal-drop" id="calDrop">
+          <div class="cal-nav">
+            <button class="cal-nav-btn" onclick="calShift(-1)">‹</button>
+            <span class="cal-month-label" id="calMonthLabel"></span>
+            <button class="cal-nav-btn" onclick="calShift(1)">›</button>
+          </div>
+          <div class="cal-grid">
+            <div class="cal-dow">L</div><div class="cal-dow">M</div><div class="cal-dow">M</div>
+            <div class="cal-dow">J</div><div class="cal-dow">V</div>
+            <div class="cal-dow cal-dow-wk">S</div><div class="cal-dow cal-dow-wk">D</div>
+          </div>
+          <div class="cal-days" id="calDays"></div>
+          <div class="cal-hint" id="calHint">Seleccioná la fecha de llegada</div>
         </div>
       </div>
-      <div id="nights-display" style="text-align:center;font-family:'Playfair Display',serif;font-style:italic;font-size:1.2rem;color:var(--vl);min-height:1.8rem"></div>
+
+      <div id="nights-display" style="text-align:center;font-family:'Playfair Display',serif;font-style:italic;font-size:1.2rem;color:var(--vl);min-height:1.8rem;margin-top:.5rem"></div>
       <div class="cnav">
         <span></span>
         <button class="cbtn-next" onclick="goStep(2)">Siguiente →</button>
@@ -738,17 +788,17 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
       <div class="rule"></div>
       <p class="prose">Desde tres habitaciones hasta diez. Para grupos chicos o familias grandes. Lo que tienen en común es que cuando cerrás la puerta, el mundo de afuera desaparece.</p>
     </div>
-    <a href="https://mg-experiences.com/ver-todas-las-villas" target="_blank" class="btn bf rv rv2">Ver catálogo completo</a>
+    <a href="#tu-experiencia" class="btn bf rv rv2">Armá tu estadía</a>
   </div>
   <div class="vg">
-    <div class="vc"><img class="vi" src="https://img1.wsimg.com/isteam/ip/28e700c9-c37b-485d-b636-01fcfc9acb86/Mar-y-Palma_-Ocean-Front_villa.webp" alt="Townhouse Marina" loading="lazy"><div class="vov"></div><div class="vinfo"><div class="vname">Townhouse Marina</div><div class="vdet">3 hab · 8 huéspedes</div></div><div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$300/noche</div><div class="vprice-x">3 hab · 3.5 baños · 8 huéspedes</div><a href="https://mg-experiences.com/townhouse-marina" target="_blank" class="vbtn">Ver villa</a></div></div>
-    <div class="vc"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#0d2b22"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".22" fill="rgba(212,184,154,.2)" text-anchor="middle">VISTA MAR</text></svg><div class="vov"></div><div class="vinfo"><div class="vname">Vista Mar</div><div class="vdet">7 hab · 18 huéspedes</div></div><div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$2.500/noche</div><div class="vprice-x">7 hab · 12 baños · 18 huéspedes</div><a href="https://mg-experiences.com/vista-mar" target="_blank" class="vbtn">Ver villa</a></div></div>
-    <div class="vc"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#1a3a50"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".2" fill="rgba(109,195,205,.2)" text-anchor="middle">LA CATALINA</text></svg><div class="vov"></div><div class="vinfo"><div class="vname">La Catalina</div><div class="vdet">8 hab · 20 huéspedes</div></div><div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$4.500/noche</div><div class="vprice-x">8 hab · 10 baños · 20 huéspedes</div><a href="https://mg-experiences.com/la-catalina-1" target="_blank" class="vbtn">Ver villa</a></div></div>
-    <div class="vc"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#3a2510"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".2" fill="rgba(174,133,96,.2)" text-anchor="middle">DU CACIQUE</text></svg><div class="vov"></div><div class="vinfo"><div class="vname">Du Cacique</div><div class="vdet">8 hab · 14 huéspedes</div></div><div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$3.000/noche</div><div class="vprice-x">8 hab · 6 baños · 14 huéspedes</div><a href="https://mg-experiences.com/du-cacique" target="_blank" class="vbtn">Ver villa</a></div></div>
-    <div class="vc"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#0a2016"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".18" fill="rgba(29,77,58,.4)" text-anchor="middle">CLARA ROYALE</text></svg><div class="vov"></div><div class="vinfo"><div class="vname">Clara Royale</div><div class="vdet">10 hab · 20 huéspedes</div></div><div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$15.000/noche</div><div class="vprice-x">10 hab · 12 baños · 20 huéspedes</div><a href="https://mg-experiences.com/clara-royale" target="_blank" class="vbtn">Ver villa</a></div></div>
-    <div class="vc"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#003535"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".2" fill="rgba(0,123,111,.3)" text-anchor="middle">VILLA LAGUNA</text></svg><div class="vov"></div><div class="vinfo"><div class="vname">Villa Laguna</div><div class="vdet">5 hab · 10 huéspedes</div></div><div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$2.800/noche</div><div class="vprice-x">5 hab · 5.5 baños · 10 huéspedes</div><a href="https://mg-experiences.com/villa-laguna" target="_blank" class="vbtn">Ver villa</a></div></div>
-    <div class="vc"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#1a1a2e"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".2" fill="rgba(66,96,122,.4)" text-anchor="middle">MIRALEJOS</text></svg><div class="vov"></div><div class="vinfo"><div class="vname">Miralejos</div><div class="vdet">6 hab · 16 huéspedes</div></div><div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$3.500/noche</div><div class="vprice-x">6 hab · 6.5 baños · 16 huéspedes</div><a href="https://mg-experiences.com/miralejos" target="_blank" class="vbtn">Ver villa</a></div></div>
-    <div class="vc"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#1a0f00"/><text x="1.5" y="1.9" font-family="Cinzel,serif" font-size=".15" fill="rgba(174,133,96,.2)" text-anchor="middle">VILLA BALI · LA PLAYA</text><text x="1.5" y="2.3" font-family="Cinzel,serif" font-size=".13" fill="rgba(174,133,96,.15)" text-anchor="middle">CANARIA · RANCHOS · FARO</text></svg><div class="vov"></div><div class="vinfo"><div class="vname">+5 Villas más</div><div class="vdet">Bali · La Playa · Canaria · Faro</div></div><div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$1.400/noche</div><div class="vprice-x">Para cada tipo de grupo</div><a href="https://mg-experiences.com/ver-todas-las-villas" target="_blank" class="vbtn">Ver catálogo</a></div></div>
+    <div class="vc"><img class="vi" src="https://img1.wsimg.com/isteam/ip/28e700c9-c37b-485d-b636-01fcfc9acb86/Mar-y-Palma_-Ocean-Front_villa.webp" alt="Townhouse Marina" loading="lazy"><div class="vov"></div><div class="vinfo"><div class="vname">Townhouse Marina</div><div class="vdet">3 hab · 8 huéspedes</div></div><div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$300/noche</div><div class="vprice-x">3 hab · 3.5 baños · 8 huéspedes</div><a href="#tu-experiencia" class="vbtn">Ver opciones</a></div></div>
+    <div class="vc"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#0d2b22"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".22" fill="rgba(212,184,154,.2)" text-anchor="middle">VISTA MAR</text></svg><div class="vov"></div><div class="vinfo"><div class="vname">Vista Mar</div><div class="vdet">7 hab · 18 huéspedes</div></div><div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$2.500/noche</div><div class="vprice-x">7 hab · 12 baños · 18 huéspedes</div><a href="#tu-experiencia" class="vbtn">Ver opciones</a></div></div>
+    <div class="vc"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#1a3a50"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".2" fill="rgba(109,195,205,.2)" text-anchor="middle">LA CATALINA</text></svg><div class="vov"></div><div class="vinfo"><div class="vname">La Catalina</div><div class="vdet">8 hab · 20 huéspedes</div></div><div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$4.500/noche</div><div class="vprice-x">8 hab · 10 baños · 20 huéspedes</div><a href="#tu-experiencia" class="vbtn">Ver opciones</a></div></div>
+    <div class="vc"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#3a2510"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".2" fill="rgba(174,133,96,.2)" text-anchor="middle">DU CACIQUE</text></svg><div class="vov"></div><div class="vinfo"><div class="vname">Du Cacique</div><div class="vdet">8 hab · 14 huéspedes</div></div><div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$3.000/noche</div><div class="vprice-x">8 hab · 6 baños · 14 huéspedes</div><a href="#tu-experiencia" class="vbtn">Ver opciones</a></div></div>
+    <div class="vc"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#0a2016"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".18" fill="rgba(29,77,58,.4)" text-anchor="middle">CLARA ROYALE</text></svg><div class="vov"></div><div class="vinfo"><div class="vname">Clara Royale</div><div class="vdet">10 hab · 20 huéspedes</div></div><div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$15.000/noche</div><div class="vprice-x">10 hab · 12 baños · 20 huéspedes</div><a href="#tu-experiencia" class="vbtn">Ver opciones</a></div></div>
+    <div class="vc"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#003535"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".2" fill="rgba(0,123,111,.3)" text-anchor="middle">VILLA LAGUNA</text></svg><div class="vov"></div><div class="vinfo"><div class="vname">Villa Laguna</div><div class="vdet">5 hab · 10 huéspedes</div></div><div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$2.800/noche</div><div class="vprice-x">5 hab · 5.5 baños · 10 huéspedes</div><a href="#tu-experiencia" class="vbtn">Ver opciones</a></div></div>
+    <div class="vc"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#1a1a2e"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".2" fill="rgba(66,96,122,.4)" text-anchor="middle">MIRALEJOS</text></svg><div class="vov"></div><div class="vinfo"><div class="vname">Miralejos</div><div class="vdet">6 hab · 16 huéspedes</div></div><div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$3.500/noche</div><div class="vprice-x">6 hab · 6.5 baños · 16 huéspedes</div><a href="#tu-experiencia" class="vbtn">Ver opciones</a></div></div>
+    <div class="vc"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#1a0f00"/><text x="1.5" y="1.9" font-family="Cinzel,serif" font-size=".15" fill="rgba(174,133,96,.2)" text-anchor="middle">VILLA BALI · LA PLAYA</text><text x="1.5" y="2.3" font-family="Cinzel,serif" font-size=".13" fill="rgba(174,133,96,.15)" text-anchor="middle">CANARIA · RANCHOS · FARO</text></svg><div class="vov"></div><div class="vinfo"><div class="vname">+5 Villas más</div><div class="vdet">Bali · La Playa · Canaria · Faro</div></div><div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$1.400/noche</div><div class="vprice-x">Para cada tipo de grupo</div><a href="#tu-experiencia" class="vbtn">Ver opciones</a></div></div>
   </div>
 </section>
 
@@ -778,7 +828,7 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
         <div class="frow"><div><div class="fn">Tiara 38 LS</div><div class="fs2">Sport Cruiser</div></div><div class="fc">12 pas.</div></div>
         <div class="frow"><div><div class="fn">Boston Whaler Conquest 305</div><div class="fs2">Open Sport</div></div><div class="fc">9 pas.</div></div>
       </div>
-      <div style="margin-top:1.8rem"><a href="https://mg-experiences.com/embarcaciones" target="_blank" class="btn bf">Reservar salida</a></div>
+      <div style="margin-top:1.8rem"><a href="#tu-experiencia" class="btn bf">Reservar salida</a></div>
     </div>
   </div>
 </section>
@@ -1166,12 +1216,8 @@ let state = {step:1, nights:0, guests:8, villaId:null, svcs:{}, barcoId:null, go
 // ── STEP NAVIGATION
 function goStep(n){
   if(n>1){
-    const di=document.getElementById('dateIn').value;
-    const dout=document.getElementById('dateOut').value;
-    if(!di||!dout){alert('Seleccioná las fechas de tu estadía.');return}
-    const nd=Math.round((new Date(dout)-new Date(di))/(1000*60*60*24));
-    if(nd<=0){alert('La salida debe ser posterior a la llegada.');return}
-    state.nights=nd; state.dateIn=di; state.dateOut=dout;
+    if(!state.dateIn||!state.dateOut){alert('Seleccioná las fechas de tu estadía.');return}
+    if(state.nights<=0){alert('La salida debe ser posterior a la llegada.');return}
   }
   if(n>3&&!state.villaId){alert('Seleccioná una casa para continuar.');return}
   document.getElementById('panel'+state.step).classList.remove('active');
@@ -1197,16 +1243,76 @@ function updateStepBar(){
 }
 
 // ── DATES
-document.getElementById('dateIn').addEventListener('change',calcNights);
-document.getElementById('dateOut').addEventListener('change',calcNights);
-function calcNights(){
-  const di=document.getElementById('dateIn').value;
-  const dout=document.getElementById('dateOut').value;
-  if(!di||!dout) return;
-  const n=Math.round((new Date(dout)-new Date(di))/(1000*60*60*24));
-  const el=document.getElementById('nights-display');
-  el.textContent = n>0 ? n+' '+(n===1?'noche':'noches') : '';
-}
+// ── CUSTOM CALENDAR ──────────────────────────────────────────────────────────
+(function(){
+  const MONTHS=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  let calMode='in', calYear, calMonth;
+  let selIn=null, selOut=null;
+
+  function today(){ const d=new Date(); d.setHours(0,0,0,0); return d; }
+  function fmtDisplay(d){ return d?d.toLocaleDateString('es-AR',{day:'numeric',month:'long'}):null; }
+  function fmtISO(d){ return d?d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'):''; }
+
+  function updateFields(){
+    const inEl=document.getElementById('cfInVal');
+    const outEl=document.getElementById('cfOutVal');
+    if(selIn){ inEl.textContent=fmtDisplay(selIn); inEl.classList.remove('empty'); }
+    else { inEl.textContent='Seleccioná'; inEl.classList.add('empty'); }
+    if(selOut){ outEl.textContent=fmtDisplay(selOut); outEl.classList.remove('empty'); }
+    else { outEl.textContent='Seleccioná'; outEl.classList.add('empty'); }
+    state.dateIn=fmtISO(selIn); state.dateOut=fmtISO(selOut);
+    const nd=document.getElementById('nights-display');
+    if(selIn&&selOut){
+      const diff=Math.round((selOut-selIn)/86400000);
+      state.nights=diff;
+      nd.textContent=diff>0?diff+(diff===1?' noche':' noches'):'';
+    } else { state.nights=0; nd.textContent=''; }
+  }
+
+  function renderCal(){
+    document.getElementById('calMonthLabel').textContent=MONTHS[calMonth]+' '+calYear;
+    document.getElementById('calHint').textContent=calMode==='in'?'Seleccioná la fecha de llegada':'Seleccioná la fecha de salida';
+    const first=new Date(calYear,calMonth,1);
+    const last=new Date(calYear,calMonth+1,0);
+    const startDow=(first.getDay()+6)%7;
+    const t=today();
+    let html='';
+    for(let i=0;i<startDow;i++) html+='<div class="cal-day empty"></div>';
+    for(let d=1;d<=last.getDate();d++){
+      const cur=new Date(calYear,calMonth,d);
+      const iso=fmtISO(cur);
+      let cls='cal-day';
+      if(cur<t) cls+=' past';
+      if(selIn&&iso===fmtISO(selIn)) cls+=' selected-in';
+      if(selOut&&iso===fmtISO(selOut)) cls+=' selected-out';
+      if(selIn&&selOut&&cur>selIn&&cur<selOut) cls+=' in-range';
+      html+=`<div class="${cls}" data-iso="${iso}">${d}</div>`;
+    }
+    const grid=document.getElementById('calDays');
+    grid.innerHTML=html;
+    grid.querySelectorAll('.cal-day:not(.empty):not(.past)').forEach(el=>{
+      el.addEventListener('click',()=>{
+        const picked=new Date(el.dataset.iso+'T12:00:00');
+        if(calMode==='in'){ selIn=picked; selOut=null; calMode='out'; document.getElementById('cfIn').classList.remove('active'); document.getElementById('cfOut').classList.add('active'); }
+        else { if(picked<=selIn){ selIn=picked; calMode='out'; } else { selOut=picked; closeCal(); } }
+        updateFields(); renderCal();
+      });
+    });
+  }
+
+  window.openCal=function(mode){
+    calMode=mode;
+    const now=new Date(); calYear=now.getFullYear(); calMonth=now.getMonth();
+    document.getElementById('calDrop').classList.add('open');
+    document.getElementById('cfIn').classList.toggle('active',mode==='in');
+    document.getElementById('cfOut').classList.toggle('active',mode==='out');
+    renderCal();
+  };
+  window.closeCal=function(){ document.getElementById('calDrop').classList.remove('open'); document.getElementById('cfIn').classList.remove('active'); document.getElementById('cfOut').classList.remove('active'); };
+  window.calShift=function(delta){ calMonth+=delta; if(calMonth>11){calMonth=0;calYear++;} if(calMonth<0){calMonth=11;calYear--;} renderCal(); };
+  document.addEventListener('click',e=>{ const drop=document.getElementById('calDrop'); const wrap=document.querySelector('.cal-wrap'); if(drop&&drop.classList.contains('open')&&wrap&&!wrap.contains(e.target)) closeCal(); });
+})();
+function calcNights(){ /* legacy noop — handled by calendar */ }
 
 // ── GUESTS
 function changeGuests(d){
@@ -2037,12 +2143,14 @@ if(sessionStorage.getItem('mg_verified')==='1'){
   }
   #val-close:hover { color: rgba(174,133,91,.9); }
 
-  /* iframe fills the rest */
+  /* iframe fills the rest — offset to hide bot's own header */
   #val-iframe {
     flex: 1;
     border: none;
     width: 100%;
     background: #0a0e0a;
+    margin-top: -72px;        /* hides bot's duplicate header */
+    height: calc(100% + 72px);
   }
 
   /* Mobile adjustments */
