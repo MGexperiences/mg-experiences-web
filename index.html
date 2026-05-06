@@ -1326,16 +1326,26 @@ function renderServices(){
 
   Object.entries(actividades).forEach(([cat, items]) => {
     html += accHeader(cat, cat, actEmojis[cat]||'');
-    const bodyHtml = items.map(a =>
-      `<div class="svc-opt ${state.svcs[a.id]?'selected':''}" onclick="toggleActiv('${a.id}',${a.price},'${a.name.replace(/'/g,"\\'")}','${a.unit}')">
+    const bodyHtml = items.map(a => {
+      const sel = !!state.svcs[a.id];
+      const qty = sel ? (state.svcs[a.id].cantidad || 1) : 1;
+      const qtySelector = sel ? `
+        <div onclick="event.stopPropagation()" style="display:flex;align-items:center;gap:.5rem;margin-top:.5rem">
+          <button onclick="changeActivCantidad('${a.id}',-1)" style="width:24px;height:24px;border:1px solid rgba(174,133,96,.4);background:none;color:var(--vl);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;line-height:1">−</button>
+          <span id="actqty-${a.id}" style="font-family:'Cinzel',serif;font-size:.65rem;color:var(--wh);min-width:20px;text-align:center">${qty}</span>
+          <button onclick="changeActivCantidad('${a.id}',1)" style="width:24px;height:24px;border:1px solid rgba(174,133,96,.4);background:none;color:var(--vl);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;line-height:1">+</button>
+          <span style="font-size:.72rem;color:rgba(253,250,246,.4)">${a.unit}</span>
+        </div>` : '';
+      return `<div class="svc-opt ${sel?'selected':''}" onclick="toggleActiv('${a.id}',${a.price},'${a.name.replace(/'/g,"\\'")}','${a.unit}')">
         <div class="svc-check"></div>
-        <div>
+        <div style="flex:1">
           <div class="svc-opt-name">${a.name}</div>
           ${a.note?`<div class="svc-opt-desc">${a.note}</div>`:''}
           <div class="svc-opt-price">USD $${a.price.toLocaleString()} / ${a.unit}</div>
+          ${qtySelector}
         </div>
-      </div>`
-    ).join('');
+      </div>`;
+    }).join('');
     html += accBody(cat, bodyHtml);
   });
 
@@ -1377,16 +1387,30 @@ function toggleSvcItem(id,price,name,unit){
   renderServices();
 }
 function toggleActiv(id,price,name,unit){
-  // Find correct price from actividades if not passed
+  // Find correct data from actividades if not passed
   if(!price){
     for(const items of Object.values(actividades)){
       const found=items.find(a=>a.id===id);
       if(found){price=found.price;name=found.name;unit=found.unit;break;}
     }
   }
-  if(state.svcs[id]){delete state.svcs[id];}
-  else{state.svcs[id]={price,name,unit,perPerson:true};}
+  if(state.svcs[id]){
+    delete state.svcs[id];
+  } else {
+    // Default cantidad: number of guests for person-based, 1 otherwise
+    const defaultQty = ['persona','adulto','niño'].includes(unit) ? state.guests : 1;
+    state.svcs[id]={price,name,unit,perPerson:false,cantidad:defaultQty};
+  }
   renderServices();
+}
+function changeActivCantidad(id, delta){
+  if(!state.svcs[id]) return;
+  const current = state.svcs[id].cantidad || 1;
+  const newVal = Math.max(1, current + delta);
+  state.svcs[id].cantidad = newVal;
+  // Update display inline without full re-render
+  const el = document.getElementById('actqty-'+id);
+  if(el) el.textContent = newVal;
 }
 function toggleAccordion(key){
   state.openAccordion = state.openAccordion===key ? null : key;
@@ -1543,7 +1567,7 @@ function buildPresupuestoData(){
         categoria:'Actividad',
         descripcion:act.name,
         display: act.display || act.name,
-        cantidad:['persona','adulto','niño'].includes(act.unit)?guests:1,
+        cantidad: state.svcs[act.id].cantidad || 1,
         unidad:act.unit
       });
     });
@@ -1559,7 +1583,34 @@ function buildPresupuestoData(){
   };
 }
 
-// ── Envía la consulta al Apps Script (mismo flow que el bot)
+// ── Guarda contacto en el log apenas se verifica (antes de completar presupuesto)
+async function guardarContactoParcial(){
+  const u = gateState.userData;
+  if(!u) return;
+  const villa = villas.find(v=>v.id===state.villaId);
+  const clientData = {
+    nombre:   u.nombre,
+    apellido: u.apellido,
+    email:    u.email,
+    pais:     u.pais,
+    telefono: u.tel
+  };
+  const nota = villa ? `Villa de interés: ${villa.name}` : 'No completó el presupuesto';
+  try {
+    const params = new URLSearchParams();
+    params.append('action', 'guardarContacto');
+    params.append('cliente', JSON.stringify(clientData));
+    params.append('nota', nota);
+    fetch(APPS_SCRIPT_URL, {
+      method:'POST',
+      headers:{'Content-Type':'application/x-www-form-urlencoded'},
+      body: params.toString(),
+      mode:'cors'
+    });
+  } catch(_){}
+}
+
+// ── Envía la consulta al Apps Script (flujo completo)
 async function enviarConsulta(){
   const btn=document.getElementById('submitBtn');
   if(!btn||btn.disabled) return;
@@ -1779,6 +1830,9 @@ function verifyCode(){
     // Guardar en sessionStorage
     sessionStorage.setItem('mg_verified', '1');
     sessionStorage.setItem('mg_user', JSON.stringify(gateState.userData));
+
+    // Guardar contacto en el log inmediatamente (antes de que complete el presupuesto)
+    guardarContactoParcial();
 
     setTimeout(() => {
       closeGate();
