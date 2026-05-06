@@ -569,8 +569,8 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
     <h1 class="hh1">Llegás.<br>Todo está listo.<em>El Caribe, a tu manera.</em></h1>
     <p class="hsub">Sin itinerarios. Sin apuros. Sin que nadie te marque la agenda.<br>Una casa en el Caribe donde el tiempo es tuyo.</p>
     <div class="hbtns">
-      <a href="#tu-experiencia" class="btn bf">Diseñá tu estadía</a>
-      <a href="https://wa.me/541164388699" target="_blank" class="btn bo">Hablemos</a>
+      <a href="#tu-experiencia" class="btn bf">Diseñá tu estadía ✦</a>
+      <button onclick="openValentina()" class="btn bo" style="cursor:pointer;border:none">Hablá con Valentina</button>
     </div>
   </div>
   <div class="scue"><span>Descubrí</span><div class="sln"></div></div>
@@ -584,7 +584,133 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
   <div class="bi"><span class="bn">15</span><span class="bl">años conociéndola de adentro</span></div>
 </div>
 
-<!-- SERVICES -->
+<!-- ════════════════════════════════════════
+     CONFIGURADOR DE EXPERIENCIA
+════════════════════════════════════════ -->
+<section class="config rv" id="tu-experiencia">
+  <div class="config-inner">
+    <div class="config-head">
+      <span class="lbl">Diseñá tu estadía</span>
+      <h2 class="bigt">Contanos<br><em>qué imaginás</em></h2>
+      <div class="rule rc"></div>
+      <p class="prose" style="margin:0 auto">Elegís fechas, casa y lo que querés incluir. Te mostramos un estimado y lo conversamos — sin compromiso.</p>
+    </div>
+
+    <!-- Progress bar -->
+    <div class="steps-bar">
+      <div class="step-item">
+        <div class="step-dot active" id="dot1">1</div>
+        <span class="step-label active" id="lbl1">Fechas</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step-item">
+        <div class="step-dot" id="dot2">2</div>
+        <span class="step-label" id="lbl2">Personas</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step-item">
+        <div class="step-dot" id="dot3">3</div>
+        <span class="step-label" id="lbl3">Villa</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step-item">
+        <div class="step-dot" id="dot4">4</div>
+        <span class="step-label" id="lbl4">Servicios</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step-item">
+        <div class="step-dot" id="dot5">5</div>
+        <span class="step-label" id="lbl5">Resumen</span>
+      </div>
+    </div>
+
+    <!-- STEP 1: Fechas -->
+    <div class="cpanel active" id="panel1">
+      <div class="cpanel-title">¿Cuándo viajan?</div>
+      <p class="cpanel-sub">Las fechas ayudan a ver qué casas están disponibles para ese período.</p>
+      <div class="date-row">
+        <div class="date-group">
+          <label class="date-label">Llegada</label>
+          <input type="date" class="date-input" id="dateIn">
+        </div>
+        <div class="date-group">
+          <label class="date-label">Salida</label>
+          <input type="date" class="date-input" id="dateOut">
+        </div>
+      </div>
+      <div id="nights-display" style="text-align:center;font-family:'Playfair Display',serif;font-style:italic;font-size:1.2rem;color:var(--vl);min-height:1.8rem"></div>
+      <div class="cnav">
+        <span></span>
+        <button class="cbtn-next" onclick="goStep(2)">Siguiente →</button>
+      </div>
+    </div>
+
+    <!-- STEP 2: Personas -->
+    <div class="cpanel" id="panel2">
+      <div class="cpanel-title">¿Cuántos van?</div>
+      <p class="cpanel-sub">Incluyendo chicos — así encontramos la casa que tiene el espacio justo para todos.</p>
+      <div class="guest-row">
+        <button class="guest-btn" onclick="changeGuests(-1)">−</button>
+        <div>
+          <div class="guest-num" id="guestNum">8</div>
+          <div class="guest-label">personas</div>
+        </div>
+        <button class="guest-btn" onclick="changeGuests(1)">+</button>
+      </div>
+      <div class="cnav">
+        <button class="cbtn-back" onclick="goStep(1)">← Volver</button>
+        <button class="cbtn-next" onclick="goStep(3)">Siguiente →</button>
+      </div>
+    </div>
+
+    <!-- STEP 3: Villa -->
+    <div class="cpanel" id="panel3">
+      <div class="cpanel-title">¿Dónde se quedan?</div>
+      <p class="cpanel-sub filter-note" id="filterNote">Casas disponibles para tu grupo</p>
+      <div class="villa-sel-grid" id="villaGrid"></div>
+      <div class="cnav">
+        <button class="cbtn-back" onclick="goStep(2)">← Volver</button>
+        <button class="cbtn-next" onclick="goStep(4)">Siguiente →</button>
+      </div>
+    </div>
+
+    <!-- STEP 4: Servicios -->
+    <div class="cpanel" id="panel4">
+      <div class="cpanel-title">¿Qué querés agregar?</div>
+      <p class="cpanel-sub">Todo es opcional. Sumá lo que tiene sentido para este viaje, dejá afuera lo que no.</p>
+      <div class="svc-opts" id="svcOptsContainer" style="grid-template-columns:1fr 1fr">
+        <!-- Renderizado dinámico desde renderServices() -->
+      </div>
+      <div class="cnav">
+        <button class="cbtn-back" onclick="goStep(3)">← Volver</button>
+        <button class="cbtn-next" onclick="goStep(5)">Ver resumen →</button>
+      </div>
+    </div>
+
+    <!-- STEP 5: Summary -->
+    <div class="cpanel" id="panel5">
+      <div class="cpanel-title">Tu estadía</div>
+      <p class="cpanel-sub">Revisá el detalle. Si querés cambiar algo, volvé atrás. Si está todo bien, envianos la consulta y nos contactamos a la brevedad.</p>
+      <div class="summary-box" id="summaryBox"></div>
+      <div class="cnav">
+        <button class="cbtn-back" onclick="goStep(4)">← Modificar</button>
+        <button class="cbtn-wa" id="submitBtn" onclick="enviarConsulta()">
+          Enviar consulta ✦
+        </button>
+      </div>
+      <!-- Pantalla de confirmación -->
+      <div id="confirmBox" style="display:none;text-align:center;padding:2rem 1rem">
+        <div style="font-size:2rem;margin-bottom:1rem">✓</div>
+        <div style="font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.25em;color:var(--v);text-transform:uppercase;margin-bottom:.8rem">Consulta enviada</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.15rem;color:rgba(253,250,246,.7);line-height:1.8">
+          Gracias. El equipo de MG Experiences<br>se contacta con vos a la brevedad.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
 <section class="svcs" id="servicios">
   <div class="si rv">
     <span class="lbl">Cómo funciona</span>
@@ -729,133 +855,6 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
     <a href="https://climate.stripe.com/eWFiCh" target="_blank" class="clm-a">Ver nuestro impacto →</a>
   </div>
 </div>
-
-<!-- ════════════════════════════════════════
-     CONFIGURADOR DE EXPERIENCIA
-════════════════════════════════════════ -->
-<section class="config rv" id="tu-experiencia">
-  <div class="config-inner">
-    <div class="config-head">
-      <span class="lbl">Diseñá tu estadía</span>
-      <h2 class="bigt">Contanos<br><em>qué imaginás</em></h2>
-      <div class="rule rc"></div>
-      <p class="prose" style="margin:0 auto">Elegís fechas, casa y lo que querés incluir. Te mostramos un estimado y lo conversamos — sin compromiso.</p>
-    </div>
-
-    <!-- Progress bar -->
-    <div class="steps-bar">
-      <div class="step-item">
-        <div class="step-dot active" id="dot1">1</div>
-        <span class="step-label active" id="lbl1">Fechas</span>
-      </div>
-      <div class="step-line"></div>
-      <div class="step-item">
-        <div class="step-dot" id="dot2">2</div>
-        <span class="step-label" id="lbl2">Personas</span>
-      </div>
-      <div class="step-line"></div>
-      <div class="step-item">
-        <div class="step-dot" id="dot3">3</div>
-        <span class="step-label" id="lbl3">Villa</span>
-      </div>
-      <div class="step-line"></div>
-      <div class="step-item">
-        <div class="step-dot" id="dot4">4</div>
-        <span class="step-label" id="lbl4">Servicios</span>
-      </div>
-      <div class="step-line"></div>
-      <div class="step-item">
-        <div class="step-dot" id="dot5">5</div>
-        <span class="step-label" id="lbl5">Resumen</span>
-      </div>
-    </div>
-
-    <!-- STEP 1: Fechas -->
-    <div class="cpanel active" id="panel1">
-      <div class="cpanel-title">¿Cuándo viajan?</div>
-      <p class="cpanel-sub">Las fechas ayudan a ver qué casas están disponibles para ese período.</p>
-      <div class="date-row">
-        <div class="date-group">
-          <label class="date-label">Llegada</label>
-          <input type="date" class="date-input" id="dateIn">
-        </div>
-        <div class="date-group">
-          <label class="date-label">Salida</label>
-          <input type="date" class="date-input" id="dateOut">
-        </div>
-      </div>
-      <div id="nights-display" style="text-align:center;font-family:'Playfair Display',serif;font-style:italic;font-size:1.2rem;color:var(--vl);min-height:1.8rem"></div>
-      <div class="cnav">
-        <span></span>
-        <button class="cbtn-next" onclick="goStep(2)">Siguiente →</button>
-      </div>
-    </div>
-
-    <!-- STEP 2: Personas -->
-    <div class="cpanel" id="panel2">
-      <div class="cpanel-title">¿Cuántos van?</div>
-      <p class="cpanel-sub">Incluyendo chicos — así encontramos la casa que tiene el espacio justo para todos.</p>
-      <div class="guest-row">
-        <button class="guest-btn" onclick="changeGuests(-1)">−</button>
-        <div>
-          <div class="guest-num" id="guestNum">8</div>
-          <div class="guest-label">personas</div>
-        </div>
-        <button class="guest-btn" onclick="changeGuests(1)">+</button>
-      </div>
-      <div class="cnav">
-        <button class="cbtn-back" onclick="goStep(1)">← Volver</button>
-        <button class="cbtn-next" onclick="goStep(3)">Siguiente →</button>
-      </div>
-    </div>
-
-    <!-- STEP 3: Villa -->
-    <div class="cpanel" id="panel3">
-      <div class="cpanel-title">¿Dónde se quedan?</div>
-      <p class="cpanel-sub filter-note" id="filterNote">Casas disponibles para tu grupo</p>
-      <div class="villa-sel-grid" id="villaGrid"></div>
-      <div class="cnav">
-        <button class="cbtn-back" onclick="goStep(2)">← Volver</button>
-        <button class="cbtn-next" onclick="goStep(4)">Siguiente →</button>
-      </div>
-    </div>
-
-    <!-- STEP 4: Servicios -->
-    <div class="cpanel" id="panel4">
-      <div class="cpanel-title">¿Qué querés agregar?</div>
-      <p class="cpanel-sub">Todo es opcional. Sumá lo que tiene sentido para este viaje, dejá afuera lo que no.</p>
-      <div class="svc-opts" id="svcOptsContainer" style="grid-template-columns:1fr 1fr">
-        <!-- Renderizado dinámico desde renderServices() -->
-      </div>
-      <div class="cnav">
-        <button class="cbtn-back" onclick="goStep(3)">← Volver</button>
-        <button class="cbtn-next" onclick="goStep(5)">Ver resumen →</button>
-      </div>
-    </div>
-
-    <!-- STEP 5: Summary -->
-    <div class="cpanel" id="panel5">
-      <div class="cpanel-title">Tu estadía</div>
-      <p class="cpanel-sub">Revisá el detalle. Si querés cambiar algo, volvé atrás. Si está todo bien, envianos la consulta y nos contactamos a la brevedad.</p>
-      <div class="summary-box" id="summaryBox"></div>
-      <div class="cnav">
-        <button class="cbtn-back" onclick="goStep(4)">← Modificar</button>
-        <button class="cbtn-wa" id="submitBtn" onclick="enviarConsulta()">
-          Enviar consulta ✦
-        </button>
-      </div>
-      <!-- Pantalla de confirmación -->
-      <div id="confirmBox" style="display:none;text-align:center;padding:2rem 1rem">
-        <div style="font-size:2rem;margin-bottom:1rem">✓</div>
-        <div style="font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.25em;color:var(--v);text-transform:uppercase;margin-bottom:.8rem">Consulta enviada</div>
-        <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.15rem;color:rgba(253,250,246,.7);line-height:1.8">
-          Gracias. El equipo de MG Experiences<br>se contacta con vos a la brevedad.
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
 
 <!-- FOUNDERS -->
 <div class="founders" id="nosotros">
@@ -1910,6 +1909,217 @@ if(sessionStorage.getItem('mg_verified')==='1'){
   const saved=sessionStorage.getItem('mg_user');
   if(saved) gateState.userData=JSON.parse(saved);
 }
+</script>
+<!-- ══ VALENTINA FLOATING WIDGET ══ -->
+<style>
+  /* ── Widget button ── */
+  #val-btn {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    z-index: 9000;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #AE8560, #7A5C2E);
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 8px 32px rgba(174,133,91,.45), 0 2px 8px rgba(0,0,0,.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform .2s, box-shadow .2s;
+    overflow: hidden;
+  }
+  #val-btn:hover { transform: scale(1.08); box-shadow: 0 12px 40px rgba(174,133,91,.55); }
+  #val-btn img  { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+
+  /* Pulse ring */
+  #val-btn::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 2px solid rgba(174,133,91,.4);
+    animation: valPulse 2.4s ease-out infinite;
+  }
+  @keyframes valPulse {
+    0%   { transform: scale(1);    opacity: .8; }
+    70%  { transform: scale(1.22); opacity: 0;  }
+    100% { transform: scale(1.22); opacity: 0;  }
+  }
+
+  /* Tooltip */
+  #val-tip {
+    position: fixed;
+    bottom: 38px;
+    right: 100px;
+    z-index: 8999;
+    background: rgba(14,26,18,.97);
+    border: 1px solid rgba(174,133,91,.2);
+    color: rgb(235,225,210);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-style: italic;
+    font-size: .95rem;
+    padding: .55rem 1rem;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateX(8px);
+    transition: opacity .3s, transform .3s;
+  }
+  #val-tip.show { opacity: 1; transform: translateX(0); }
+
+  /* ── Drawer ── */
+  #val-drawer {
+    position: fixed;
+    bottom: 0; right: 0;
+    z-index: 9100;
+    width: 420px;
+    max-width: 100vw;
+    height: 680px;
+    max-height: 92vh;
+    background: #0a0e0a;
+    border-radius: 20px 20px 0 0;
+    border: 1px solid rgba(174,133,91,.2);
+    border-bottom: none;
+    box-shadow: 0 -20px 60px rgba(0,0,0,.7);
+    display: flex;
+    flex-direction: column;
+    transform: translateY(100%);
+    transition: transform .38s cubic-bezier(.32,.72,0,1);
+    overflow: hidden;
+  }
+  #val-drawer.open { transform: translateY(0); }
+
+  /* Drawer header */
+  #val-dhead {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px 13px;
+    border-bottom: 1px solid rgba(174,133,91,.1);
+    background: rgba(174,133,91,.04);
+    flex-shrink: 0;
+  }
+  #val-dhead .dh-avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1.5px solid rgba(174,133,91,.35);
+    flex-shrink: 0;
+  }
+  #val-dhead .dh-avatar img { width: 100%; height: 100%; object-fit: cover; }
+  #val-dhead .dh-info { flex: 1; }
+  #val-dhead .dh-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: rgb(235,225,210);
+  }
+  #val-dhead .dh-sub {
+    font-family: 'Montserrat', sans-serif;
+    font-size: .58rem;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: #AE8560;
+    margin-top: 1px;
+  }
+  #val-close {
+    background: none;
+    border: none;
+    color: rgba(174,133,91,.5);
+    font-size: 1.3rem;
+    cursor: pointer;
+    line-height: 1;
+    padding: 4px 6px;
+    transition: color .2s;
+  }
+  #val-close:hover { color: rgba(174,133,91,.9); }
+
+  /* iframe fills the rest */
+  #val-iframe {
+    flex: 1;
+    border: none;
+    width: 100%;
+    background: #0a0e0a;
+  }
+
+  /* Mobile adjustments */
+  @media (max-width: 480px) {
+    #val-drawer  { width: 100vw; border-radius: 20px 20px 0 0; height: 85vh; max-height: 85vh; }
+    #val-btn     { bottom: 20px; right: 20px; width: 54px; height: 54px; }
+    #val-tip     { display: none; }
+  }
+</style>
+
+<!-- Floating button -->
+<button id="val-btn" onclick="openValentina()" aria-label="Hablar con Valentina">
+  <img src="https://img1.wsimg.com/isteam/ip/28e700c9-c37b-485d-b636-01fcfc9acb86/25FEB441-32E0-49ED-878A-CA88687EE6BB.jpeg" alt="Valentina">
+</button>
+
+<!-- Tooltip -->
+<div id="val-tip">Hablá con Valentina</div>
+
+<!-- Drawer -->
+<div id="val-drawer" role="dialog" aria-label="Chat con Valentina">
+  <div id="val-dhead">
+    <div class="dh-avatar">
+      <img src="https://img1.wsimg.com/isteam/ip/28e700c9-c37b-485d-b636-01fcfc9acb86/25FEB441-32E0-49ED-878A-CA88687EE6BB.jpeg" alt="Valentina">
+    </div>
+    <div class="dh-info">
+      <div class="dh-name">Valentina</div>
+      <div class="dh-sub">MG Experiences · En línea</div>
+    </div>
+    <button id="val-close" onclick="closeValentina()" aria-label="Cerrar">✕</button>
+  </div>
+  <iframe id="val-iframe" src="" title="Chat con Valentina" allow="microphone" loading="lazy"></iframe>
+</div>
+
+<script>
+  const valBtn    = document.getElementById('val-btn');
+  const valTip    = document.getElementById('val-tip');
+  const valDrawer = document.getElementById('val-drawer');
+  const valIframe = document.getElementById('val-iframe');
+  let valLoaded   = false;
+  let tipTimer;
+
+  // Show tooltip on hover (desktop)
+  valBtn.addEventListener('mouseenter', () => {
+    tipTimer = setTimeout(() => valTip.classList.add('show'), 400);
+  });
+  valBtn.addEventListener('mouseleave', () => {
+    clearTimeout(tipTimer);
+    valTip.classList.remove('show');
+  });
+
+  // Show tooltip briefly on page load (after 3s)
+  setTimeout(() => {
+    valTip.classList.add('show');
+    setTimeout(() => valTip.classList.remove('show'), 3500);
+  }, 3000);
+
+  function openValentina() {
+    valTip.classList.remove('show');
+    // Load iframe only once
+    if (!valLoaded) {
+      valIframe.src = 'https://bot.mg-experiences.com/';
+      valLoaded = true;
+    }
+    valDrawer.classList.add('open');
+    valBtn.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  function closeValentina() {
+    valDrawer.classList.remove('open');
+    valBtn.style.display = 'flex';
+  }
+
+  // Close on Escape
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && valDrawer.classList.contains('open')) closeValentina();
+  });
 </script>
 </body>
 </html>
