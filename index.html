@@ -96,6 +96,13 @@ nav.solid{background:rgba(28,30,23,.96);backdrop-filter:blur(20px);border-bottom
 .vh{display:flex;align-items:flex-end;justify-content:space-between;max-width:1200px;margin:0 auto 4rem;flex-wrap:wrap;gap:2rem}
 .vg{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5px;background:rgba(174,133,96,.12);max-width:1200px;margin:0 auto}
 .vc{position:relative;overflow:hidden;cursor:pointer;transition:all .4s}
+.vc.hidden{display:none}
+.vpc-wrap{width:100%;padding-bottom:133%}
+.vpc-wrap .vpc{position:absolute;inset:0;width:100%;height:100%}
+.vc:hover .vfoot{opacity:1;transform:translateY(0)}
+.vfilt{display:flex;gap:.5rem;justify-content:center;padding:1.5rem 1rem .5rem;max-width:1200px;margin:0 auto;flex-wrap:wrap}
+.vfb{font-family:'Cinzel',serif;font-size:.48rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(253,250,246,.45);background:none;border:1px solid rgba(174,133,96,.18);padding:.45rem 1.1rem;cursor:pointer;transition:all .2s}
+.vfb:hover,.vfb.active{color:var(--vl);border-color:rgba(174,133,96,.55);background:rgba(174,133,96,.06)}
 .vc:hover{z-index:2}
 .vc:hover .vi{transform:scale(1.07)}
 .vc:hover .vfoot{opacity:1;transform:translateY(0)}
@@ -109,8 +116,46 @@ nav.solid{background:rgba(28,30,23,.96);backdrop-filter:blur(20px);border-bottom
 .vprice-l{font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.15em;color:var(--vl);text-transform:uppercase;margin-bottom:.35rem}
 .vprice-v{font-family:'Playfair Display',serif;font-style:italic;font-size:1.75rem;color:var(--wh);margin-bottom:.3rem}
 .vprice-x{font-size:.76rem;color:rgba(253,250,246,.5);text-align:center;margin-bottom:1.2rem}
-.vbtn{font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:var(--g);background:var(--vl);padding:.55rem 1.3rem;text-decoration:none;transition:background .3s}
+.vbtn{font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:var(--g);background:var(--vl);padding:.55rem 1.3rem;cursor:pointer;border:none;text-decoration:none;transition:background .3s}
 .vbtn:hover{background:var(--wh)}
+
+/* ── VILLA DETAIL MODAL ── */
+#vmodal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.82);backdrop-filter:blur(6px);z-index:8000;opacity:0;pointer-events:none;transition:opacity .3s}
+#vmodal-overlay.open{opacity:1;pointer-events:all}
+#vmodal{position:fixed;top:0;right:0;bottom:0;width:min(640px,100vw);background:rgb(11,17,10);border-left:1px solid rgba(174,133,96,.18);z-index:8001;transform:translateX(100%);transition:transform .38s cubic-bezier(.32,.72,0,1);overflow-y:auto;display:flex;flex-direction:column}
+#vmodal.open{transform:translateX(0)}
+.vm-img{width:100%;height:320px;object-fit:cover;flex-shrink:0}
+.vm-img-placeholder{width:100%;height:280px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.vm-body{padding:2.5rem 2.8rem;flex:1}
+.vm-close{position:sticky;top:0;z-index:10;display:flex;justify-content:flex-end;padding:.8rem 1rem .4rem;background:linear-gradient(rgb(11,17,10),transparent);margin-bottom:-1rem}
+.vm-close-btn{background:none;border:1px solid rgba(174,133,96,.25);color:rgba(174,133,96,.6);width:36px;height:36px;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.vm-close-btn:hover{border-color:rgba(174,133,96,.7);color:var(--vl)}
+.vm-label{font-family:'Cinzel',serif;font-size:.48rem;letter-spacing:.22em;color:var(--vl);text-transform:uppercase;margin-bottom:.6rem}
+.vm-title{font-family:'Playfair Display',serif;font-size:2.1rem;font-style:italic;color:var(--wh);margin-bottom:1.6rem;line-height:1.2}
+.vm-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin-bottom:2rem}
+.vm-stat{border:1px solid rgba(174,133,96,.15);padding:.9rem .8rem;text-align:center}
+.vm-stat-n{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--vl);font-style:italic}
+.vm-stat-l{font-family:'Cinzel',serif;font-size:.42rem;letter-spacing:.12em;color:rgba(253,250,246,.4);text-transform:uppercase;margin-top:.2rem}
+.vm-price-box{background:rgba(174,133,96,.07);border:1px solid rgba(174,133,96,.2);padding:1.2rem 1.5rem;margin-bottom:2rem;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.vm-price-from{font-family:'Cinzel',serif;font-size:.48rem;letter-spacing:.18em;color:rgba(174,133,96,.6);text-transform:uppercase}
+.vm-price-val{font-family:'Playfair Display',serif;font-size:1.8rem;font-style:italic;color:var(--wh)}
+.vm-price-night{font-size:.76rem;color:rgba(253,250,246,.4)}
+.vm-section-t{font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.2em;color:var(--vl);text-transform:uppercase;margin-bottom:.9rem;margin-top:1.8rem;padding-bottom:.5rem;border-bottom:1px solid rgba(174,133,96,.12)}
+.vm-desc{font-family:'Cormorant Garamond',serif;font-size:1rem;color:rgba(253,250,246,.7);line-height:1.85;margin-bottom:.8rem}
+.vm-amenities{display:grid;grid-template-columns:1fr 1fr;gap:.45rem .8rem;margin-bottom:.5rem}
+.vm-am{display:flex;align-items:flex-start;gap:.5rem;font-family:'Cormorant Garamond',serif;font-size:.92rem;color:rgba(253,250,246,.65);line-height:1.5}
+.vm-am::before{content:'✦';font-size:.55rem;color:var(--vl);margin-top:.28rem;flex-shrink:0}
+.vm-rooms{display:flex;flex-direction:column;gap:.7rem}
+.vm-room{padding:.9rem 1rem;border-left:2px solid rgba(174,133,96,.25);background:rgba(174,133,96,.04)}
+.vm-room-n{font-family:'Cinzel',serif;font-size:.48rem;letter-spacing:.16em;color:var(--vl);text-transform:uppercase;margin-bottom:.3rem}
+.vm-room-d{font-family:'Cormorant Garamond',serif;font-size:.9rem;color:rgba(253,250,246,.6);line-height:1.6}
+.vm-note{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.85rem;color:rgba(253,250,246,.35);line-height:1.6;margin-top:1rem}
+.vm-ctas{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid rgba(174,133,96,.12)}
+.vm-cta-main{font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.18em;text-transform:uppercase;color:var(--bk);background:var(--vl);border:none;padding:1rem;cursor:pointer;transition:background .2s}
+.vm-cta-main:hover{background:var(--wh)}
+.vm-cta-sec{font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.18em;text-transform:uppercase;color:var(--vl);background:none;border:1px solid rgba(174,133,96,.35);padding:1rem;cursor:pointer;transition:all .2s;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:.4rem}
+.vm-cta-sec:hover{border-color:var(--vl);background:rgba(174,133,96,.06)}
+@media(max-width:640px){#vmodal{width:100vw;border-left:none}.vm-body{padding:1.5rem 1.3rem}.vm-stats{grid-template-columns:repeat(3,1fr)}.vm-amenities{grid-template-columns:1fr}.vm-ctas{grid-template-columns:1fr}}
 
 /* ── BOATS ── */
 .boats{min-height:90vh;display:flex;align-items:center;position:relative;overflow:hidden;padding:8rem 4rem}
@@ -779,26 +824,145 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
   <p class="sh">← Deslizá para explorar →</p>
 </section>
 
-<!-- VILLAS PREVIEW -->
+<!-- VILLAS CATÁLOGO COMPLETO -->
 <section class="villas rv" id="villas">
   <div class="vh">
     <div>
       <span class="lbl">Dónde vas a estar</span>
       <h2 class="bigt">Cada casa,<br><em>su carácter</em></h2>
       <div class="rule"></div>
-      <p class="prose">Desde tres habitaciones hasta diez. Para grupos chicos o familias grandes. Lo que tienen en común es que cuando cerrás la puerta, el mundo de afuera desaparece.</p>
+      <p class="prose">Desde tres habitaciones hasta diez. Para grupos chicos o familias grandes. Todas privadas, todas con pileta, todas dentro del resort. Elegís la que más te representa.</p>
     </div>
     <a href="#tu-experiencia" class="btn bf rv rv2">Armá tu estadía</a>
   </div>
-  <div class="vg">
-    <div class="vc"><img class="vi" src="https://img1.wsimg.com/isteam/ip/28e700c9-c37b-485d-b636-01fcfc9acb86/Mar-y-Palma_-Ocean-Front_villa.webp" alt="Townhouse Marina" loading="lazy"><div class="vov"></div><div class="vinfo"><div class="vname">Townhouse Marina</div><div class="vdet">3 hab · 8 huéspedes</div></div><div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$300/noche</div><div class="vprice-x">3 hab · 3.5 baños · 8 huéspedes</div><a href="#tu-experiencia" class="vbtn">Ver opciones</a></div></div>
-    <div class="vc"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#0d2b22"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".22" fill="rgba(212,184,154,.2)" text-anchor="middle">VISTA MAR</text></svg><div class="vov"></div><div class="vinfo"><div class="vname">Vista Mar</div><div class="vdet">7 hab · 18 huéspedes</div></div><div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$2.500/noche</div><div class="vprice-x">7 hab · 12 baños · 18 huéspedes</div><a href="#tu-experiencia" class="vbtn">Ver opciones</a></div></div>
-    <div class="vc"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#1a3a50"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".2" fill="rgba(109,195,205,.2)" text-anchor="middle">LA CATALINA</text></svg><div class="vov"></div><div class="vinfo"><div class="vname">La Catalina</div><div class="vdet">8 hab · 20 huéspedes</div></div><div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$4.500/noche</div><div class="vprice-x">8 hab · 10 baños · 20 huéspedes</div><a href="#tu-experiencia" class="vbtn">Ver opciones</a></div></div>
-    <div class="vc"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#3a2510"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".2" fill="rgba(174,133,96,.2)" text-anchor="middle">DU CACIQUE</text></svg><div class="vov"></div><div class="vinfo"><div class="vname">Du Cacique</div><div class="vdet">8 hab · 14 huéspedes</div></div><div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$3.000/noche</div><div class="vprice-x">8 hab · 6 baños · 14 huéspedes</div><a href="#tu-experiencia" class="vbtn">Ver opciones</a></div></div>
-    <div class="vc"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#0a2016"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".18" fill="rgba(29,77,58,.4)" text-anchor="middle">CLARA ROYALE</text></svg><div class="vov"></div><div class="vinfo"><div class="vname">Clara Royale</div><div class="vdet">10 hab · 20 huéspedes</div></div><div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$15.000/noche</div><div class="vprice-x">10 hab · 12 baños · 20 huéspedes</div><a href="#tu-experiencia" class="vbtn">Ver opciones</a></div></div>
-    <div class="vc"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#003535"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".2" fill="rgba(0,123,111,.3)" text-anchor="middle">VILLA LAGUNA</text></svg><div class="vov"></div><div class="vinfo"><div class="vname">Villa Laguna</div><div class="vdet">5 hab · 10 huéspedes</div></div><div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$2.800/noche</div><div class="vprice-x">5 hab · 5.5 baños · 10 huéspedes</div><a href="#tu-experiencia" class="vbtn">Ver opciones</a></div></div>
-    <div class="vc"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#1a1a2e"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".2" fill="rgba(66,96,122,.4)" text-anchor="middle">MIRALEJOS</text></svg><div class="vov"></div><div class="vinfo"><div class="vname">Miralejos</div><div class="vdet">6 hab · 16 huéspedes</div></div><div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$3.500/noche</div><div class="vprice-x">6 hab · 6.5 baños · 16 huéspedes</div><a href="#tu-experiencia" class="vbtn">Ver opciones</a></div></div>
-    <div class="vc"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#1a0f00"/><text x="1.5" y="1.9" font-family="Cinzel,serif" font-size=".15" fill="rgba(174,133,96,.2)" text-anchor="middle">VILLA BALI · LA PLAYA</text><text x="1.5" y="2.3" font-family="Cinzel,serif" font-size=".13" fill="rgba(174,133,96,.15)" text-anchor="middle">CANARIA · RANCHOS · FARO</text></svg><div class="vov"></div><div class="vinfo"><div class="vname">+5 Villas más</div><div class="vdet">Bali · La Playa · Canaria · Faro</div></div><div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$1.400/noche</div><div class="vprice-x">Para cada tipo de grupo</div><a href="#tu-experiencia" class="vbtn">Ver opciones</a></div></div>
+
+  <!-- Filtro por tamaño -->
+  <div class="vfilt">
+    <button class="vfb active" onclick="filtVillas('all',this)">Todas</button>
+    <button class="vfb" onclick="filtVillas('small',this)">2–4 pers.</button>
+    <button class="vfb" onclick="filtVillas('med',this)">5–10 pers.</button>
+    <button class="vfb" onclick="filtVillas('large',this)">11–20 pers.</button>
+  </div>
+
+  <div class="vg" id="villaGrid">
+
+    <!-- 2–4 -->
+    <div class="vc" data-size="small">
+      <div class="vpc-wrap"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#0f1f17"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".2" fill="rgba(174,133,96,.18)" text-anchor="middle">ALTOS DE CHAVÓN</text></svg></div>
+      <div class="vov"></div><div class="vinfo"><div class="vname">Altos de Chavón</div><div class="vdet">2 hab · 4 huéspedes</div></div>
+      <div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$280/noche</div><div class="vprice-x">2 hab · 4 huéspedes · Vista al río Chavón</div><button class="vbtn" onclick="openVModal(\'altosChavon\')">Ver villa</button></div>
+    </div>
+
+    <!-- 3 hab -->
+    <div class="vc" data-size="small">
+      <img class="vi" src="https://img1.wsimg.com/isteam/ip/28e700c9-c37b-485d-b636-01fcfc9acb86/Mar-y-Palma_-Ocean-Front_villa.webp" alt="Townhouse Marina" loading="lazy">
+      <div class="vov"></div><div class="vinfo"><div class="vname">Townhouse Marina</div><div class="vdet">3 hab · 8 huéspedes</div></div>
+      <div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$360/noche</div><div class="vprice-x">3 hab · 3.5 baños · Vista al mar</div><button class="vbtn" onclick="openVModal(\'townhouse\')">Ver villa</button></div>
+    </div>
+
+    <div class="vc" data-size="small">
+      <div class="vpc-wrap"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#200d00"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".18" fill="rgba(174,133,96,.18)" text-anchor="middle">LA PLAYA</text></svg></div>
+      <div class="vov"></div><div class="vinfo"><div class="vname">La Playa</div><div class="vdet">3 hab · 8 huéspedes</div></div>
+      <div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$2.800/noche</div><div class="vprice-x">3 hab · Frente al mar · Playa privada</div><button class="vbtn" onclick="openVModal(\'laplaya\')">Ver villa</button></div>
+    </div>
+
+    <!-- 4 hab -->
+    <div class="vc" data-size="med">
+      <div class="vpc-wrap"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#1a2e1a"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".18" fill="rgba(174,133,96,.18)" text-anchor="middle">TOWNHOUSE FARO</text></svg></div>
+      <div class="vov"></div><div class="vinfo"><div class="vname">Townhouse Faro</div><div class="vdet">4 hab · 10 huéspedes</div></div>
+      <div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$1.120/noche</div><div class="vprice-x">4 hab · Vista al mar y golf</div><button class="vbtn" onclick="openVModal(\'faro\')">Ver villa</button></div>
+    </div>
+
+    <div class="vc" data-size="med">
+      <div class="vpc-wrap"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#1f0d23"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".18" fill="rgba(174,133,96,.18)" text-anchor="middle">CANARIA</text></svg></div>
+      <div class="vov"></div><div class="vinfo"><div class="vname">Canaria</div><div class="vdet">4 hab · 8 huéspedes</div></div>
+      <div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$2.000/noche</div><div class="vprice-x">4 hab · Jardín tropical · Pileta</div><button class="vbtn" onclick="openVModal(\'canaria\')">Ver villa</button></div>
+    </div>
+
+    <div class="vc" data-size="med">
+      <div class="vpc-wrap"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#0c1f0c"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".18" fill="rgba(174,133,96,.18)" text-anchor="middle">VILLA COLINAS 21</text></svg></div>
+      <div class="vov"></div><div class="vinfo"><div class="vname">Villa Colinas 21</div><div class="vdet">4 hab · 10 huéspedes</div></div>
+      <div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$2.640/noche</div><div class="vprice-x">4 hab · Vista panorámica al resort</div><button class="vbtn" onclick="openVModal(\'colinas21\')">Ver villa</button></div>
+    </div>
+
+    <!-- 5 hab -->
+    <div class="vc" data-size="med">
+      <div class="vpc-wrap"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#111b0e"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".18" fill="rgba(174,133,96,.18)" text-anchor="middle">VILLA LOS LAGOS</text></svg></div>
+      <div class="vov"></div><div class="vinfo"><div class="vname">Villa Los Lagos</div><div class="vdet">5 hab · 10 huéspedes</div></div>
+      <div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$1.120/noche</div><div class="vprice-x">5 hab · Frente al lago · Pileta</div><button class="vbtn" onclick="openVModal(\'loslagos\')">Ver villa</button></div>
+    </div>
+
+    <div class="vc" data-size="med">
+      <div class="vpc-wrap"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#1c1400"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".18" fill="rgba(174,133,96,.18)" text-anchor="middle">VILLA LAGOS 94</text></svg></div>
+      <div class="vov"></div><div class="vinfo"><div class="vname">Villa Lagos 94</div><div class="vdet">5 hab · 10 huéspedes</div></div>
+      <div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$1.440/noche</div><div class="vprice-x">5 hab · Pileta · Jardín</div><button class="vbtn" onclick="openVModal(\'lagos94\')">Ver villa</button></div>
+    </div>
+
+    <div class="vc" data-size="med">
+      <div class="vpc-wrap"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#003535"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".18" fill="rgba(0,123,111,.25)" text-anchor="middle">VILLA LAGUNA</text></svg></div>
+      <div class="vov"></div><div class="vinfo"><div class="vname">Villa Laguna</div><div class="vdet">5 hab · 10 huéspedes</div></div>
+      <div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$2.240/noche</div><div class="vprice-x">5 hab · 5.5 baños · Laguna privada</div><button class="vbtn" onclick="openVModal(\'laguna\')">Ver villa</button></div>
+    </div>
+
+    <!-- 6 hab -->
+    <div class="vc" data-size="large">
+      <div class="vpc-wrap"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#0d1a2e"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".18" fill="rgba(174,133,96,.18)" text-anchor="middle">VILLA LOS RANCHOS</text></svg></div>
+      <div class="vov"></div><div class="vinfo"><div class="vname">Villa Los Ranchos</div><div class="vdet">6 hab · 14 huéspedes</div></div>
+      <div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$2.400/noche</div><div class="vprice-x">6 hab · Diseño colonial · Jardín</div><button class="vbtn" onclick="openVModal(\'ranchos\')">Ver villa</button></div>
+    </div>
+
+    <div class="vc" data-size="large">
+      <div class="vpc-wrap"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#1a1a2e"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".18" fill="rgba(66,96,122,.4)" text-anchor="middle">MIRALEJOS</text></svg></div>
+      <div class="vov"></div><div class="vinfo"><div class="vname">Miralejos</div><div class="vdet">6 hab · 16 huéspedes</div></div>
+      <div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$2.800/noche</div><div class="vprice-x">6 hab · Vista al mar · Pileta inf.</div><button class="vbtn" onclick="openVModal(\'miralejos\')">Ver villa</button></div>
+    </div>
+
+    <div class="vc" data-size="large">
+      <div class="vpc-wrap"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#1a0f00"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".18" fill="rgba(174,133,96,.2)" text-anchor="middle">VILLA BALI</text></svg></div>
+      <div class="vov"></div><div class="vinfo"><div class="vname">Villa Bali</div><div class="vdet">6 hab · 12 huéspedes</div></div>
+      <div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$3.200/noche</div><div class="vprice-x">6 hab · Jardín tropical · Chimenea</div><button class="vbtn" onclick="openVModal(\'bali\')">Ver villa</button></div>
+    </div>
+
+    <div class="vc" data-size="large">
+      <div class="vpc-wrap"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#1a1000"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".18" fill="rgba(174,133,96,.18)" text-anchor="middle">VILLA NARANJOS</text></svg></div>
+      <div class="vov"></div><div class="vinfo"><div class="vname">Villa Naranjos</div><div class="vdet">6 hab · 12 huéspedes</div></div>
+      <div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$3.200/noche</div><div class="vprice-x">6 hab · Jardín · Pileta</div><button class="vbtn" onclick="openVModal(\'naranjos\')">Ver villa</button></div>
+    </div>
+
+    <!-- 7 hab -->
+    <div class="vc" data-size="large">
+      <div class="vpc-wrap"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#0d2b22"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".18" fill="rgba(212,184,154,.18)" text-anchor="middle">VISTA MAR</text></svg></div>
+      <div class="vov"></div><div class="vinfo"><div class="vname">Vista Mar</div><div class="vdet">7 hab · 18 huéspedes</div></div>
+      <div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$2.000/noche</div><div class="vprice-x">7 hab · 12 baños · Vista al mar</div><button class="vbtn" onclick="openVModal(\'vistamar\')">Ver villa</button></div>
+    </div>
+
+    <!-- 8 hab -->
+    <div class="vc" data-size="large">
+      <div class="vpc-wrap"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#3a2510"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".18" fill="rgba(174,133,96,.2)" text-anchor="middle">DU CACIQUE</text></svg></div>
+      <div class="vov"></div><div class="vinfo"><div class="vname">Du Cacique</div><div class="vdet">8 hab · 14 huéspedes</div></div>
+      <div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$2.400/noche</div><div class="vprice-x">8 hab · 6 baños · Pileta desbordante</div><button class="vbtn" onclick="openVModal(\'cacique\')">Ver villa</button></div>
+    </div>
+
+    <div class="vc" data-size="large">
+      <div class="vpc-wrap"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#1a3a50"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".18" fill="rgba(109,195,205,.2)" text-anchor="middle">LA CATALINA</text></svg></div>
+      <div class="vov"></div><div class="vinfo"><div class="vname">La Catalina</div><div class="vdet">8 hab · 20 huéspedes</div></div>
+      <div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$3.600/noche</div><div class="vprice-x">8 hab · 10 baños · Vista al mar</div><button class="vbtn" onclick="openVModal(\'catalina\')">Ver villa</button></div>
+    </div>
+
+    <!-- 6 hab frente al mar -->
+    <div class="vc" data-size="large">
+      <div class="vpc-wrap"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#001a2e"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".18" fill="rgba(109,195,205,.2)" text-anchor="middle">PUNTA MINITAS</text></svg></div>
+      <div class="vov"></div><div class="vinfo"><div class="vname">Punta Minitas</div><div class="vdet">6 hab · 12 huéspedes</div></div>
+      <div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$4.400/noche</div><div class="vprice-x">6 hab · Frente al mar · Acceso privado a playa</div><button class="vbtn" onclick="openVModal(\'puntaminitas\')">Ver villa</button></div>
+    </div>
+
+    <!-- 10 hab -->
+    <div class="vc" data-size="large">
+      <div class="vpc-wrap"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#0a2016"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".15" fill="rgba(29,77,58,.4)" text-anchor="middle">CLARA ROYALE</text></svg></div>
+      <div class="vov"></div><div class="vinfo"><div class="vname">Clara Royale</div><div class="vdet">10 hab · 20 huéspedes</div></div>
+      <div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$12.000/noche</div><div class="vprice-x">10 hab · 12 baños · La más grande del resort</div><button class="vbtn" onclick="openVModal(\'royale\')">Ver villa</button></div>
+    </div>
+
   </div>
 </section>
 
@@ -977,21 +1141,21 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
     <div>
       <div class="fct">Servicios</div>
       <ul class="flinks">
-        <li><a href="https://mg-experiences.com/ver-todas-las-villas" target="_blank">Villas</a></li>
-        <li><a href="https://mg-experiences.com/embarcaciones" target="_blank">Embarcaciones</a></li>
-        <li><a href="https://mg-experiences.com/golf" target="_blank">Green Fee</a></li>
-        <li><a href="https://mg-experiences.com/traslados" target="_blank">Traslados</a></li>
-        <li><a href="https://mg-experiences.com/migración-vip" target="_blank">Migración VIP</a></li>
-        <li><a href="https://mg-experiences.com/accesorios" target="_blank">Accesorios</a></li>
+        <li><a href="#villas">Villas</a></li>
+        <li><a href="#embarcaciones">Embarcaciones</a></li>
+        <li><a href="#golf">Green Fee</a></li>
+        <li><a href="#traslados">Traslados</a></li>
+        <li><a href="#vip">Migración VIP</a></li>
+        <li><a href="#tu-experiencia">Armá tu estadía</a></li>
       </ul>
     </div>
     <div>
       <div class="fct">El Resort</div>
       <ul class="flinks">
-        <li><a href="https://mg-experiences.com/la-marina" target="_blank">La Marina</a></li>
-        <li><a href="https://mg-experiences.com/minitas-beach" target="_blank">Minitas Beach</a></li>
-        <li><a href="https://mg-experiences.com/chavon" target="_blank">Chavón</a></li>
-        <li><a href="https://mg-experiences.com/actividades" target="_blank">Actividades</a></li>
+        <li><a href="#servicios">Cómo funciona</a></li>
+        <li><a href="#golf">Golf</a></li>
+        <li><a href="#embarcaciones">Marina</a></li>
+        <li><a href="#nosotros">Quiénes somos</a></li>
       </ul>
     </div>
     <div>
@@ -1213,7 +1377,25 @@ const feeCDC = 27;
 // ── STATE
 let state = {step:1, nights:0, guests:8, villaId:null, svcs:{}, barcoId:null, golfId:null, aeropuertoId:null, openAccordion:null};
 
-// ── STEP NAVIGATION
+// ── VILLA CATALOG: select and jump to configurator
+function selectVillaAndGo(villaId){
+  state.villaId = villaId;
+  document.getElementById('tu-experiencia').scrollIntoView({behavior:'smooth', block:'start'});
+  // If already past step 1, jump to step 3
+  if(state.dateIn && state.dateOut && state.nights > 0){
+    setTimeout(()=>{ goStep(3); renderVillas(); }, 600);
+  }
+}
+
+// ── VILLA FILTER
+function filtVillas(size, btn){
+  document.querySelectorAll('.vfb').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('#villaGrid .vc').forEach(card=>{
+    if(size==='all') card.classList.remove('hidden');
+    else card.classList.toggle('hidden', card.dataset.size !== size);
+  });
+}
 function goStep(n){
   if(n>1){
     if(!state.dateIn||!state.dateOut){alert('Seleccioná las fechas de tu estadía.');return}
@@ -2016,7 +2198,372 @@ if(sessionStorage.getItem('mg_verified')==='1'){
   if(saved) gateState.userData=JSON.parse(saved);
 }
 </script>
-<!-- ══ VALENTINA FLOATING WIDGET ══ -->
+<!-- ══ VILLA DETAIL MODAL ══ -->
+<div id="vmodal-overlay" onclick="closeVModal()"></div>
+<div id="vmodal">
+  <div class="vm-close"><button class="vm-close-btn" onclick="closeVModal()">✕</button></div>
+  <div id="vmodal-content"></div>
+</div>
+
+<script>
+// ── VILLA DETAIL DATA ────────────────────────────────────────────────────────
+const villaData = {
+  townhouse: {
+    name: 'Townhouse Marina',
+    label: 'Frente al puerto deportivo',
+    img: 'https://img1.wsimg.com/isteam/ip/28e700c9-c37b-485d-b636-01fcfc9acb86/Mar-y-Palma_-Ocean-Front_villa.webp',
+    hab: 3, banos: '3.5', huespedes: 8, precio: 300, noche: true,
+    servicio: 'Incluye empleada doméstica de lun–vie, 8am–4pm (limpiar, lavar, planchar)',
+    descripcion: 'Te sentís libre, relajado y de vacaciones en el momento en que entrás. Los espacios abiertos y ventilados y una gran vista al puerto deportivo te dan la bienvenida. A pocos minutos a pie del supermercado, salón de belleza y tiendas de la Marina.',
+    notas: 'Incluye ropa de cama y toallas (personal y playa) para 8 huéspedes. Lavavajillas, microondas, cafetera, congelador, tostadora y barbacoa incluidos. Nuestro personal NO está incluido durante fines de semana, pero puede coordinarse de lunes a viernes de 8am a 1pm por cargo adicional. Todos los huéspedes abonan tarifa de limpieza de $50 por semana o fin de semana.',
+    amenities: ['Pileta privada','Vista al puerto deportivo','Wi-Fi en todas las habitaciones','Smart TV en sala','Cocina totalmente equipada','Barbacoa exterior','Ropa de cama y toallas','Aire acondicionado central','Supermercado a 5 min caminando','Cine y tiendas a pie','Acceso al resort completo'],
+    habitaciones: [
+      { nombre: 'Dormitorio principal', desc: '1 cama king, aire acondicionado, Wi-Fi, vestidor amplio y baño privado en suite.' },
+      { nombre: 'Dormitorio secundario', desc: '2 camas queen, mesa de noche, Wi-Fi y baño privado.' },
+      { nombre: 'Tercer dormitorio', desc: '1 cama full, mesa de noche, Wi-Fi y baño privado.' },
+      { nombre: 'Cocina', desc: 'Totalmente equipada con heladera, horno, cafetera, vajilla y utensilios.' },
+      { nombre: 'Sala de estar / comedor', desc: 'Smart TV, Wi-Fi, comedor para 8 y área de lectura adicional.' },
+      { nombre: 'Terraza', desc: 'Sala exterior, barbacoa y vista al puerto deportivo.' },
+    ]
+  },
+  altosChavon: {
+    name: 'Altos de Chavón',
+    label: 'Vista al río Chavón',
+    img: null, bgcolor: '#0f1f17',
+    hab: 2, banos: 2, huespedes: 4, precio: 280, noche: true,
+    servicio: 'Servicio de limpieza incluido',
+    descripcion: 'Villa íntima ubicada en el icónico pueblo medieval de Altos de Chavón, con vistas al río Chavón y la selva tropical. Perfecta para parejas o grupos pequeños que buscan privacidad y una experiencia cultural única dentro del resort.',
+    notas: 'Acceso a pie a las galerías de arte, el anfiteatro y los restaurantes de Altos de Chavón. Tranquilidad absoluta con todas las comodidades del resort.',
+    amenities: ['Vista al río Chavón','Pileta','Wi-Fi','Aire acondicionado','Cocina equipada','Servicio de limpieza','Acceso a galerías y anfiteatro','Ambiente colonial exclusivo'],
+    habitaciones: [
+      { nombre: 'Dormitorio principal', desc: '1 cama king, baño privado, vista al río.' },
+      { nombre: 'Segundo dormitorio', desc: '1 cama queen, baño privado.' },
+      { nombre: 'Sala y comedor', desc: 'Living amplio, Smart TV, Wi-Fi.' },
+    ]
+  },
+  faro: {
+    name: 'Townhouse Faro',
+    label: 'Vista al mar y al golf',
+    img: null, bgcolor: '#1a2e1a',
+    hab: 4, banos: 4, huespedes: 10, precio: 1120, noche: true,
+    servicio: 'Incluye empleada doméstica diaria',
+    descripcion: 'Elegante townhouse de cuatro habitaciones con vistas panorámicas al mar Caribe y los campos de golf. Espacios amplios y luminosos, perfectos para familias medianas o grupos de amigos que buscan confort y privacidad total.',
+    notas: 'Incluye ropa de cama y toallas para todos los huéspedes. Acceso directo a los campos de golf y a las instalaciones del resort.',
+    amenities: ['Pileta privada','Vista al mar y golf','Wi-Fi en toda la casa','Smart TV','Cocina totalmente equipada','Barbacoa','Aire acondicionado','Servicio de limpieza diario','4 baños completos'],
+    habitaciones: [
+      { nombre: 'Suite principal', desc: '1 cama king, baño en suite con tina, vestidor, vista al mar.' },
+      { nombre: 'Habitación 2', desc: '1 cama king, baño privado.' },
+      { nombre: 'Habitación 3', desc: '1 cama queen, baño privado.' },
+      { nombre: 'Habitación 4', desc: '2 camas twin, baño privado.' },
+    ]
+  },
+  loslagos: {
+    name: 'Villa Los Lagos',
+    label: 'Frente al lago',
+    img: null, bgcolor: '#111b0e',
+    hab: 5, banos: 5, huespedes: 10, precio: 1120, noche: true,
+    servicio: 'Servicio de limpieza y empleada incluidos',
+    descripcion: 'Villa de cinco habitaciones frente al lago, con acceso directo al agua y pileta privada. Amplio jardín tropical y espacios de entretenimiento al aire libre. Ideal para familias grandes o grupos que disfrutan de la naturaleza y el relax total.',
+    notas: 'Acceso privado al lago para actividades acuáticas. Personal de servicio incluido de lunes a viernes.',
+    amenities: ['Pileta privada','Frente al lago','Jardín tropical amplio','Wi-Fi','Smart TV','Cocina equipada','Barbacoa','Aire acondicionado','Servicio completo'],
+    habitaciones: [
+      { nombre: 'Suite principal', desc: '1 cama king, baño en suite, vista al lago.' },
+      { nombre: 'Habitaciones 2 y 3', desc: '1 cama king c/u, baño privado.' },
+      { nombre: 'Habitaciones 4 y 5', desc: '2 camas twin c/u, baño privado.' },
+    ]
+  },
+  lagos94: {
+    name: 'Villa Lagos 94',
+    label: '5 habitaciones · Lagos',
+    img: null, bgcolor: '#1c1400',
+    hab: 5, banos: 5, huespedes: 10, precio: 1440, noche: true,
+    servicio: 'Empleada doméstica incluida de lunes a viernes',
+    descripcion: 'Generosa villa de cinco habitaciones en la zona de Lagos, con gran pileta y jardín cuidado. Distribución ideal para grupos que buscan comodidad y espacio. Totalmente equipada con todo lo necesario para una estadía perfecta.',
+    notas: 'Tarifa de limpieza aplicable en estadías de fin de semana.',
+    amenities: ['Pileta privada','Jardín amplio','Wi-Fi','Smart TV','Cocina totalmente equipada','Barbacoa','Aire acondicionado','Servicio de limpieza','Cochera'],
+    habitaciones: [
+      { nombre: 'Suite principal', desc: '1 cama king, baño en suite, vestidor.' },
+      { nombre: 'Habitaciones 2 y 3', desc: '1 cama king c/u, baño privado.' },
+      { nombre: 'Habitaciones 4 y 5', desc: '1 cama queen c/u, baño privado.' },
+    ]
+  },
+  canaria: {
+    name: 'Canaria',
+    label: 'Jardín tropical · Privacidad total',
+    img: null, bgcolor: '#1f0d23',
+    hab: 4, banos: 4, huespedes: 8, precio: 2000, noche: true,
+    servicio: 'Servicio completo de staff incluido',
+    descripcion: 'Villa de diseño contemporáneo rodeada de vegetación tropical exuberante. La pileta desbordante y los jardines curados crean un ambiente de privacidad absoluta. Perfecta para quienes buscan desconectarse del mundo y disfrutar del lujo en silencio.',
+    notas: 'Personal completo incluido de lunes a sábado. Chef disponible por cargo adicional.',
+    amenities: ['Pileta desbordante','Jardín tropical privado','Sala de juegos','Wi-Fi alta velocidad','Smart TV 65"','Cocina de chef','Barbacoa premium','Aire acondicionado','Staff completo incluido'],
+    habitaciones: [
+      { nombre: 'Suite principal', desc: '1 cama king, baño en suite con tina de hidromasaje, terraza privada.' },
+      { nombre: 'Habitación 2', desc: '1 cama king, baño privado.' },
+      { nombre: 'Habitación 3', desc: '1 cama queen, baño privado.' },
+      { nombre: 'Habitación 4', desc: '2 camas twin, baño privado.' },
+    ]
+  },
+  colinas21: {
+    name: 'Villa Colinas 21',
+    label: 'Vistas panorámicas',
+    img: null, bgcolor: '#0c1f0c',
+    hab: 4, banos: 4, huespedes: 10, precio: 2640, noche: true,
+    servicio: 'Staff completo incluido',
+    descripcion: 'Posicionada en lo alto de las colinas del resort, con vistas 360° al mar, los campos de golf y la exuberante vegetación. Diseño moderno con amplias terrazas para disfrutar del amanecer y el atardecer caribeño.',
+    notas: 'Cancha de tenis privada disponible. Staff completo incluido.',
+    amenities: ['Vista panorámica 360°','Pileta infinita','Cancha de tenis privada','Sala de cine','Wi-Fi','Smart TV','Cocina gourmet','Barbacoa premium','Aire acondicionado','Staff completo'],
+    habitaciones: [
+      { nombre: 'Suite principal', desc: '1 cama king, baño en suite con tina y ducha lluvia, terraza con vista al mar.' },
+      { nombre: 'Habitaciones 2 y 3', desc: '1 cama king c/u, baño en suite.' },
+      { nombre: 'Habitación 4', desc: '2 camas queen, baño privado.' },
+    ]
+  },
+  laguna: {
+    name: 'Villa Laguna',
+    label: 'Con acceso a laguna privada',
+    img: null, bgcolor: '#003535',
+    hab: 5, banos: '5.5', huespedes: 10, precio: 2240, noche: true,
+    servicio: 'Staff completo incluido',
+    descripcion: 'Una de las villas más exclusivas del resort, con acceso directo a una laguna privada. La arquitectura integra los interiores con el paisaje acuático de manera única. Para quienes buscan algo verdaderamente distinto.',
+    notas: 'Kayaks y equipo acuático incluidos. Chef privado disponible bajo consulta.',
+    amenities: ['Acceso a laguna privada','Pileta','Kayaks incluidos','Wi-Fi','Smart TV','Cocina equipada','Barbacoa','Aire acondicionado','Staff completo'],
+    habitaciones: [
+      { nombre: 'Suite principal', desc: '1 cama king, vista a la laguna, baño en suite con tina.' },
+      { nombre: 'Habitaciones 2, 3 y 4', desc: '1 cama king o queen c/u, baño privado.' },
+      { nombre: 'Habitación 5', desc: '2 camas twin, baño privado.' },
+    ]
+  },
+  vistamar: {
+    name: 'Vista Mar',
+    label: 'Vista directa al Mar Caribe',
+    img: null, bgcolor: '#0d2b22',
+    hab: 7, banos: 12, huespedes: 18, precio: 2000, noche: true,
+    servicio: 'Staff completo de cocina y limpieza incluido',
+    descripcion: 'Una de las villas más grandes y espectaculares del resort, con vista directa al Mar Caribe desde todas las habitaciones principales. Amplio living, comedor para 20 personas, y espacios de entretenimiento de nivel hotelero. Para grupos grandes que no quieren renunciar a nada.',
+    notas: 'Chef privado incluido en estadías de 5+ noches. Cancha de tenis privada. Sala de cine en casa.',
+    amenities: ['Vista directa al Mar Caribe','Pileta infinita','Cancha de tenis','Sala de cine','Jacuzzi exterior','Wi-Fi alta velocidad','Smart TV en todas las hab.','Cocina de chef profesional','Barbacoa premium','Staff completo','Chef incluido','12 baños completos'],
+    habitaciones: [
+      { nombre: 'Suite master', desc: '1 cama king, sala privada, terraza con vista al mar, jacuzzi, baño en suite de mármol.' },
+      { nombre: 'Habitaciones 2, 3 y 4', desc: '1 cama king c/u, baño en suite, vista al mar.' },
+      { nombre: 'Habitaciones 5 y 6', desc: '1 cama queen c/u, baño privado.' },
+      { nombre: 'Habitación 7', desc: '2 camas twin, baño privado.' },
+    ]
+  },
+  ranchos: {
+    name: 'Villa Los Ranchos',
+    label: 'Diseño colonial · 6 habitaciones',
+    img: null, bgcolor: '#0d1a2e',
+    hab: 6, banos: 6, huespedes: 14, precio: 2400, noche: true,
+    servicio: 'Staff completo incluido',
+    descripcion: 'Villa de estilo colonial con gran personalidad, jardines exuberantes y pileta privada de gran tamaño. El diseño celebra la arquitectura tradicional del Caribe con techos de palma y espacios abiertos al exterior. Perfecta para celebraciones y grupos que buscan una experiencia auténtica.',
+    notas: 'Parrilla de leña incluida. Cancha de bochas y juegos de jardín disponibles.',
+    amenities: ['Pileta grande','Jardín colonial','Parrilla de leña','Rancho exterior','Wi-Fi','Smart TV','Cocina equipada','Barbacoa','Aire acondicionado','Staff completo','Juegos de jardín'],
+    habitaciones: [
+      { nombre: 'Suite principal', desc: '1 cama king, baño en suite, patio privado.' },
+      { nombre: 'Habitaciones 2 y 3', desc: '1 cama king c/u, baño privado.' },
+      { nombre: 'Habitaciones 4 y 5', desc: '1 cama queen c/u, baño privado.' },
+      { nombre: 'Habitación 6', desc: '2 camas twin, baño privado.' },
+    ]
+  },
+  miralejos: {
+    name: 'Miralejos',
+    label: 'Vista al mar · Pileta infinita',
+    img: null, bgcolor: '#1a1a2e',
+    hab: 6, banos: '6.5', huespedes: 16, precio: 2800, noche: true,
+    servicio: 'Staff completo incluido. Chef disponible bajo consulta.',
+    descripcion: 'Miralejos combina arquitectura de autor con vistas excepcionales al mar Caribe. La pileta infinita parece fundirse con el horizonte. Sus generosos espacios exteriores la convierten en la elección ideal para grupos que quieren vivir afuera tanto como adentro.',
+    notas: 'Kayaks disponibles. Acceso a playa privada Minitas a 10 min en carrito. Chef privado disponible.',
+    amenities: ['Vista al mar Caribe','Pileta infinita','Kayaks','Jacuzzi exterior','Wi-Fi alta velocidad','Smart TV','Cocina gourmet','Barbacoa','Aire acondicionado','Staff completo'],
+    habitaciones: [
+      { nombre: 'Suite master', desc: '1 cama king, terraza con vista al mar, jacuzzi, baño en suite de lujo.' },
+      { nombre: 'Suite 2', desc: '1 cama king, baño en suite, vista al mar.' },
+      { nombre: 'Habitaciones 3, 4 y 5', desc: '1 cama king o queen c/u, baño privado.' },
+      { nombre: 'Habitación 6', desc: '2 camas twin, baño privado.' },
+    ]
+  },
+  bali: {
+    name: 'Villa Bali',
+    label: 'Jardín tropical · Chimenea · Lujo total',
+    img: null, bgcolor: '#1a0f00',
+    hab: 6, banos: 6, huespedes: 12, precio: 3200, noche: true,
+    servicio: 'Staff completo de cocina y limpieza. Empleada doméstica de 8–4pm.',
+    descripcion: 'Villa Bali es una de las más hermosas del resort, con jardines increíbles, pileta espectacular y una chimenea que invita a las noches afuera. El espacio exterior está dividido en dos niveles donde los árboles, la terraza y las áreas verdes dan una sensación de calma absoluta. El espacio exterior de la piscina tiene vistas a la terraza donde está el fuego, el lugar perfecto para tomar un vino mientras disfrutás del atardecer.',
+    notas: 'Incluye servicio diario de empleada doméstica de 8–4pm (limpiar, lavar, planchar). Chef privado disponible. El comedor exterior tiene mesa para 12 personas con vista al Caribe.',
+    amenities: ['Pileta espectacular dos niveles','Chimenea exterior','Jardín tropical exuberante','Comedor exterior para 12','Vista al Caribe','Wi-Fi alta velocidad','Smart TV','Cocina de chef','Barbacoa premium','Aire acondicionado','Staff completo'],
+    habitaciones: [
+      { nombre: 'Suite master', desc: '1 cama king, baño en suite con tina de piedra, terraza privada con jardín.' },
+      { nombre: 'Habitaciones 2 y 3', desc: '1 cama king c/u, baño en suite.' },
+      { nombre: 'Habitaciones 4 y 5', desc: '1 cama queen c/u, baño privado.' },
+      { nombre: 'Habitación 6', desc: '2 camas twin, baño privado.' },
+    ]
+  },
+  naranjos: {
+    name: 'Villa Naranjos',
+    label: 'Jardín y pileta privada',
+    img: null, bgcolor: '#1a1000',
+    hab: 6, banos: 6, huespedes: 12, precio: 3200, noche: true,
+    servicio: 'Empleada doméstica y staff incluidos',
+    descripcion: 'Villa de seis habitaciones con arquitectura caribeña clásica. Jardín generoso con pileta privada y amplias terrazas cubiertas. Ideal para grupos que valoran el espacio y la privacidad, con todo el resort a pocos minutos en carrito.',
+    notas: 'Carritos de golf disponibles para traslados internos. Staff incluido de lunes a sábado.',
+    amenities: ['Pileta privada','Jardín amplio','Terrazas cubiertas','Wi-Fi','Smart TV','Cocina equipada','Barbacoa','Aire acondicionado','Staff incluido'],
+    habitaciones: [
+      { nombre: 'Suite principal', desc: '1 cama king, baño en suite, terraza privada.' },
+      { nombre: 'Habitaciones 2 y 3', desc: '1 cama king c/u, baño privado.' },
+      { nombre: 'Habitaciones 4 y 5', desc: '1 cama queen c/u, baño privado.' },
+      { nombre: 'Habitación 6', desc: '2 camas twin, baño compartido.' },
+    ]
+  },
+  cacique: {
+    name: 'Du Cacique',
+    label: 'Pileta desbordante · 8 habitaciones',
+    img: null, bgcolor: '#3a2510',
+    hab: 8, banos: 6, huespedes: 14, precio: 2400, noche: true,
+    servicio: 'Staff completo incluido. Chef bajo consulta.',
+    descripcion: 'Du Cacique es una de las villas más buscadas del resort. Su pileta desbordante, sus generosas terrazas y su diseño cálido y elegante la hacen perfecta para grupos grandes que quieren estar juntos sin resignar comodidad. Ocho habitaciones bien distribuidas para que cada uno tenga su espacio.',
+    notas: 'Sala de juegos incluida. Chef privado disponible por cargo adicional. Capacidad para celebraciones y eventos privados.',
+    amenities: ['Pileta desbordante','Terrazas múltiples','Sala de juegos','Wi-Fi','Smart TV','Cocina amplia','Barbacoa','Aire acondicionado','Staff completo','Apta para eventos'],
+    habitaciones: [
+      { nombre: 'Suite master', desc: '1 cama king, baño en suite con tina, terraza privada.' },
+      { nombre: 'Suites 2 y 3', desc: '1 cama king c/u, baño en suite.' },
+      { nombre: 'Habitaciones 4, 5 y 6', desc: '1 cama queen o king c/u, baño privado.' },
+      { nombre: 'Habitaciones 7 y 8', desc: '2 camas twin c/u, baño privado.' },
+    ]
+  },
+  catalina: {
+    name: 'La Catalina',
+    label: 'Vista al mar · 8 habitaciones · 20 huéspedes',
+    img: null, bgcolor: '#1a3a50',
+    hab: 8, banos: 10, huespedes: 20, precio: 3600, noche: true,
+    servicio: 'Staff completo de cocina y limpieza incluido',
+    descripcion: 'La Catalina es la villa por excelencia para grandes grupos. Ocho habitaciones, diez baños y una vista al mar Caribe que quita el aliento. Sus espacios de entretenimiento —exterior e interior— están pensados para que el grupo pueda estar junto sin sentirse encima. Una experiencia hotelera de cinco estrellas con la privacidad de una casa.',
+    notas: 'Chef privado incluido. Sala de cine. Cancha de paddle y tenis a metros. Ideal para celebraciones, retiros corporativos o reuniones familiares grandes.',
+    amenities: ['Vista al mar Caribe','Pileta infinita','Sala de cine','Cancha de paddle','Jacuzzi exterior','Wi-Fi alta velocidad','Smart TV en todas','Cocina de chef profesional','Barbacoa premium','Staff completo','Chef incluido','10 baños completos'],
+    habitaciones: [
+      { nombre: 'Suite master', desc: '1 cama king, sala privada, terraza con vista al mar, jacuzzi, baño de mármol.' },
+      { nombre: 'Suites 2, 3 y 4', desc: '1 cama king c/u, baño en suite, vista al mar.' },
+      { nombre: 'Habitaciones 5, 6 y 7', desc: '1 cama queen o king c/u, baño privado.' },
+      { nombre: 'Habitación 8', desc: '2 camas twin, baño privado.' },
+    ]
+  },
+  puntaminitas: {
+    name: 'Punta Minitas',
+    label: 'Frente al mar · Playa privada',
+    img: null, bgcolor: '#001a2e',
+    hab: 6, banos: 6, huespedes: 12, precio: 4400, noche: true,
+    servicio: 'Staff completo premium incluido. Chef bajo consulta.',
+    descripcion: 'La única villa del resort con acceso privado a la playa. Punta Minitas está literalmente al borde del Mar Caribe, con el sonido de las olas como banda de sonido permanente. Para quienes quieren la experiencia más exclusiva del resort, esta es la elección.',
+    notas: 'Acceso privado a playa de arena blanca. Equipo de snorkeling incluido. Chef privado disponible. Servicio de mayordomo incluido.',
+    amenities: ['Acceso privado a playa','Vista al mar','Pileta frente al mar','Equipo de snorkeling','Kayaks','Wi-Fi','Smart TV','Cocina gourmet','Barbacoa','Mayordomo incluido','Staff completo premium'],
+    habitaciones: [
+      { nombre: 'Suite master', desc: '1 cama king, terraza directa a la playa, baño en suite con tina.' },
+      { nombre: 'Suites 2 y 3', desc: '1 cama king c/u, baño en suite, vista al mar.' },
+      { nombre: 'Habitaciones 4 y 5', desc: '1 cama queen c/u, baño privado.' },
+      { nombre: 'Habitación 6', desc: '2 camas twin, baño privado.' },
+    ]
+  },
+  royale: {
+    name: 'Clara Royale',
+    label: 'La más grande del resort · 10 habitaciones',
+    img: null, bgcolor: '#0a2016',
+    hab: 10, banos: 12, huespedes: 20, precio: 12000, noche: true,
+    servicio: 'Staff completo premium. Chef ejecutivo y mayordomo incluidos.',
+    descripcion: 'Clara Royale es la villa definitiva en Casa de Campo. La más grande, la más exclusiva, la más completa. Diez habitaciones, doce baños, pileta olímpica, cancha privada, sala de cine, spa y todo el personal que necesitás para que la única pregunta sea qué querés comer. Para bodas, celebraciones de lujo o simplemente porque podés.',
+    notas: 'Incluye chef ejecutivo, mayordomo, sommelier y staff completo. Helipuerto privado disponible. Capacidad para eventos de hasta 150 personas. Precio varía por temporada y cantidad de noches.',
+    amenities: ['Pileta olímpica','Cancha de tenis privada','Sala de cine','Spa privado','Helipuerto','Jacuzzi y sauna','Wi-Fi fibra óptica','Smart TV 85" en salón','Cocina de chef ejecutivo','Bodega climatizada','Mayordomo 24hs','Chef ejecutivo incluido','Staff completo premium','Apta para eventos hasta 150 personas'],
+    habitaciones: [
+      { nombre: 'Suite presidencial', desc: '1 cama king tamaño plus, sala privada, terraza con vista al mar, jacuzzi privado, baño de mármol con tina de piedra.' },
+      { nombre: 'Suites 2, 3 y 4', desc: '1 cama king c/u, sala privada, baño en suite de lujo.' },
+      { nombre: 'Habitaciones 5, 6, 7 y 8', desc: '1 cama king o queen c/u, baño en suite.' },
+      { nombre: 'Habitaciones 9 y 10', desc: '2 camas twin c/u, baño privado. Ideales para niños.' },
+    ]
+  },
+};
+
+// ── OPEN / CLOSE MODAL ───────────────────────────────────────────────────────
+function openVModal(id) {
+  const d = villaData[id];
+  if (!d) return;
+  const overlay = document.getElementById('vmodal-overlay');
+  const modal   = document.getElementById('vmodal');
+  const content = document.getElementById('vmodal-content');
+
+  // Build image or placeholder
+  const imgHtml = d.img
+    ? `<img class="vm-img" src="${d.img}" alt="${d.name}">`
+    : `<div class="vm-img-placeholder" style="background:${d.bgcolor||'#0f1f17'}">
+         <svg viewBox="0 0 3 4" width="100%" height="100%" style="position:absolute;inset:0"><rect width="3" height="4" fill="${d.bgcolor||'#0f1f17'}"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".22" fill="rgba(174,133,96,.18)" text-anchor="middle">${d.name.toUpperCase()}</text></svg>
+       </div>`;
+
+  // Amenities grid
+  const amenHtml = d.amenities.map(a => `<div class="vm-am">${a}</div>`).join('');
+
+  // Habitaciones
+  const habHtml = d.habitaciones.map(h =>
+    `<div class="vm-room"><div class="vm-room-n">${h.nombre}</div><div class="vm-room-d">${h.desc}</div></div>`
+  ).join('');
+
+  content.innerHTML = `
+    ${imgHtml}
+    <div class="vm-body">
+      <div class="vm-label">${d.label}</div>
+      <h2 class="vm-title">${d.name}</h2>
+
+      <div class="vm-stats">
+        <div class="vm-stat"><div class="vm-stat-n">${d.hab}</div><div class="vm-stat-l">Habitaciones</div></div>
+        <div class="vm-stat"><div class="vm-stat-n">${d.banos}</div><div class="vm-stat-l">Baños</div></div>
+        <div class="vm-stat"><div class="vm-stat-n">${d.huespedes}</div><div class="vm-stat-l">Huéspedes</div></div>
+      </div>
+
+      <div class="vm-price-box">
+        <div>
+          <div class="vm-price-from">Precio por noche</div>
+          <div class="vm-price-night">${d.servicio}</div>
+        </div>
+        <div>
+          <div class="vm-price-val">$${d.precio.toLocaleString()}</div>
+          <div class="vm-price-night">USD / noche</div>
+        </div>
+      </div>
+
+      <div class="vm-section-t">Descripción</div>
+      <p class="vm-desc">${d.descripcion}</p>
+      ${d.notas ? `<p class="vm-note">${d.notas}</p>` : ''}
+
+      <div class="vm-section-t">Amenities</div>
+      <div class="vm-amenities">${amenHtml}</div>
+
+      <div class="vm-section-t">Habitaciones</div>
+      <div class="vm-rooms">${habHtml}</div>
+
+      <div class="vm-ctas">
+        <button class="vm-cta-main" onclick="selectVillaFromModal('${id}')">Elegir esta villa ✦</button>
+        <a href="https://wa.me/541164388699?text=${encodeURIComponent('Hola! Me interesa la '+d.name+'. ¿Pueden darme más info?')}" target="_blank" class="vm-cta-sec">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zm-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884zm8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Consultar por WhatsApp
+        </a>
+      </div>
+    </div>`;
+
+  overlay.classList.add('open');
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeVModal() {
+  document.getElementById('vmodal-overlay').classList.remove('open');
+  document.getElementById('vmodal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function selectVillaFromModal(id) {
+  closeVModal();
+  selectVillaAndGo(id);
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeVModal();
+});
+</script>
 <style>
   /* ── Widget button ── */
   #val-btn {
