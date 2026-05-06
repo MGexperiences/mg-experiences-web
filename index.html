@@ -1000,24 +1000,24 @@ function onNl(e){e.preventDefault();const b=document.getElementById('nlBtn');b.t
 
 // ── VILLAS (USD/noche)
 const villas = [
-  {id:'townhouse',    name:'Townhouse Marina',    hab:3,  guests:8,  price:427,   url:'https://mg-experiences.com/townhouse-marina'},
-  {id:'altosChavon',  name:'Altos de Chavon',     hab:2,  guests:4,  price:332,   url:'https://mg-experiences.com/altos-de-chavon'},
-  {id:'faro',         name:'Townhouse Faro',      hab:4,  guests:10, price:1326,  url:'https://mg-experiences.com/townhouse-faro'},
-  {id:'loslagos',     name:'Villa Los Lagos',     hab:5,  guests:10, price:1326,  url:'https://mg-experiences.com/villa-laguna'},
-  {id:'lagos94',      name:'Villa Lagos 94',      hab:5,  guests:10, price:1705,  url:'https://mg-experiences.com/villa-laguna'},
-  {id:'canaria',      name:'Canaria',             hab:4,  guests:8,  price:2368,  url:'https://mg-experiences.com/canaria'},
-  {id:'vistamar',     name:'Vista Mar',           hab:7,  guests:18, price:2368,  url:'https://mg-experiences.com/vista-mar'},
-  {id:'laguna',       name:'Villa Laguna',        hab:5,  guests:10, price:2652,  url:'https://mg-experiences.com/villa-laguna'},
-  {id:'cacique',      name:'Du Cacique',          hab:8,  guests:14, price:2842,  url:'https://mg-experiences.com/du-cacique'},
-  {id:'ranchos',      name:'Villa Los Ranchos',   hab:6,  guests:14, price:2842,  url:'https://mg-experiences.com/villa-los-ranchos-1'},
-  {id:'colinas21',    name:'Villa Colinas 21',    hab:4,  guests:10, price:3126,  url:'https://mg-experiences.com/villa-colinas'},
-  {id:'laplaya',      name:'La Playa',            hab:3,  guests:8,  price:3315,  url:'https://mg-experiences.com/la-playa'},
-  {id:'miralejos',    name:'Miralejos',           hab:6,  guests:16, price:3315,  url:'https://mg-experiences.com/miralejos'},
-  {id:'bali',         name:'Villa Bali',          hab:6,  guests:12, price:3789,  url:'https://mg-experiences.com/villa-bali'},
-  {id:'naranjos',     name:'Villa Naranjos',      hab:6,  guests:12, price:3789,  url:'https://mg-experiences.com/villa-naranjos'},
-  {id:'catalina',     name:'La Catalina',         hab:8,  guests:20, price:4262,  url:'https://mg-experiences.com/la-catalina-1'},
-  {id:'puntaminitas', name:'Punta Minitas',       hab:6,  guests:12, price:5209,  url:'https://mg-experiences.com/punta-minitas'},
-  {id:'royale',       name:'Clara Royale',        hab:10, guests:20, price:14206, url:'https://mg-experiences.com/clara-royale'},
+  {id:'townhouse',    name:'Townhouse Marina',    hab:3,  guests:8,  price:427,   display:'Townhouse Marina | 3 hab / 8 pax'},
+  {id:'altosChavon',  name:'Altos de Chavon',     hab:2,  guests:4,  price:332,   display:'Altos de Chavon'},
+  {id:'faro',         name:'Townhouse Faro',      hab:4,  guests:10, price:1326,  display:'Townhouse Faro | 4 hab / 10 pax'},
+  {id:'loslagos',     name:'Villa Los Lagos',     hab:5,  guests:10, price:1326,  display:'Villa Los Lagos'},
+  {id:'lagos94',      name:'Villa Lagos 94',      hab:5,  guests:10, price:1705,  display:'Villa Lagos 94 | 5 hab'},
+  {id:'canaria',      name:'Canaria',             hab:4,  guests:8,  price:2368,  display:'Canaria | 4 hab / 8 pax'},
+  {id:'vistamar',     name:'Vista Mar',           hab:7,  guests:18, price:2368,  display:'Vista Mar | 7 hab / 18 pax'},
+  {id:'laguna',       name:'Villa Laguna',        hab:5,  guests:10, price:2652,  display:'Villa Laguna | 5 hab / 10 pax'},
+  {id:'cacique',      name:'Du Cacique',          hab:8,  guests:14, price:2842,  display:'Du Cacique | 8 hab / 14 pax'},
+  {id:'ranchos',      name:'Villa Los Ranchos',   hab:6,  guests:14, price:2842,  display:'Villa Los Ranchos | 6 hab / 14 pax'},
+  {id:'colinas21',    name:'Villa Colinas 21',    hab:4,  guests:10, price:3126,  display:'Villa Colinas 21'},
+  {id:'laplaya',      name:'La Playa',            hab:3,  guests:8,  price:3315,  display:'La Playa | 3 hab / 8 pax'},
+  {id:'miralejos',    name:'Miralejos',           hab:6,  guests:16, price:3315,  display:'Miralejos | 6 hab / 16 pax'},
+  {id:'bali',         name:'Villa Bali',          hab:6,  guests:12, price:3789,  display:'Villa Bali | 6 hab / 12 pax'},
+  {id:'naranjos',     name:'Villa Naranjos',      hab:6,  guests:12, price:3789,  display:'Villa Naranjos'},
+  {id:'catalina',     name:'La Catalina',         hab:8,  guests:20, price:4262,  display:'La Catalina | 8 hab / 20 pax'},
+  {id:'puntaminitas', name:'Punta Minitas',       hab:6,  guests:12, price:5209,  display:'Punta Minitas vista al mar'},
+  {id:'royale',       name:'Clara Royale',        hab:10, guests:20, price:14206, display:'Clara Royale | 10 hab / 20 pax'},
 ];
 
 // ── SERVICIOS EN VILLA (USD/día)
@@ -1032,120 +1032,120 @@ const villaServices = [
 
 // ── TRASLADOS (USD ida+vuelta)
 const traslados = [
-  {id:'suv2',  name:'SUV',           pax:'2 pax',  price:242},
-  {id:'suv6',  name:'Full Size SUV', pax:'6 pax',  price:471},
-  {id:'van6',  name:'Minivan',       pax:'6 pax',  price:377},
-  {id:'van11', name:'Van',           pax:'11 pax', price:471},
-  {id:'bus16', name:'Mini Bus',      pax:'16 pax', price:530},
+  {id:'suv2',  name:'SUV',           pax:'2 pax',  price:242, display:'SUV | 2 pax'},
+  {id:'suv6',  name:'Full Size SUV', pax:'6 pax',  price:471, display:'Full Size SUV | 6 pax'},
+  {id:'van6',  name:'Minivan',       pax:'6 pax',  price:377, display:'Minivan | 6 pax'},
+  {id:'van11', name:'Van',           pax:'11 pax', price:471, display:'Van | 11 pax'},
+  {id:'bus16', name:'Mini Bus',      pax:'16 pax', price:530, display:'MiniBus | 16 pax'},
 ];
 
 // ── CARRITOS (USD/día)
 const carritos = [
-  {id:'carrito4', name:'Carrito de golf — 4 pax', price:69,  unit:'día'},
-  {id:'carrito6', name:'Carrito de golf — 6 pax', price:94,  unit:'día'},
+  {id:'carrito4', name:'Carrito de golf — 4 pax', price:69,  unit:'día', display:'Carrito de golf | 4 pax'},
+  {id:'carrito6', name:'Carrito de golf — 6 pax', price:94,  unit:'día', display:'Carrito de golf | 6 pax'},
 ];
 
 // ── EMBARCACIONES (USD/salida)
 const barcos = [
-  {id:'bw305palm', name:'Boston Whaler 305 — Palmillas', pax:'hasta 9',  price:1553},
-  {id:'bw305cat',  name:'Boston Whaler 305 — Catalina',  pax:'hasta 9',  price:1553},
-  {id:'bw305saon', name:'Boston Whaler 305 — Saona',     pax:'hasta 9',  price:2259},
-  {id:'tiara38p',  name:'Tiara 38LS — Palmillas',        pax:'10 a 12',  price:1765},
-  {id:'tiara38s',  name:'Tiara 38LS — Saona',            pax:'10 a 12',  price:2942},
-  {id:'azimuth',   name:'Azimuth Flybridge 55',          pax:'13 a 16',  price:4706},
-  {id:'catamaran', name:'Catamarán',                     pax:'17 a 35',  price:2589},
+  {id:'bw305palm', name:'Boston Whaler 305 — Palmillas', pax:'hasta 9',  price:1553, display:'Boston Whaler 305 | Palmillas'},
+  {id:'bw305cat',  name:'Boston Whaler 305 — Catalina',  pax:'hasta 9',  price:1553, display:'Boston Whaler 305 | Catalina'},
+  {id:'bw305saon', name:'Boston Whaler 305 — Saona',     pax:'hasta 9',  price:2259, display:'Boston Whaler 305 | Saona'},
+  {id:'tiara38p',  name:'Tiara 38LS — Palmillas',        pax:'10 a 12',  price:1765, display:'Tiara 38LS | Palmillas'},
+  {id:'tiara38s',  name:'Tiara 38LS — Saona',            pax:'10 a 12',  price:2942, display:'Tiara 38LS | Saona'},
+  {id:'azimuth',   name:'Azimuth Flybridge 55',          pax:'13 a 16',  price:4706, display:'Azimuth Flybridge 55 | Salida general'},
+  {id:'catamaran', name:'Catamarán',                     pax:'17 a 35',  price:2589, display:'Catamaran | Salida general'},
 ];
 
 // ── ACTIVIDADES — organizadas por subcategoría
 const actividades = {
   'Golf': [
-    {id:'teeth', name:'Teeth of the Dog', price:732, unit:'persona', note:'18% tax inc.'},
-    {id:'dye',   name:'Dye Fore',         price:620, unit:'persona', note:'18% tax inc.'},
-    {id:'links', name:'Links',            price:509, unit:'persona', note:'18% tax inc.'},
+    {id:'teeth', name:'Teeth of the Dog', price:732, unit:'persona', note:'18% tax inc.', display:'Golf: Teeth of the Dog'},
+    {id:'dye',   name:'Dye Fore',         price:620, unit:'persona', note:'18% tax inc.', display:'Golf: Dye Fore'},
+    {id:'links', name:'Links',            price:509, unit:'persona', note:'18% tax inc.', display:'Golf: Links'},
   ],
   'Ecuestre': [
-    {id:'cab30',   name:'Paseo a caballo 1/2h',           price:43,  unit:'persona'},
-    {id:'cab60',   name:'Paseo a caballo 1h',             price:79,  unit:'persona'},
-    {id:'cab120',  name:'Paseo a caballo 2h',             price:127, unit:'persona'},
-    {id:'ponies',  name:'Ponies niños 1/2h',              price:37,  unit:'niño'},
-    {id:'equ30',   name:'Lección equitación/salto 1/2h',  price:85,  unit:'persona'},
-    {id:'equ60',   name:'Lección equitación/salto 1h',    price:132, unit:'persona'},
-    {id:'polo',    name:'Lección polo profesional',       price:211, unit:'persona/h'},
-    {id:'poloas',  name:'Asistente polo',                 price:127, unit:'persona/h'},
-    {id:'donkey',  name:'Donkey Polo',                    price:74,  unit:'persona/h'},
-    {id:'ranch',   name:'Tour ranchos',                   price:179, unit:'persona'},
-    {id:'ranchp',  name:'Tour ranchos con picnic',        price:253, unit:'persona'},
+    {id:'cab30',   name:'Paseo a caballo 1/2h',          price:43,  unit:'persona',   display:'Ecuestre: Paseo a caballo 1/2h'},
+    {id:'cab60',   name:'Paseo a caballo 1h',            price:79,  unit:'persona',   display:'Ecuestre: Paseo a caballo 1h'},
+    {id:'cab120',  name:'Paseo a caballo 2h',            price:127, unit:'persona',   display:'Ecuestre: Paseo a caballo 2h'},
+    {id:'ponies',  name:'Ponies niños 1/2h',             price:37,  unit:'niño',      display:'Ecuestre: Ponies niños 1/2h'},
+    {id:'equ30',   name:'Lección equitación/salto 1/2h', price:85,  unit:'persona',   display:'Ecuestre: Lección equitación/salto 1/2h'},
+    {id:'equ60',   name:'Lección equitación/salto 1h',   price:132, unit:'persona',   display:'Ecuestre: Lección equitación/salto 1h'},
+    {id:'polo',    name:'Lección polo profesional',      price:211, unit:'persona/h', display:'Ecuestre: Lección polo profesional'},
+    {id:'poloas',  name:'Asistente polo',                price:127, unit:'persona/h', display:'Ecuestre: Asistente polo'},
+    {id:'donkey',  name:'Donkey Polo',                   price:74,  unit:'persona/h', display:'Ecuestre: Donkey Polo'},
+    {id:'ranch',   name:'Tour ranchos',                  price:179, unit:'persona',   display:'Ecuestre: Tour ranchos'},
+    {id:'ranchp',  name:'Tour ranchos con picnic',       price:253, unit:'persona',   display:'Ecuestre: Tour ranchos con picnic'},
   ],
   'Tenis': [
-    {id:'ten_dia',  name:'Cancha diurna',                      price:42,  unit:'hora'},
-    {id:'ten_noc',  name:'Cancha nocturna',                    price:52,  unit:'hora'},
-    {id:'ten_dir',  name:'Clase privada con Director',         price:168, unit:'hora'},
-    {id:'ten_pro',  name:'Clase con Pro',                      price:79,  unit:'hora'},
-    {id:'ten_semi', name:'Clase semiprivada con Pro (2 pax)',  price:100, unit:'hora'},
-    {id:'ten_head', name:'Clase con Head Pro (2 pax)',         price:216, unit:'hora'},
-    {id:'ten_comp', name:'Compañero de práctica',              price:69,  unit:'hora'},
-    {id:'ten_clin', name:'Clínica grupal',                     price:48,  unit:'p/hora'},
-    {id:'ten_clinn',name:'Clínica grupal niños',               price:37,  unit:'p/hora'},
-    {id:'ten_maq',  name:'Máquina de pelotas',                 price:31,  unit:'uso'},
-    {id:'ten_raq',  name:'Alquiler raqueta',                   price:20,  unit:'uso'},
+    {id:'ten_dia',  name:'Cancha diurna',                     price:42,  unit:'hora',   display:'Tenis: Cancha diurna'},
+    {id:'ten_noc',  name:'Cancha nocturna',                   price:52,  unit:'hora',   display:'Tenis: Cancha nocturna'},
+    {id:'ten_dir',  name:'Clase privada con Director',        price:168, unit:'hora',   display:'Tenis: Clase privada con Director'},
+    {id:'ten_pro',  name:'Clase con Pro',                     price:79,  unit:'hora',   display:'Tenis: Clase con Pro'},
+    {id:'ten_semi', name:'Clase semiprivada con Pro (2 pax)', price:100, unit:'hora',   display:'Tenis: Clase semiprivada con Pro (2 pax)'},
+    {id:'ten_head', name:'Clase con Head Pro (2 pax)',        price:216, unit:'hora',   display:'Tenis: Clase con Head Pro (2 pax)'},
+    {id:'ten_comp', name:'Compañero de práctica',             price:69,  unit:'hora',   display:'Tenis: Compañero de práctica'},
+    {id:'ten_clin', name:'Clínica grupal',                    price:48,  unit:'p/hora', display:'Tenis: Clínica grupal'},
+    {id:'ten_clinn',name:'Clínica grupal niños',              price:37,  unit:'p/hora', display:'Tenis: Clínica grupal niños'},
+    {id:'ten_maq',  name:'Máquina de pelotas',                price:31,  unit:'uso',    display:'Tenis: Máquina de pelotas'},
+    {id:'ten_raq',  name:'Alquiler raqueta',                  price:20,  unit:'uso',    display:'Tenis: Alquiler raqueta'},
   ],
   'Pádel': [
-    {id:'pad_dia',  name:'Cancha diurna',                        price:48,  unit:'hora'},
-    {id:'pad_noc',  name:'Cancha nocturna',                      price:52,  unit:'hora'},
-    {id:'pad_dir',  name:'Clase privada con Director',           price:105, unit:'hora'},
-    {id:'pad_pro',  name:'Clase con Pro',                        price:94,  unit:'hora'},
-    {id:'pad_semi', name:'Clase semiprivada con Pro',            price:115, unit:'hora'},
-    {id:'pad_clin', name:'Clínica grupal',                       price:42,  unit:'p/hora'},
-    {id:'pad_clind',name:'Clínica grupal con Director',          price:48,  unit:'p/hora'},
-    {id:'pad_clinn',name:'Clínica grupal niños',                 price:42,  unit:'p/hora'},
-    {id:'pad_comp', name:'Compañero de práctica',                price:42,  unit:'p/hora'},
-    {id:'pad_maq',  name:'Máquina de pelotas',                   price:58,  unit:'uso'},
-    {id:'pad_raq',  name:'Alquiler raqueta',                     price:11,  unit:'uso'},
+    {id:'pad_dia',  name:'Cancha diurna',              price:48,  unit:'hora',   display:'Padel: Cancha diurna'},
+    {id:'pad_noc',  name:'Cancha nocturna',            price:52,  unit:'hora',   display:'Padel: Cancha nocturna'},
+    {id:'pad_dir',  name:'Clase privada con Director', price:105, unit:'hora',   display:'Padel: Clase privada con Director'},
+    {id:'pad_pro',  name:'Clase con Pro',              price:94,  unit:'hora',   display:'Padel: Clase con Pro'},
+    {id:'pad_semi', name:'Clase semiprivada con Pro',  price:115, unit:'hora',   display:'Padel: Clase semiprivada con Pro'},
+    {id:'pad_clin', name:'Clínica grupal',             price:42,  unit:'p/hora', display:'Padel: Clínica grupal pádel'},
+    {id:'pad_clind',name:'Clínica grupal con Director',price:48,  unit:'p/hora', display:'Padel: Clínica grupal pádel con Director'},
+    {id:'pad_clinn',name:'Clínica grupal niños',       price:42,  unit:'p/hora', display:'Padel: Clínica grupal niños'},
+    {id:'pad_comp', name:'Compañero de práctica',      price:42,  unit:'p/hora', display:'Padel: Compañero de práctica'},
+    {id:'pad_maq',  name:'Máquina de pelotas',         price:58,  unit:'uso',    display:'Padel: Máquina de pelotas'},
+    {id:'pad_raq',  name:'Alquiler raqueta',           price:11,  unit:'uso',    display:'Padel: Alquiler raqueta'},
   ],
   'Tiro': [
-    {id:'skeet',  name:'Skeet & Trap',      price:53,  unit:'persona'},
-    {id:'five',   name:'Five Stand',        price:58,  unit:'persona'},
-    {id:'caza',   name:'Simulación cacería',price:137, unit:'persona'},
+    {id:'skeet', name:'Skeet & Trap',       price:53,  unit:'persona', display:'Tiro: Skeet & Trap'},
+    {id:'five',  name:'Five Stand',         price:58,  unit:'persona', display:'Tiro: Five Stand'},
+    {id:'caza',  name:'Simulación cacería', price:137, unit:'persona', display:'Tiro: Simulación cacería'},
   ],
   'Río Chavón': [
-    {id:'kayak2', name:'Kayak doble', price:64, unit:'persona'},
-    {id:'kayak1', name:'Kayak simple',price:48, unit:'persona'},
+    {id:'kayak2', name:'Kayak doble', price:64, unit:'persona', display:'Río Chavón: Kayak doble'},
+    {id:'kayak1', name:'Kayak simple',price:48, unit:'persona', display:'Río Chavón: Kayak simple'},
   ],
   'Cumayasa': [
-    {id:'zip_a',  name:'Zipline adultos', price:92,  unit:'persona'},
-    {id:'zip_n',  name:'Zipline niños',   price:63,  unit:'niño'},
-    {id:'bug1',   name:'Buggies simple',  price:120, unit:'persona'},
-    {id:'bug2',   name:'Buggies doble',   price:92,  unit:'persona'},
+    {id:'zip_a', name:'Zipline adultos', price:92,  unit:'persona', display:'Cumayasa: Zipline adultos'},
+    {id:'zip_n', name:'Zipline niños',   price:63,  unit:'niño',    display:'Cumayasa: Zipline niños'},
+    {id:'bug1',  name:'Buggies simple',  price:120, unit:'persona', display:'Cumayasa: Buggies simple'},
+    {id:'bug2',  name:'Buggies doble',   price:92,  unit:'persona', display:'Cumayasa: Buggies doble'},
   ],
   'Mar': [
-    {id:'cat_a',  name:'Isla Catalina tour grupal (adulto)', price:51, unit:'adulto'},
-    {id:'cat_n',  name:'Isla Catalina tour grupal (niño)',   price:32, unit:'niño'},
-    {id:'snork',  name:'Snorkeling Minitas Beach',           price:20, unit:'día'},
-    {id:'kmin',   name:'Kayak Minitas Beach',                price:27, unit:'hora'},
-    {id:'kminm',  name:'Kayak Minitas Beach (máximo)',       price:37, unit:'hora'},
-    {id:'banana', name:'Banana boat',                        price:22, unit:'persona'},
-    {id:'hobie',  name:'Hobie Wave',                         price:53, unit:'hora'},
+    {id:'cat_a',  name:'Isla Catalina tour grupal (adulto)', price:51, unit:'adulto',  display:'Mar: Isla Catalina tour grupal adulto'},
+    {id:'cat_n',  name:'Isla Catalina tour grupal (niño)',   price:32, unit:'niño',    display:'Mar: Isla Catalina tour grupal niño'},
+    {id:'snork',  name:'Snorkeling Minitas Beach',           price:20, unit:'día',     display:'Mar: Snorkeling Minitas Beach'},
+    {id:'kmin',   name:'Kayak Minitas Beach',                price:27, unit:'hora',    display:'Mar: Kayak Minitas Beach'},
+    {id:'kminm',  name:'Kayak Minitas Beach (máximo)',       price:37, unit:'hora',    display:'Mar: Kayak Minitas Beach (máximo)'},
+    {id:'banana', name:'Banana boat',                        price:22, unit:'persona', display:'Mar: Banana boat'},
+    {id:'hobie',  name:'Hobie Wave',                         price:53, unit:'hora',    display:'Mar: Hobie Wave'},
   ],
   'Cigars': [
-    {id:'cigar',  name:'Cigar Factory Tour', price:22, unit:'persona'},
+    {id:'cigar', name:'Cigar Factory Tour', price:22, unit:'persona', display:'Cigar: Cigar Factory Tour'},
   ],
   'Buceo': [
-    {id:'buceo_cat_md',  name:'Excursión medio día Catalina',              price:74,  unit:'persona'},
-    {id:'buceo_bay',     name:'Buceo Catalina doble tanque — Bayahibe',    price:79,  unit:'persona'},
-    {id:'buceo_pca',     name:'Buceo Catalina doble tanque — Punta Cana',  price:122, unit:'persona'},
-    {id:'buceo_upg',     name:'Buceo Bayahibe upgrade desde Punta Cana',   price:91,  unit:'persona'},
-    {id:'buceo_alm',     name:'Buceo Catalina + almuerzo',                 price:200, unit:'persona'},
-    {id:'padi',          name:'Curso PADI Open Water (3 días)',            price:509, unit:'persona'},
+    {id:'buceo_cat_md', name:'Excursión medio día Catalina',             price:74,  unit:'persona', display:'ScubaCaribe: Excursión medio día Catalina'},
+    {id:'buceo_bay',    name:'Buceo Catalina doble tanque — Bayahibe',   price:79,  unit:'persona', display:'ScubaCaribe: Buceo Catalina doble tanque desde Bayahibe'},
+    {id:'buceo_pca',    name:'Buceo Catalina doble tanque — Punta Cana', price:122, unit:'persona', display:'ScubaCaribe: Buceo Catalina doble tanque desde Punta Cana'},
+    {id:'buceo_upg',    name:'Buceo Bayahibe upgrade desde Punta Cana',  price:91,  unit:'persona', display:'ScubaCaribe: Buceo Bayahibe upgrade desde Punta Cana'},
+    {id:'buceo_alm',    name:'Buceo Catalina + almuerzo',                price:200, unit:'persona', display:'ScubaCaribe: Excursión buceo Catalina doble tanque + almuerzo'},
+    {id:'padi',         name:'Curso PADI Open Water (3 días)',           price:509, unit:'persona', display:'ScubaCaribe: Curso PADI Open Water (3 días)'},
   ],
   'Spa': [
-    {id:'spa_wj',   name:'Wellness Journeys 110min',      price:492, unit:'persona', note:'tax + serv. inc.'},
-    {id:'spa_love', name:'Art of Self-Love 170min',       price:667, unit:'persona', note:'tax + serv. inc.'},
-    {id:'spa_m50',  name:'Masaje 50min (desde)',          price:250, unit:'persona', note:'tax + serv. inc.'},
-    {id:'spa_m80',  name:'Masaje 80min',                  price:371, unit:'persona', note:'tax + serv. inc.'},
-    {id:'spa_fac',  name:'Faciales (desde)',              price:250, unit:'persona', note:'tax + serv. inc.'},
-    {id:'spa_hfp',  name:'HydraFacial Platinum',         price:573, unit:'persona', note:'tax + serv. inc.'},
-    {id:'spa_hfd',  name:'HydraFacial Deluxe',           price:438, unit:'persona', note:'tax + serv. inc.'},
-    {id:'spa_corp', name:'Tratamientos corporales (desde)',price:250,unit:'persona', note:'tax + serv. inc.'},
+    {id:'spa_wj',   name:'Wellness Journeys 110min',        price:492, unit:'persona', note:'tax+serv.inc.', display:'Spa: Wellness Journeys 110min'},
+    {id:'spa_love', name:'Art of Self-Love 170min',         price:667, unit:'persona', note:'tax+serv.inc.', display:'Spa: Art of Self-Love 170min'},
+    {id:'spa_m50',  name:'Masaje 50min (desde)',            price:250, unit:'persona', note:'tax+serv.inc.', display:'Spa: Masaje 50min (desde)'},
+    {id:'spa_m80',  name:'Masaje 80min',                    price:371, unit:'persona', note:'tax+serv.inc.', display:'Spa: Masaje 80min'},
+    {id:'spa_fac',  name:'Faciales (desde)',                price:250, unit:'persona', note:'tax+serv.inc.', display:'Spa: Faciales (desde)'},
+    {id:'spa_hfp',  name:'HydraFacial Platinum',           price:573, unit:'persona', note:'tax+serv.inc.', display:'Spa: HydraFacial Platinum'},
+    {id:'spa_hfd',  name:'HydraFacial Deluxe',             price:438, unit:'persona', note:'tax+serv.inc.', display:'Spa: HydraFacial Deluxe'},
+    {id:'spa_corp', name:'Tratamientos corporales (desde)', price:250, unit:'persona', note:'tax+serv.inc.', display:'Spa: Tratamientos corporales (desde)'},
   ],
 };
 
@@ -1463,13 +1463,13 @@ function buildPresupuestoData(){
     items.push({
       categoria:'Villa',
       descripcion:villa.name,
-      display:villa.name+(villa.hab?` | ${villa.hab} hab / ${villa.guests} pax`:''),
+      display: villa.display || villa.name,
       cantidad:nights,
       unidad:'noche'
     });
   }
 
-  // Fee CDC (adultos × noches — asumimos todos adultos si no hay distinción)
+  // Fee CDC
   items.push({
     categoria:'Fee CDC',
     descripcion:'Fee Casa de Campo',
@@ -1484,8 +1484,8 @@ function buildPresupuestoData(){
     if(t) items.push({
       categoria:'Traslado',
       descripcion:t.name,
-      display:t.name+' | '+t.pax,
-      cantidad:2, // ida + vuelta
+      display: t.display || t.name,
+      cantidad:2,
       unidad:'ida+vuelta'
     });
   }
@@ -1495,7 +1495,7 @@ function buildPresupuestoData(){
     if(state.svcs[c.id]) items.push({
       categoria:'Carrito',
       descripcion:c.name,
-      display:c.name,
+      display: c.display || c.name,
       cantidad:1,
       unidad:'dia'
     });
@@ -1505,21 +1505,21 @@ function buildPresupuestoData(){
   if(state.barcoId){
     const b=barcos.find(x=>x.id===state.barcoId);
     if(b) items.push({
-      categoria:'Embarcacion',
+      categoria:'Embarcación',
       descripcion:b.name,
-      display:b.name,
+      display: b.display || b.name,
       cantidad:1,
       unidad:'salida'
     });
   }
 
-  // Aeropuerto
+  // Aeropuerto VIP → Actividad
   if(state.aeropuertoId){
     const a=aeropuerto.find(x=>x.id===state.aeropuertoId);
     if(a) items.push({
       categoria:'Actividad',
       descripcion:a.name,
-      display:a.name,
+      display: a.name,
       cantidad:guests,
       unidad:'persona'
     });
@@ -1530,7 +1530,7 @@ function buildPresupuestoData(){
     if(state.svcs[s.id]) items.push({
       categoria:'Servicio Villa',
       descripcion:s.name,
-      display:s.name,
+      display: s.name,
       cantidad:1,
       unidad:s.unit
     });
@@ -1542,8 +1542,8 @@ function buildPresupuestoData(){
       if(state.svcs[act.id]) items.push({
         categoria:'Actividad',
         descripcion:act.name,
-        display:act.name,
-        cantidad:act.unit==='persona'||act.unit==='adulto'||act.unit==='niño'?guests:1,
+        display: act.display || act.name,
+        cantidad:['persona','adulto','niño'].includes(act.unit)?guests:1,
         unidad:act.unit
       });
     });
