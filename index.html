@@ -1294,8 +1294,8 @@ async function loadVillasFromSheet() {
       const paxMax   = get(6);   // G = Pax máx.
       const display  = get(11);  // L = Display
       const notas    = get(12);  // M = Notas
-      const linkPDF  = get(13);  // N = Link PDF ← imagen thumbnail
-      const linkFotos= get(14);  // O = Link carpeta imágenes
+      const linkPDF   = get(13);  // N = Link PDF
+      const linkFotos = get(14);  // O = Link thumbnail / carpeta imágenes
 
       if(!nombre) return;
 
@@ -1315,9 +1315,8 @@ async function loadVillasFromSheet() {
         .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
         .replace(/[^a-z0-9]/g,'');
 
-      // Col N ya tiene URL directa de thumbnail — usarla tal cual
-      // Si no, intentar construirla desde col O (carpeta)
-      const fotoUrl = linkPDF || driveThumb(linkFotos);
+      // Col O = thumbnail directo, Col N = PDF (para botón brochure)
+      const fotoUrl = linkFotos || driveThumb(linkPDF);
 
       // Color de fondo para el placeholder cuando no hay imagen
       let bgcolor = '#1a2a1a';
