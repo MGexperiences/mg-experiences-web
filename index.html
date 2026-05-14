@@ -1256,7 +1256,13 @@ function onNl(e){e.preventDefault();const b=document.getElementById('nlBtn');b.t
 // Agregás una villa al sheet → aparece en la web al próximo reload
 // CSV URL: publicado desde Archivo → Compartir → Publicar en la web → CSV
 
-const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR3IH2QqoLQhCOPBPXsvLFVPKvmLX4M2M9vkMIOy_GmxlfYRNaDJfD5M7Atdk_-pY2qyjgU-fUCUl7c/pub?gid=718549851&single=true&output=csv';
+// URLs para intentar cargar el CSV (en orden de prioridad)
+const CSV_URLS = [
+  // 1. CSV publicado (Publicar en la web)
+  'https://docs.google.com/spreadsheets/d/e/2PACX-1vR3IH2QqoLQhCOPBPXsvLFVPKvmLX4M2M9vkMIOy_GmxlfYRNaDJfD5M7Atdk_-pY2qyjgU-fUCUl7c/pub?gid=718549851&single=true&output=csv',
+  // 2. gviz endpoint como CSV
+  'https://docs.google.com/spreadsheets/d/1PaZ5YVzsUKwvr7PvdKwhwHtfJBtyQKF0G9t45po6OYo/gviz/tq?tqx=out:csv&gid=718549851',
+];
 
 function driveThumb(url, sz) {
   if(!url || !url.trim()) return null;
@@ -1290,10 +1296,32 @@ function parseCSV(text) {
 }
 
 async function loadVillasFromSheet() {
+  let csvText = null;
+
+  // Intentar cada URL hasta que una funcione
+  for(const url of CSV_URLS) {
+    try {
+      const res = await fetch(url);
+      if(!res.ok) continue;
+      const text = await res.text();
+      // Verificar que sea CSV real (no HTML de error)
+      if(text.includes('Villa,Hospedaje') || text.includes('Categoría')) {
+        csvText = text;
+        console.log('CSV OK desde:', url.substring(0,60), '| chars:', text.length);
+        break;
+      }
+    } catch(e) { console.log('CSV fetch failed:', url.substring(0,60)); }
+  }
+
+  if(!csvText) {
+    console.log('CSV no disponible — usando datos hardcodeados');
+    renderVillaGridFallback();
+    return;
+  }
+
   try {
-    const res  = await fetch(CSV_URL);
-    const text = await res.text();
-    const rows = parseCSV(text);
+    const rows = parseCSV(csvText);
+    console.log('Parsed rows:', rows.length);
 
     villasFromSheet = [];
     villaDataFromSheet = {};
@@ -1360,6 +1388,7 @@ async function loadVillasFromSheet() {
     }
 
     if(villasFromSheet.length > 0) {
+      console.log('Villas loaded:', villasFromSheet.length, villasFromSheet.map(v=>v.name));
       renderVillaGrid();
       setTimeout(setupScrollReveal, 150);
     } else {
@@ -1389,9 +1418,54 @@ function renderVillaGrid() {
   }).join('');
 }
 
-const villasFallback = [];
-function getVillas() { return villasFromSheet.length > 0 ? villasFromSheet : villasFromSheet; }
-function renderVillaGridFallback() { renderVillaGrid(); }
+const villasFallback = [
+  {id:'altosdechavon',name:'Altos de Chavon',hab:2,guests:4,price:331,size:'small',foto_url:null,bgcolor:'#1a2a1a'},
+  {id:'townhousemarina',name:'Townhouse Marina',hab:3,guests:8,price:426,size:'small',foto_url:null,bgcolor:'#1a2a1a'},
+  {id:'losaltos3102',name:'Los Altos 3102',hab:2,guests:6,price:941,size:'small',foto_url:'https://drive.google.com/thumbnail?id=1mybsil6kX9WRM3Amh5IUiUDwVCm9arLj&sz=w1200',bgcolor:'#1a2a1a'},
+  {id:'townhousefaro',name:'Townhouse Faro',hab:4,guests:10,price:1326,size:'small',foto_url:null,bgcolor:'#1a2a1a'},
+  {id:'messina',name:'Messina',hab:5,guests:12,price:1412,size:'large',foto_url:'https://drive.google.com/thumbnail?id=1VoyAjPJ-Kf-A4Ipk_DRA1Te5S-7tqkfk&sz=w1200',bgcolor:'#1a2a1a'},
+  {id:'loslagos',name:'Los Lagos',hab:5,guests:10,price:1647,size:'small',foto_url:null,bgcolor:'#0f1f17'},
+  {id:'lagos94',name:'Lagos 94',hab:5,guests:10,price:1705,size:'small',foto_url:null,bgcolor:'#1c1400'},
+  {id:'loslagos92',name:'Los Lagos 92',hab:5,guests:10,price:1882,size:'small',foto_url:'https://drive.google.com/thumbnail?id=1HNMY_TdECfeTBZ7NEJqN1jO8JsP2OSx_&sz=w1200',bgcolor:'#0f1f17'},
+  {id:'canaria',name:'Canaria',hab:4,guests:8,price:2368,size:'small',foto_url:null,bgcolor:'#1f0d23'},
+  {id:'vistamar',name:'Vista Mar',hab:7,guests:18,price:2368,size:'large',foto_url:null,bgcolor:'#0d2b22'},
+  {id:'vivero114',name:'Vivero 1,14',hab:4,guests:12,price:2471,size:'large',foto_url:'https://drive.google.com/thumbnail?id=1jqYkEgf0qVG64SAMrxgKxsMHX7bbW3Sh&sz=w1200',bgcolor:'#1a2a1a'},
+  {id:'laguna',name:'Laguna',hab:5,guests:10,price:2652,size:'small',foto_url:null,bgcolor:'#003535'},
+  {id:'canas169',name:'Cañas 1,69',hab:4,guests:10,price:2706,size:'small',foto_url:'https://drive.google.com/thumbnail?id=1BZvzAQDTWkJyNs7oaFBHbx9HFADXvkCn&sz=w1200',bgcolor:'#1a2a1a'},
+  {id:'ducacique',name:'Du Cacique',hab:8,guests:14,price:2841,size:'large',foto_url:null,bgcolor:'#3a2510'},
+  {id:'losranchos',name:'Los Ranchos',hab:6,guests:14,price:2841,size:'large',foto_url:null,bgcolor:'#0d1a2e'},
+  {id:'naranjos10',name:'Naranjos 10',hab:7,guests:14,price:2941,size:'large',foto_url:'https://drive.google.com/thumbnail?id=1q9fltJ_hsT1mt8SVlSQkAJs5A6gGacqA&sz=w1200',bgcolor:'#0f1f17'},
+  {id:'vistamar35',name:'Vista Mar 35',hab:7,guests:16,price:3059,size:'large',foto_url:'https://drive.google.com/thumbnail?id=17XMK_3lWGU38Jd5O_bFJxjFHVE9qJBqI&sz=w1200',bgcolor:'#0d2b22'},
+  {id:'colinas21',name:'Colinas 21',hab:4,guests:10,price:3125,size:'small',foto_url:'https://drive.google.com/thumbnail?id=14Tjru4P30rcA2pD68-iab_UQeicJHPQl&sz=w1200',bgcolor:'#0c1f0c'},
+  {id:'laplaya',name:'La Playa',hab:3,guests:8,price:3315,size:'small',foto_url:null,bgcolor:'#200d00'},
+  {id:'miralejos',name:'Miralejos',hab:6,guests:16,price:3315,size:'large',foto_url:null,bgcolor:'#1a1a2e'},
+  {id:'lomas24',name:'Lomas 24',hab:7,guests:14,price:3529,size:'large',foto_url:'https://drive.google.com/thumbnail?id=1yPFIL7U0AF6NN1Lvz2TqVjognqVkUiyx&sz=w1200',bgcolor:'#0f1f17'},
+  {id:'bali',name:'Villa Bali',hab:6,guests:12,price:3788,size:'large',foto_url:null,bgcolor:'#1a0f00'},
+  {id:'naranjos',name:'Villa Naranjos',hab:6,guests:12,price:3788,size:'large',foto_url:null,bgcolor:'#1a1000'},
+  {id:'lacatalina',name:'La Catalina',hab:8,guests:20,price:4262,size:'large',foto_url:null,bgcolor:'#1a3a50'},
+  {id:'colinas21b',name:'Colinas 21 (12 hab)',hab:12,guests:24,price:4706,size:'large',foto_url:'https://drive.google.com/thumbnail?id=1rF94KmjE0dCHtEMFfw0pc21U0CgYDIRK&sz=w1200',bgcolor:'#0c1f0c'},
+  {id:'losmangos',name:'Los Mangos',hab:6,guests:12,price:4824,size:'large',foto_url:'https://drive.google.com/thumbnail?id=1xBxT5YGDp_51QU3o6sToMJ4XVxnWA9Ov&sz=w1200',bgcolor:'#0f1f17'},
+  {id:'costaverde5',name:'Costa Verde 5',hab:4,guests:10,price:5176,size:'small',foto_url:'https://drive.google.com/thumbnail?id=1tfWufAcRgFNJ931XhTfcsUr_zXlF42kO&sz=w1200',bgcolor:'#001a2e'},
+  {id:'puntaminitas',name:'Punta Minitas',hab:6,guests:12,price:5209,size:'large',foto_url:null,bgcolor:'#001a2e'},
+  {id:'puntaminitas5',name:'Punta Minitas 5',hab:8,guests:16,price:6235,size:'large',foto_url:'https://drive.google.com/thumbnail?id=1eG29_oGvDZT5vuFiabFeD1ZqaJ-8gQ_C&sz=w1200',bgcolor:'#001a2e'},
+  {id:'puntaminitas19',name:'Punta Minitas 19',hab:6,guests:14,price:7529,size:'large',foto_url:'https://drive.google.com/thumbnail?id=1zhsHN_-9ud-ScfF9HzKn5fCQe3EHc8Nf&sz=w1200',bgcolor:'#001528'},
+  {id:'puntaaguila57',name:'Punta Águila 57',hab:8,guests:16,price:7882,size:'large',foto_url:'https://drive.google.com/thumbnail?id=1TVlUqLTqKIs9Kg4P46KIznRHk8gtSOwE&sz=w1200',bgcolor:'#001528'},
+  {id:'costmar10',name:'Costa Mar 10',hab:6,guests:12,price:8114,size:'large',foto_url:'https://drive.google.com/thumbnail?id=170qEOw6A-tq4lwJ33cibHT9Tbr_W7FMa&sz=w1200',bgcolor:'#0f1f17'},
+  {id:'bahiaminitas3',name:'Bahía Minitas 3',hab:5,guests:10,price:9176,size:'small',foto_url:'https://drive.google.com/thumbnail?id=19QRRlCyfUCns_3BCeK4N9RevHSBho98K&sz=w1200',bgcolor:'#001a2e'},
+  {id:'bahiaminitas6',name:'Bahía Minitas 6',hab:9,guests:18,price:9412,size:'large',foto_url:'https://drive.google.com/thumbnail?id=1IP3Ltr31FkfO2QAXdAy1DaA3-g2U8eOV&sz=w1200',bgcolor:'#001528'},
+  {id:'clararoyale',name:'Clara Royale',hab:10,guests:20,price:14206,size:'large',foto_url:null,bgcolor:'#0a2016'},
+];
+function getVillas() { return villasFromSheet.length > 0 ? villasFromSheet : villasFallback; }
+function renderVillaGridFallback() {
+  villasFromSheet = villasFallback.map(v => ({
+    ...v, precio_noche:v.price, huespedes:v.guests,
+    display:v.name, label:v.hab+' hab · '+v.guests+' huésp.',
+    descripcion:'', notas:'', amenities:[], habitaciones:[], pdf_url:null,
+  }));
+  villasFallback.forEach(v => { villaDataFromSheet[v.id] = villasFromSheet.find(x => x.id === v.id); });
+  renderVillaGrid();
+  setTimeout(setupScrollReveal, 150);
+}
 
 loadVillasFromSheet();
 
