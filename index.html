@@ -158,6 +158,16 @@ nav.solid{background:rgba(28,30,23,.96);backdrop-filter:blur(20px);border-bottom
 .vm-cta-sec:hover{border-color:var(--vl);background:rgba(174,133,96,.06)}
 @media(max-width:640px){#vmodal{width:100vw;border-left:none}.vm-body{padding:1.5rem 1.3rem}.vm-stats{grid-template-columns:repeat(3,1fr)}.vm-amenities{grid-template-columns:1fr}.vm-ctas{grid-template-columns:1fr}}
 
+/* ── CARRUSEL MODAL ── */
+.vm-carousel{position:relative;width:100%;background:#000;flex-shrink:0}
+.vm-carousel-track{display:flex;transition:transform .35s cubic-bezier(.25,.46,.45,.94);will-change:transform}
+.vm-carousel-track img{width:100%;flex-shrink:0;aspect-ratio:16/9;object-fit:cover;display:block}
+.vm-carousel-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.15);color:#fff;width:38px;height:38px;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;z-index:5;transition:background .2s}
+.vm-carousel-btn:hover{background:rgba(0,0,0,.85)}
+.vm-carousel-btn.prev{left:.6rem}.vm-carousel-btn.next{right:.6rem}
+.vm-carousel-counter{position:absolute;bottom:.6rem;right:.8rem;background:rgba(0,0,0,.55);color:rgba(255,255,255,.8);font-family:'Cinzel',serif;font-size:.42rem;letter-spacing:.1em;padding:.2rem .5rem}
+.vm-carousel-loading{display:flex;align-items:center;justify-content:center;aspect-ratio:16/9;color:rgba(253,250,246,.3);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.9rem}
+
 /* ── SCROLL ANIMATIONS (Apple-style) ── */
 [data-reveal]{opacity:0;transform:translateY(32px);transition:opacity .78s cubic-bezier(.25,.46,.45,.94),transform .78s cubic-bezier(.25,.46,.45,.94)}
 [data-reveal="left"]{transform:translateX(-40px)}
@@ -1378,6 +1388,7 @@ async function loadVillasFromSheet() {
         label: detalle, display: display || nombre,
         descripcion: notas, notas: '',
         foto_url: fotoUrl, pdf_url: linkPDF,
+        carpeta_url: linkFotos,
         bgcolor,
         size: guests >= 12 ? 'large' : 'small',
         amenities: detalle.split('/').map(s=>s.trim()).filter(s=>s.length>2),
@@ -1422,38 +1433,38 @@ function renderVillaGrid() {
 const villasFallback = [
   {id:'altosdechavon',name:'Altos de Chavon',hab:2,guests:4,price:331,size:'small',foto_url:null,bgcolor:'#1a2a1a'},
   {id:'townhousemarina',name:'Townhouse Marina',hab:3,guests:8,price:426,size:'small',foto_url:null,bgcolor:'#1a2a1a'},
-  {id:'losaltos3102',name:'Los Altos 3102',hab:2,guests:6,price:941,size:'small',foto_url:'https://drive.google.com/thumbnail?id=1mybsil6kX9WRM3Amh5IUiUDwVCm9arLj&sz=w1200',bgcolor:'#1a2a1a'},
+  {id:'losaltos3102',carpeta_url:'https://drive.google.com/drive/folders/1ddGzl95nZxzNHhrAoXVx3WLoUxExpcxz',name:'Los Altos 3102',hab:2,guests:6,price:941,size:'small',foto_url:'https://drive.google.com/thumbnail?id=1mybsil6kX9WRM3Amh5IUiUDwVCm9arLj&sz=w1200',bgcolor:'#1a2a1a'},
   {id:'townhousefaro',name:'Townhouse Faro',hab:4,guests:10,price:1326,size:'small',foto_url:null,bgcolor:'#1a2a1a'},
-  {id:'messina',name:'Messina',hab:5,guests:12,price:1412,size:'large',foto_url:'https://drive.google.com/thumbnail?id=1VoyAjPJ-Kf-A4Ipk_DRA1Te5S-7tqkfk&sz=w1200',bgcolor:'#1a2a1a'},
+  {id:'messina',carpeta_url:'https://drive.google.com/drive/folders/1nGs_p99MFz-9_KtTl3E0qmrnpm9XfGNl',name:'Messina',hab:5,guests:12,price:1412,size:'large',foto_url:'https://drive.google.com/thumbnail?id=1VoyAjPJ-Kf-A4Ipk_DRA1Te5S-7tqkfk&sz=w1200',bgcolor:'#1a2a1a'},
   {id:'loslagos',name:'Los Lagos',hab:5,guests:10,price:1647,size:'small',foto_url:null,bgcolor:'#0f1f17'},
   {id:'lagos94',name:'Lagos 94',hab:5,guests:10,price:1705,size:'small',foto_url:null,bgcolor:'#1c1400'},
-  {id:'loslagos92',name:'Los Lagos 92',hab:5,guests:10,price:1882,size:'small',foto_url:'https://drive.google.com/thumbnail?id=1HNMY_TdECfeTBZ7NEJqN1jO8JsP2OSx_&sz=w1200',bgcolor:'#0f1f17'},
+  {id:'loslagos92',carpeta_url:'https://drive.google.com/drive/folders/1VGuOzJ9vQj3rrVGXgIPdnwYpwS7Liq59',name:'Los Lagos 92',hab:5,guests:10,price:1882,size:'small',foto_url:'https://drive.google.com/thumbnail?id=1HNMY_TdECfeTBZ7NEJqN1jO8JsP2OSx_&sz=w1200',bgcolor:'#0f1f17'},
   {id:'canaria',name:'Canaria',hab:4,guests:8,price:2368,size:'small',foto_url:null,bgcolor:'#1f0d23'},
   {id:'vistamar',name:'Vista Mar',hab:7,guests:18,price:2368,size:'large',foto_url:null,bgcolor:'#0d2b22'},
-  {id:'vivero114',name:'Vivero 1,14',hab:4,guests:12,price:2471,size:'large',foto_url:'https://drive.google.com/thumbnail?id=1jqYkEgf0qVG64SAMrxgKxsMHX7bbW3Sh&sz=w1200',bgcolor:'#1a2a1a'},
+  {id:'vivero114',carpeta_url:'https://drive.google.com/drive/folders/10efjb0aVXSQkVDcDJI-QiVpGhqnBB_Iy',name:'Vivero 1,14',hab:4,guests:12,price:2471,size:'large',foto_url:'https://drive.google.com/thumbnail?id=1jqYkEgf0qVG64SAMrxgKxsMHX7bbW3Sh&sz=w1200',bgcolor:'#1a2a1a'},
   {id:'laguna',name:'Laguna',hab:5,guests:10,price:2652,size:'small',foto_url:null,bgcolor:'#003535'},
-  {id:'canas169',name:'Cañas 1,69',hab:4,guests:10,price:2706,size:'small',foto_url:'https://drive.google.com/thumbnail?id=1BZvzAQDTWkJyNs7oaFBHbx9HFADXvkCn&sz=w1200',bgcolor:'#1a2a1a'},
+  {id:'canas169',carpeta_url:'https://drive.google.com/drive/folders/1I4L_vVUv7Iaj5D_tlNmRpKP3bl_Qt8K_',name:'Cañas 1,69',hab:4,guests:10,price:2706,size:'small',foto_url:'https://drive.google.com/thumbnail?id=1BZvzAQDTWkJyNs7oaFBHbx9HFADXvkCn&sz=w1200',bgcolor:'#1a2a1a'},
   {id:'ducacique',name:'Du Cacique',hab:8,guests:14,price:2841,size:'large',foto_url:null,bgcolor:'#3a2510'},
   {id:'losranchos',name:'Los Ranchos',hab:6,guests:14,price:2841,size:'large',foto_url:null,bgcolor:'#0d1a2e'},
-  {id:'naranjos10',name:'Naranjos 10',hab:7,guests:14,price:2941,size:'large',foto_url:'https://drive.google.com/thumbnail?id=1q9fltJ_hsT1mt8SVlSQkAJs5A6gGacqA&sz=w1200',bgcolor:'#0f1f17'},
-  {id:'vistamar35',name:'Vista Mar 35',hab:7,guests:16,price:3059,size:'large',foto_url:'https://drive.google.com/thumbnail?id=17XMK_3lWGU38Jd5O_bFJxjFHVE9qJBqI&sz=w1200',bgcolor:'#0d2b22'},
-  {id:'colinas21',name:'Colinas 21',hab:4,guests:10,price:3125,size:'small',foto_url:'https://drive.google.com/thumbnail?id=14Tjru4P30rcA2pD68-iab_UQeicJHPQl&sz=w1200',bgcolor:'#0c1f0c'},
+  {id:'naranjos10',carpeta_url:'https://drive.google.com/drive/folders/1Uz1boJWPocgr7oUKJRRi98YNJxp9gMg1',name:'Naranjos 10',hab:7,guests:14,price:2941,size:'large',foto_url:'https://drive.google.com/thumbnail?id=1q9fltJ_hsT1mt8SVlSQkAJs5A6gGacqA&sz=w1200',bgcolor:'#0f1f17'},
+  {id:'vistamar35',carpeta_url:'https://drive.google.com/drive/folders/1qg5M5zuptGNXIs8B8ugu28xOj8W1eAWK',name:'Vista Mar 35',hab:7,guests:16,price:3059,size:'large',foto_url:'https://drive.google.com/thumbnail?id=17XMK_3lWGU38Jd5O_bFJxjFHVE9qJBqI&sz=w1200',bgcolor:'#0d2b22'},
+  {id:'colinas21',carpeta_url:'https://drive.google.com/drive/folders/13lNFXKDYypefWxyu5wTVjJmkHVd2VTgB',name:'Colinas 21',hab:4,guests:10,price:3125,size:'small',foto_url:'https://drive.google.com/thumbnail?id=14Tjru4P30rcA2pD68-iab_UQeicJHPQl&sz=w1200',bgcolor:'#0c1f0c'},
   {id:'laplaya',name:'La Playa',hab:3,guests:8,price:3315,size:'small',foto_url:null,bgcolor:'#200d00'},
   {id:'miralejos',name:'Miralejos',hab:6,guests:16,price:3315,size:'large',foto_url:null,bgcolor:'#1a1a2e'},
-  {id:'lomas24',name:'Lomas 24',hab:7,guests:14,price:3529,size:'large',foto_url:'https://drive.google.com/thumbnail?id=1yPFIL7U0AF6NN1Lvz2TqVjognqVkUiyx&sz=w1200',bgcolor:'#0f1f17'},
+  {id:'lomas24',carpeta_url:'https://drive.google.com/drive/folders/1BdyV8VuwIjiLSzANm6F8c6WUpvly171S',name:'Lomas 24',hab:7,guests:14,price:3529,size:'large',foto_url:'https://drive.google.com/thumbnail?id=1yPFIL7U0AF6NN1Lvz2TqVjognqVkUiyx&sz=w1200',bgcolor:'#0f1f17'},
   {id:'bali',name:'Villa Bali',hab:6,guests:12,price:3788,size:'large',foto_url:null,bgcolor:'#1a0f00'},
   {id:'naranjos',name:'Villa Naranjos',hab:6,guests:12,price:3788,size:'large',foto_url:null,bgcolor:'#1a1000'},
   {id:'lacatalina',name:'La Catalina',hab:8,guests:20,price:4262,size:'large',foto_url:null,bgcolor:'#1a3a50'},
-  {id:'colinas21b',name:'Colinas 21 (12 hab)',hab:12,guests:24,price:4706,size:'large',foto_url:'https://drive.google.com/thumbnail?id=1rF94KmjE0dCHtEMFfw0pc21U0CgYDIRK&sz=w1200',bgcolor:'#0c1f0c'},
-  {id:'losmangos',name:'Los Mangos',hab:6,guests:12,price:4824,size:'large',foto_url:'https://drive.google.com/thumbnail?id=1xBxT5YGDp_51QU3o6sToMJ4XVxnWA9Ov&sz=w1200',bgcolor:'#0f1f17'},
-  {id:'costaverde5',name:'Costa Verde 5',hab:4,guests:10,price:5176,size:'small',foto_url:'https://drive.google.com/thumbnail?id=1tfWufAcRgFNJ931XhTfcsUr_zXlF42kO&sz=w1200',bgcolor:'#001a2e'},
+  {id:'colinas21b',carpeta_url:'https://drive.google.com/drive/folders/13lNFXKDYypefWxyu5wTVjJmkHVd2VTgB',name:'Colinas 21 (12 hab)',hab:12,guests:24,price:4706,size:'large',foto_url:'https://drive.google.com/thumbnail?id=1rF94KmjE0dCHtEMFfw0pc21U0CgYDIRK&sz=w1200',bgcolor:'#0c1f0c'},
+  {id:'losmangos',carpeta_url:'https://drive.google.com/drive/folders/1vRid91CRptbjtWex8ezg5wLsAY_POPP7',name:'Los Mangos',hab:6,guests:12,price:4824,size:'large',foto_url:'https://drive.google.com/thumbnail?id=1xBxT5YGDp_51QU3o6sToMJ4XVxnWA9Ov&sz=w1200',bgcolor:'#0f1f17'},
+  {id:'costaverde5',carpeta_url:'https://drive.google.com/drive/folders/1_GFXccbzKo3kOEkaBjjG3l7jX8_1hxXf',name:'Costa Verde 5',hab:4,guests:10,price:5176,size:'small',foto_url:'https://drive.google.com/thumbnail?id=1tfWufAcRgFNJ931XhTfcsUr_zXlF42kO&sz=w1200',bgcolor:'#001a2e'},
   {id:'puntaminitas',name:'Punta Minitas',hab:6,guests:12,price:5209,size:'large',foto_url:null,bgcolor:'#001a2e'},
-  {id:'puntaminitas5',name:'Punta Minitas 5',hab:8,guests:16,price:6235,size:'large',foto_url:'https://drive.google.com/thumbnail?id=1eG29_oGvDZT5vuFiabFeD1ZqaJ-8gQ_C&sz=w1200',bgcolor:'#001a2e'},
-  {id:'puntaminitas19',name:'Punta Minitas 19',hab:6,guests:14,price:7529,size:'large',foto_url:'https://drive.google.com/thumbnail?id=1zhsHN_-9ud-ScfF9HzKn5fCQe3EHc8Nf&sz=w1200',bgcolor:'#001528'},
-  {id:'puntaaguila57',name:'Punta Águila 57',hab:8,guests:16,price:7882,size:'large',foto_url:'https://drive.google.com/thumbnail?id=1TVlUqLTqKIs9Kg4P46KIznRHk8gtSOwE&sz=w1200',bgcolor:'#001528'},
-  {id:'costmar10',name:'Costa Mar 10',hab:6,guests:12,price:8114,size:'large',foto_url:'https://drive.google.com/thumbnail?id=170qEOw6A-tq4lwJ33cibHT9Tbr_W7FMa&sz=w1200',bgcolor:'#0f1f17'},
-  {id:'bahiaminitas3',name:'Bahía Minitas 3',hab:5,guests:10,price:9176,size:'small',foto_url:'https://drive.google.com/thumbnail?id=19QRRlCyfUCns_3BCeK4N9RevHSBho98K&sz=w1200',bgcolor:'#001a2e'},
-  {id:'bahiaminitas6',name:'Bahía Minitas 6',hab:9,guests:18,price:9412,size:'large',foto_url:'https://drive.google.com/thumbnail?id=1IP3Ltr31FkfO2QAXdAy1DaA3-g2U8eOV&sz=w1200',bgcolor:'#001528'},
+  {id:'puntaminitas5',carpeta_url:'https://drive.google.com/drive/folders/13jVLXLBFV8xgnprkPZoDOaWniS9X_oR4',name:'Punta Minitas 5',hab:8,guests:16,price:6235,size:'large',foto_url:'https://drive.google.com/thumbnail?id=1eG29_oGvDZT5vuFiabFeD1ZqaJ-8gQ_C&sz=w1200',bgcolor:'#001a2e'},
+  {id:'puntaminitas19',carpeta_url:'https://drive.google.com/drive/folders/1QhZQWAZcg7FBore4tq5PmIycEPZKtinw',name:'Punta Minitas 19',hab:6,guests:14,price:7529,size:'large',foto_url:'https://drive.google.com/thumbnail?id=1zhsHN_-9ud-ScfF9HzKn5fCQe3EHc8Nf&sz=w1200',bgcolor:'#001528'},
+  {id:'puntaaguila57',carpeta_url:'https://drive.google.com/drive/folders/1vV-nRxfBIt3J8-aW138QeHjj8Bnqk-Ss',name:'Punta Águila 57',hab:8,guests:16,price:7882,size:'large',foto_url:'https://drive.google.com/thumbnail?id=1TVlUqLTqKIs9Kg4P46KIznRHk8gtSOwE&sz=w1200',bgcolor:'#001528'},
+  {id:'costmar10',carpeta_url:'https://drive.google.com/drive/folders/1B65lk7_oQNnfO-HuoEfLniNpkvVAnEG0',name:'Costa Mar 10',hab:6,guests:12,price:8114,size:'large',foto_url:'https://drive.google.com/thumbnail?id=170qEOw6A-tq4lwJ33cibHT9Tbr_W7FMa&sz=w1200',bgcolor:'#0f1f17'},
+  {id:'bahiaminitas3',carpeta_url:'https://drive.google.com/drive/folders/1ESXw9WBZ-I4-Z7536RzuavFme6embdAf',name:'Bahía Minitas 3',hab:5,guests:10,price:9176,size:'small',foto_url:'https://drive.google.com/thumbnail?id=19QRRlCyfUCns_3BCeK4N9RevHSBho98K&sz=w1200',bgcolor:'#001a2e'},
+  {id:'bahiaminitas6',carpeta_url:'https://drive.google.com/drive/folders/1lyc23sKAcA2Os3Wr4PFCkVrBg0Lyetck',name:'Bahía Minitas 6',hab:9,guests:18,price:9412,size:'large',foto_url:'https://drive.google.com/thumbnail?id=1IP3Ltr31FkfO2QAXdAy1DaA3-g2U8eOV&sz=w1200',bgcolor:'#001528'},
   {id:'clararoyale',name:'Clara Royale',hab:10,guests:20,price:14206,size:'large',foto_url:null,bgcolor:'#0a2016'},
 ];
 function getVillas() { return villasFromSheet.length > 0 ? villasFromSheet : villasFallback; }
@@ -2765,54 +2776,106 @@ function openVModal(id) {
         Consultar por WhatsApp
       </a>`;
 
-  // Amenities grid
-  const amenHtml = amenities.map(a => `<div class="vm-am">${a}</div>`).join('');
+  // Extraer folder ID de la URL de carpeta Drive
+  const folderUrl = d.carpeta_url || d.pdf_url || '';
+  const folderMatch = folderUrl.match(/folders\/([a-zA-Z0-9_-]+)/);
+  const folderId = folderMatch ? folderMatch[1] : null;
 
-  // Habitaciones
-  const habHtml = habitaciones.map(h =>
-    `<div class="vm-room"><div class="vm-room-n">${h.nombre}</div><div class="vm-room-d">${h.desc}</div></div>`
-  ).join('');
+  // Imagen inicial (portada)
+  const portadaUrl = d.foto_url || d.img;
 
   content.innerHTML = `
     <div style="position:relative;flex-shrink:0">
-      ${imgHtml}
+      <div class="vm-carousel" id="vmCarousel">
+        <div class="vm-carousel-loading">Cargando fotos...</div>
+      </div>
       <button class="vm-close-btn" onclick="closeVModal()" style="position:absolute;top:.7rem;right:.7rem;z-index:10" aria-label="Cerrar">✕</button>
     </div>
     <div class="vm-body">
       <div class="vm-label">${d.label||''}</div>
       <h2 class="vm-title">${d.name}</h2>
-
       <div class="vm-stats">
-        <div class="vm-stat"><div class="vm-stat-n">${d.hab}</div><div class="vm-stat-l">Habitaciones</div></div>
-        <div class="vm-stat"><div class="vm-stat-n">${d.banos}</div><div class="vm-stat-l">Baños</div></div>
-        <div class="vm-stat"><div class="vm-stat-n">${d.huespedes||d.guests}</div><div class="vm-stat-l">Huéspedes</div></div>
+        <div class="vm-stat"><div class="vm-stat-n">${d.hab||''}</div><div class="vm-stat-l">Habitaciones</div></div>
+        <div class="vm-stat"><div class="vm-stat-n">${d.banos||''}</div><div class="vm-stat-l">Baños</div></div>
+        <div class="vm-stat"><div class="vm-stat-n">${d.huespedes||d.guests||''}</div><div class="vm-stat-l">Huéspedes</div></div>
       </div>
-
       <div class="vm-price-box">
-        <div>
-          <div class="vm-price-from">Precio por noche</div>
-          <div class="vm-price-night">${d.servicio||''}</div>
-        </div>
-        <div>
-          <div class="vm-price-val">$${precio.toLocaleString()}</div>
-          <div class="vm-price-night">USD / noche</div>
-        </div>
+        <div><div class="vm-price-from">Precio por noche</div><div class="vm-price-night">${d.servicio||''}</div></div>
+        <div><div class="vm-price-val">$${precio.toLocaleString()}</div><div class="vm-price-night">USD / noche</div></div>
       </div>
-
       ${d.descripcion?`<div class="vm-section-t">Descripción</div><p class="vm-desc">${d.descripcion}</p>`:''}
       ${d.notas?`<p class="vm-note">${d.notas}</p>`:''}
-      ${amenities.length?`<div class="vm-section-t">Amenities</div><div class="vm-amenities">${amenHtml}</div>`:''}
-      ${habitaciones.length?`<div class="vm-section-t">Habitaciones</div><div class="vm-rooms">${habHtml}</div>`:''}
-
+      ${amenities.length?`<div class="vm-section-t">Amenities</div><div class="vm-amenities">${amenities.map(a=>`<div class="vm-am">${a}</div>`).join('')}</div>`:''}
+      ${habitaciones.length?`<div class="vm-section-t">Habitaciones</div><div class="vm-rooms">${habitaciones.map(h=>`<div class="vm-room"><div class="vm-room-n">${h.nombre}</div><div class="vm-room-d">${h.desc}</div></div>`).join('')}</div>`:''}
       <div class="vm-ctas">
         <button class="vm-cta-main" onclick="selectVillaFromModal('${id}')">Elegir esta villa ✦</button>
         ${pdfBtn}
       </div>
     </div>`;
 
+  // Cargar fotos del carrusel
+  initCarousel(folderId, portadaUrl);
+
   overlay.classList.add('open');
   modal.classList.add('open');
   document.body.style.overflow = 'hidden';
+}
+
+// ── CARRUSEL DE FOTOS ────────────────────────────────────────────────────────
+const DRIVE_KEY = 'AIzaSyAe9IVx4R47OJlV9nkI2PLSdEBbdZclnuc';
+
+async function initCarousel(folderId, portadaUrl) {
+  const el = document.getElementById('vmCarousel');
+  if(!el) return;
+
+  let fotos = [];
+
+  if(folderId) {
+    try {
+      const url = `https://www.googleapis.com/drive/v3/files?q='${folderId}'+in+parents+and+mimeType+contains+'image/'&fields=files(id,name)&orderBy=name&pageSize=100&key=${DRIVE_KEY}`;
+      const res  = await fetch(url);
+      const data = await res.json();
+      if(data.files && data.files.length > 0) {
+        fotos = data.files.map(f => `https://drive.google.com/thumbnail?id=${f.id}&sz=w1200`);
+      }
+    } catch(e) { console.log('Drive folder error:', e); }
+  }
+
+  // Fallback: si no hay fotos de carpeta, usar solo la portada
+  if(fotos.length === 0 && portadaUrl) fotos = [portadaUrl];
+  if(fotos.length === 0) {
+    el.innerHTML = '<div class="vm-carousel-loading">Sin fotos disponibles</div>';
+    return;
+  }
+
+  let cur = 0;
+  const render = () => {
+    el.innerHTML = `
+      <div class="vm-carousel-track" id="vmTrack" style="transform:translateX(-${cur*100}%)">
+        ${fotos.map(u => `<img src="${u}" loading="lazy" alt="foto villa">`).join('')}
+      </div>
+      ${fotos.length > 1 ? `
+        <button class="vm-carousel-btn prev" onclick="carouselMove(-1)">‹</button>
+        <button class="vm-carousel-btn next" onclick="carouselMove(1)">›</button>
+        <div class="vm-carousel-counter">${cur+1} / ${fotos.length}</div>
+      ` : ''}`;
+  };
+
+  window._carouselFotos = fotos;
+  window._carouselCur   = 0;
+  render();
+  window._carouselRender = render;
+}
+
+function carouselMove(dir) {
+  const fotos = window._carouselFotos || [];
+  window._carouselCur = (window._carouselCur + dir + fotos.length) % fotos.length;
+  const track = document.getElementById('vmTrack');
+  if(track) {
+    track.style.transform = `translateX(-${window._carouselCur * 100}%)`;
+    const counter = document.querySelector('.vm-carousel-counter');
+    if(counter) counter.textContent = `${window._carouselCur+1} / ${fotos.length}`;
+  }
 }
 
 function closeVModal() {
