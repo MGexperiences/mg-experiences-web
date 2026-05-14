@@ -176,6 +176,9 @@ nav.solid{background:rgba(28,30,23,.96);backdrop-filter:blur(20px);border-bottom
 .rs-cd{font-family:'Cormorant Garamond',serif;font-size:1rem;color:rgba(253,250,246,.62);line-height:1.75}
 .vbd{font-size:.88rem;color:rgba(253,250,246,.58);line-height:1.78}
 
+.vc-loading{background:rgba(174,133,96,.04);aspect-ratio:3/4;animation:shimmer 1.6s ease-in-out infinite}
+@keyframes shimmer{0%,100%{opacity:.4}50%{opacity:.8}}
+
 /* ── RESORT SECTIONS ── */
 .resort-section{padding:6rem 4rem;background:transparent}
 .rs-inner{max-width:1200px;margin:0 auto}
@@ -864,143 +867,32 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
 <!-- VILLAS CATÁLOGO COMPLETO -->
 <section class="villas rv" id="villas">
   <div class="vh">
-    <div>
+    <div data-reveal>
       <span class="lbl">Dónde vas a estar</span>
       <h2 class="bigt">Cada casa,<br><em>su carácter</em></h2>
       <div class="rule"></div>
       <p class="prose">Desde tres habitaciones hasta diez. Para grupos chicos o familias grandes. Todas privadas, todas con pileta, todas dentro del resort. Elegís la que más te representa.</p>
     </div>
-    <a href="#tu-experiencia" class="btn bf rv rv2">Armá tu estadía</a>
+    <a href="#tu-experiencia" class="btn bf rv rv2" data-reveal>Armá tu estadía</a>
   </div>
 
-  <!-- Filtro por tamaño -->
-  <div class="vfilt">
+  <div class="vfilt" data-reveal>
     <button class="vfb active" onclick="filtVillas('all',this)">Todas</button>
-    <button class="vfb" onclick="filtVillas('small',this)">2–4 pers.</button>
-    <button class="vfb" onclick="filtVillas('med',this)">5–10 pers.</button>
-    <button class="vfb" onclick="filtVillas('large',this)">11–20 pers.</button>
+    <button class="vfb" onclick="filtVillas('small',this)">2–10 pers.</button>
+    <button class="vfb" onclick="filtVillas('large',this)">11–24 pers.</button>
   </div>
 
+  <!-- Grid se genera dinámicamente desde Google Sheets -->
   <div class="vg" id="villaGrid">
-
-    <!-- 2–4 -->
-    <div class="vc" data-reveal data-delay="1" data-size="small">
-      <div class="vpc-wrap"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#0f1f17"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".2" fill="rgba(174,133,96,.18)" text-anchor="middle">ALTOS DE CHAVÓN</text></svg></div>
-      <div class="vov"></div><div class="vinfo"><div class="vname">Altos de Chavón</div><div class="vdet">2 hab · 4 huéspedes</div></div>
-      <div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$280/noche</div><div class="vprice-x">2 hab · 4 huéspedes · Vista al río Chavón</div><button class="vbtn" onclick="openVModal('altosChavon')">Ver villa</button></div>
-    </div>
-
-    <!-- 3 hab -->
-    <div class="vc" data-reveal data-delay="2" data-size="small">
-      <img class="vi" src="https://img1.wsimg.com/isteam/ip/28e700c9-c37b-485d-b636-01fcfc9acb86/Mar-y-Palma_-Ocean-Front_villa.webp" alt="Townhouse Marina" loading="lazy">
-      <div class="vov"></div><div class="vinfo"><div class="vname">Townhouse Marina</div><div class="vdet">3 hab · 8 huéspedes</div></div>
-      <div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$300/noche</div><div class="vprice-x">3 hab · 3.5 baños · Vista al mar</div><button class="vbtn" onclick="openVModal('townhouse')">Ver villa</button></div>
-    </div>
-
-    <div class="vc" data-reveal data-delay="3" data-size="small">
-      <div class="vpc-wrap"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#200d00"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".18" fill="rgba(174,133,96,.18)" text-anchor="middle">LA PLAYA</text></svg></div>
-      <div class="vov"></div><div class="vinfo"><div class="vname">La Playa</div><div class="vdet">3 hab · 8 huéspedes</div></div>
-      <div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$3.500/noche</div><div class="vprice-x">3 hab · Frente al mar · Playa privada</div><button class="vbtn" onclick="openVModal('laplaya')">Ver villa</button></div>
-    </div>
-
-    <!-- 4 hab -->
-    <div class="vc" data-reveal data-delay="4" data-size="med">
-      <div class="vpc-wrap"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#1a2e1a"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".18" fill="rgba(174,133,96,.18)" text-anchor="middle">TOWNHOUSE FARO</text></svg></div>
-      <div class="vov"></div><div class="vinfo"><div class="vname">Townhouse Faro</div><div class="vdet">4 hab · 10 huéspedes</div></div>
-      <div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$1.300/noche</div><div class="vprice-x">4 hab · Vista al mar y golf</div><button class="vbtn" onclick="openVModal('faro')">Ver villa</button></div>
-    </div>
-
-    <div class="vc" data-reveal data-delay="1" data-size="med">
-      <div class="vpc-wrap"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#1f0d23"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".18" fill="rgba(174,133,96,.18)" text-anchor="middle">CANARIA</text></svg></div>
-      <div class="vov"></div><div class="vinfo"><div class="vname">Canaria</div><div class="vdet">4 hab · 8 huéspedes</div></div>
-      <div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$2.500/noche</div><div class="vprice-x">4 hab · Jardín tropical · Pileta</div><button class="vbtn" onclick="openVModal('canaria')">Ver villa</button></div>
-    </div>
-
-    <div class="vc" data-reveal data-delay="2" data-size="med">
-      <div class="vpc-wrap"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#0c1f0c"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".18" fill="rgba(174,133,96,.18)" text-anchor="middle">VILLA COLINAS 21</text></svg></div>
-      <div class="vov"></div><div class="vinfo"><div class="vname">Villa Colinas 21</div><div class="vdet">4 hab · 10 huéspedes</div></div>
-      <div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$2.640/noche</div><div class="vprice-x">4 hab · Vista panorámica al resort</div><button class="vbtn" onclick="openVModal('colinas21')">Ver villa</button></div>
-    </div>
-
-    <!-- 5 hab -->
-    <div class="vc" data-reveal data-delay="3" data-size="med">
-      <div class="vpc-wrap"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#111b0e"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".18" fill="rgba(174,133,96,.18)" text-anchor="middle">VILLA LOS LAGOS</text></svg></div>
-      <div class="vov"></div><div class="vinfo"><div class="vname">Villa Los Lagos</div><div class="vdet">5 hab · 10 huéspedes</div></div>
-      <div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$1.120/noche</div><div class="vprice-x">5 hab · Frente al lago · Pileta</div><button class="vbtn" onclick="openVModal('loslagos')">Ver villa</button></div>
-    </div>
-
-    <div class="vc" data-reveal data-delay="4" data-size="med">
-      <div class="vpc-wrap"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#1c1400"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".18" fill="rgba(174,133,96,.18)" text-anchor="middle">VILLA LAGOS 94</text></svg></div>
-      <div class="vov"></div><div class="vinfo"><div class="vname">Villa Lagos 94</div><div class="vdet">5 hab · 10 huéspedes</div></div>
-      <div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$1.440/noche</div><div class="vprice-x">5 hab · Pileta · Jardín</div><button class="vbtn" onclick="openVModal('lagos94')">Ver villa</button></div>
-    </div>
-
-    <div class="vc" data-reveal data-delay="1" data-size="med">
-      <div class="vpc-wrap"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#003535"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".18" fill="rgba(0,123,111,.25)" text-anchor="middle">VILLA LAGUNA</text></svg></div>
-      <div class="vov"></div><div class="vinfo"><div class="vname">Villa Laguna</div><div class="vdet">5 hab · 10 huéspedes</div></div>
-      <div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$2.240/noche</div><div class="vprice-x">5 hab · 5.5 baños · Laguna privada</div><button class="vbtn" onclick="openVModal('laguna')">Ver villa</button></div>
-    </div>
-
-    <!-- 6 hab -->
-    <div class="vc" data-reveal data-delay="2" data-size="large">
-      <div class="vpc-wrap"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#0d1a2e"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".18" fill="rgba(174,133,96,.18)" text-anchor="middle">VILLA LOS RANCHOS</text></svg></div>
-      <div class="vov"></div><div class="vinfo"><div class="vname">Villa Los Ranchos</div><div class="vdet">6 hab · 14 huéspedes</div></div>
-      <div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$2.700/noche</div><div class="vprice-x">6 hab · Piscina · Jacuzzi · Jardín</div><button class="vbtn" onclick="openVModal('ranchos')">Ver villa</button></div>
-    </div>
-
-    <div class="vc" data-reveal data-delay="3" data-size="large">
-      <div class="vpc-wrap"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#1a1a2e"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".18" fill="rgba(66,96,122,.4)" text-anchor="middle">MIRALEJOS</text></svg></div>
-      <div class="vov"></div><div class="vinfo"><div class="vname">Miralejos</div><div class="vdet">6 hab · 16 huéspedes</div></div>
-      <div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$3.500/noche</div><div class="vprice-x">6 hab · Vista al mar · Pileta inf.</div><button class="vbtn" onclick="openVModal('miralejos')">Ver villa</button></div>
-    </div>
-
-    <div class="vc" data-reveal data-delay="4" data-size="large">
-      <div class="vpc-wrap"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#1a0f00"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".18" fill="rgba(174,133,96,.2)" text-anchor="middle">VILLA BALI</text></svg></div>
-      <div class="vov"></div><div class="vinfo"><div class="vname">Villa Bali</div><div class="vdet">6 hab · 12 huéspedes</div></div>
-      <div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$3.200/noche</div><div class="vprice-x">6 hab · Jardín tropical · Chimenea</div><button class="vbtn" onclick="openVModal('bali')">Ver villa</button></div>
-    </div>
-
-    <div class="vc" data-reveal data-delay="1" data-size="large">
-      <div class="vpc-wrap"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#1a1000"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".18" fill="rgba(174,133,96,.18)" text-anchor="middle">VILLA NARANJOS</text></svg></div>
-      <div class="vov"></div><div class="vinfo"><div class="vname">Villa Naranjos</div><div class="vdet">6 hab · 12 huéspedes</div></div>
-      <div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$3.200/noche</div><div class="vprice-x">6 hab · Jardín · Pileta</div><button class="vbtn" onclick="openVModal('naranjos')">Ver villa</button></div>
-    </div>
-
-    <!-- 7 hab -->
-    <div class="vc" data-reveal data-delay="2" data-size="large">
-      <div class="vpc-wrap"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#0d2b22"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".18" fill="rgba(212,184,154,.18)" text-anchor="middle">VISTA MAR</text></svg></div>
-      <div class="vov"></div><div class="vinfo"><div class="vname">Vista Mar</div><div class="vdet">7 hab · 18 huéspedes</div></div>
-      <div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$2.500/noche</div><div class="vprice-x">7 hab · 12 baños · Vista al mar</div><button class="vbtn" onclick="openVModal('vistamar')">Ver villa</button></div>
-    </div>
-
-    <!-- 8 hab -->
-    <div class="vc" data-reveal data-delay="3" data-size="large">
-      <div class="vpc-wrap"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#3a2510"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".18" fill="rgba(174,133,96,.2)" text-anchor="middle">DU CACIQUE</text></svg></div>
-      <div class="vov"></div><div class="vinfo"><div class="vname">Du Cacique</div><div class="vdet">8 hab · 14 huéspedes</div></div>
-      <div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$3.000/noche</div><div class="vprice-x">8 hab · 6 baños · Pileta desbordante</div><button class="vbtn" onclick="openVModal('cacique')">Ver villa</button></div>
-    </div>
-
-    <div class="vc" data-reveal data-delay="4" data-size="large">
-      <div class="vpc-wrap"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#1a3a50"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".18" fill="rgba(109,195,205,.2)" text-anchor="middle">LA CATALINA</text></svg></div>
-      <div class="vov"></div><div class="vinfo"><div class="vname">La Catalina</div><div class="vdet">8 hab · 20 huéspedes</div></div>
-      <div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$4.500/noche</div><div class="vprice-x">8 hab · 10 baños · Vista al mar</div><button class="vbtn" onclick="openVModal('catalina')">Ver villa</button></div>
-    </div>
-
-    <!-- 6 hab frente al mar -->
-    <div class="vc" data-reveal data-delay="1" data-size="large">
-      <div class="vpc-wrap"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#001a2e"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".18" fill="rgba(109,195,205,.2)" text-anchor="middle">PUNTA MINITAS</text></svg></div>
-      <div class="vov"></div><div class="vinfo"><div class="vname">Punta Minitas</div><div class="vdet">6 hab · 12 huéspedes</div></div>
-      <div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$4.400/noche</div><div class="vprice-x">6 hab · Frente al mar · Acceso privado a playa</div><button class="vbtn" onclick="openVModal('puntaminitas')">Ver villa</button></div>
-    </div>
-
-    <!-- 10 hab -->
-    <div class="vc" data-reveal data-delay="2" data-size="large">
-      <div class="vpc-wrap"><svg class="vpc" viewBox="0 0 3 4" preserveAspectRatio="xMidYMid slice"><rect width="3" height="4" fill="#0a2016"/><text x="1.5" y="2.2" font-family="Cinzel,serif" font-size=".15" fill="rgba(29,77,58,.4)" text-anchor="middle">CLARA ROYALE</text></svg></div>
-      <div class="vov"></div><div class="vinfo"><div class="vname">Clara Royale</div><div class="vdet">10 hab · 20 huéspedes</div></div>
-      <div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">$15.000/noche</div><div class="vprice-x">10 hab · 12 baños · La más grande del resort</div><button class="vbtn" onclick="openVModal('royale')">Ver villa</button></div>
-    </div>
-
+    <!-- Loading skeleton -->
+    <div class="vc-loading"></div>
+    <div class="vc-loading"></div>
+    <div class="vc-loading"></div>
+    <div class="vc-loading"></div>
   </div>
+</section>
+
+</div>
 </section>
 
 <!-- BOATS -->
@@ -1354,27 +1246,195 @@ function onNl(e){e.preventDefault();const b=document.getElementById('nlBtn');b.t
 // Última sincronización: Mayo 2026
 // ══════════════════════════════════════════
 
-// ── VILLAS (USD/noche)
-const villas = [
-  {id:'townhouse',    name:'Townhouse Marina',    hab:3,  guests:8,  price:427,   display:'Townhouse Marina | 3 hab / 8 pax'},
-  {id:'altosChavon',  name:'Altos de Chavon',     hab:2,  guests:4,  price:332,   display:'Altos de Chavon'},
-  {id:'faro',         name:'Townhouse Faro',      hab:4,  guests:10, price:1326,  display:'Townhouse Faro | 4 hab / 10 pax'},
-  {id:'loslagos',     name:'Villa Los Lagos',     hab:5,  guests:10, price:1326,  display:'Villa Los Lagos'},
-  {id:'lagos94',      name:'Villa Lagos 94',      hab:5,  guests:10, price:1705,  display:'Villa Lagos 94 | 5 hab'},
-  {id:'canaria',      name:'Canaria',             hab:4,  guests:8,  price:2368,  display:'Canaria | 4 hab / 8 pax'},
-  {id:'vistamar',     name:'Vista Mar',           hab:7,  guests:18, price:2368,  display:'Vista Mar | 7 hab / 18 pax'},
-  {id:'laguna',       name:'Villa Laguna',        hab:5,  guests:10, price:2652,  display:'Villa Laguna | 5 hab / 10 pax'},
-  {id:'cacique',      name:'Du Cacique',          hab:8,  guests:14, price:2842,  display:'Du Cacique | 8 hab / 14 pax'},
-  {id:'ranchos',      name:'Villa Los Ranchos',   hab:6,  guests:14, price:2842,  display:'Villa Los Ranchos | 6 hab / 14 pax'},
-  {id:'colinas21',    name:'Villa Colinas 21',    hab:4,  guests:10, price:3126,  display:'Villa Colinas 21'},
-  {id:'laplaya',      name:'La Playa',            hab:3,  guests:8,  price:3315,  display:'La Playa | 3 hab / 8 pax'},
-  {id:'miralejos',    name:'Miralejos',           hab:6,  guests:16, price:3315,  display:'Miralejos | 6 hab / 16 pax'},
-  {id:'bali',         name:'Villa Bali',          hab:6,  guests:12, price:3789,  display:'Villa Bali | 6 hab / 12 pax'},
-  {id:'naranjos',     name:'Villa Naranjos',      hab:6,  guests:12, price:3789,  display:'Villa Naranjos'},
-  {id:'catalina',     name:'La Catalina',         hab:8,  guests:20, price:4262,  display:'La Catalina | 8 hab / 20 pax'},
-  {id:'puntaminitas', name:'Punta Minitas',       hab:6,  guests:12, price:5209,  display:'Punta Minitas vista al mar'},
-  {id:'royale',       name:'Clara Royale',        hab:10, guests:20, price:14206, display:'Clara Royale | 10 hab / 20 pax'},
+
+// ══════════════════════════════════════════════════════════════════════════
+// VILLAS — Cargadas dinámicamente desde Google Sheets (Data Base)
+// Columnas A–O del Data Base:
+//   A=Categoría|B=Subcategoría|C=Item|D=Variante|E=Unidad
+//   F=Pax mín.|G=Pax máx.|H=Detalle|I=Precio USD|J=Margen
+//   K=Precio con margen|L=Display|M=Notas|N=Link PDF|O=Link fotos
+// ══════════════════════════════════════════════════════════════════════════
+
+const SHEET_ID = '1PaZ5YVzsUKwvr7PvdKwhwHtfJBtyQKF0G9t45po6OYo';
+
+// Extrae File ID de cualquier URL de Drive y construye URL de thumbnail
+// Google renderiza la primera página del PDF como imagen automáticamente
+function driveThumb(url, sz) {
+  if(!url || !url.trim()) return null;
+  sz = sz || 'w800';
+  if(url.includes('thumbnail?id=')) return url;
+  var m = url.match(/\/d\/([a-zA-Z0-9_-]+)/) || url.match(/id=([a-zA-Z0-9_-]+)/);
+  if(m) return 'https://drive.google.com/thumbnail?id=' + m[1] + '&sz=' + sz;
+  return null;
+}
+
+let villasFromSheet = [];
+let villaDataFromSheet = {};
+
+async function loadVillasFromSheet() {
+  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Data%20Base&range=A4:O300`;
+  try {
+    const res  = await fetch(url);
+    const text = await res.text();
+    const json = JSON.parse(text.replace(/^[^(]+\(/, '').replace(/\);?$/, ''));
+    const rows = json.table.rows;
+
+    villasFromSheet = [];
+    villaDataFromSheet = {};
+
+    rows.forEach(row => {
+      const c = row.c;
+      if(!c || !c[0] || !c[0].v) return;
+      const get = (i, def='') => (c[i] && c[i].v != null) ? String(c[i].v).trim() : def;
+
+      if(get(0).toLowerCase() !== 'villa') return;
+
+      const nombre   = get(2);   // C = Item (nombre)
+      const detalle  = get(7);   // H = Detalle
+      const paxMax   = get(6);   // G = Pax máx.
+      const display  = get(11);  // L = Display
+      const notas    = get(12);  // M = Notas
+      const linkPDF  = get(13);  // N = Link PDF ← imagen thumbnail
+      const linkFotos= get(14);  // O = Link carpeta imágenes
+
+      if(!nombre) return;
+
+      // Precio: preferir col K (precio con margen), sino col I (precio base)
+      const precioK = parseFloat(get(10).replace(/[^0-9.,]/g,'').replace(',','.')) || 0;
+      const precioI = parseFloat(get(8).replace(/[^0-9.,]/g,'').replace(',','.'))  || 0;
+      const precio  = precioK > 0 ? precioK : precioI;
+
+      // Parsear hab y pax del campo H
+      const habM   = detalle.match(/(\d+)\s*hab/i);
+      const paxM   = detalle.match(/(\d+)\s*pax/i) || detalle.match(/(\d+)\s*guests/i);
+      const hab    = habM ? parseInt(habM[1]) : 0;
+      const guests = paxM ? parseInt(paxM[1]) : (parseInt(paxMax) || 0);
+
+      // ID: nombre normalizado sin tildes ni espacios
+      const id = nombre.toLowerCase()
+        .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+        .replace(/[^a-z0-9]/g,'');
+
+      // Col N ya tiene URL directa de thumbnail — usarla tal cual
+      // Si no, intentar construirla desde col O (carpeta)
+      const fotoUrl = linkPDF || driveThumb(linkFotos);
+
+      // Color de fondo para el placeholder cuando no hay imagen
+      let bgcolor = '#1a2a1a';
+      const det = detalle.toLowerCase();
+      if(det.includes('ocean') || det.includes('minitas') || det.includes('playa')) bgcolor = '#001a2e';
+      else if(det.includes('golf') || det.includes('garden') || det.includes('jardín')) bgcolor = '#0f1f17';
+      else if(det.includes('punta') || det.includes('bahía')) bgcolor = '#001528';
+      else if(hab >= 8) bgcolor = '#1a1a2e';
+
+      // Size para el filtro: large = 12+ huéspedes
+      const size = guests >= 12 ? 'large' : 'small';
+
+      // Amenities extraídas del detalle (separado por /)
+      const amenities = detalle.split('/')
+        .map(s => s.trim()).filter(s => s.length > 2 && !/^\d+$/.test(s));
+
+      const obj = {
+        id, name: nombre,
+        hab, banos: detalle.match(/([\d.]+)\s*ba[ñn]/i)?.[1] || '',
+        huespedes: guests, guests,
+        precio_noche: precio, price: precio,
+        label: detalle, display: display || nombre,
+        descripcion: notas,
+        notas: '',
+        amenities, habitaciones: [],
+        foto_url: fotoUrl,
+        pdf_url: linkPDF,
+        bgcolor, size,
+      };
+
+      villasFromSheet.push(obj);
+      villaDataFromSheet[id] = obj;
+    });
+
+    if(villasFromSheet.length > 0) {
+      renderVillaGrid();
+      setTimeout(setupScrollReveal, 150);
+    } else {
+      renderVillaGridFallback();
+    }
+  } catch(e) {
+    console.error('Error cargando villas desde Sheets:', e);
+    renderVillaGridFallback();
+  }
+}
+
+function renderVillaGrid() {
+  const grid = document.getElementById('villaGrid');
+  if(!grid) return;
+
+  grid.innerHTML = villasFromSheet.map((v, i) => {
+    const delay = (i % 4) + 1;
+    const det = v.hab
+      ? `${v.hab} hab · ${v.huespedes > 0 ? v.huespedes + ' huésp.' : ''}`
+      : v.label.split('/').slice(0,2).join('/').trim();
+
+    const imgEl = v.foto_url
+      ? `<img class="vi" src="${v.foto_url}" alt="${v.name}" loading="lazy" style="width:100%;aspect-ratio:3/4;object-fit:cover;display:block">`
+      : `<div class="vpc-wrap"><svg class="vpc" viewBox="0 0 300 400" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%">
+           <rect width="300" height="400" fill="${v.bgcolor}"/>
+           <text x="150" y="210" font-family="Cinzel,serif" font-size="11" fill="rgba(174,133,96,.3)" text-anchor="middle" letter-spacing="3">${v.name.toUpperCase()}</text>
+         </svg></div>`;
+
+    const precioDisplay = v.precio_noche > 0
+      ? `$${v.precio_noche.toLocaleString()}/noche`
+      : 'Consultar precio';
+
+    return `<div class="vc" data-reveal data-delay="${delay}" data-size="${v.size}" onclick="openVModal('${v.id}')">
+      ${imgEl}
+      <div class="vov"></div>
+      <div class="vinfo">
+        <div class="vname">${v.name}</div>
+        <div class="vdet">${det}</div>
+      </div>
+      <div class="vfoot">
+        <div class="vprice-l">Desde</div>
+        <div class="vprice-v">${precioDisplay}</div>
+        <div class="vprice-x">${det}</div>
+        <button class="vbtn">Ver villa</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderVillaGridFallback() {
+  const grid = document.getElementById('villaGrid');
+  if(grid) grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:4rem;color:rgba(253,250,246,.4);font-family:'Cormorant Garamond',serif;font-style:italic">
+    Cargando catálogo...<br><span style="font-size:.8rem;display:block;margin-top:.5rem">Si el problema persiste escribinos por <a href="https://wa.me/541164388699" style="color:#AE8560">WhatsApp</a></span>
+  </div>`;
+}
+
+// Fallback hardcodeado para el configurador si Sheets no carga
+const villasFallback = [
+  {id:'townhousemarina', name:'Townhouse Marina',  hab:3, guests:8,  price:426,  display:'Townhouse Marina | 3 hab / 8 pax'},
+  {id:'altosdechavon',   name:'Altos de Chavon',   hab:2, guests:4,  price:331,  display:'Altos de Chavon'},
+  {id:'townhousefaro',   name:'Townhouse Faro',    hab:4, guests:10, price:1326, display:'Townhouse Faro | 4 hab / 10 pax'},
+  {id:'loslagos',        name:'Los Lagos',         hab:5, guests:10, price:1326, display:'Los Lagos'},
+  {id:'lagos94',         name:'Lagos 94',          hab:5, guests:10, price:1705, display:'Lagos 94 | 5 hab'},
+  {id:'canaria',         name:'Canaria',           hab:4, guests:8,  price:2368, display:'Canaria | 4 hab / 8 pax'},
+  {id:'vistamar',        name:'Vista Mar',         hab:7, guests:18, price:2368, display:'Vista Mar | 7 hab / 18 pax'},
+  {id:'laguna',          name:'Laguna',            hab:5, guests:10, price:2652, display:'Laguna | 5 hab / 10 pax'},
+  {id:'ducacique',       name:'Du Cacique',        hab:8, guests:14, price:2841, display:'Du Cacique | 8 hab / 14 pax'},
+  {id:'losranchos',      name:'Los Ranchos',       hab:6, guests:14, price:2841, display:'Los Ranchos | 6 hab / 14 pax'},
+  {id:'colinas21',       name:'Colinas 21',        hab:12,guests:24, price:3125, display:'Colinas 21'},
+  {id:'laplaya',         name:'La Playa',          hab:3, guests:8,  price:3315, display:'La Playa | 3 hab / 8 pax'},
+  {id:'miralejos',       name:'Miralejos',         hab:6, guests:16, price:3315, display:'Miralejos | 6 hab / 16 pax'},
+  {id:'bali',            name:'Bali',              hab:6, guests:12, price:3788, display:'Bali | 6 hab / 12 pax'},
+  {id:'naranjos',        name:'Naranjos',          hab:6, guests:12, price:3788, display:'Naranjos'},
+  {id:'lacatalina',      name:'La Catalina',       hab:8, guests:20, price:4262, display:'La Catalina | 8 hab / 20 pax'},
+  {id:'puntaministasvistaalmar',name:'Punta Minitas vista al mar',hab:6,guests:12,price:5209,display:'Punta Minitas vista al mar'},
+  {id:'clararoyale',     name:'Clara Royale',      hab:10,guests:20, price:14206,display:'Clara Royale | 10 hab / 20 pax'},
 ];
+
+function getVillas() { return villasFromSheet.length > 0 ? villasFromSheet : villasFallback; }
+
+// Iniciar carga
+loadVillasFromSheet();
 
 // ── SERVICIOS EN VILLA (USD/día)
 const villaServices = [
@@ -1535,8 +1595,8 @@ function filtVillas(size, btn){
   document.querySelectorAll('.vfb').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   document.querySelectorAll('#villaGrid .vc').forEach(card=>{
-    if(size==='all') card.classList.remove('hidden');
-    else card.classList.toggle('hidden', card.dataset.size !== size);
+    if(size==='all'){ card.classList.remove('hidden'); }
+    else { card.classList.toggle('hidden', card.dataset.size !== size); }
   });
 }
 function goStep(n){
@@ -1651,8 +1711,8 @@ function renderVillas(){
   const g=state.guests;
   const grid=document.getElementById('villaGrid');
   const note=document.getElementById('filterNote');
-  const suitable=villas.filter(v=>v.guests>=g);
-  const toShow=suitable.length>0?suitable:villas;
+  const suitable=getVillas().filter(v=>v.guests>=g);
+  const toShow=suitable.length>0?suitable:getVillas();
   note.textContent = suitable.length>0
     ? `Casas para ${g} personas o más (${suitable.length} disponibles)`
     : 'Mostrando todas las casas — consultanos por grupos grandes';
@@ -1856,7 +1916,7 @@ function toggleSvc(el,key,price){
 
 // ── STEP 5: SUMMARY
 function renderSummary(){
-  const villa=villas.find(v=>v.id===state.villaId);
+  const villa=getVillas().find(v=>v.id===state.villaId);
   const nights=state.nights;
   const guests=state.guests;
   const villaTotal=villa?villa.price*nights:0;
@@ -1903,7 +1963,7 @@ function renderSummary(){
 
 // ── Construye el pData igual que el bot (mismo formato que crearPresupuesto espera)
 function buildPresupuestoData(){
-  const villa=villas.find(v=>v.id===state.villaId);
+  const villa=getVillas().find(v=>v.id===state.villaId);
   const nights=state.nights;
   const guests=state.guests;
   // Parsear fechas para fechaLlegada y fechaSalida legibles
@@ -2018,7 +2078,7 @@ function buildPresupuestoData(){
 async function guardarContactoParcial(){
   const u = gateState.userData;
   if(!u) return;
-  const villa = villas.find(v=>v.id===state.villaId);
+  const villa = getVillas().find(v=>v.id===state.villaId);
   const clientData = {
     nombre:   u.nombre,
     apellido: u.apellido,
@@ -2633,15 +2693,26 @@ const villaData = {
 
 // ── OPEN / CLOSE MODAL ───────────────────────────────────────────────────────
 function openVModal(id) {
-  const d = villaData[id];
+  // Use Sheet data if available, fall back to hardcoded villaData
+  const d = villaDataFromSheet[id] || villaData[id];
   if (!d) return;
+  // Normalize amenities (Sheet uses array, hardcoded uses array too)
+  if(d.amenities && typeof d.amenities[0] === 'string' && !d.amenities.some) d.amenities = [];
   const overlay = document.getElementById('vmodal-overlay');
   const modal   = document.getElementById('vmodal');
   const content = document.getElementById('vmodal-content');
 
+  // Normalize: amenities always array of strings
+  const amenities = Array.isArray(d.amenities) ? d.amenities : [];
+  // Normalize: habitaciones always array of {nombre, desc}
+  const habitaciones = Array.isArray(d.habitaciones) ? d.habitaciones : [];
+  // Normalize: precio
+  const precio = d.precio_noche || d.precio || 0;
+
   // Build image or placeholder
-  const imgHtml = d.img
-    ? `<img class="vm-img" src="${d.img}" alt="${d.name}">`
+  const fotoUrl = d.foto_url || d.img;
+  const imgHtml = fotoUrl
+    ? `<img class="vm-img" src="${fotoUrl}" alt="${d.name}">`
     : `<div class="vm-img-placeholder" style="background:${d.bgcolor||'#0f1f17'}">
          <svg viewBox="0 0 300 240" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" style="position:absolute;inset:0;width:100%;height:100%">
            <rect width="300" height="240" fill="${d.bgcolor||'#0f1f17'}"/>
@@ -2649,11 +2720,22 @@ function openVModal(id) {
          </svg>
        </div>`;
 
+  // PDF button if available
+  const pdfBtn = d.pdf_url
+    ? `<a href="${d.pdf_url}" target="_blank" class="vm-cta-sec" style="text-decoration:none">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Ver brochure PDF
+      </a>`
+    : `<a href="https://wa.me/541164388699?text=${encodeURIComponent('Hola! Me interesa la '+d.name+'. ¿Pueden darme más info?')}" target="_blank" class="vm-cta-sec">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zm-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884zm8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Consultar por WhatsApp
+      </a>`;
+
   // Amenities grid
-  const amenHtml = d.amenities.map(a => `<div class="vm-am">${a}</div>`).join('');
+  const amenHtml = amenities.map(a => `<div class="vm-am">${a}</div>`).join('');
 
   // Habitaciones
-  const habHtml = d.habitaciones.map(h =>
+  const habHtml = habitaciones.map(h =>
     `<div class="vm-room"><div class="vm-room-n">${h.nombre}</div><div class="vm-room-d">${h.desc}</div></div>`
   ).join('');
 
@@ -2663,42 +2745,34 @@ function openVModal(id) {
       <button class="vm-close-btn" onclick="closeVModal()" style="position:absolute;top:.7rem;right:.7rem;z-index:10" aria-label="Cerrar">✕</button>
     </div>
     <div class="vm-body">
-      <div class="vm-label">${d.label}</div>
+      <div class="vm-label">${d.label||''}</div>
       <h2 class="vm-title">${d.name}</h2>
 
       <div class="vm-stats">
         <div class="vm-stat"><div class="vm-stat-n">${d.hab}</div><div class="vm-stat-l">Habitaciones</div></div>
         <div class="vm-stat"><div class="vm-stat-n">${d.banos}</div><div class="vm-stat-l">Baños</div></div>
-        <div class="vm-stat"><div class="vm-stat-n">${d.huespedes}</div><div class="vm-stat-l">Huéspedes</div></div>
+        <div class="vm-stat"><div class="vm-stat-n">${d.huespedes||d.guests}</div><div class="vm-stat-l">Huéspedes</div></div>
       </div>
 
       <div class="vm-price-box">
         <div>
           <div class="vm-price-from">Precio por noche</div>
-          <div class="vm-price-night">${d.servicio}</div>
+          <div class="vm-price-night">${d.servicio||''}</div>
         </div>
         <div>
-          <div class="vm-price-val">$${d.precio.toLocaleString()}</div>
+          <div class="vm-price-val">$${precio.toLocaleString()}</div>
           <div class="vm-price-night">USD / noche</div>
         </div>
       </div>
 
-      <div class="vm-section-t">Descripción</div>
-      <p class="vm-desc">${d.descripcion}</p>
-      ${d.notas ? `<p class="vm-note">${d.notas}</p>` : ''}
-
-      <div class="vm-section-t">Amenities</div>
-      <div class="vm-amenities">${amenHtml}</div>
-
-      <div class="vm-section-t">Habitaciones</div>
-      <div class="vm-rooms">${habHtml}</div>
+      ${d.descripcion?`<div class="vm-section-t">Descripción</div><p class="vm-desc">${d.descripcion}</p>`:''}
+      ${d.notas?`<p class="vm-note">${d.notas}</p>`:''}
+      ${amenities.length?`<div class="vm-section-t">Amenities</div><div class="vm-amenities">${amenHtml}</div>`:''}
+      ${habitaciones.length?`<div class="vm-section-t">Habitaciones</div><div class="vm-rooms">${habHtml}</div>`:''}
 
       <div class="vm-ctas">
         <button class="vm-cta-main" onclick="selectVillaFromModal('${id}')">Elegir esta villa ✦</button>
-        <a href="https://wa.me/541164388699?text=${encodeURIComponent('Hola! Me interesa la '+d.name+'. ¿Pueden darme más info?')}" target="_blank" class="vm-cta-sec">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zm-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884zm8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          Consultar por WhatsApp
-        </a>
+        ${pdfBtn}
       </div>
     </div>`;
 
@@ -2934,20 +3008,19 @@ document.addEventListener('keydown', e => {
     if (e.key === 'Escape' && valDrawer.classList.contains('open')) closeValentina();
   });
 </script>
-<!-- ── SCROLL REVEAL: Apple-style ── -->
+<!-- ── SCROLL REVEAL ── -->
 <script>
-(function(){
+function setupScrollReveal() {
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => {
-      if(e.isIntersecting){
-        e.target.classList.add('visible');
-        io.unobserve(e.target);
-      }
+      if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }
     });
   }, { threshold: 0.12, rootMargin: '0px 0px -48px 0px' });
-
-  document.querySelectorAll('[data-reveal]').forEach(el => io.observe(el));
-})();
+  document.querySelectorAll('[data-reveal]').forEach(el => {
+    if(!el.classList.contains('visible')) io.observe(el);
+  });
+}
+document.addEventListener('DOMContentLoaded', setupScrollReveal);
 </script>
 </body>
 </html>
