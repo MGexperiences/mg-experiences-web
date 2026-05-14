@@ -883,7 +883,7 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
   </div>
 
   <!-- Grid se genera dinámicamente desde Google Sheets -->
-  <div class="vg" id="villaGrid">
+  <div class="vg" id="villaCatalog">
     <!-- Loading skeleton -->
     <div class="vc-loading"></div>
     <div class="vc-loading"></div>
@@ -1401,7 +1401,7 @@ async function loadVillasFromSheet() {
 }
 
 function renderVillaGrid() {
-  const grid = document.getElementById('villaGrid');
+  const grid = document.getElementById('villaCatalog');
   if(!grid) return;
   grid.innerHTML = villasFromSheet.map((v, i) => {
     const delay = (i % 4) + 1;
@@ -1627,7 +1627,7 @@ function selectVillaAndGo(villaId){
 function filtVillas(size, btn){
   document.querySelectorAll('.vfb').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
-  document.querySelectorAll('#villaGrid .vc').forEach(card=>{
+  document.querySelectorAll('#villaCatalog .vc').forEach(card=>{
     if(size==='all'){ card.classList.remove('hidden'); }
     else { card.classList.toggle('hidden', card.dataset.size !== size); }
   });
