@@ -95,9 +95,10 @@ nav.solid{background:rgba(28,30,23,.96);backdrop-filter:blur(20px);border-bottom
 .villas{padding:8rem 4rem;background:var(--sand)}
 .vh{display:flex;align-items:flex-end;justify-content:space-between;max-width:1200px;margin:0 auto 4rem;flex-wrap:wrap;gap:2rem}
 .vg{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5px;background:rgba(174,133,96,.12);max-width:1200px;margin:0 auto}
-.vc{position:relative;overflow:hidden;cursor:pointer;transition:all .4s}
+.vc{position:relative;overflow:hidden;cursor:pointer;transition:all .4s;aspect-ratio:3/4}
 .vc.hidden{display:none}
-.vpc-wrap{width:100%;padding-bottom:133%}
+.vi{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
+.vpc-wrap{position:absolute;inset:0;width:100%;height:100%}
 .vpc-wrap .vpc{position:absolute;inset:0;width:100%;height:100%}
 .vc:hover .vfoot{opacity:1;transform:translateY(0)}
 .vfilt{display:flex;gap:.5rem;justify-content:center;padding:1.5rem 1rem .5rem;max-width:1200px;margin:0 auto;flex-wrap:wrap}
@@ -1406,7 +1407,7 @@ function renderVillaGrid() {
   grid.innerHTML = villasFromSheet.map((v, i) => {
     const delay = (i % 4) + 1;
     const imgEl = v.foto_url
-      ? `<img class="vi" src="${v.foto_url}" alt="${v.name}" loading="lazy" style="width:100%;aspect-ratio:3/4;object-fit:cover;display:block">`
+      ? `<img class="vi" src="${v.foto_url}" alt="${v.name}" loading="lazy" style="width:100%;height:100%;position:absolute;inset:0;object-fit:cover">`
       : `<div class="vpc-wrap"><svg viewBox="0 0 300 400" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%"><rect width="300" height="400" fill="${v.bgcolor}"/><text x="150" y="210" font-family="Cinzel,serif" font-size="11" fill="rgba(174,133,96,.3)" text-anchor="middle" letter-spacing="3">${v.name.toUpperCase()}</text></svg></div>`;
     const precioDisplay = v.precio_noche > 0 ? '$' + v.precio_noche.toLocaleString() + '/noche' : 'Consultar precio';
     return `<div class="vc" data-reveal data-delay="${delay}" data-size="${v.size}" onclick="openVModal('${v.id}')">
