@@ -1272,7 +1272,9 @@ let villasFromSheet = [];
 let villaDataFromSheet = {};
 
 async function loadVillasFromSheet() {
-  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Data%20Base&range=A4:O300`;
+  // Usar GID de la hoja en vez del nombre (evita problemas con espacios/caracteres)
+  // gid=718549851 es la hoja "Data Base" del spreadsheet
+  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=718549851&range=A1:O300`;
   try {
     const res  = await fetch(url);
     const text = await res.text();
@@ -1402,10 +1404,24 @@ function renderVillaGrid() {
 }
 
 function renderVillaGridFallback() {
-  const grid = document.getElementById('villaGrid');
-  if(grid) grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:4rem;color:rgba(253,250,246,.4);font-family:'Cormorant Garamond',serif;font-style:italic">
-    Cargando catálogo...<br><span style="font-size:.8rem;display:block;margin-top:.5rem">Si el problema persiste escribinos por <a href="https://wa.me/541164388699" style="color:#AE8560">WhatsApp</a></span>
-  </div>`;
+  // Usar los datos hardcodeados para mostrar cards reales
+  villasFromSheet = villasFallback.map(v => ({
+    ...v,
+    precio_noche: v.price,
+    huespedes: v.guests,
+    label: `${v.hab} hab · ${v.guests} huésp.`,
+    foto_url: null,
+    pdf_url: null,
+    bgcolor: '#1a2a1a',
+    size: v.guests >= 12 ? 'large' : 'small',
+    amenities: [],
+    habitaciones: [],
+    descripcion: '',
+    notas: '',
+  }));
+  villasFallback.forEach(v => { villaDataFromSheet[v.id] = villasFromSheet.find(x => x.id === v.id); });
+  renderVillaGrid();
+  setTimeout(setupScrollReveal, 150);
 }
 
 // Fallback hardcodeado para el configurador si Sheets no carga
