@@ -1388,7 +1388,7 @@ async function loadVillasFromSheet() {
         label: detalle, display: display || nombre,
         descripcion: notas, notas: '',
         foto_url: fotoUrl, pdf_url: linkPDF,
-        carpeta_url: linkFotos,
+        carpeta_url: linkFoto,
         bgcolor,
         size: guests >= 12 ? 'large' : 'small',
         amenities: detalle.split('/').map(s=>s.trim()).filter(s=>s.length>2),
