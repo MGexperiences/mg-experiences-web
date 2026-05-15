@@ -1372,8 +1372,10 @@ async function loadVillasFromSheet() {
         .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
         .replace(/[^a-z0-9]/g,'');
 
-      // Col O = URL directa del thumbnail, Col N = PDF (para botón brochure)
-      const fotoUrl = linkFoto || driveThumb(linkPDF);
+      // Col O puede ser thumbnail directo o link de carpeta
+      // Solo usar como foto si es thumbnail, sino construir desde col N (PDF)
+      const isThumbnail = linkFoto && (linkFoto.includes('thumbnail?id=') || linkFoto.includes('lh3.google'));
+      const fotoUrl = isThumbnail ? linkFoto : driveThumb(linkPDF);
 
       const det = detalle.toLowerCase();
       let bgcolor = '#1a2a1a';
