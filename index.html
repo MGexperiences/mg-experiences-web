@@ -1118,61 +1118,57 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
 
 <!-- CASA DE CAMPO RESORT -->
 <section id="casa-de-campo">
+  <div style="display:grid;grid-template-columns:1fr 420px;min-height:92vh;max-height:100vh">
 
-  <!-- VIDEO HERO — portrait 9:16 video cropped to landscape -->
-  <div style="position:relative;width:100%;height:80vh;min-height:540px;overflow:hidden;background:#0a0c08">
-    <!-- Overlay gradients -->
-    <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(10,12,8,.5) 0%,transparent 22%,transparent 62%,rgba(10,12,8,.92) 100%);z-index:2;pointer-events:none"></div>
+    <!-- LEFT: Text content -->
+    <div style="display:flex;flex-direction:column;justify-content:center;padding:5rem 4rem 5rem 5rem;background:var(--bk);position:relative;z-index:1">
 
-    <!--
-      Portrait 9:16 video. To fill landscape 16:9 container with no black bars:
-      Set iframe width=100vw → height = 100vw × (16/9) = 177.78vw
-      Center vertically: top=50%, translateY(-50%)
-      overflow:hidden on parent clips top/bottom excess.
-    -->
-    <iframe
-      id="cdc-video"
-      style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:100vw;height:177.78vw;min-height:100%;border:none;z-index:1;pointer-events:none"
-      src="https://player.vimeo.com/video/1193386929?badge=0&autopause=0&player_id=0&app_id=58479&muted=1&autoplay=1&loop=1&title=0&byline=0&portrait=0&background=1&color=AE8560"
-      allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
-      title="Casa de Campo Resort · MG Experiences">
-    </iframe>
+      <span class="lbl" style="margin-bottom:1.2rem;display:block">El destino</span>
+      <h2 class="bigt" style="font-size:clamp(2rem,3.5vw,3.2rem);margin-bottom:1rem;line-height:1.1">Casa de Campo,<br><em>el resort más exclusivo del Caribe</em></h2>
+      <div class="rule" style="margin-bottom:1.8rem"></div>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:rgba(253,250,246,.65);line-height:1.9;margin-bottom:2.2rem;max-width:480px">7,000 acres de naturaleza virgen en La Romana, República Dominicana. Golf de clase mundial, playa privada, marina de yates y Altos de Chavón — todo dentro de un resort cerrado y seguro.</p>
 
-    <!-- Text overlay -->
-    <div style="position:absolute;bottom:3.5rem;left:50%;transform:translateX(-50%);z-index:3;text-align:center;width:100%;padding:0 2rem">
-      <span style="font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(253,250,246,.45);display:block;margin-bottom:.8rem">El destino</span>
-      <h2 style="font-family:'Playfair Display',serif;font-style:italic;font-weight:400;font-size:clamp(2.2rem,5vw,4rem);color:#FDFAF6;margin:0 0 .5rem;text-shadow:0 2px 30px rgba(0,0,0,.5)">Casa de Campo</h2>
-      <p style="font-family:'Cormorant Garamond',serif;font-size:clamp(.9rem,1.8vw,1.2rem);color:rgba(253,250,246,.65);letter-spacing:.05em">La Romana, República Dominicana</p>
-    </div>
-  </div>
-
-  <!-- CONTENT BELOW VIDEO -->
-  <div style="background:var(--bk);padding:4rem 4rem 5rem;max-width:1300px;margin:0 auto">
-
-    <!-- Two columns: text + stats -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;margin-bottom:3rem">
-
-      <!-- Left: description -->
-      <div>
-        <p style="font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:rgba(253,250,246,.7);line-height:2;margin-bottom:2rem">7,000 acres de naturaleza virgen. Golf de clase mundial, playa privada, marina de yates y el pueblo artesanal de Altos de Chavón — todo dentro de un mismo resort cerrado.</p>
-        <div style="display:flex;flex-wrap:wrap;gap:.7rem">
-          <span class="cdc-tag">Playa Minitas privada</span>
-          <span class="cdc-tag">Marina de yates</span>
-          <span class="cdc-tag">Altos de Chavón</span>
-          <span class="cdc-tag">Beach club exclusivo</span>
-          <span class="cdc-tag">Seguridad 24h</span>
-          <span class="cdc-tag">Polo internacional</span>
-          <span class="cdc-tag">3 campos de golf Pete Dye</span>
-        </div>
-      </div>
-
-      <!-- Right: stats grid -->
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
-        <div class="cdc-stat"><div class="cdc-stat-n">7,000</div><div class="cdc-stat-l">Acres de extensión</div></div>
+      <!-- Stats 2x2 -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:2rem;max-width:400px">
+        <div class="cdc-stat"><div class="cdc-stat-n">7,000</div><div class="cdc-stat-l">Acres</div></div>
         <div class="cdc-stat"><div class="cdc-stat-n">3</div><div class="cdc-stat-l">Campos Pete Dye</div></div>
         <div class="cdc-stat"><div class="cdc-stat-n">370+</div><div class="cdc-stat-l">Casas privadas</div></div>
         <div class="cdc-stat"><div class="cdc-stat-n">45'</div><div class="cdc-stat-l">Del aeropuerto</div></div>
       </div>
+
+      <!-- Tags -->
+      <div style="display:flex;flex-wrap:wrap;gap:.6rem">
+        <span class="cdc-tag">Playa Minitas privada</span>
+        <span class="cdc-tag">Marina de yates</span>
+        <span class="cdc-tag">Altos de Chavón</span>
+        <span class="cdc-tag">Beach club</span>
+        <span class="cdc-tag">Seguridad 24h</span>
+        <span class="cdc-tag">Polo internacional</span>
+      </div>
+    </div>
+
+    <!-- RIGHT: Portrait video — fills full column height -->
+    <div style="position:relative;overflow:hidden;background:#0a0c08">
+      <!-- Gradient overlays top/bottom -->
+      <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(10,12,8,.4) 0%,transparent 15%,transparent 80%,rgba(10,12,8,.6) 100%);z-index:2;pointer-events:none"></div>
+      <!-- Left edge fade to blend with text column -->
+      <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(10,12,8,.6) 0%,transparent 25%);z-index:2;pointer-events:none"></div>
+
+      <!--
+        Portrait 9:16 video filling a portrait column.
+        Column is ~420px wide. For 9:16: height = 420 * (16/9) = 747px
+        But column height is 92vh ≈ 840px.
+        To fill column height with no bars: width = 840 * (9/16) = 472px > 420px ✓
+        So: width:100%, height:100% works naturally for portrait in portrait container.
+        Add slight scale to ensure full coverage.
+      -->
+      <iframe
+        id="cdc-video"
+        style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(1.02);width:100%;height:100%;border:none;z-index:1"
+        src="https://player.vimeo.com/video/1193386929?badge=0&autopause=0&player_id=0&app_id=58479&muted=1&autoplay=1&loop=1&title=0&byline=0&portrait=0&background=1&color=AE8560"
+        allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+        title="Casa de Campo Resort">
+      </iframe>
     </div>
 
   </div>
@@ -3315,9 +3311,9 @@ document.addEventListener('keydown', e => {
 }
 @media(max-width:768px){
   #lb-prev,#lb-next{padding:1rem;font-size:2rem}
-  #casa-de-campo>div:last-child{padding:2.5rem 1.5rem 3rem!important}
-  #casa-de-campo>div:first-child{height:55vh!important}
-  #casa-de-campo>div:last-child>div{grid-template-columns:1fr!important;gap:2.5rem!important}
+  #casa-de-campo>div{grid-template-columns:1fr!important;min-height:auto!important;max-height:none!important}
+  #casa-de-campo>div>div:first-child{padding:3.5rem 1.5rem!important}
+  #casa-de-campo>div>div:last-child{height:65vw!important;min-height:260px}
 }
 
 /* ── Widget button ── */
