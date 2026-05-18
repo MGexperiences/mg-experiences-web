@@ -1772,8 +1772,15 @@ function renderVillas(){
          onclick="selectVilla('${v.id}')">
       <div class="vo-name">${v.name}</div>
       <div class="vo-spec">${v.hab} hab · hasta ${v.guests} pers.</div>
-      <div class="vo-price">USD $${v.price.toLocaleString()}/noche</div>
+      <div class="vo-price">desde USD $${(v.precio_noche||v.price||0).toLocaleString()}/noche</div>
     </div>`).join('');
+  // Scroll to preselected villa if coming from modal
+  if(state.villaId){
+    setTimeout(()=>{
+      const sel=grid.querySelector('.villa-opt.selected');
+      if(sel) sel.scrollIntoView({behavior:'smooth',block:'nearest'});
+    },200);
+  }
 }
 
 function selectVilla(id){
@@ -2773,12 +2780,7 @@ function openVModal(id) {
        </div>`;
 
   // PDF button if available
-  const pdfBtn = d.pdf_url
-    ? `<a href="${d.pdf_url}" target="_blank" class="vm-cta-sec" style="text-decoration:none">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-        Ver brochure PDF
-      </a>`
-    : `<a href="https://wa.me/541164388699?text=${encodeURIComponent('Hola! Me interesa la '+d.name+'. ¿Pueden darme más info?')}" target="_blank" class="vm-cta-sec">
+  const pdfBtn = `<a href="https://wa.me/541164388699?text=${encodeURIComponent('Hola! Me interesa '+d.name+'. ¿Pueden darme más info?')}" target="_blank" class="vm-cta-sec">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zm-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884zm8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
         Consultar por WhatsApp
       </a>`;
@@ -2815,7 +2817,7 @@ function openVModal(id) {
       ${amenities.length?`<div class="vm-section-t">Amenities</div><div class="vm-amenities">${amenities.map(a=>`<div class="vm-am">${a}</div>`).join('')}</div>`:''}
       ${habitaciones.length?`<div class="vm-section-t">Habitaciones</div><div class="vm-rooms">${habitaciones.map(h=>`<div class="vm-room"><div class="vm-room-n">${h.nombre}</div><div class="vm-room-d">${h.desc}</div></div>`).join('')}</div>`:''}
       <div class="vm-ctas">
-        <button class="vm-cta-main" onclick="selectVillaFromModal('${id}')">Elegir esta villa ✦</button>
+        <button class="vm-cta-main" onclick="selectVillaFromModal('${id}')">Armar presupuesto ✦</button>
         ${pdfBtn}
       </div>
     </div>`;
@@ -2893,7 +2895,19 @@ function closeVModal() {
 
 function selectVillaFromModal(id) {
   closeVModal();
-  selectVillaAndGo(id);
+  // Preselect villa in state
+  state.villaId = id;
+  // Scroll to configurator
+  const conf = document.getElementById('tu-experiencia');
+  if(conf) conf.scrollIntoView({behavior:'smooth', block:'start'});
+  // If dates already set, jump to step 3 (villa confirmation) then step 4
+  setTimeout(()=>{
+    if(state.dateIn && state.dateOut && state.nights > 0){
+      goStep(3);
+      renderVillas();
+    }
+    // else stay on step 1 (dates) with villa preselected
+  }, 700);
 }
 
 document.addEventListener('keydown', e => {
