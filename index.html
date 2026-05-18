@@ -53,7 +53,7 @@ nav.solid{background:rgba(28,30,23,.96);backdrop-filter:blur(20px);border-bottom
 @keyframes fu{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
 @keyframes pulse{0%,100%{opacity:.25}50%{opacity:.7}}
 .rv{opacity:0;transform:translateY(32px);transition:opacity .9s ease,transform .9s ease}
-.rv.in{opacity:1;transform:translateY(0)}
+.rv.visible,.rv.in{opacity:1;transform:translateY(0)}
 .rv2{transition-delay:.18s}.rv3{transition-delay:.36s}
 
 /* ── SHARED ── */
@@ -910,7 +910,7 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
 </section>
 
 <!-- BOATS -->
-<section class="boats sa sa-up" id="embarcaciones">
+<section class="boats" id="embarcaciones">
   <div class="bbg" data-parallax="0.18"></div>
   <div class="bb">
     <div>
@@ -941,7 +941,7 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
 </section>
 
 <!-- GOLF -->
-<section class="golf sa sa-scale" id="golf">
+<section class="golf" id="golf">
   <div class="gbg"></div>
   <div class="gbody">
     <span class="lbl" style="text-align:center;display:block">Para los que lo saben apreciar</span>
@@ -1334,8 +1334,8 @@ const nav=document.getElementById('nav');
 window.addEventListener('scroll',()=>nav.classList.toggle('solid',scrollY>80));
 
 // ── REVEAL
-const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:.1});
-document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');e.target.classList.add('in');obs.unobserve(e.target)}}),{threshold:.08,rootMargin:'0px 0px -20px 0px'});
+document.querySelectorAll('.rv,.sa,.bs,.fimg,.ftxt,.lbl,.rule,.cdc-img,.cdc-stat').forEach(e=>{if(!e.closest('.hero'))obs.observe(e)});
 
 // ── SERVICE CARDS DRAG
 const ss=document.getElementById('svcScroll');
@@ -2684,7 +2684,7 @@ const io = new IntersectionObserver((entries) => {
 
 // Observe everything with .sa, .bs, .fimg, .ftxt, .lbl, .rule, .cdc-img, .rv
 function observeAll() {
-  document.querySelectorAll('.sa,.bs,.fimg,.ftxt,.lbl,.rule,.cdc-img,.cdc-stat,.svc-card,.rs-card,.vc,.rv').forEach(el => {
+  document.querySelectorAll('.sa,.bs,.fimg,.ftxt,.lbl,.rule,.cdc-img,.cdc-stat,.rv').forEach(el => {
     if (!el.closest('.hero') && !el.classList.contains('_obs')) {
       el.classList.add('_obs');
       io.observe(el);
@@ -2720,13 +2720,13 @@ function observeVillaCards() {
 observeVillaCards();
 
 // ── SERVICES stagger ──────────────────────────────────────
-document.querySelectorAll('.svcs, .rs-grid, #actividades-resort .rs-grid').forEach(wrap => {
+document.querySelectorAll('.svcs, .rs-grid, .rs-inner, .rs-beach-facts').forEach(wrap => {
   new IntersectionObserver(([e]) => {
     if (!e.isIntersecting) return;
-    wrap.querySelectorAll('.svc-card, .rs-card').forEach((c, i) => {
+    wrap.querySelectorAll('.svc-card, .rs-card, .rs-fact').forEach((c, i) => {
       setTimeout(() => c.classList.add('visible'), i * 65);
     });
-  }, { threshold: 0.05 }).observe(wrap);
+  }, { threshold: 0.02 }).observe(wrap);
 });
 
 // ── CDC STAT CARDS stagger ────────────────────────────────
@@ -3364,6 +3364,8 @@ document.addEventListener('keydown', e => {
 .vc:hover .vi{transform:scale(1.07)!important;transition:transform .7s cubic-bezier(.22,1,.36,1)!important}
 
 /* ── SERVICE + RS CARDS ── */
+.rs-fact{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s cubic-bezier(.22,1,.36,1)}
+.rs-fact.visible{opacity:1;transform:translateY(0)}
 .svc-card,.rs-card{opacity:0;transform:translateY(40px);
   transition:opacity .65s ease,transform .65s cubic-bezier(.22,1,.36,1)}
 .svc-card.visible,.rs-card.visible{opacity:1;transform:translateY(0)}
@@ -3420,9 +3422,7 @@ document.addEventListener('keydown', e => {
 .ftxt{opacity:0;transform:translateX(50px);transition:opacity 1s ease,transform 1s cubic-bezier(.22,1,.36,1)}
 .ftxt.visible{opacity:1;transform:translateX(0)}
 
-/* ── OLD .rv COMPAT ── */
-.rv{opacity:0;transform:translateY(40px);transition:opacity .8s ease,transform .8s cubic-bezier(.22,1,.36,1)}
-.rv.visible{opacity:1;transform:translateY(0)}
+/* ── OLD .rv COMPAT (removed, using original .rv rule) ── */
 
 /* ── Widget button ── */
   #val-btn {
