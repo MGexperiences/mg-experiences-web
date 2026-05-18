@@ -1356,6 +1356,8 @@ async function loadVillasFromSheet() {
       const notas    = (r[12] || '').trim();
       const linkFoto = (r[14] || '').trim(); // O = thumbnail URL
       const linkPDF  = (r[13] || '').trim(); // N = PDF link
+      const docDesc  = (r[15] || '').trim(); // P = Descripción
+      const docAmen  = (r[16] || '').trim(); // Q = Amenities
 
       if(!nombre) continue;
 
@@ -1391,6 +1393,8 @@ async function loadVillasFromSheet() {
         descripcion: notas, notas: '',
         foto_url: fotoUrl, pdf_url: linkPDF,
         carpeta_url: linkFoto,
+        descripcion: docDesc,
+        amenities: docAmen ? docAmen.split(',').map(s=>s.trim()).filter(Boolean) : detalle.split('/').map(s=>s.trim()).filter(s=>s.length>2),
         bgcolor,
         size: guests >= 12 ? 'large' : 'small',
         amenities: detalle.split('/').map(s=>s.trim()).filter(s=>s.length>2),
