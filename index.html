@@ -878,7 +878,7 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
 </section>
 
 <!-- VILLAS CATÁLOGO COMPLETO -->
-<section class="villas" id="villas">
+<section class="villas rv" id="villas">
   <div class="vh rv">
     <div data-reveal>
       <span class="lbl">Dónde vas a estar</span>
@@ -909,7 +909,7 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
 </section>
 
 <!-- BOATS -->
-<section class="boats" id="embarcaciones">
+<section class="boats rv" id="embarcaciones">
   <div class="bbg" data-parallax="0.18"></div>
   <div class="bb">
     <div>
@@ -940,7 +940,7 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
 </section>
 
 <!-- GOLF -->
-<section class="golf" id="golf">
+<section class="golf rv" id="golf">
   <div class="gbg"></div>
   <div class="gbody">
     <span class="lbl" style="text-align:center;display:block">Para los que lo apreciar</span>
@@ -1003,7 +1003,7 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
 </section>
 
 <!-- RESORT INFO: ACCESORIOS -->
-<section class="resort-section" id="accesorios">
+<section class="resort-section rv" id="accesorios">
   <div class="rs-inner">
     <div class="rs-head" data-reveal>
       <span class="lbl">Servicios complementarios</span>
@@ -1023,7 +1023,7 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
 </section>
 
 <!-- RESORT INFO: LA MARINA -->
-<section class="resort-section" id="marina" style="background:rgba(0,0,0,.25)">
+<section class="resort-section rv" id="marina" style="background:rgba(0,0,0,.25)">
   <div class="rs-inner">
     <div class="rs-head" data-reveal>
       <span class="lbl">Puerto deportivo</span>
@@ -1043,7 +1043,7 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
 </section>
 
 <!-- RESORT INFO: MINITAS BEACH -->
-<section class="resort-section" id="minitas">
+<section class="resort-section rv" id="minitas">
   <div class="rs-inner rs-beach">
     <div>
       <span class="lbl">Playa privada del resort</span>
@@ -1065,7 +1065,7 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
 </section>
 
 <!-- RESORT INFO: ALTOS DE CHAVÓN -->
-<section class="resort-section" id="chavon" style="background:rgba(0,0,0,.25)">
+<section class="resort-section rv" id="chavon" style="background:rgba(0,0,0,.25)">
   <div class="rs-inner">
     <div class="rs-head" data-reveal>
       <span class="lbl">Pueblo medieval · Arquitectura única</span>
@@ -1085,7 +1085,7 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
 </section>
 
 <!-- RESORT INFO: ACTIVIDADES -->
-<section class="resort-section" id="actividades-resort">
+<section class="resort-section rv" id="actividades-resort">
   <div class="rs-inner">
     <div class="rs-head" data-reveal>
       <span class="lbl">3.000 hectáreas de experiencias</span>
@@ -1332,1412 +1332,12 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
 const nav=document.getElementById('nav');
 window.addEventListener('scroll',()=>nav.classList.toggle('solid',scrollY>80));
 
+
+// ── REVEAL ON SCROLL ──
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:.1});
+document.querySelectorAll('.rv,[data-reveal]').forEach(el=>obs.observe(el));
+
 // ── REVEAL
-
-// ── SCROLL PROGRESS BAR ──
-const _sprg = document.createElement('div');
-_sprg.id = 'scroll-progress';
-document.body.prepend(_sprg);
-window.addEventListener('scroll', () => {
-  _sprg.style.width = Math.min(window.scrollY / (document.body.scrollHeight - innerHeight) * 100, 100) + '%';
-}, { passive: true });
-
-// ── HERO PARALLAX ──
-window.addEventListener('scroll', () => {
-  const y = window.scrollY;
-  const bg = document.querySelector('.hbg');
-  const hb = document.querySelector('.hb');
-  if (bg) bg.style.transform = `translateY(${y * 0.4}px) scale(1.08)`;
-  if (hb) { hb.style.transform = `translateY(${y * 0.18}px)`; hb.style.opacity = Math.max(0, 1 - y / 500); }
-}, { passive: true });
-
-// ── UNIVERSAL REVEAL ──
-// Single IntersectionObserver handles ALL animated elements
-const _io = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (!e.isIntersecting) return;
-    const el = e.target;
-    el.classList.add('in');
-    _io.unobserve(el);
-  });
-}, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
-
-// Observe everything that needs animation
-function _observe() {
-  document.querySelectorAll(
-    '.rv, .bs, .svc-card, .rs-card, .rs-fact, .fimg, .ftxt, .rule, .cdc-stat, .cdc-img'
-  ).forEach(el => {
-    if (!el.closest('.hero') && !el._observed) {
-      el._observed = true;
-      _io.observe(el);
-    }
-  });
-}
-_observe();
-
-// ── VILLA CARDS — stagger in batches ──
-function _observeVillas() {
-  const grid = document.getElementById('villaCatalog');
-  if (!grid) return;
-  const cards = grid.querySelectorAll('.vc');
-  if (!cards.length) return;
-  const vio = new IntersectionObserver(([e]) => {
-    if (!e.isIntersecting) return;
-    cards.forEach((c, i) => setTimeout(() => c.classList.add('in'), i * 80));
-    vio.disconnect();
-  }, { threshold: 0.04 });
-  vio.observe(grid);
-}
-_observeVillas();
-
-// ── COUNT-UP for CDC stats ──
-document.querySelectorAll('.cdc-stat').forEach(stat => {
-  const nEl = stat.querySelector('.cdc-stat-n');
-  if (!nEl) return;
-  const raw = nEl.textContent.trim();
-  const num = parseFloat(raw.replace(/[^0-9.]/g, ''));
-  const suf = raw.replace(/[0-9.]/g, '');
-  if (!num) return;
-  const cio = new IntersectionObserver(([e]) => {
-    if (!e.isIntersecting) return;
-    let st = null;
-    const step = ts => {
-      if (!st) st = ts;
-      const p = Math.min((ts - st) / 1000, 1);
-      const ease = 1 - Math.pow(1 - p, 3);
-      nEl.textContent = Math.floor(num * ease) + suf;
-      if (p < 1) requestAnimationFrame(step);
-      else nEl.textContent = raw;
-    };
-    requestAnimationFrame(step);
-    cio.disconnect();
-  }, { threshold: 0.5 });
-  cio.observe(stat);
-});
-
-
-// ── SERVICE CARDS DRAG
-const ss=document.getElementById('svcScroll');
-let dragging=false,sx,sl;
-ss.addEventListener('mousedown',e=>{dragging=true;sx=e.pageX-ss.offsetLeft;sl=ss.scrollLeft;ss.classList.add('grab')});
-document.addEventListener('mouseup',()=>{dragging=false;ss.classList.remove('grab')});
-document.addEventListener('mousemove',e=>{if(!dragging)return;e.preventDefault();ss.scrollLeft=sl-(e.pageX-ss.offsetLeft-sx)*1.5});
-
-// ── SMOOTH SCROLL
-document.querySelectorAll('a[href^="#"]').forEach(a=>{
-  a.addEventListener('click',e=>{
-    const t=document.querySelector(a.getAttribute('href'));
-    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'})}
-  });
-});
-
-// ── FORMS
-function onSend(e){e.preventDefault();const b=document.getElementById('subBtn');b.textContent='✓ Enviado';b.style.background='#1D4D3A';b.style.color='#D4B89A';setTimeout(()=>{b.textContent='Enviar →';b.style.background='';b.style.color=''},4000)}
-function onNl(e){e.preventDefault();const b=document.getElementById('nlBtn');b.textContent='✓ Listo';setTimeout(()=>{b.textContent='Me apunto'},3000)}
-
-// ══════════════════════════════════════════
-// TARIFARIO COMPLETO — Columna K del Drive
-// Última sincronización: Mayo 2026
-// ══════════════════════════════════════════
-
-
-// ══════════════════════════════════════════════════════════════════════════
-// VILLAS — Cargadas dinámicamente desde Google Sheets (Data Base)
-// Columnas A–O del Data Base:
-//   A=Categoría|B=Subcategoría|C=Item|D=Variante|E=Unidad
-//   F=Pax mín.|G=Pax máx.|H=Detalle|I=Precio USD|J=Margen
-// ── VILLAS: CSV público desde Google Sheets (se actualiza automáticamente) ────
-// Agregás una villa al sheet → aparece en la web al próximo reload
-// CSV URL: publicado desde Archivo → Compartir → Publicar en la web → CSV
-
-// URLs para intentar cargar el CSV (en orden de prioridad)
-const CSV_URLS = [
-  // 1. CSV publicado (Publicar en la web)
-  'https://docs.google.com/spreadsheets/d/e/2PACX-1vR3IH2QqoLQhCOPBPXsvLFVPKvmLX4M2M9vkMIOy_GmxlfYRNaDJfD5M7Atdk_-pY2qyjgU-fUCUl7c/pub?gid=718549851&single=true&output=csv',
-  // 2. gviz endpoint como CSV
-  'https://docs.google.com/spreadsheets/d/1PaZ5YVzsUKwvr7PvdKwhwHtfJBtyQKF0G9t45po6OYo/gviz/tq?tqx=out:csv&gid=718549851',
-];
-
-function driveThumb(url, sz) {
-  if(!url || !url.trim()) return null;
-  sz = sz || 'w1200';
-  if(url.includes('thumbnail?id=')) return url;
-  var m = url.match(/\/d\/([a-zA-Z0-9_-]+)/) || url.match(/id=([a-zA-Z0-9_-]+)/);
-  if(m) return 'https://drive.google.com/thumbnail?id=' + m[1] + '&sz=' + sz;
-  return null;
-}
-
-let villasFromSheet = [];
-let villaDataFromSheet = {};
-
-function parseCSV(text) {
-  const lines = text.trim().split('\n');
-  const rows = [];
-  for(let i = 0; i < lines.length; i++) {
-    // Parse CSV respetando comillas
-    const cols = [];
-    let cur = '', inQ = false;
-    for(let c = 0; c < lines[i].length; c++) {
-      const ch = lines[i][c];
-      if(ch === '"') { inQ = !inQ; }
-      else if(ch === ',' && !inQ) { cols.push(cur.trim()); cur = ''; }
-      else { cur += ch; }
-    }
-    cols.push(cur.trim());
-    rows.push(cols);
-  }
-  return rows;
-}
-
-async function loadVillasFromSheet() {
-  let csvText = null;
-
-  // Intentar cada URL hasta que una funcione
-  for(const url of CSV_URLS) {
-    try {
-      const res = await fetch(url);
-      if(!res.ok) continue;
-      const text = await res.text();
-      // Verificar que sea CSV real (no HTML de error)
-      if(text.includes('Villa,Hospedaje') || text.includes('Categoría')) {
-        csvText = text;
-        console.log('CSV OK desde:', url.substring(0,60), '| chars:', text.length);
-        break;
-      }
-    } catch(e) { console.log('CSV fetch failed:', url.substring(0,60)); }
-  }
-
-  if(!csvText) {
-    console.log('CSV no disponible — usando datos hardcodeados');
-    renderVillaGridFallback();
-    return;
-  }
-
-  try {
-    const rows = parseCSV(csvText);
-    console.log('Parsed rows:', rows.length);
-
-    villasFromSheet = [];
-    villaDataFromSheet = {};
-
-    // Buscar header row (la que tiene"Categoría" o"Categoria")
-    let dataStart = 0;
-    for(let i = 0; i < rows.length; i++) {
-      if(rows[i][0] && rows[i][0].toLowerCase().includes('categor')) {
-        dataStart = i + 1; break;
-      }
-    }
-
-    for(let i = dataStart; i < rows.length; i++) {
-      const r = rows[i];
-      if(!r[0] || r[0].toLowerCase() !== 'villa') continue;
-
-      const nombre   = (r[2] || '').trim();
-      const detalle  = (r[7] || '').trim();
-      const paxMax   = parseInt(r[6]) || 0;
-      const display  = (r[11] || '').trim();
-      const notas    = (r[12] || '').trim();
-      const linkFoto = (r[14] || '').trim(); // O = thumbnail URL
-      const linkPDF  = (r[13] || '').trim(); // N = PDF link
-      const docDesc  = (r[15] || '').trim(); // P = Descripción
-      const docAmen  = (r[16] || '').trim(); // Q = Amenities
-
-      if(!nombre) continue;
-
-      const precioK = parseFloat((r[10] || '').replace(/[^0-9.,]/g,'').replace(',','.')) || 0;
-      const precioI = parseFloat((r[8]  || '').replace(/[^0-9.,]/g,'').replace(',','.')) || 0;
-      const precio  = precioK > 0 ? precioK : precioI;
-
-      const habM  = detalle.match(/(\d+)\s*hab/i);
-      const paxM  = detalle.match(/(\d+)\s*pax/i) || detalle.match(/(\d+)\s*guests/i);
-      const hab   = habM ? parseInt(habM[1]) : 0;
-      const guests = paxM ? parseInt(paxM[1]) : paxMax;
-
-      const id = nombre.toLowerCase()
-        .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
-        .replace(/[^a-z0-9]/g,'');
-
-      // Col O puede ser thumbnail directo o link de carpeta
-      // Solo usar como foto si es thumbnail, sino construir desde col N (PDF)
-      const isThumbnail = linkFoto && (linkFoto.includes('thumbnail?id=') || linkFoto.includes('lh3.google'));
-      const fotoUrl = isThumbnail ? linkFoto : driveThumb(linkPDF);
-
-      const det = detalle.toLowerCase();
-      let bgcolor = '#1a2a1a';
-      if(det.includes('ocean') || det.includes('minitas') || det.includes('bahía')) bgcolor = '#001a2e';
-      else if(det.includes('golf') || det.includes('garden') || det.includes('jardín')) bgcolor = '#0f1f17';
-      else if(hab >= 8) bgcolor = '#1a1a2e';
-
-      const obj = {
-        id, name: nombre,
-        hab, guests, huespedes: guests,
-        precio_noche: precio, price: precio,
-        label: detalle, display: display || nombre,
-        descripcion: notas, notas: '',
-        foto_url: fotoUrl, pdf_url: linkPDF,
-        carpeta_url: linkFoto,
-        descripcion: docDesc,
-        amenities: docAmen ? docAmen.split(',').map(s=>s.trim()).filter(Boolean) : detalle.split('/').map(s=>s.trim()).filter(s=>s.length>2),
-        bgcolor,
-        size: guests >= 12 ? 'large' : 'small',
-        amenities: detalle.split('/').map(s=>s.trim()).filter(s=>s.length>2),
-        habitaciones: [],
-      };
-
-      villasFromSheet.push(obj);
-      villaDataFromSheet[id] = obj;
-    }
-
-    if(villasFromSheet.length > 0) {
-      console.log('Villas loaded:', villasFromSheet.length, villasFromSheet.map(v=>v.name));
-      renderVillaGrid();
-      setTimeout(setupScrollReveal, 150);
-    } else {
-      renderVillaGridFallback();
-    }
-  } catch(e) {
-    console.error('CSV load error:', e);
-    renderVillaGridFallback();
-  }
-}
-
-function renderVillaGrid() {
-  const grid = document.getElementById('villaCatalog');
-  if(!grid) return;
-  grid.innerHTML = villasFromSheet.map((v, i) => {
-    const delay = (i % 4) + 1;
-    const imgEl = v.foto_url
-      ? `<img class="vi" src="${v.foto_url}" alt="${v.name}" loading="lazy" style="width:100%;height:100%;position:absolute;inset:0;object-fit:cover">`
-      : `<div class="vpc-wrap"><svg viewBox="0 0 300 400" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%"><rect width="300" height="400" fill="${v.bgcolor}"/><text x="150" y="210" font-family="Cinzel,serif" font-size="11" fill="rgba(174,133,96,.3)" text-anchor="middle" letter-spacing="3">${v.name.toUpperCase()}</text></svg></div>`;
-    const precioDisplay = v.precio_noche > 0 ? '$' + v.precio_noche.toLocaleString() + '/noche' : 'Consultar precio';
-    return `<div class="vc" data-reveal data-delay="${delay}" data-size="${v.size}" onclick="openVModal('${v.id}')">
-      <button class="vc-zoom" onclick="event.stopPropagation();const img=this.previousElementSibling?.querySelector&&this.previousElementSibling?.querySelector('img')||this.parentElement.querySelector('img');if(img)openLightbox(img,'${v.name}')">&#x26F6;</button>
-      ${imgEl}<div class="vov"></div>
-      <div class="vinfo"><div class="vname">${v.name}</div><div class="vdet">${v.hab} hab · ${v.guests} huésp.</div></div>
-      <div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">${precioDisplay}</div>
-      <div class="vprice-x">${v.hab} hab · ${v.guests} huésp.</div><button class="vbtn">Ver villa</button></div>
-    </div>`;
-  }).join('');
-}
-
-const villasFallback = [
-  {id:'altosdechavon',name:'Altos de Chavon',hab:2,guests:4,price:331,size:'small',foto_url:null,bgcolor:'#1a2a1a'},
-  {id:'townhousemarina',name:'Townhouse Marina',hab:3,guests:8,price:426,size:'small',foto_url:null,bgcolor:'#1a2a1a'},
-  {id:'losaltos3102',carpeta_url:'https://drive.google.com/drive/folders/1ddGzl95nZxzNHhrAoXVx3WLoUxExpcxz',name:'Los Altos 3102',hab:2,guests:6,price:941,size:'small',foto_url:'https://drive.google.com/thumbnail?id=1mybsil6kX9WRM3Amh5IUiUDwVCm9arLj&sz=w1200',bgcolor:'#1a2a1a'},
-  {id:'townhousefaro',name:'Townhouse Faro',hab:4,guests:10,price:1326,size:'small',foto_url:null,bgcolor:'#1a2a1a'},
-  {id:'messina',carpeta_url:'https://drive.google.com/drive/folders/1nGs_p99MFz-9_KtTl3E0qmrnpm9XfGNl',name:'Messina',hab:5,guests:12,price:1412,size:'large',foto_url:'https://drive.google.com/thumbnail?id=1VoyAjPJ-Kf-A4Ipk_DRA1Te5S-7tqkfk&sz=w1200',bgcolor:'#1a2a1a'},
-  {id:'loslagos',name:'Los Lagos',hab:5,guests:10,price:1647,size:'small',foto_url:null,bgcolor:'#0f1f17'},
-  {id:'lagos94',name:'Lagos 94',hab:5,guests:10,price:1705,size:'small',foto_url:null,bgcolor:'#1c1400'},
-  {id:'loslagos92',carpeta_url:'https://drive.google.com/drive/folders/1VGuOzJ9vQj3rrVGXgIPdnwYpwS7Liq59',name:'Los Lagos 92',hab:5,guests:10,price:1882,size:'small',foto_url:'https://drive.google.com/thumbnail?id=1HNMY_TdECfeTBZ7NEJqN1jO8JsP2OSx_&sz=w1200',bgcolor:'#0f1f17'},
-  {id:'canaria',name:'Canaria',hab:4,guests:8,price:2368,size:'small',foto_url:null,bgcolor:'#1f0d23'},
-  {id:'vistamar',name:'Vista Mar',hab:7,guests:18,price:2368,size:'large',foto_url:null,bgcolor:'#0d2b22'},
-  {id:'vivero114',carpeta_url:'https://drive.google.com/drive/folders/10efjb0aVXSQkVDcDJI-QiVpGhqnBB_Iy',name:'Vivero 1,14',hab:4,guests:12,price:2471,size:'large',foto_url:'https://drive.google.com/thumbnail?id=1jqYkEgf0qVG64SAMrxgKxsMHX7bbW3Sh&sz=w1200',bgcolor:'#1a2a1a'},
-  {id:'laguna',name:'Laguna',hab:5,guests:10,price:2652,size:'small',foto_url:null,bgcolor:'#003535'},
-  {id:'canas169',carpeta_url:'https://drive.google.com/drive/folders/1I4L_vVUv7Iaj5D_tlNmRpKP3bl_Qt8K_',name:'Cañas 1,69',hab:4,guests:10,price:2706,size:'small',foto_url:'https://drive.google.com/thumbnail?id=1BZvzAQDTWkJyNs7oaFBHbx9HFADXvkCn&sz=w1200',bgcolor:'#1a2a1a'},
-  {id:'ducacique',name:'Du Cacique',hab:8,guests:14,price:2841,size:'large',foto_url:null,bgcolor:'#3a2510'},
-  {id:'losranchos',name:'Los Ranchos',hab:6,guests:14,price:2841,size:'large',foto_url:null,bgcolor:'#0d1a2e'},
-  {id:'naranjos10',carpeta_url:'https://drive.google.com/drive/folders/1Uz1boJWPocgr7oUKJRRi98YNJxp9gMg1',name:'Naranjos 10',hab:7,guests:14,price:2941,size:'large',foto_url:'https://drive.google.com/thumbnail?id=1q9fltJ_hsT1mt8SVlSQkAJs5A6gGacqA&sz=w1200',bgcolor:'#0f1f17'},
-  {id:'vistamar35',carpeta_url:'https://drive.google.com/drive/folders/1qg5M5zuptGNXIs8B8ugu28xOj8W1eAWK',name:'Vista Mar 35',hab:7,guests:16,price:3059,size:'large',foto_url:'https://drive.google.com/thumbnail?id=17XMK_3lWGU38Jd5O_bFJxjFHVE9qJBqI&sz=w1200',bgcolor:'#0d2b22'},
-  {id:'colinas21',carpeta_url:'https://drive.google.com/drive/folders/13lNFXKDYypefWxyu5wTVjJmkHVd2VTgB',name:'Colinas 21',hab:4,guests:10,price:3125,size:'small',foto_url:'https://drive.google.com/thumbnail?id=14Tjru4P30rcA2pD68-iab_UQeicJHPQl&sz=w1200',bgcolor:'#0c1f0c'},
-  {id:'laplaya',name:'La Playa',hab:3,guests:8,price:3315,size:'small',foto_url:null,bgcolor:'#200d00'},
-  {id:'miralejos',name:'Miralejos',hab:6,guests:16,price:3315,size:'large',foto_url:null,bgcolor:'#1a1a2e'},
-  {id:'lomas24',carpeta_url:'https://drive.google.com/drive/folders/1BdyV8VuwIjiLSzANm6F8c6WUpvly171S',name:'Lomas 24',hab:7,guests:14,price:3529,size:'large',foto_url:'https://drive.google.com/thumbnail?id=1yPFIL7U0AF6NN1Lvz2TqVjognqVkUiyx&sz=w1200',bgcolor:'#0f1f17'},
-  {id:'bali',name:'Villa Bali',hab:6,guests:12,price:3788,size:'large',foto_url:null,bgcolor:'#1a0f00'},
-  {id:'naranjos',name:'Villa Naranjos',hab:6,guests:12,price:3788,size:'large',foto_url:null,bgcolor:'#1a1000'},
-  {id:'lacatalina',name:'La Catalina',hab:8,guests:20,price:4262,size:'large',foto_url:null,bgcolor:'#1a3a50'},
-  {id:'colinas21b',carpeta_url:'https://drive.google.com/drive/folders/13lNFXKDYypefWxyu5wTVjJmkHVd2VTgB',name:'Colinas 21 (12 hab)',hab:12,guests:24,price:4706,size:'large',foto_url:'https://drive.google.com/thumbnail?id=1rF94KmjE0dCHtEMFfw0pc21U0CgYDIRK&sz=w1200',bgcolor:'#0c1f0c'},
-  {id:'losmangos',carpeta_url:'https://drive.google.com/drive/folders/1vRid91CRptbjtWex8ezg5wLsAY_POPP7',name:'Los Mangos',hab:6,guests:12,price:4824,size:'large',foto_url:'https://drive.google.com/thumbnail?id=1xBxT5YGDp_51QU3o6sToMJ4XVxnWA9Ov&sz=w1200',bgcolor:'#0f1f17'},
-  {id:'costaverde5',carpeta_url:'https://drive.google.com/drive/folders/1_GFXccbzKo3kOEkaBjjG3l7jX8_1hxXf',name:'Costa Verde 5',hab:4,guests:10,price:5176,size:'small',foto_url:'https://drive.google.com/thumbnail?id=1tfWufAcRgFNJ931XhTfcsUr_zXlF42kO&sz=w1200',bgcolor:'#001a2e'},
-  {id:'puntaminitas',name:'Punta Minitas',hab:6,guests:12,price:5209,size:'large',foto_url:null,bgcolor:'#001a2e'},
-  {id:'puntaminitas5',carpeta_url:'https://drive.google.com/drive/folders/13jVLXLBFV8xgnprkPZoDOaWniS9X_oR4',name:'Punta Minitas 5',hab:8,guests:16,price:6235,size:'large',foto_url:'https://drive.google.com/thumbnail?id=1eG29_oGvDZT5vuFiabFeD1ZqaJ-8gQ_C&sz=w1200',bgcolor:'#001a2e'},
-  {id:'puntaminitas19',carpeta_url:'https://drive.google.com/drive/folders/1QhZQWAZcg7FBore4tq5PmIycEPZKtinw',name:'Punta Minitas 19',hab:6,guests:14,price:7529,size:'large',foto_url:'https://drive.google.com/thumbnail?id=1zhsHN_-9ud-ScfF9HzKn5fCQe3EHc8Nf&sz=w1200',bgcolor:'#001528'},
-  {id:'puntaaguila57',carpeta_url:'https://drive.google.com/drive/folders/1vV-nRxfBIt3J8-aW138QeHjj8Bnqk-Ss',name:'Punta Águila 57',hab:8,guests:16,price:7882,size:'large',foto_url:'https://drive.google.com/thumbnail?id=1TVlUqLTqKIs9Kg4P46KIznRHk8gtSOwE&sz=w1200',bgcolor:'#001528'},
-  {id:'costmar10',carpeta_url:'https://drive.google.com/drive/folders/1B65lk7_oQNnfO-HuoEfLniNpkvVAnEG0',name:'Costa Mar 10',hab:6,guests:12,price:8114,size:'large',foto_url:'https://drive.google.com/thumbnail?id=170qEOw6A-tq4lwJ33cibHT9Tbr_W7FMa&sz=w1200',bgcolor:'#0f1f17'},
-  {id:'bahiaminitas3',carpeta_url:'https://drive.google.com/drive/folders/1ESXw9WBZ-I4-Z7536RzuavFme6embdAf',name:'Bahía Minitas 3',hab:5,guests:10,price:9176,size:'small',foto_url:'https://drive.google.com/thumbnail?id=19QRRlCyfUCns_3BCeK4N9RevHSBho98K&sz=w1200',bgcolor:'#001a2e'},
-  {id:'bahiaminitas6',carpeta_url:'https://drive.google.com/drive/folders/1lyc23sKAcA2Os3Wr4PFCkVrBg0Lyetck',name:'Bahía Minitas 6',hab:9,guests:18,price:9412,size:'large',foto_url:'https://drive.google.com/thumbnail?id=1IP3Ltr31FkfO2QAXdAy1DaA3-g2U8eOV&sz=w1200',bgcolor:'#001528'},
-  {id:'clararoyale',name:'Clara Royale',hab:10,guests:20,price:14206,size:'large',foto_url:null,bgcolor:'#0a2016'},
-];
-function getVillas() { return villasFromSheet.length > 0 ? villasFromSheet : villasFallback; }
-function renderVillaGridFallback() {
-  villasFromSheet = villasFallback.map(v => ({
-    ...v, precio_noche:v.price, huespedes:v.guests,
-    display:v.name, label:v.hab+' hab · '+v.guests+' huésp.',
-    descripcion:'', notas:'', amenities:[], habitaciones:[], pdf_url:null,
-  }));
-  villasFallback.forEach(v => { villaDataFromSheet[v.id] = villasFromSheet.find(x => x.id === v.id); });
-  renderVillaGrid();
-  setTimeout(setupScrollReveal, 150);
-}
-
-loadVillasFromSheet();
-
-// ── SERVICIOS EN VILLA (USD/día)
-const villaServices = [
-  {id:'limpieza',  name:'Limpieza + Desayuno',  price:79,  unit:'día'},
-  {id:'cocinera',  name:'Cocinera',             price:100, unit:'día'},
-  {id:'cocinera2', name:'Cocinera + Nocturno',  price:172, unit:'día'},
-  {id:'chef',      name:'Chef completo',        price:286, unit:'día'},
-  {id:'nineraD',   name:'Niñera (día)',         price:122, unit:'día'},
-  {id:'nineraH',   name:'Niñera (noche)',       price:172, unit:'noche'},
-];
-
-// ── TRASLADOS (USD ida+vuelta)
-const traslados = [
-  {id:'suv2',  name:'SUV',           pax:'2 pax',  price:242, display:'SUV | 2 pax'},
-  {id:'suv6',  name:'Full Size SUV', pax:'6 pax',  price:471, display:'Full Size SUV | 6 pax'},
-  {id:'van6',  name:'Minivan',       pax:'6 pax',  price:377, display:'Minivan | 6 pax'},
-  {id:'van11', name:'Van',           pax:'11 pax', price:471, display:'Van | 11 pax'},
-  {id:'bus16', name:'Mini Bus',      pax:'16 pax', price:530, display:'MiniBus | 16 pax'},
-];
-
-// ── CARRITOS (USD/día)
-const carritos = [
-  {id:'carrito4', name:'Carrito de golf — 4 pax', price:69,  unit:'día', display:'Carrito de golf | 4 pax'},
-  {id:'carrito6', name:'Carrito de golf — 6 pax', price:94,  unit:'día', display:'Carrito de golf | 6 pax'},
-];
-
-// ── EMBARCACIONES (USD/)
-const barcos = [
-  {id:'bw305palm', name:'Boston Whaler 305 — Palmillas', pax:'hasta 9',  price:1553, display:'Boston Whaler 305 | Palmillas'},
-  {id:'bw305cat',  name:'Boston Whaler 305 — Catalina',  pax:'hasta 9',  price:1553, display:'Boston Whaler 305 | Catalina'},
-  {id:'bw305saon', name:'Boston Whaler 305 — Saona',     pax:'hasta 9',  price:2259, display:'Boston Whaler 305 | Saona'},
-  {id:'tiara38p',  name:'Tiara 38LS — Palmillas',        pax:'10 a 12',  price:1765, display:'Tiara 38LS | Palmillas'},
-  {id:'tiara38s',  name:'Tiara 38LS — Saona',            pax:'10 a 12',  price:2942, display:'Tiara 38LS | Saona'},
-  {id:'azimuth',   name:'Azimuth Flybridge 55',          pax:'13 a 16',  price:4706, display:'Azimuth Flybridge 55 | Salida general'},
-  {id:'catamaran', name:'Catamarán',                     pax:'17 a 35',  price:2589, display:'Catamaran | Salida general'},
-];
-
-// ── ACTIVIDADES — organizadas por subcategoría
-const actividades = {
-  'Golf': [
-    {id:'teeth', name:'Teeth of the Dog', price:732, unit:'persona', note:'18% tax inc.', display:'Golf: Teeth of the Dog'},
-    {id:'dye',   name:'Dye Fore',         price:620, unit:'persona', note:'18% tax inc.', display:'Golf: Dye Fore'},
-    {id:'links', name:'Links',            price:509, unit:'persona', note:'18% tax inc.', display:'Golf: Links'},
-  ],
-  'Ecuestre': [
-    {id:'cab30',   name:'Paseo a caballo 1/2h',          price:43,  unit:'persona',   display:'Ecuestre: Paseo a caballo 1/2h'},
-    {id:'cab60',   name:'Paseo a caballo 1h',            price:79,  unit:'persona',   display:'Ecuestre: Paseo a caballo 1h'},
-    {id:'cab120',  name:'Paseo a caballo 2h',            price:127, unit:'persona',   display:'Ecuestre: Paseo a caballo 2h'},
-    {id:'ponies',  name:'Ponies niños 1/2h',             price:37,  unit:'niño',      display:'Ecuestre: Ponies niños 1/2h'},
-    {id:'equ30',   name:'Lección equitación/1/2h', price:85,  unit:'persona',   display:'Ecuestre: Lección equitación/1/2h'},
-    {id:'equ60',   name:'Lección equitación/1h',   price:132, unit:'persona',   display:'Ecuestre: Lección equitación/1h'},
-    {id:'polo',    name:'Lección polo profesional',      price:211, unit:'persona/h', display:'Ecuestre: Lección polo profesional'},
-    {id:'poloas',  name:'Asistente polo',                price:127, unit:'persona/h', display:'Ecuestre: Asistente polo'},
-    {id:'donkey',  name:'Donkey Polo',                   price:74,  unit:'persona/h', display:'Ecuestre: Donkey Polo'},
-    {id:'ranch',   name:'Tour ranchos',                  price:179, unit:'persona',   display:'Ecuestre: Tour ranchos'},
-    {id:'ranchp',  name:'Tour ranchos con picnic',       price:253, unit:'persona',   display:'Ecuestre: Tour ranchos con picnic'},
-  ],
-  'Tenis': [
-    {id:'ten_dia',  name:'Cancha diurna',                     price:42,  unit:'hora',   display:'Tenis: Cancha diurna'},
-    {id:'ten_noc',  name:'Cancha nocturna',                   price:52,  unit:'hora',   display:'Tenis: Cancha nocturna'},
-    {id:'ten_dir',  name:'Clase privada con Director',        price:168, unit:'hora',   display:'Tenis: Clase privada con Director'},
-    {id:'ten_pro',  name:'Clase con Pro',                     price:79,  unit:'hora',   display:'Tenis: Clase con Pro'},
-    {id:'ten_semi', name:'Clase semiprivada con Pro (2 pax)', price:100, unit:'hora',   display:'Tenis: Clase semiprivada con Pro (2 pax)'},
-    {id:'ten_head', name:'Clase con Head Pro (2 pax)',        price:216, unit:'hora',   display:'Tenis: Clase con Head Pro (2 pax)'},
-    {id:'ten_comp', name:'Compañero de práctica',             price:69,  unit:'hora',   display:'Tenis: Compañero de práctica'},
-    {id:'ten_clin', name:'Clínica grupal',                    price:48,  unit:'p/hora', display:'Tenis: Clínica grupal'},
-    {id:'ten_clinn',name:'Clínica grupal niños',              price:37,  unit:'p/hora', display:'Tenis: Clínica grupal niños'},
-    {id:'ten_maq',  name:'Máquina de pelotas',                price:31,  unit:'uso',    display:'Tenis: Máquina de pelotas'},
-    {id:'ten_raq',  name:'Alquiler raqueta',                  price:20,  unit:'uso',    display:'Tenis: Alquiler raqueta'},
-  ],
-  'Pádel': [
-    {id:'pad_dia',  name:'Cancha diurna',              price:48,  unit:'hora',   display:'Padel: Cancha diurna'},
-    {id:'pad_noc',  name:'Cancha nocturna',            price:52,  unit:'hora',   display:'Padel: Cancha nocturna'},
-    {id:'pad_dir',  name:'Clase privada con Director', price:105, unit:'hora',   display:'Padel: Clase privada con Director'},
-    {id:'pad_pro',  name:'Clase con Pro',              price:94,  unit:'hora',   display:'Padel: Clase con Pro'},
-    {id:'pad_semi', name:'Clase semiprivada con Pro',  price:115, unit:'hora',   display:'Padel: Clase semiprivada con Pro'},
-    {id:'pad_clin', name:'Clínica grupal',             price:42,  unit:'p/hora', display:'Padel: Clínica grupal pádel'},
-    {id:'pad_clind',name:'Clínica grupal con Director',price:48,  unit:'p/hora', display:'Padel: Clínica grupal pádel con Director'},
-    {id:'pad_clinn',name:'Clínica grupal niños',       price:42,  unit:'p/hora', display:'Padel: Clínica grupal niños'},
-    {id:'pad_comp', name:'Compañero de práctica',      price:42,  unit:'p/hora', display:'Padel: Compañero de práctica'},
-    {id:'pad_maq',  name:'Máquina de pelotas',         price:58,  unit:'uso',    display:'Padel: Máquina de pelotas'},
-    {id:'pad_raq',  name:'Alquiler raqueta',           price:11,  unit:'uso',    display:'Padel: Alquiler raqueta'},
-  ],
-  'Tiro': [
-    {id:'skeet', name:'Skeet & Trap',       price:53,  unit:'persona', display:'Tiro: Skeet & Trap'},
-    {id:'five',  name:'Five Stand',         price:58,  unit:'persona', display:'Tiro: Five Stand'},
-    {id:'caza',  name:'Simulación cacería', price:137, unit:'persona', display:'Tiro: Simulación cacería'},
-  ],
-  'Río Chavón': [
-    {id:'kayak2', name:'Kayak doble', price:64, unit:'persona', display:'Río Chavón: Kayak doble'},
-    {id:'kayak1', name:'Kayak simple',price:48, unit:'persona', display:'Río Chavón: Kayak simple'},
-  ],
-  'Cumayasa': [
-    {id:'zip_a', name:'Zipline adultos', price:92,  unit:'persona', display:'Cumayasa: Zipline adultos'},
-    {id:'zip_n', name:'Zipline niños',   price:63,  unit:'niño',    display:'Cumayasa: Zipline niños'},
-    {id:'bug1',  name:'Buggies simple',  price:120, unit:'persona', display:'Cumayasa: Buggies simple'},
-    {id:'bug2',  name:'Buggies doble',   price:92,  unit:'persona', display:'Cumayasa: Buggies doble'},
-  ],
-  'Mar': [
-    {id:'cat_a',  name:'Isla Catalina tour grupal (adulto)', price:51, unit:'adulto',  display:'Mar: Isla Catalina tour grupal adulto'},
-    {id:'cat_n',  name:'Isla Catalina tour grupal (niño)',   price:32, unit:'niño',    display:'Mar: Isla Catalina tour grupal niño'},
-    {id:'snork',  name:'Snorkeling Minitas Beach',           price:20, unit:'día',     display:'Mar: Snorkeling Minitas Beach'},
-    {id:'kmin',   name:'Kayak Minitas Beach',                price:27, unit:'hora',    display:'Mar: Kayak Minitas Beach'},
-    {id:'kminm',  name:'Kayak Minitas Beach (máximo)',       price:37, unit:'hora',    display:'Mar: Kayak Minitas Beach (máximo)'},
-    {id:'banana', name:'Banana boat',                        price:22, unit:'persona', display:'Mar: Banana boat'},
-    {id:'hobie',  name:'Hobie Wave',                         price:53, unit:'hora',    display:'Mar: Hobie Wave'},
-  ],
-  'Cigars': [
-    {id:'cigar', name:'Cigar Factory Tour', price:22, unit:'persona', display:'Cigar: Cigar Factory Tour'},
-  ],
-  'Buceo': [
-    {id:'buceo_cat_md', name:'Excursión medio día Catalina',             price:74,  unit:'persona', display:'ScubaCaribe: Excursión medio día Catalina'},
-    {id:'buceo_bay',    name:'Buceo Catalina doble tanque — Bayahibe',   price:79,  unit:'persona', display:'ScubaCaribe: Buceo Catalina doble tanque desde Bayahibe'},
-    {id:'buceo_pca',    name:'Buceo Catalina doble tanque — Punta Cana', price:122, unit:'persona', display:'ScubaCaribe: Buceo Catalina doble tanque desde Punta Cana'},
-    {id:'buceo_upg',    name:'Buceo Bayahibe upgrade desde Punta Cana',  price:91,  unit:'persona', display:'ScubaCaribe: Buceo Bayahibe upgrade desde Punta Cana'},
-    {id:'buceo_alm',    name:'Buceo Catalina + almuerzo',                price:200, unit:'persona', display:'ScubaCaribe: Excursión buceo Catalina doble tanque + almuerzo'},
-    {id:'padi',         name:'Curso PADI Open Water (3 días)',           price:509, unit:'persona', display:'ScubaCaribe: Curso PADI Open Water (3 días)'},
-  ],
-  'Spa': [
-    {id:'spa_wj',   name:'Wellness Journeys 110min',        price:492, unit:'persona', note:'tax+serv.inc.', display:'Spa: Wellness Journeys 110min'},
-    {id:'spa_love', name:'Art of Self-Love 170min',         price:667, unit:'persona', note:'tax+serv.inc.', display:'Spa: Art of Self-Love 170min'},
-    {id:'spa_m50',  name:'Masaje 50min (desde)',            price:250, unit:'persona', note:'tax+serv.inc.', display:'Spa: Masaje 50min (desde)'},
-    {id:'spa_m80',  name:'Masaje 80min',                    price:371, unit:'persona', note:'tax+serv.inc.', display:'Spa: Masaje 80min'},
-    {id:'spa_fac',  name:'Faciales (desde)',                price:250, unit:'persona', note:'tax+serv.inc.', display:'Spa: Faciales (desde)'},
-    {id:'spa_hfp',  name:'HydraFacial Platinum',           price:573, unit:'persona', note:'tax+serv.inc.', display:'Spa: HydraFacial Platinum'},
-    {id:'spa_hfd',  name:'HydraFacial Deluxe',             price:438, unit:'persona', note:'tax+serv.inc.', display:'Spa: HydraFacial Deluxe'},
-    {id:'spa_corp', name:'Tratamientos corporales (desde)', price:250, unit:'persona', note:'tax+serv.inc.', display:'Spa: Tratamientos corporales (desde)'},
-  ],
-};
-
-// ── AEROPUERTO VIP (USD/persona)
-const aeropuerto = [
-  {id:'arr',    name:'Solo llegada VIP Fast Track',                          price:168, display:'Arrival VIP Fast Track'},
-  {id:'arrDep', name:'Llegada + Salida VIP Fast Track & Lounge',             price:274, display:'Arrival VIP Fast Track + Departure VIP Fast Track & Lounge Access'},
-  {id:'works',  name:'The Works — llegada + + concierge completo',    price:526, display:'The Works: Arrival & Departure VIP- Concierge Assisted'},
-  {id:'dep',    name:'Solo VIP Fast Track & Lounge (sin asistencia)', price:116, display:'Departure PLUS VIP Fast Track & Lounge Access (Unassisted)'},
-  {id:'depcon', name:'Solo VIP Concierge + Lounge',                   price:368, display:'Departure VIP Concierge + Lounge Access'},
-];
-
-// ── FEE CDC (USD/persona/día)
-const feeCDC = 27;
-
-// ── STATE
-let state = {step:1, nights:0, guests:8, villaId:null, svcs:{}, barcoId:null, golfId:null, aeropuertoId:null, openAccordion:null};
-
-// ── VILLA CATALOG: select and jump to configurator
-function selectVillaAndGo(villaId){
-  state.villaId = villaId;
-  document.getElementById('tu-experiencia').scrollIntoView({behavior:'smooth', block:'start'});
-  // If already past step 1, jump to step 3
-  if(state.dateIn && state.dateOut && state.nights > 0){
-    setTimeout(()=>{ goStep(3); renderVillas(); }, 600);
-  }
-}
-
-// ── VILLA FILTER
-function filtVillas(size, btn){
-  document.querySelectorAll('.vfb').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  document.querySelectorAll('#villaCatalog .vc').forEach(card=>{
-    if(size==='all'){ card.classList.remove('hidden'); }
-    else { card.classList.toggle('hidden', card.dataset.size !== size); }
-  });
-}
-function goStep(n){
-  if(n>1){
-    if(!state.dateIn||!state.dateOut){alert('Seleccioná las fechas de tu estadía.');return}
-    if(state.nights<=0){alert('La debe ser posterior a la llegada.');return}
-  }
-  if(n>3&&!state.villaId){alert('Seleccioná una casa para continuar.');return}
-  document.getElementById('panel'+state.step).classList.remove('active');
-  state.step=n;
-  document.getElementById('panel'+n).classList.add('active');
-  updateStepBar();
-  if(n===3) renderVillas();
-  if(n===4) renderServices();
-  if(n===5) renderSummary();
-  document.getElementById('tu-experiencia').scrollIntoView({behavior:'smooth',block:'start'});
-}
-
-function updateStepBar(){
-  for(let i=1;i<=5;i++){
-    const dot=document.getElementById('dot'+i);
-    const lbl=document.getElementById('lbl'+i);
-    dot.classList.remove('active','done');
-    lbl.classList.remove('active','done');
-    if(i<state.step){dot.classList.add('done');dot.textContent='✓';lbl.classList.add('done')}
-    else if(i===state.step){dot.classList.add('active');dot.textContent=i;lbl.classList.add('active')}
-    else{dot.textContent=i}
-  }
-}
-
-// ── DATES
-// ── CUSTOM CALENDAR ──────────────────────────────────────────────────────────
-(function(){
-  const MONTHS=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-  let calMode='in', calYear, calMonth;
-  let selIn=null, selOut=null;
-
-  function today(){ const d=new Date(); d.setHours(0,0,0,0); return d; }
-  function fmtDisplay(d){ return d?d.toLocaleDateString('es-AR',{day:'numeric',month:'long'}):null; }
-  function fmtISO(d){ return d?d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'):''; }
-
-  function updateFields(){
-    const inEl=document.getElementById('cfInVal');
-    const outEl=document.getElementById('cfOutVal');
-    if(selIn){ inEl.textContent=fmtDisplay(selIn); inEl.classList.remove('empty'); }
-    else { inEl.textContent='Seleccioná'; inEl.classList.add('empty'); }
-    if(selOut){ outEl.textContent=fmtDisplay(selOut); outEl.classList.remove('empty'); }
-    else { outEl.textContent='Seleccioná'; outEl.classList.add('empty'); }
-    state.dateIn=fmtISO(selIn); state.dateOut=fmtISO(selOut);
-    const nd=document.getElementById('nights-display');
-    if(selIn&&selOut){
-      const diff=Math.round((selOut-selIn)/86400000);
-      state.nights=diff;
-      nd.textContent=diff>0?diff+(diff===1?' noche':' noches'):'';
-    } else { state.nights=0; nd.textContent=''; }
-  }
-
-  function renderCal(){
-    document.getElementById('calMonthLabel').textContent=MONTHS[calMonth]+' '+calYear;
-    document.getElementById('calHint').textContent=calMode==='in'?'Seleccioná la fecha de llegada':'Seleccioná la fecha de ';
-    const first=new Date(calYear,calMonth,1);
-    const last=new Date(calYear,calMonth+1,0);
-    const startDow=(first.getDay()+6)%7;
-    const t=today();
-    let html='';
-    for(let i=0;i<startDow;i++) html+='<div class="cal-day empty"></div>';
-    for(let d=1;d<=last.getDate();d++){
-      const cur=new Date(calYear,calMonth,d);
-      const iso=fmtISO(cur);
-      let cls='cal-day';
-      if(cur<t) cls+=' past';
-      if(selIn&&iso===fmtISO(selIn)) cls+=' selected-in';
-      if(selOut&&iso===fmtISO(selOut)) cls+=' selected-out';
-      if(selIn&&selOut&&cur>selIn&&cur<selOut) cls+=' in-range';
-      html+=`<div class="${cls}" data-iso="${iso}">${d}</div>`;
-    }
-    const grid=document.getElementById('calDays');
-    grid.innerHTML=html;
-    grid.querySelectorAll('.cal-day:not(.empty):not(.past)').forEach(el=>{
-      el.addEventListener('click',()=>{
-        const picked=new Date(el.dataset.iso+'T12:00:00');
-        if(calMode==='in'){ selIn=picked; selOut=null; calMode='out'; document.getElementById('cfIn').classList.remove('active'); document.getElementById('cfOut').classList.add('active'); }
-        else { if(picked<=selIn){ selIn=picked; calMode='out'; } else { selOut=picked; closeCal(); } }
-        updateFields(); renderCal();
-      });
-    });
-  }
-
-  window.openCal=function(mode){
-    calMode=mode;
-    const now=new Date(); calYear=now.getFullYear(); calMonth=now.getMonth();
-    document.getElementById('calDrop').classList.add('open');
-    document.getElementById('cfIn').classList.toggle('active',mode==='in');
-    document.getElementById('cfOut').classList.toggle('active',mode==='out');
-    renderCal();
-  };
-  window.closeCal=function(){ document.getElementById('calDrop').classList.remove('open'); document.getElementById('cfIn').classList.remove('active'); document.getElementById('cfOut').classList.remove('active'); };
-  window.calShift=function(delta){ calMonth+=delta; if(calMonth>11){calMonth=0;calYear++;} if(calMonth<0){calMonth=11;calYear--;} renderCal(); };
-  document.addEventListener('click',e=>{ const drop=document.getElementById('calDrop'); const wrap=document.querySelector('.cal-wrap'); if(drop&&drop.classList.contains('open')&&wrap&&!wrap.contains(e.target)) closeCal(); });
-})();
-function calcNights(){ /* legacy noop — handled by calendar */ }
-
-// ── GUESTS
-function changeGuests(d){
-  state.guests=Math.max(1,Math.min(50,state.guests+d));
-  document.getElementById('guestNum').textContent=state.guests;
-  state.villaId=null;
-}
-
-// ── STEP 3: VILLAS
-function renderVillas(){
-  const g=state.guests;
-  const grid=document.getElementById('villaGrid');
-  const note=document.getElementById('filterNote');
-  const suitable=getVillas().filter(v=>v.guests>=g);
-  const toShow=suitable.length>0?suitable:getVillas();
-  note.textContent = suitable.length>0
-    ? `Casas para ${g} personas o más (${suitable.length} disponibles)`
-    : 'Mostrando todas las casas — consultanos por grupos grandes';
-  grid.innerHTML=toShow.map(v=>`
-    <div class="villa-opt ${v.id===state.villaId?'selected':''}"
-         onclick="selectVilla('${v.id}')">
-      <div class="vo-name">${v.name}</div>
-      <div class="vo-spec">${v.hab} hab · hasta ${v.guests} pers.</div>
-      <div class="vo-price">desde USD $${(v.precio_noche||v.price||0).toLocaleString()}/noche</div>
-    </div>`).join('');
-  // Scroll to preselected villa if coming from modal
-  if(state.villaId){
-    setTimeout(()=>{
-      const sel=grid.querySelector('.villa-opt.selected');
-      if(sel) sel.scrollIntoView({behavior:'smooth',block:'nearest'});
-    },200);
-  }
-}
-
-function selectVilla(id){
-  state.villaId=id;
-  document.querySelectorAll('.villa-opt').forEach(el=>{
-    el.classList.toggle('selected',el.getAttribute('onclick').includes("'"+id+"'"));
-  });
-}
-
-// ── STEP 4: SERVICES — renderizado dinámico con datos reales
-function renderServices(){
-  const panel=document.getElementById('svcOptsContainer');
-  if(!panel) return;
-  const nights=state.nights||1;
-  const guests=state.guests||1;
-  const cdcTotal=feeCDC*guests*nights;
-
-  // Helper: section header
-  const secHeader = (label) =>
-    `<div style="grid-column:span 2;margin:1.4rem 0 .6rem;padding-bottom:.6rem;border-bottom:.5px solid rgba(174,133,96,.18)">
-      <span style="font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.3em;color:rgba(212,184,154,.55);text-transform:uppercase">${label}</span>
-    </div>`;
-
-  // Helper: radio-style card (single select)
-  const radioCard = (id, name, desc, price, unit, selectedId, onclick) =>
-    `<div class="svc-opt ${selectedId===id?'selected':''}" onclick="${onclick}">
-      <div class="svc-check"></div>
-      <div>
-        <div class="svc-opt-name">${name}</div>
-        ${desc?`<div class="svc-opt-desc">${desc}</div>`:''}
-        <div class="svc-opt-price">USD $${price.toLocaleString()}${unit?' / '+unit:''}</div>
-      </div>
-    </div>`;
-
-  // Helper: checkbox-style card (multi select)
-  const checkCard = (id, name, desc, price, unit, onclick) =>
-    `<div class="svc-opt ${state.svcs[id]?'selected':''}" onclick="${onclick}">
-      <div class="svc-check"></div>
-      <div>
-        <div class="svc-opt-name">${name}</div>
-        ${desc?`<div class="svc-opt-desc">${desc}</div>`:''}
-        <div class="svc-opt-price">USD $${price.toLocaleString()} / ${unit}</div>
-      </div>
-    </div>`;
-
-  // Accordion toggle helper
-  const accHeader = (key, label, emoji) => {
-    const open = state.openAccordion === key;
-    return `<div style="grid-column:span 2;margin:.4rem 0">
-      <button onclick="toggleAccordion('${key}')" style="width:100%;background:rgba(253,250,246,.03);border:.5px solid rgba(174,133,96,${open?'.45':'.18'});padding:.9rem 1.2rem;display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:all .3s">
-        <span style="font-family:'Cinzel',serif;font-size:.56rem;letter-spacing:.2em;color:${open?'var(--vl)':'rgba(253,250,246,.55)'};text-transform:uppercase">${emoji} ${label}</span>
-        <span style="color:var(--v);font-size:.9rem">${open?'−':'+'}</span>
-      </button>
-    </div>`;
-  };
-
-  const accBody = (key, content) => {
-    const open = state.openAccordion === key;
-    return open ? `<div style="grid-column:span 2;display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(174,133,96,.1);margin-bottom:.5rem">${content}</div>` : '';
-  };
-
-  let html = '';
-
-  // ── EMBARCACIONES
-  html += secHeader('Un día en el agua');
-  html += barcos.map(b => radioCard(b.id, b.name, `${b.pax} pasajeros · 9 a 18 hs`, b.price, '', state.barcoId, `selectBarco('${b.id}')`)).join('');
-
-  // ── TRASLADOS
-  html += secHeader('Traslados — ida + vuelta');
-  html += traslados.map(t => radioCard(t.id, t.name, t.pax, t.price, null, state.svcs['traslado'], `selectTraslado('${t.id}',${t.price})`)).join('');
-
-  // ── CARRITOS
-  html += secHeader('Carritos de golf');
-  html += carritos.map(c => checkCard(c.id, c.name, '', c.price, c.unit, `toggleSvcItem('${c.id}',${c.price},'${c.name}','${c.unit}')`)).join('');
-
-  // ── AEROPUERTO VIP
-  html += secHeader('Aeropuerto VIP');
-  html += aeropuerto.map(a => radioCard(a.id, a.name, '', a.price, 'persona', state.aeropuertoId, `selectAeropuerto('${a.id}')`)).join('');
-
-  // ── SERVICIOS EN VILLA
-  html += secHeader('Servicios en la casa');
-  html += villaServices.map(s => checkCard(s.id, s.name, '', s.price, s.unit, `toggleSvcItem('${s.id}',${s.price},'${s.name}','${s.unit}')`)).join('');
-
-  // ── ACTIVIDADES — acordeón por categoría
-  html += secHeader('Actividades en el resort');
-
-  const actEmojis = {
-    'Golf':'⛳', 'Ecuestre':'🐴', 'Tenis':'🎾', 'Pádel':'🏓',
-    'Tiro':'🎯', 'Río Chavón':'🚣', 'Cumayasa':'🌿', 'Mar':'🌊',
-    'Cigars':'🍷', 'Buceo':'🤿', 'Spa':'✨'
-  };
-
-  Object.entries(actividades).forEach(([cat, items]) => {
-    html += accHeader(cat, cat, actEmojis[cat]||'');
-    const bodyHtml = items.map(a => {
-      const sel = !!state.svcs[a.id];
-      const qty = sel ? (state.svcs[a.id].cantidad || 1) : 1;
-      const qtySelector = sel ? `
-        <div onclick="event.stopPropagation()" style="display:flex;align-items:center;gap:.5rem;margin-top:.5rem">
-          <button onclick="changeActivCantidad('${a.id}',-1)" style="width:24px;height:24px;border:1px solid rgba(174,133,96,.4);background:none;color:var(--vl);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;line-height:1">−</button>
-          <span id="actqty-${a.id}" style="font-family:'Cinzel',serif;font-size:.65rem;color:var(--wh);min-width:20px;text-align:center">${qty}</span>
-          <button onclick="changeActivCantidad('${a.id}',1)" style="width:24px;height:24px;border:1px solid rgba(174,133,96,.4);background:none;color:var(--vl);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;line-height:1">+</button>
-          <span style="font-size:.72rem;color:rgba(253,250,246,.4)">${a.unit}</span>
-        </div>` : '';
-      return `<div class="svc-opt ${sel?'selected':''}" onclick="toggleActiv('${a.id}',${a.price},'${a.name.replace(/'/g,"\\'")}','${a.unit}')">
-        <div class="svc-check"></div>
-        <div style="flex:1">
-          <div class="svc-opt-name">${a.name}</div>
-          ${a.note?`<div class="svc-opt-desc">${a.note}</div>`:''}
-          <div class="svc-opt-price">USD $${a.price.toLocaleString()} / ${a.unit}</div>
-          ${qtySelector}
-        </div>
-      </div>`;
-    }).join('');
-    html += accBody(cat, bodyHtml);
-  });
-
-  // ── FEE CDC (informativo)
-  html += `<div style="grid-column:span 2;margin-top:1.5rem;padding:1.2rem 1.5rem;border:.5px solid rgba(174,133,96,.2);background:rgba(253,250,246,.02)">
-    <div style="font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.2em;color:var(--v);text-transform:uppercase;margin-bottom:.3rem">Fee Casa de Campo — incluido automáticamente</div>
-    <div style="font-size:.82rem;color:rgba(253,250,246,.4)">USD $${feeCDC}/persona/día · ${guests} personas · ${nights} noches = <strong style="color:rgba(253,250,246,.65)">USD $${cdcTotal.toLocaleString()}</strong></div>
-  </div>`;
-
-  panel.innerHTML = html;
-}
-
-// Selectors para opciones únicas (radio-style)
-function selectBarco(id){
-  const b=barcos.find(x=>x.id===id);
-  if(state.barcoId===id){state.barcoId=null;delete state.svcs['_barco'];}
-  else{state.barcoId=id;state.svcs['_barco']={price:b.price,name:b.name};}
-  renderServices();
-}
-function selectGolf(id){
-  // Kept for legacy — golf is now in actividades
-  toggleActiv(id, 0, id, 'persona');
-}
-function selectTraslado(id,price){
-  const t=traslados.find(x=>x.id===id);
-  if(state.svcs['traslado']===id){delete state.svcs['traslado'];delete state.svcs['_traslado'];}
-  else{state.svcs['traslado']=id;state.svcs['_traslado']={price,name:t.name};}
-  renderServices();
-}
-function selectAeropuerto(id){
-  const a=aeropuerto.find(x=>x.id===id);
-  if(state.aeropuertoId===id){state.aeropuertoId=null;delete state.svcs['_aeropuerto'];}
-  else{state.aeropuertoId=id;state.svcs['_aeropuerto']={price:a.price,name:a.name,perPerson:true};}
-  renderServices();
-}
-function toggleSvcItem(id,price,name,unit){
-  if(state.svcs[id]){delete state.svcs[id];}
-  else{state.svcs[id]={price,name,unit,perNight:unit==='día'||unit==='noche'};}
-  renderServices();
-}
-function toggleActiv(id,price,name,unit){
-  // Find correct data from actividades if not passed
-  if(!price){
-    for(const items of Object.values(actividades)){
-      const found=items.find(a=>a.id===id);
-      if(found){price=found.price;name=found.name;unit=found.unit;break;}
-    }
-  }
-  if(state.svcs[id]){
-    delete state.svcs[id];
-  } else {
-    // Default cantidad: number of guests for person-based, 1 otherwise
-    const defaultQty = ['persona','adulto','niño'].includes(unit) ? state.guests : 1;
-    state.svcs[id]={price,name,unit,perPerson:false,cantidad:defaultQty};
-  }
-  renderServices();
-}
-function changeActivCantidad(id, delta){
-  if(!state.svcs[id]) return;
-  const current = state.svcs[id].cantidad || 1;
-  const newVal = Math.max(1, current + delta);
-  state.svcs[id].cantidad = newVal;
-  // Update display inline without full re-render
-  const el = document.getElementById('actqty-'+id);
-  if(el) el.textContent = newVal;
-}
-function toggleAccordion(key){
-  state.openAccordion = state.openAccordion===key ? null : key;
-  renderServices();
-}
-// Legacy compatibility
-function toggleSvc(el,key,price){
-  el.classList.toggle('selected');
-  if(el.classList.contains('selected'))state.svcs[key]={price,name:key};
-  else delete state.svcs[key];
-}
-
-// ── STEP 5: SUMMARY
-function renderSummary(){
-  const villa=getVillas().find(v=>v.id===state.villaId);
-  const nights=state.nights;
-  const guests=state.guests;
-  const villaTotal=villa?villa.price*nights:0;
-  const cdcTotal=feeCDC*guests*nights;
-
-  const di=new Date(state.dateIn+'T12:00:00');
-  const dout=new Date(state.dateOut+'T12:00:00');
-  const fmt=d=>d.toLocaleDateString('es-AR',{day:'numeric',month:'long'});
-
-  let html=`<div class="summary-title">Detalle de tu estadía</div>`;
-  html+=`<div class="summary-line"><span class="sl-name">Fechas</span><span class="sl-val">${fmt(di)} → ${fmt(dout)} · ${nights} ${nights===1?'noche':'noches'}</span></div>`;
-  html+=`<div class="summary-line"><span class="sl-name">Personas</span><span class="sl-val">${guests}</span></div>`;
-  if(villa){
-    html+=`<div class="summary-line"><span class="sl-name">${villa.name}</span><span class="sl-val">$${villa.price.toLocaleString()}/noche × ${nights} = $${villaTotal.toLocaleString()}</span></div>`;
-  }
-  html+=`<div class="summary-line"><span class="sl-name">Fee Casa de Campo</span><span class="sl-val">$${cdcTotal.toLocaleString()}</span></div>`;
-
-  let extrasTotal=0;
-  const extras=[];
-  Object.entries(state.svcs).forEach(([k,v])=>{
-    if(k==='traslado'||!v.price) return;
-    let amt=v.price;
-    let label=v.name;
-    if(v.perPerson){amt=v.price*guests;label+=` × ${guests} pers.`}
-    else if(v.perNight){amt=v.price*nights;label+=` × ${nights} ${nights===1?'noche':'noches'}`}
-    extrasTotal+=amt;
-    extras.push({label,amt});
-  });
-  extras.forEach(e=>{
-    html+=`<div class="summary-line"><span class="sl-name">${e.label}</span><span class="sl-val">$${e.amt.toLocaleString()}</span></div>`;
-  });
-
-  const total=villaTotal+cdcTotal+extrasTotal;
-  const perPerson=guests>0?Math.round(total/guests):0;
-  html+=`<div class="summary-total">
-    <div>
-      <div class="st-label">Estimado total</div>
-      <div class="st-note">USD $${perPerson.toLocaleString()} por persona · Sujeto a disponibilidad</div>
-    </div>
-    <div class="st-val">USD $${total.toLocaleString()}</div>
-  </div>`;
-  document.getElementById('summaryBox').innerHTML=html;
-}
-
-// ── Construye el pData igual que el bot (mismo formato que crearPresupuesto espera)
-function buildPresupuestoData(){
-  const villa=getVillas().find(v=>v.id===state.villaId);
-  const nights=state.nights;
-  const guests=state.guests;
-  // Parsear fechas para fechaLlegada y fechaSalida legibles
-  const di=new Date(state.dateIn+'T12:00:00');
-  const dout=new Date(state.dateOut+'T12:00:00');
-  const fmtLegible=d=>d.toLocaleDateString('es-AR',{day:'numeric',month:'long',year:'numeric'});
-
-  const items=[];
-
-  // Villa
-  if(villa){
-    items.push({
-      categoria:'Villa',
-      descripcion:villa.name,
-      display: villa.display || villa.name,
-      cantidad:nights,
-      unidad:'noche'
-    });
-  }
-
-  // Fee CDC
-  items.push({
-    categoria:'Fee CDC',
-    descripcion:'Fee Casa de Campo',
-    display:'Fee ingreso CDC',
-    cantidad:guests*nights,
-    unidad:'persona/dia'
-  });
-
-  // Traslado
-  if(state.svcs['_traslado']){
-    const t=traslados.find(x=>x.id===state.svcs['traslado']);
-    if(t) items.push({
-      categoria:'Traslado',
-      descripcion:t.name,
-      display: t.display || t.name,
-      cantidad:2,
-      unidad:'ida+vuelta'
-    });
-  }
-
-  // Carritos
-  carritos.forEach(c=>{
-    if(state.svcs[c.id]) items.push({
-      categoria:'Carrito',
-      descripcion:c.name,
-      display: c.display || c.name,
-      cantidad:1,
-      unidad:'dia'
-    });
-  });
-
-  // Barco
-  if(state.barcoId){
-    const b=barcos.find(x=>x.id===state.barcoId);
-    if(b) items.push({
-      categoria:'Embarcación',
-      descripcion:b.name,
-      display: b.display || b.name,
-      cantidad:1,
-      unidad:''
-    });
-  }
-
-  // Aeropuerto VIP → segunda fila de Traslados en el sheet Base
-  if(state.aeropuertoId){
-    const a=aeropuerto.find(x=>x.id===state.aeropuertoId);
-    if(a) items.push({
-      categoria:'Traslado',
-      descripcion:a.name,
-      display: a.display || a.name,
-      cantidad:guests,
-      unidad:'persona'
-    });
-  }
-
-  // Servicios villa
-  villaServices.forEach(s=>{
-    if(state.svcs[s.id]) items.push({
-      categoria:'Servicio Villa',
-      descripcion:s.name,
-      display: s.name,
-      cantidad:1,
-      unidad:s.unit
-    });
-  });
-
-  // Actividades seleccionadas
-  Object.entries(actividades).forEach(([cat,actList])=>{
-    actList.forEach(act=>{
-      if(state.svcs[act.id]) items.push({
-        categoria:'Actividad',
-        descripcion:act.name,
-        display: act.display || act.name,
-        cantidad: state.svcs[act.id].cantidad || 1,
-        unidad:act.unit
-      });
-    });
-  });
-
-  return {
-    adultos: guests,
-    ninos: 0,
-    noches: nights,
-    fechaLlegada: fmtLegible(di),
-    fechaSalida: fmtLegible(dout),
-    items
-  };
-}
-
-// ── Guarda contacto en el log apenas se verifica (antes de completar presupuesto)
-async function guardarContactoParcial(){
-  const u = gateState.userData;
-  if(!u) return;
-  const villa = getVillas().find(v=>v.id===state.villaId);
-  const clientData = {
-    nombre:   u.nombre,
-    apellido: u.apellido,
-    email:    u.email,
-    pais:     u.pais,
-    telefono: u.tel
-  };
-  const nota = villa ? `Villa de interés: ${villa.name}` : 'No completó el presupuesto';
-  try {
-    const params = new URLSearchParams();
-    params.append('action', 'guardarContacto');
-    params.append('cliente', JSON.stringify(clientData));
-    params.append('nota', nota);
-    fetch(APPS_SCRIPT_URL, {
-      method:'POST',
-      headers:{'Content-Type':'application/x-www-form-urlencoded'},
-      body: params.toString(),
-      mode:'cors'
-    });
-  } catch(_){}
-}
-
-// ── Envía la consulta al Apps Script (flujo completo)
-async function enviarConsulta(){
-  const btn=document.getElementById('submitBtn');
-  if(!btn||btn.disabled) return;
-
-  // Necesita usuario verificado
-  if(!gateState.verified && sessionStorage.getItem('mg_verified')!=='1'){
-    openGate(); return;
-  }
-  // Recuperar userData de sesión si hace falta
-  if(!gateState.userData){
-    const =sessionStorage.getItem('mg_user');
-    if() gateState.userData=JSON.parse();
-    else { openGate(); return; }
-  }
-
-  btn.disabled=true;
-  btn.textContent='Enviando...';
-
-  const u=gateState.userData;
-  const clientData={
-    nombre:   u.nombre,
-    apellido: u.apellido,
-    email:    u.email,
-    pais:     u.pais,
-    telefono: u.tel
-  };
-  const pData=buildPresupuestoData();
-
-  try {
-    const params=new URLSearchParams();
-    params.append('cliente',    JSON.stringify(clientData));
-    params.append('presupuestoTexto', 'Presupuesto generado desde el sitio web');
-    params.append('clienteItems', JSON.stringify(pData));
-    params.append('source', 'web');
-
-    const res = await fetch(APPS_SCRIPT_URL, {
-      method:'POST',
-      headers:{'Content-Type':'application/x-www-form-urlencoded'},
-      body: params.toString(),
-      mode:'cors'
-    });
-
-    let vf = null;
-    try {
-      const data = await res.json();
-      if(data.valoresFinales) vf = data.valoresFinales;
-    } catch(_){}
-
-    // Ocultar resumen y botones
-    document.getElementById('summaryBox').style.display='none';
-    document.querySelector('#panel5 .cnav').style.display='none';
-    document.querySelector('#panel5 .cpanel-sub').style.display='none';
-
-    // Construir pantalla de confirmación con valores reales si los hay
-    const nombre = gateState.userData?.nombre || '';
-    let confirmHtml = `
-      <div style="text-align:center;padding:2rem 1rem">
-        <div style="font-size:2.5rem;margin-bottom:1.2rem;color:var(--v)">✓</div>
-        <div style="font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.28em;color:var(--v);text-transform:uppercase;margin-bottom:.8rem">Consulta enviada</div>
-        <div style="font-family:'Playfair Display',serif;font-style:italic;font-size:1.4rem;color:var(--wh);margin-bottom:.5rem">Gracias${nombre?', '+nombre:''}.</div>
-        <div style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:rgba(253,250,246,.55);line-height:1.8;margin-bottom:1.5rem">
-          El equipo de MG Experiences se contacta con vos a la brevedad para confirmar disponibilidad y ultimar los detalles.
-        </div>`;
-
-    if(vf && vf.total){
-      confirmHtml += `
-        <div style="border:.5px solid rgba(174,133,91,.25);padding:1.2rem 1.5rem;text-align:left;margin-bottom:1.2rem">
-          <div style="font-family:'Cinzel',serif;font-size:.48rem;letter-spacing:.2em;color:rgba(174,133,91,.6);text-transform:uppercase;margin-bottom:.8rem">Estimado de inversión</div>
-          ${vf.villa?`<div style="display:flex;justify-content:space-between;margin-bottom:.4rem;font-size:.9rem"><span style="color:rgba(253,250,246,.5)">Hospedaje</span><span style="color:var(--wh)">${vf.villa}</span></div>`:''}
-          ${vf.traslados&&vf.traslados!=='$0'?`<div style="display:flex;justify-content:space-between;margin-bottom:.4rem;font-size:.9rem"><span style="color:rgba(253,250,246,.5)">Traslados</span><span style="color:var(--wh)">${vf.traslados}</span></div>`:''}
-          ${vf.embarcaciones&&vf.embarcaciones!=='$0'?`<div style="display:flex;justify-content:space-between;margin-bottom:.4rem;font-size:.9rem"><span style="color:rgba(253,250,246,.5)">Embarcaciones</span><span style="color:var(--wh)">${vf.embarcaciones}</span></div>`:''}
-          ${vf.actividades&&vf.actividades!=='$0'?`<div style="display:flex;justify-content:space-between;margin-bottom:.4rem;font-size:.9rem"><span style="color:rgba(253,250,246,.5)">Actividades</span><span style="color:var(--wh)">${vf.actividades}</span></div>`:''}
-          ${vf.feeCDC&&vf.feeCDC!=='$0'?`<div style="display:flex;justify-content:space-between;margin-bottom:.4rem;font-size:.9rem"><span style="color:rgba(253,250,246,.5)">Fee CDC</span><span style="color:var(--wh)">${vf.feeCDC}</span></div>`:''}
-          <div style="border-top:.5px solid rgba(174,133,91,.2);margin-top:.8rem;padding-top:.8rem;display:flex;justify-content:space-between">
-            <span style="font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.15em;color:var(--vl);text-transform:uppercase">Total estimado</span>
-            <span style="font-size:1.1rem;color:var(--wh);font-family:'Playfair Display',serif">${vf.total}</span>
-          </div>
-          ${vf.porHuesped?`<div style="text-align:right;font-size:.78rem;color:rgba(253,250,246,.35);margin-top:.2rem">${vf.porHuesped} por persona</div>`:''}
-          <div style="font-size:.72rem;color:rgba(253,250,246,.25);margin-top:.8rem;font-style:italic">Valores en USD · Sujetos a disponibilidad · Válidos 7 días</div>
-        </div>`;
-    }
-
-    confirmHtml += `
-        <a href="https://wa.me/541164388699" target="_blank" style="display:inline-flex;align-items:center;gap:.5rem;font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.18em;text-transform:uppercase;color:var(--bk);background:var(--vl);padding:.8rem 1.6rem;text-decoration:none;transition:background .3s">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zm-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884zm8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          Seguir por WhatsApp
-        </a>
-      </div>`;
-
-    document.getElementById('confirmBox').innerHTML = confirmHtml;
-    document.getElementById('confirmBox').style.display='block';
-
-  } catch(err) {
-    btn.disabled=false;
-    btn.textContent='Enviar consulta ✦';
-    alert('Hubo un error al enviar. Intentá de nuevo o escribinos por WhatsApp.');
-  }
-}
-// ══════════════════════════════════════════
-// SISTEMA DE VERIFICACIÓN — Google Apps Script
-// ══════════════════════════════════════════
-
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyOmyl7RCsJg92nL1FBuR4Y37hP2OVHxDj3NguqeQcoeuNYuM_g7YD3SNQw3HLxNFfqLw/exec';
-
-// ── STATE de verificación
-let gateState = {
-  verified: false,
-  code: null,
-  attempts: 0,
-  userData: null,
-  codeExpiry: null,
-};
-
-// ── Mostrar / cerrar gate
-function openGate(){
-  document.getElementById('gateOverlay').classList.add('show');
-  document.getElementById('gNombre').focus();
-}
-function closeGate(){
-  document.getElementById('gateOverlay').classList.remove('show');
-}
-
-// ── Generar código de 6 dígitos
-function generateCode(){
-  return String(Math.floor(100000 + Math.random() * 900000));
-}
-
-// ── STEP A: Enviar código via Apps Script (Gmail)
-async function sendCode(e){
-  e.preventDefault();
-  const btn    = document.getElementById('gateBtnA');
-  const errEl  = document.getElementById('gateErrorA');
-  errEl.textContent = '';
-  btn.disabled = true;
-  btn.textContent = 'Enviando...';
-
-  const nombre   = document.getElementById('gNombre').value.trim();
-  const apellido = document.getElementById('gApellido').value.trim();
-  const email    = document.getElementById('gEmail').value.trim();
-  const tel      = document.getElementById('gTel').value.trim();
-  const pais     = document.getElementById('gPais').value;
-
-  if(!nombre || !apellido || !email || !tel || !pais){
-    errEl.textContent = 'Por favor completá todos los campos.';
-    btn.disabled = false;
-    btn.textContent = 'Recibir código →';
-    return;
-  }
-
-  const code = generateCode();
-  gateState.code      = code;
-  gateState.attempts  = 0;
-  gateState.codeExpiry = Date.now() + 5 * 60 * 1000; // 5 minutos
-  gateState.userData  = { nombre, apellido, email, tel, pais };
-
-  // Llamada al Apps Script
-  try {
-    const params = new URLSearchParams({
-      action:  'sendCode',
-      email:   email,
-      nombre:  nombre,
-      code:    code,
-    });
-
-    const res = await fetch(APPS_SCRIPT_URL + '?' + params.toString(), {
-      method: 'GET',
-      mode:   'no-cors', // Apps Script requiere no-cors
-    });
-
-    // no-cors siempre devuelve opaque — asumimos éxito si no hay error
-    document.getElementById('gateEmailDisplay').textContent = email;
-    document.getElementById('gateStepA').style.display = 'none';
-    document.getElementById('gateStepB').style.display = 'block';
-    document.getElementById('gateErrorB').textContent = '';
-    document.getElementById('c0').focus();
-    btn.disabled = false;
-    btn.textContent = 'Recibir código →';
-
-  } catch(err) {
-    errEl.textContent = 'No pudimos enviar el código. Revisá tu conexión e intentá de nuevo.';
-    btn.disabled = false;
-    btn.textContent = 'Recibir código →';
-  }
-}
-
-// ── Code input — auto-avanzar entre dígitos
-function codeInput(idx){
-  const el=document.getElementById('c'+idx);
-  const val=el.value.replace(/\D/g,'');
-  el.value=val;
-  if(val&&idx<5) document.getElementById('c'+(idx+1)).focus();
-  // Auto-verify when all 6 filled
-  if(idx===5&&val) verifyCode();
-}
-
-// ── STEP B: Verificar código
-function verifyCode(){
-  const entered = [0,1,2,3,4,5].map(i => document.getElementById('c'+i).value).join('');
-  const errEl   = document.getElementById('gateErrorB');
-
-  if(entered.length < 6){ errEl.textContent = 'Ingresá los 6 dígitos.'; return; }
-
-  // Verificar vencimiento (5 minutos)
-  if(Date.now() > gateState.codeExpiry){
-    errEl.textContent = 'El código venció. Pedí uno nuevo.';
-    [0,1,2,3,4,5].forEach(i=>{ document.getElementById('c'+i).value=''; });
-    gateState.code = null;
-    return;
-  }
-
-  gateState.attempts++;
-
-  if(entered === gateState.code){
-    // ✅ Verificado
-    gateState.verified = true;
-    errEl.innerHTML = '<span class="gate-success">✓ Verificado correctamente</span>';
-
-    // Guardar en sessionStorage
-    sessionStorage.setItem('mg_verified', '1');
-    sessionStorage.setItem('mg_user', JSON.stringify(gateState.userData));
-
-    // Guardar contacto en el log inmediatamente (antes de que complete el presupuesto)
-    guardarContactoParcial();
-
-    setTimeout(() => {
-      closeGate();
-      unlockPrices();
-      showUnlockedBadge();
-    }, 900);
-
-  } else if(gateState.attempts >= 3){
-    errEl.textContent = 'Demasiados intentos. Pedí un nuevo código.';
-    [0,1,2,3,4,5].forEach(i=>{ document.getElementById('c'+i).value=''; });
-    document.getElementById('c0').focus();
-    gateState.code = null;
-  } else {
-    const restantes = 3 - gateState.attempts;
-    errEl.textContent = `Código incorrecto. Te ${restantes === 1 ? 'queda' : 'quedan'} ${restantes} intento${restantes !== 1 ? 's' : ''}.`;
-    [0,1,2,3,4,5].forEach(i=>{ document.getElementById('c'+i).value=''; });
-    document.getElementById('c0').focus();
-  }
-}
-
-// ── Reenviar código
-function resendCode(){
-  document.getElementById('gateStepB').style.display='none';
-  document.getElementById('gateStepA').style.display='block';
-  document.getElementById('gateErrorA').textContent='';
-  [0,1,2,3,4,5].forEach(i=>{document.getElementById('c'+i).value='';});
-  document.getElementById('gateErrorB').textContent='';
-}
-
-// ── Desbloquear precios en el configurador
-function unlockPrices(){
-  // Re-render the services section with prices visible
-  if(document.getElementById('svcOptsContainer')){
-    renderServices();
-  }
-  // Unlock villa grid prices
-  document.querySelectorAll('.price-locked').forEach(el=>{
-    const price=el.getAttribute('data-price');
-    if(price) el.outerHTML=`<div class="svc-opt-price">USD $${Number(price).toLocaleString()} / noche</div>`;
-  });
-}
-
-// ── Badge de confirmación
-function showUnlockedBadge(){
-  const b=document.createElement('div');
-  b.className='unlocked-badge';
-  const u=gateState.userData;
-  b.textContent=`✓ Bienvenido, ${u.nombre}. Precios desbloqueados.`;
-  document.body.appendChild(b);
-  setTimeout(()=>b.remove(),4000);
-}
-
-// ── Interceptar paso 4 del configurador para pedir verificación
-const _origGoStep=goStep;
-window.goStep=function(n){
-  if(n===4&&!gateState.verified&&sessionStorage.getItem('mg_verified')!=='1'){
-    openGate();
-    return;
-  }
-  if(sessionStorage.getItem('mg_verified')==='1'&&!gateState.verified){
-    gateState.verified=true;
-    const =sessionStorage.getItem('mg_user');
-    if() gateState.userData=JSON.parse();
-  }
-  _origGoStep(n);
-};
-
-// ── Cerrar con Escape
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeGate();});
-
-// ── Verificar si ya tenía sesión activa
-if(sessionStorage.getItem('mg_verified')==='1'){
-  gateState.verified=true;
-  const =sessionStorage.getItem('mg_user');
-  if() gateState.userData=JSON.parse();
-}
-</script>
-<!-- ══ VILLA DETAIL MODAL ══ -->
-<div id="vmodal-overlay" onclick="closeVModal()"></div>
-<div id="vmodal">
-  <div id="vmodal-content"></div>
-</div>
-
-<script>
-
-// ── LIGHTBOX ─────────────────────────────────────────
-let lbImages = [], lbIdx = 0;
-
-function buildLightboxSet(clickedEl, caption) {
-  // Collect all gallery images on the page
-  const all = Array.from(document.querySelectorAll('.cdc-img, .vi'));
-  lbImages = all.map(el => ({ src: el.src || el.currentSrc, caption: el.alt || '' }));
-  lbIdx = lbImages.findIndex(x => x.src === (clickedEl.src || clickedEl.currentSrc));
-  if (lbIdx < 0) {
-    lbImages = [{ src: clickedEl.src || clickedEl.currentSrc, caption: caption || clickedEl.alt || '' }];
-    lbIdx = 0;
-  }
-}
-
-function openLightbox(el, caption) {
-  buildLightboxSet(el, caption);
-  const overlay = document.getElementById('lb-overlay');
-  const img = document.getElementById('lb-img');
-  const cap = document.getElementById('lb-caption');
-  const count = document.getElementById('lb-count');
-  img.src = lbImages[lbIdx].src;
-  cap.textContent = lbImages[lbIdx].caption || caption || '';
-  count.textContent = lbImages.length > 1 ? (lbIdx + 1) + ' / ' + lbImages.length : '';
-  overlay.classList.add('active');
-  document.body.style.overflow = 'hidden';
-  // Show/hide nav arrows
-  document.getElementById('lb-prev').style.opacity = lbImages.length > 1 ? '1' : '0';
-  document.getElementById('lb-next').style.opacity = lbImages.length > 1 ? '1' : '0';
-}
-
-function closeLightbox() {
-  document.getElementById('lb-overlay').classList.remove('active');
-  document.body.style.overflow = '';
-}
-
-function lbNav(dir) {
-  lbIdx = (lbIdx + dir + lbImages.length) % lbImages.length;
-  const img = document.getElementById('lb-img');
-  img.style.opacity = '0';
-  setTimeout(() => {
-    img.src = lbImages[lbIdx].src;
-    img.onload = () => { img.style.opacity = '1'; };
-    document.getElementById('lb-caption').textContent = lbImages[lbIdx].caption;
-    document.getElementById('lb-count').textContent = (lbIdx + 1) + ' / ' + lbImages.length;
-  }, 200);
-}
-
-// Keyboard nav for lightbox
-document.addEventListener('keydown', e => {
-  const o = document.getElementById('lb-overlay');
-  if (!o || !o.classList.contains('active')) return;
-  if (e.key === 'Escape') closeLightbox();
-  if (e.key === 'ArrowRight') lbNav(1);
-  if (e.key === 'ArrowLeft') lbNav(-1);
-});
-
-// Touch swipe for lightbox
-let lbTouchX = 0;
-document.getElementById('lb-overlay')?.addEventListener('touchstart', e => { lbTouchX = e.touches[0].clientX; }, { passive: true });
-document.getElementById('lb-overlay')?.addEventListener('touchend', e => {
-  const dx = e.changedTouches[0].clientX - lbTouchX;
-  if (Math.abs(dx) > 50) lbNav(dx < 0 ? 1 : -1);
-});
-
-// Make villa carousel images clickable for lightbox
-function addVillaLightbox() {
-  // After villa grid renders, make carousel images openable
-  document.querySelectorAll('.vi').forEach(img => {
-    if (!img.dataset.lbReady) {
-      img.dataset.lbReady = '1';
-      img.style.cursor = 'zoom-in';
-      img.addEventListener('click', e => {
-        e.stopPropagation();
-        openLightbox(img, img.closest('.vc')?.querySelector('.vname')?.textContent || '');
-      });
-    }
-  });
-}
-
-
-// ── HOOK VILLA GRID RENDER ──
-const __origRVG = window.renderVillaGrid;
-window.renderVillaGrid = function() {
-  if (__origRVG) __origRVG.apply(this, arguments);
-  setTimeout(() => { _observeVillas(); _observe(); setTimeout(addVillaLightbox, 400); }, 150);
-};
 
 // ── VILLA DETAIL DATA ────────────────────────────────────────────────────────
 const villaData = {
@@ -3205,98 +1805,6 @@ document.addEventListener('keydown', e => {
 
 
 
-/* ── SIMPLE RELIABLE SCROLL ANIMATIONS ── */
-@keyframes slideUp{from{opacity:0;transform:translateY(35px)}to{opacity:1;transform:translateY(0)}}
-@keyframes slideLeft{from{opacity:0;transform:translateX(-35px)}to{opacity:1;transform:translateX(0)}}
-@keyframes slideRight{from{opacity:0;transform:translateX(35px)}to{opacity:1;transform:translateX(0)}}
-@keyframes scaleIn{from{opacity:0;transform:scale(0.9)}to{opacity:1;transform:scale(1)}}
-@keyframes drawRule{from{transform:scaleX(0)}to{transform:scaleX(1)}}
-@keyframes countPop{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-
-/* Scroll progress bar */
-#scroll-progress{position:fixed;top:0;left:0;height:2px;
-  background:linear-gradient(90deg,var(--v),var(--teal));
-  z-index:9999;width:0%;transition:width .1s linear;pointer-events:none}
-
-/* When .rv gets class 'in', animate */
-.rv{opacity:0}
-.rv.in{animation:slideUp .8s cubic-bezier(.22,1,.36,1) both}
-.rv.in.rv2{animation-delay:.15s}
-.rv.in.rv3{animation-delay:.3s}
-
-/* Band stats stagger */
-.bs{opacity:0}
-.bs.in{animation:slideUp .7s cubic-bezier(.34,1.56,.64,1) both}
-.bs.in[data-delay="1"]{animation-delay:.05s}
-.bs.in[data-delay="2"]{animation-delay:.15s}
-.bs.in[data-delay="3"]{animation-delay:.25s}
-.bs.in[data-delay="4"]{animation-delay:.35s}
-
-/* Service cards */
-.svc-card{opacity:0;transition:transform .3s ease,box-shadow .3s ease}
-.svc-card.in{animation:slideUp .65s cubic-bezier(.22,1,.36,1) both}
-.svc-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.3)}
-.svc-card.in[data-delay="1"]{animation-delay:.05s}
-.svc-card.in[data-delay="2"]{animation-delay:.1s}
-.svc-card.in[data-delay="3"]{animation-delay:.15s}
-.svc-card.in[data-delay="4"]{animation-delay:.2s}
-.svc-card.in[data-delay="5"]{animation-delay:.25s}
-.svc-card.in[data-delay="6"]{animation-delay:.3s}
-
-/* Resort cards */
-.rs-card{opacity:0;transition:transform .3s ease,box-shadow .3s ease}
-.rs-card.in{animation:scaleIn .6s cubic-bezier(.22,1,.36,1) both}
-.rs-card:hover{transform:translateY(-5px) scale(1.01);box-shadow:0 20px 50px rgba(0,0,0,.35)}
-.rs-card.in[data-delay="1"]{animation-delay:.04s}
-.rs-card.in[data-delay="2"]{animation-delay:.08s}
-.rs-card.in[data-delay="3"]{animation-delay:.12s}
-.rs-card.in[data-delay="4"]{animation-delay:.16s}
-.rs-card.in[data-delay="5"]{animation-delay:.20s}
-.rs-card.in[data-delay="6"]{animation-delay:.24s}
-.rs-card.in[data-delay="7"]{animation-delay:.28s}
-.rs-card.in[data-delay="8"]{animation-delay:.32s}
-
-/* Villa cards */
-.vc{opacity:0;transition:box-shadow .3s ease}
-.vc.in{animation:slideUp .7s cubic-bezier(.22,1,.36,1) both}
-.vc.in[data-delay="1"]{animation-delay:.05s}
-.vc.in[data-delay="2"]{animation-delay:.1s}
-.vc.in[data-delay="3"]{animation-delay:.15s}
-.vc.in[data-delay="4"]{animation-delay:.2s}
-.vc .vi{transition:transform .6s cubic-bezier(.22,1,.36,1)!important}
-.vc:hover .vi{transform:scale(1.06)!important}
-
-/* Founders */
-.fimg.in{animation:slideLeft .9s cubic-bezier(.22,1,.36,1) both}
-.ftxt.in,.ftxt.rv2.in{animation:slideRight .9s cubic-bezier(.22,1,.36,1) both}
-
-/* Rule lines draw in */
-.rule{transform-origin:left;transform:scaleX(0);transition:transform .8s cubic-bezier(.22,1,.36,1)}
-.rule.in{transform:scaleX(1)}
-
-/* CDC stats */
-.cdc-stat{opacity:0;transform:translateY(20px);
-  transition:opacity .6s ease,transform .6s cubic-bezier(.22,1,.36,1),border-color .2s ease}
-.cdc-stat.in{opacity:1;transform:translateY(0)}
-.cdc-stat:hover{border-color:rgba(174,133,96,.45);transform:translateY(-3px)!important}
-
-/* CDC images */
-.cdc-img{opacity:0;transform:scale(.95);transition:opacity .8s ease,transform .8s cubic-bezier(.22,1,.36,1),filter .3s ease}
-.cdc-img.in{opacity:1;transform:scale(1)}
-.cdc-img:hover{transform:scale(1.03)!important;filter:saturate(1.15)}
-
-/* Hero parallax elements */
-.hbg{will-change:transform}
-
-/* RS facts */
-.rs-fact{opacity:0;transform:translateX(-20px);
-  transition:opacity .6s ease,transform .6s cubic-bezier(.22,1,.36,1)}
-.rs-fact.in{opacity:1;transform:translateX(0)}
-.rs-fact[data-delay="1"]{transition-delay:.05s}
-.rs-fact[data-delay="2"]{transition-delay:.12s}
-.rs-fact[data-delay="3"]{transition-delay:.19s}
-.rs-fact[data-delay="4"]{transition-delay:.26s}
-
 /* ── Widget button ── */
   #val-btn {
     position: fixed;
@@ -3448,6 +1956,13 @@ document.addEventListener('keydown', e => {
 </style>
 
 
+
+<!-- VILLA DETAIL MODAL -->
+<div id="vmodal-overlay" onclick="closeVModal()"></div>
+<div id="vmodal">
+  <div id="vmodal-content"></div>
+</div>
+
 <!-- LIGHTBOX -->
 <div id="lb-overlay" onclick="closeLightbox()">
   <div id="lb-img-wrap" onclick="event.stopPropagation()">
@@ -3541,6 +2056,408 @@ function setupScrollReveal() {
   });
 }
 document.addEventListener('DOMContentLoaded', setupScrollReveal);
+
+// ── LIGHTBOX ─────────────────────────────────────────────
+let lbImages = [], lbIdx = 0;
+function openLightbox(el, caption) {
+  const all = Array.from(document.querySelectorAll('.cdc-img, .vi'));
+  lbImages = all.map(e => ({ src: e.src || e.currentSrc, caption: e.alt || '' }));
+  lbIdx = lbImages.findIndex(x => x.src === (el.src || el.currentSrc));
+  if (lbIdx < 0) { lbImages = [{ src: el.src || el.currentSrc, caption: caption || el.alt || '' }]; lbIdx = 0; }
+  const ov = document.getElementById('lb-overlay');
+  const img = document.getElementById('lb-img');
+  if (!ov || !img) return;
+  img.src = lbImages[lbIdx].src;
+  document.getElementById('lb-caption').textContent = lbImages[lbIdx].caption || caption || '';
+  document.getElementById('lb-count').textContent = lbImages.length > 1 ? (lbIdx+1)+' / '+lbImages.length : '';
+  ov.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('lb-prev').style.opacity = lbImages.length > 1 ? '1' : '0';
+  document.getElementById('lb-next').style.opacity = lbImages.length > 1 ? '1' : '0';
+}
+function closeLightbox() {
+  const ov = document.getElementById('lb-overlay');
+  if (ov) ov.classList.remove('active');
+  document.body.style.overflow = '';
+}
+function lbNav(dir) {
+  lbIdx = (lbIdx + dir + lbImages.length) % lbImages.length;
+  const img = document.getElementById('lb-img');
+  img.style.opacity = '0';
+  setTimeout(() => {
+    img.src = lbImages[lbIdx].src;
+    img.onload = () => { img.style.opacity = '1'; };
+    document.getElementById('lb-caption').textContent = lbImages[lbIdx].caption;
+    document.getElementById('lb-count').textContent = (lbIdx+1)+' / '+lbImages.length;
+  }, 180);
+}
+document.addEventListener('keydown', e => {
+  const ov = document.getElementById('lb-overlay');
+  if (!ov || !ov.classList.contains('active')) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowRight') lbNav(1);
+  if (e.key === 'ArrowLeft') lbNav(-1);
+});
+function addVillaLightbox() {
+  document.querySelectorAll('.vi').forEach(img => {
+    if (!img.dataset.lbReady) {
+      img.dataset.lbReady = '1';
+      img.style.cursor = 'zoom-in';
+      img.addEventListener('click', e => {
+        e.stopPropagation();
+        openLightbox(img, img.closest('.vc')?.querySelector('.vname')?.textContent || '');
+      });
+    }
+  });
+}
+
+
+// ── VILLA DETAIL MODAL ───────────────────────────────────
+const villaData = {
+  townhousemarina: {
+    name: 'Townhouse Marina', label: 'Frente al puerto deportivo · Marina',
+    img: 'https://img1.wsimg.com/isteam/ip/28e700c9-c37b-485d-b636-01fcfc9acb86/Mar-y-Palma_-Ocean-Front_villa.webp',
+    hab: 3, banos: '3.5', huespedes: 8, precio: 300,
+    servicio: 'Incluye empleada doméstica lun–vie 8am–4pm',
+    descripcion: 'Villa frente al puerto deportivo con vistas al mar. Espacios abiertos y ventilados con piscina privada.',
+    amenities: 'Piscina privada · Jacuzzi · Vistas al puerto · BBQ · Golf cart',
+  },
+};
+
+function openVModal(id) {
+  const grid = document.getElementById('vmodal-content');
+  if(!grid) return;
+  
+  // Try to get data from CSV first, then from villaData
+  const sheetVilla = villasFromSheet.find(v => v.id === id);
+  const staticVilla = villaData[id];
+  
+  if(!sheetVilla && !staticVilla) return;
+  
+  const v = sheetVilla || staticVilla;
+  const name = v.name;
+  const precio = v.precio_noche || v.precio || 0;
+  const precioStr = precio > 0 ? '$' + precio.toLocaleString() + '/noche' : 'Consultar precio';
+  const desc = v.descripcion || v.description || '';
+  const amenities = v.amenities || '';
+  const img = v.foto_url || (staticVilla && staticVilla.img) || '';
+  
+  grid.innerHTML = `
+    <button class="vm-close" onclick="closeVModal()">×</button>
+    <div class="vm-hero" style="${img ? 'background-image:url(' + img + ')' : 'background:#1a2a1a'}">
+      ${!img ? '<div style="font-family:Cinzel,serif;font-size:2rem;color:rgba(174,133,96,.3);display:flex;align-items:center;justify-content:center;height:100%">' + name.toUpperCase() + '</div>' : ''}
+    </div>
+    <div class="vm-body">
+      <h2 class="vm-name">${name}</h2>
+      <div class="vm-specs">
+        <span>${v.hab || '—'} hab</span><span>·</span>
+        <span>${v.banos || '—'} baños</span><span>·</span>
+        <span>hasta ${v.huespedes || v.guests || '—'} huésp.</span>
+      </div>
+      ${desc ? '<p class="vm-desc">' + desc + '</p>' : ''}
+      ${amenities ? '<div class="vm-amenities"><div class="vm-amen-title">Amenities</div>' + amenities.split('·').filter(Boolean).map(a => '<span class="vm-amen">' + a.trim() + '</span>').join('') + '</div>' : ''}
+      <div class="vm-price-row"><span class="vm-price-label">Desde</span><span class="vm-price-val">${precioStr}</span></div>
+      <div class="vm-ctas">
+        <button class="vm-cta-main" onclick="selectVillaFromModal('${id}')">Armar presupuesto ✦</button>
+        <a class="vm-cta-wa" href="https://wa.me/541164388699?text=Hola%2C+me+interesa+la+villa+${encodeURIComponent(name)}" target="_blank">WhatsApp</a>
+      </div>
+    </div>
+  `;
+  
+  document.getElementById('vmodal-overlay').classList.add('active');
+  document.getElementById('vmodal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeVModal() {
+  document.getElementById('vmodal-overlay')?.classList.remove('active');
+  document.getElementById('vmodal')?.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+// ── CONFIGURADOR STATE ───────────────────────────────────
+const state = {step:1, nights:0, guests:8, villaId:null, svcs:{}, barcoId:null, golfId:null, aeropuertoId:null};
+
+function goStep(n) {
+  if(n > 1) {
+    if(!state.dateIn || !state.dateOut) { alert('Seleccioná las fechas de tu estadía.'); return; }
+    if(state.nights <= 0) { alert('La salida debe ser posterior a la llegada.'); return; }
+  }
+  if(n > 3 && !state.villaId) { alert('Seleccioná una casa para continuar.'); return; }
+  document.getElementById('panel' + state.step).classList.remove('active');
+  state.step = n;
+  document.getElementById('panel' + n).classList.add('active');
+  document.querySelectorAll('.step-circle').forEach((c, i) => {
+    c.classList.toggle('done', i + 1 < n);
+    c.classList.toggle('cur', i + 1 === n);
+  });
+  const conf = document.getElementById('tu-experiencia');
+  if(conf) conf.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  if(n === 3) renderVillasConf();
+  if(n === 5) renderResumen();
+}
+
+function setDateIn(val) {
+  state.dateIn = val;
+  const out = document.getElementById('dateOut');
+  if(out && val) { out.min = val; }
+  calcNights();
+}
+function setDateOut(val) {
+  state.dateOut = val;
+  calcNights();
+}
+function calcNights() {
+  if(state.dateIn && state.dateOut) {
+    const d1 = new Date(state.dateIn), d2 = new Date(state.dateOut);
+    state.nights = Math.round((d2 - d1) / 86400000);
+    const el = document.getElementById('nights-display');
+    if(el) el.textContent = state.nights > 0 ? state.nights + ' noche' + (state.nights > 1 ? 's' : '') : '';
+  }
+}
+function setGuests(n) {
+  state.guests = n;
+  document.querySelectorAll('.guest-btn').forEach(b => b.classList.toggle('sel', parseInt(b.dataset.n) === n));
+}
+
+function renderVillasConf() {
+  const grid = document.getElementById('villaGridConf');
+  if(!grid) return;
+  const villas = villasFromSheet.length ? villasFromSheet : [
+    {id:'townhousemarina',name:'Townhouse Marina',hab:3,guests:8,precio_noche:300,size:'small'},
+    {id:'messina',name:'Messina',hab:5,guests:12,precio_noche:1412,size:'large'},
+    {id:'loslagos92',name:'Los Lagos 92',hab:5,guests:10,precio_noche:1882,size:'small'},
+  ];
+  grid.innerHTML = villas.map(v => `
+    <div class="vconf-card ${v.id === state.villaId ? 'selected' : ''}" onclick="selectVillaConf('${v.id}','${v.name}',${v.precio_noche})">
+      <div class="vcn">${v.name}</div>
+      <div class="vcd">${v.hab} hab · hasta ${v.guests} huésp.</div>
+      ${v.precio_noche > 0 ? '<div class="vcp">$' + v.precio_noche.toLocaleString() + '/noche</div>' : ''}
+    </div>`).join('');
+}
+
+function selectVillaConf(id, name, precio) {
+  state.villaId = id; state.villaName = name; state.villaPrecio = precio;
+  document.querySelectorAll('.vconf-card').forEach(c => c.classList.remove('selected'));
+  const el = event.currentTarget; if(el) el.classList.add('selected');
+}
+
+function toggleSvc(id, name, precio) {
+  if(state.svcs[id]) { delete state.svcs[id]; } 
+  else { state.svcs[id] = { name, precio }; }
+  document.querySelectorAll('[data-svc-id="' + id + '"]').forEach(el => el.classList.toggle('sel', !!state.svcs[id]));
+}
+
+function renderResumen() {
+  const el = document.getElementById('resumen-content');
+  if(!el) return;
+  const total = (state.villaPrecio || 0) * state.nights + Object.values(state.svcs).reduce((s, v) => s + (v.precio || 0), 0);
+  const svcsHtml = Object.values(state.svcs).map(s => `<div class="res-item"><span>${s.name}</span></div>`).join('') || '<div class="res-item muted">Sin servicios adicionales</div>';
+  el.innerHTML = `
+    <div class="res-row"><span>Fechas</span><span>${state.dateIn} → ${state.dateOut} (${state.nights} noches)</span></div>
+    <div class="res-row"><span>Huéspedes</span><span>${state.guests}</span></div>
+    <div class="res-row"><span>Casa</span><span>${state.villaName || '—'}</span></div>
+    <div class="res-svc-title">Servicios adicionales</div>
+    ${svcsHtml}
+    ${total > 0 ? '<div class="res-total">Estimado: $' + total.toLocaleString() + ' USD</div>' : ''}
+  `;
+}
+
+function selectVillaFromModal(id) {
+  closeVModal();
+  state.villaId = id;
+  const villa = villasFromSheet.find(v => v.id === id);
+  if(villa) { state.villaName = villa.name; state.villaPrecio = villa.precio_noche; }
+  const conf = document.getElementById('tu-experiencia');
+  if(conf) conf.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  setTimeout(() => {
+    if(state.dateIn && state.dateOut && state.nights > 0) { goStep(3); }
+  }, 700);
+}
+
+// ── OTP GATE ─────────────────────────────────────────────
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyOmyl7RCsJg92nL1FBuR4Y37hP2OVHxDj3NguqeQcoeuNYuM_g7YD3SNQw3HLxNFfqLw/exec';
+
+async function enviarOTP() {
+  const email = document.getElementById('gate-email')?.value?.trim();
+  const name = document.getElementById('gate-name')?.value?.trim();
+  if(!email || !name) { alert('Completá nombre y email.'); return; }
+  state.gateEmail = email; state.gateName = name;
+  try {
+    const params = new URLSearchParams({ action: 'sendOTP', email, name });
+    await fetch(SCRIPT_URL + '?' + params);
+    document.getElementById('gate-step1').style.display = 'none';
+    document.getElementById('gate-step2').style.display = 'block';
+  } catch(e) {
+    alert('Error enviando el código. Intentá de nuevo.');
+  }
+}
+
+async function verificarOTP() {
+  const otp = document.getElementById('gate-otp')?.value?.trim();
+  const email = state.gateEmail;
+  if(!otp) { alert('Ingresá el código.'); return; }
+  try {
+    const params = new URLSearchParams({ action: 'verifyOTP', email, otp });
+    const resp = await fetch(SCRIPT_URL + '?' + params);
+    const data = await resp.json();
+    if(data.ok) {
+      document.getElementById('gate-modal').classList.remove('active');
+      state.gateVerified = true;
+      guardarContactoParcial();
+      goStep(4);
+    } else {
+      alert('Código incorrecto. Verificá e intentá de nuevo.');
+    }
+  } catch(e) {
+    alert('Error verificando. Intentá de nuevo.');
+  }
+}
+
+function checkGateAndGoStep4() {
+  if(state.gateVerified) { goStep(4); return; }
+  document.getElementById('gate-modal').classList.add('active');
+  document.getElementById('gate-step1').style.display = 'block';
+  document.getElementById('gate-step2').style.display = 'none';
+}
+
+async function guardarContactoParcial() {
+  if(!state.gateEmail) return;
+  try {
+    const params = new URLSearchParams({
+      action: 'saveContact',
+      name: state.gateName || '',
+      email: state.gateEmail,
+      source: 'web',
+      dateIn: state.dateIn || '',
+      dateOut: state.dateOut || '',
+      guests: state.guests || 8,
+      villa: state.villaName || '',
+    });
+    await fetch(SCRIPT_URL + '?' + params);
+  } catch(e) { console.warn('Contact save failed', e); }
+}
+
+async function enviarPresupuesto() {
+  const btn = document.getElementById('btn-enviar');
+  if(btn) { btn.disabled = true; btn.textContent = 'Enviando...'; }
+  const svcsList = Object.values(state.svcs).map(s => s.name).join(', ') || 'Ninguno';
+  try {
+    const params = new URLSearchParams({
+      action: 'createPresupuesto',
+      source: 'web',
+      name: state.gateName || '',
+      email: state.gateEmail || '',
+      dateIn: state.dateIn || '',
+      dateOut: state.dateOut || '',
+      nights: state.nights || 0,
+      guests: state.guests || 8,
+      villa: state.villaName || '',
+      villaPrecio: state.villaPrecio || 0,
+      services: svcsList,
+    });
+    const resp = await fetch(SCRIPT_URL + '?' + params);
+    const data = await resp.json();
+    if(data.ok) {
+      document.getElementById('panel5').innerHTML = '<div style="text-align:center;padding:3rem"><h3 style="font-family:Playfair Display,serif;font-size:1.8rem;margin-bottom:1rem">¡Listo!</h3><p style="color:rgba(253,250,246,.65)">Te enviamos el presupuesto a ' + state.gateEmail + '</p></div>';
+    }
+  } catch(e) {
+    if(btn) { btn.disabled = false; btn.textContent = 'Enviar consulta →'; }
+    alert('Error enviando. Intentá de nuevo.');
+  }
+}
+
+
+// ── VILLA CATALOG ─────────────────────────────────────────
+let villasFromSheet = [];
+const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR3IH2QqoLQhCOPBPXsvLFVPKvmLX4M2M9vkMIOy_GmxlfYRNaDJfD5M7Atdk_-pY2qyjgU-fUCUl7c/pub?gid=718549851&single=true&output=csv';
+
+function filtVillas(size, btn) {
+  document.querySelectorAll('.vfb').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('#villaCatalog .vc').forEach(c => {
+    c.style.display = (size === 'all' || c.dataset.size === size) ? '' : 'none';
+  });
+}
+
+function renderVillaGrid() {
+  const grid = document.getElementById('villaCatalog');
+  if (!grid) return;
+  grid.innerHTML = villasFromSheet.map((v, i) => {
+    const delay = (i % 4) + 1;
+    const imgEl = v.foto_url
+      ? `<img class="vi" src="${v.foto_url}" alt="${v.name}" loading="lazy" style="width:100%;height:100%;position:absolute;inset:0;object-fit:cover">`
+      : `<div class="vpc-wrap"><svg viewBox="0 0 300 400" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%"><rect width="300" height="400" fill="${v.bgcolor||'#1a2a1a'}"/><text x="150" y="210" font-family="Cinzel,serif" font-size="11" fill="rgba(174,133,96,.3)" text-anchor="middle" letter-spacing="3">${v.name.toUpperCase()}</text></svg></div>`;
+    const precioDisplay = v.precio_noche > 0 ? '$' + v.precio_noche.toLocaleString() + '/noche' : 'Consultar precio';
+    return `<div class="vc" data-reveal data-delay="${delay}" data-size="${v.size}" onclick="openVModal('${v.id}')">
+      <button class="vc-zoom" onclick="event.stopPropagation();const img=this.parentElement.querySelector('img');if(img)openLightbox(img,'${v.name}')">&#x26F6;</button>
+      ${imgEl}<div class="vov"></div>
+      <div class="vinfo"><div class="vname">${v.name}</div><div class="vdet">${v.hab} hab · ${v.guests} huésp.</div></div>
+      <div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">${precioDisplay}</div>
+      <div class="vprice-x">${v.hab} hab · ${v.guests} huésp.</div><button class="vbtn">Ver villa</button></div>
+    </div>`;
+  }).join('');
+  obs.observe && document.querySelectorAll('#villaCatalog .vc').forEach(el => obs.observe(el));
+  setTimeout(addVillaLightbox, 500);
+}
+
+function renderVillaGridFallback() {
+  const fallback = [
+    {id:'townhousemarina',name:'Townhouse Marina',hab:3,guests:8,precio_noche:300,size:'small',foto_url:null,bgcolor:'#1a2a1a'},
+    {id:'losaltos3102',name:'Los Altos 3102',hab:2,guests:6,precio_noche:941,size:'small',foto_url:'https://drive.google.com/thumbnail?id=1mybsil6kX9WRM3Amh5IUiUDwVCm9arLj&sz=w1200',bgcolor:'#1a2a1a'},
+    {id:'messina',name:'Messina',hab:5,guests:12,precio_noche:1412,size:'large',foto_url:'https://drive.google.com/thumbnail?id=1VoyAjPJ-Kf-A4Ipk_KtTl3E0qmrnpm9XfGNl&sz=w1200',bgcolor:'#1a2a1a'},
+    {id:'loslagos92',name:'Los Lagos 92',hab:5,guests:10,precio_noche:1882,size:'small',foto_url:'https://drive.google.com/thumbnail?id=1HNMY_TdECfeTBZ7NEJqN1jO8JsP2OSx_&sz=w1200',bgcolor:'#0f1f17'},
+  ];
+  villasFromSheet = fallback;
+  renderVillaGrid();
+}
+
+async function loadVillasFromSheet() {
+  try {
+    const resp = await fetch(CSV_URL);
+    const text = await resp.text();
+    const rows = text.trim().split('\n').slice(1);
+    const villas = [];
+    for (const row of rows) {
+      const cols = row.split(',');
+      const cat = (cols[0]||'').replace(/"/g,'').trim();
+      const name = (cols[2]||'').replace(/"/g,'').trim();
+      if (cat !== 'Villa' || !name) continue;
+      const precio = parseFloat((cols[8]||'0').replace(/[^0-9.]/g,'')) || 0;
+      const margen = parseFloat((cols[9]||'0').replace(/[^0-9.]/g,'')) || 0;
+      const precioConMargen = margen > 0 ? precio * (1 + margen/100) : precio;
+      const guests = parseInt((cols[6]||'0').replace(/[^0-9]/g,'')) || 0;
+      const hab = parseInt((cols[5]||'0').replace(/[^0-9]/g,'')) || 0;
+      const fotoUrl = (cols[14]||'').replace(/"/g,'').trim();
+      const carpetaUrl = (cols[14]||'').replace(/"/g,'').trim();
+      const desc = (cols[15]||'').replace(/"/g,'').trim();
+      const amenities = (cols[16]||'').replace(/"/g,'').trim();
+      villas.push({
+        id: name.toLowerCase().replace(/[^a-z0-9]/g,''),
+        name, hab, guests,
+        precio_noche: Math.round(precioConMargen),
+        size: guests <= 10 ? 'small' : 'large',
+        foto_url: fotoUrl && fotoUrl.includes('drive') ? fotoUrl.replace('open?id=','thumbnail?id=').replace('&usp=sharing','') + '&sz=w1200' : null,
+        carpeta_url: carpetaUrl,
+        bgcolor: '#1a2a1a',
+        descripcion: desc,
+        amenities: amenities,
+      });
+    }
+    if (villas.length > 0) {
+      villasFromSheet = villas;
+      renderVillaGrid();
+    } else {
+      renderVillaGridFallback();
+    }
+  } catch(e) {
+    console.warn('CSV load failed:', e);
+    renderVillaGridFallback();
+  }
+}
+loadVillasFromSheet();
+
+
 </script>
 </body>
 </html>
