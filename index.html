@@ -1119,22 +1119,20 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
 <!-- CASA DE CAMPO RESORT -->
 <section id="casa-de-campo">
 
-  <!-- VIDEO HERO — full width, crops portrait video to fill landscape container -->
+  <!-- VIDEO HERO — portrait 9:16 video cropped to landscape -->
   <div style="position:relative;width:100%;height:80vh;min-height:540px;overflow:hidden;background:#0a0c08">
     <!-- Overlay gradients -->
-    <div style="position:absolute;inset:0;background:linear-gradient(to bottom, rgba(10,12,8,.45) 0%, transparent 20%, transparent 65%, rgba(10,12,8,.9) 100%);z-index:2;pointer-events:none"></div>
+    <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(10,12,8,.5) 0%,transparent 22%,transparent 62%,rgba(10,12,8,.92) 100%);z-index:2;pointer-events:none"></div>
 
-    <!-- 
-      Video is 9:16 portrait (drone).
-      To fill a landscape 16:9 container without black bars:
-      - Set height = 100% of container
-      - Set width = (16/9)/(9/16) * 100% = (256/81)% ≈ 316% of container width
-      - Center horizontally with left:50% + translateX(-50%)
-      This crops the sides of the portrait video, showing center frame.
+    <!--
+      Portrait 9:16 video. To fill landscape 16:9 container with no black bars:
+      Set iframe width=100vw → height = 100vw × (16/9) = 177.78vw
+      Center vertically: top=50%, translateY(-50%)
+      overflow:hidden on parent clips top/bottom excess.
     -->
     <iframe
       id="cdc-video"
-      style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:316%;height:100%;border:none;z-index:1;pointer-events:none"
+      style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:100vw;height:177.78vw;min-height:100%;border:none;z-index:1;pointer-events:none"
       src="https://player.vimeo.com/video/1193386929?badge=0&autopause=0&player_id=0&app_id=58479&muted=1&autoplay=1&loop=1&title=0&byline=0&portrait=0&background=1&color=AE8560"
       allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
       title="Casa de Campo Resort · MG Experiences">
