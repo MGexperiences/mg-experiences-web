@@ -1155,27 +1155,19 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
     </div>
 
     <div>
-      <!-- CDC MEDIA: videos/images go here — replace id="cdc-media-slot" content -->
       <div id="cdc-media-slot" style="position:relative">
-        <!-- VIDEO OPTION: uncomment and paste YouTube/Vimeo embed URL or local video -->
-        <!--
-        <div style="position:relative;width:100%;padding-top:56.25%;border-radius:.5rem;overflow:hidden">
-          <iframe id="cdc-video" style="position:absolute;inset:0;width:100%;height:100%" 
-            src="PASTE_YOUTUBE_EMBED_URL_HERE" 
-            frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        <!-- VIDEO VIMEO -->
+        <div style="position:relative;width:100%;padding-top:56.25%;border-radius:.5rem;overflow:hidden;background:#0a0c08;box-shadow:0 24px 60px rgba(0,0,0,.6)">
+          <iframe 
+            id="cdc-video"
+            style="position:absolute;inset:0;width:100%;height:100%;border:none" 
+            src="https://player.vimeo.com/video/1193386929?badge=0&autopause=0&player_id=0&app_id=58479&muted=1&autoplay=0&title=0&byline=0&portrait=0&color=AE8560"
+            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+            allowfullscreen
+            title="Casa de Campo Resort · MG Experiences">
+          </iframe>
         </div>
-        -->
-
-        <!-- IMAGES: current placeholder — replace src with your photos -->
-        <div class="cdc-img-grid">
-          <img class="cdc-img" src="https://img1.wsimg.com/isteam/ip/28e700c9-c37b-485d-b636-01fcfc9acb86/Mar-y-Palma_-Ocean-Front_villa.webp" 
-            alt="Vista al mar" onclick="openLightbox(this,'Vista al mar · Casa de Campo')">
-          <img class="cdc-img" src="https://img1.wsimg.com/isteam/ip/28e700c9-c37b-485d-b636-01fcfc9acb86/golf-teeth-the-teeth-of-the-dog-c.jpg" 
-            alt="Golf Teeth of the Dog" onclick="openLightbox(this,'Teeth of the Dog · Campo de Golf')">
-          <img class="cdc-img" src="https://img1.wsimg.com/isteam/ip/28e700c9-c37b-485d-b636-01fcfc9acb86/DSC_9875.jpg" 
-            alt="Playa Minitas" onclick="openLightbox(this,'Playa Minitas · Beach Club Privado')">
-        </div>
-        <p style="font-family:'Cinzel',serif;font-size:.42rem;letter-spacing:.15em;color:rgba(253,250,246,.25);text-transform:uppercase;margin-top:.8rem;text-align:center">Clic en cada foto para ver completo</p>
+        <p style="font-family:'Cinzel',serif;font-size:.42rem;letter-spacing:.15em;color:rgba(253,250,246,.2);text-transform:uppercase;margin-top:.8rem;text-align:center">Casa de Campo Resort · La Romana, República Dominicana</p>
       </div>
     </div>
   </div>
@@ -2772,6 +2764,33 @@ if (_origRenderVillaGrid) {
   };
 }
 setTimeout(addVillaLightbox, 2000);
+
+// ── VIMEO AUTOPLAY EN SCROLL ─────────────────────────
+(function() {
+  var vimeoScript = document.createElement('script');
+  vimeoScript.src = 'https://player.vimeo.com/api/player.js';
+  document.head.appendChild(vimeoScript);
+  
+  vimeoScript.onload = function() {
+    var iframe = document.getElementById('cdc-video');
+    if (!iframe) return;
+    var player = new Vimeo.Player(iframe);
+    
+    var autoObs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          player.setMuted(true);
+          player.play();
+        } else {
+          player.pause();
+        }
+      });
+    }, { threshold: 0.4 });
+    
+    autoObs.observe(iframe);
+  };
+})();
+
 
 // ── VILLA DETAIL DATA ────────────────────────────────────────────────────────
 const villaData = {
