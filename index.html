@@ -1043,24 +1043,38 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
 </section>
 
 <!-- RESORT INFO: MINITAS BEACH -->
-<section class="resort-section rv" id="minitas">
-  <div class="rs-inner rs-beach">
-    <div>
-      <span class="lbl">Playa privada del resort</span>
-      <h2 class="bigt">Minitas<br><em>Beach Club</em></h2>
-      <div class="rule"></div>
-      <p class="prose">Con su suave arena blanca, Minitas Beach ofrece una experiencia gastronómica única con vistas al mar.</p>
-      <div style="display:flex;gap:1rem;margin-top:2rem;flex-wrap:wrap">
+<section class="resort-section rv" id="minitas" style="padding:0;overflow:hidden">
+  <div style="display:grid;grid-template-columns:1fr 320px;min-height:520px">
+
+    <!-- Text -->
+    <div style="padding:4rem 4rem 4rem 5rem;display:flex;flex-direction:column;justify-content:center">
+      <span class="lbl" style="margin-bottom:1rem;display:block">Playa privada del resort</span>
+      <h2 class="bigt" style="margin-bottom:.8rem">Minitas<br><em>Beach Club</em></h2>
+      <div class="rule" style="margin-bottom:1.5rem"></div>
+      <p class="prose" style="margin-bottom:1.5rem">Arena blanca, aguas cristalinas y gastronomía de nivel con vista al Caribe. La playa privada del resort, exclusiva para huéspedes.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-bottom:1.8rem;max-width:360px">
+        <div style="padding:.9rem;border:.5px solid rgba(174,133,96,.15)"><div style="font-family:'Cinzel',serif;font-size:.42rem;letter-spacing:.14em;color:rgba(253,250,246,.35);text-transform:uppercase;margin-bottom:.3rem">Acceso</div><div style="font-family:'Cormorant Garamond',serif;font-size:.95rem;color:rgba(253,250,246,.8)">Solo huéspedes</div></div>
+        <div style="padding:.9rem;border:.5px solid rgba(174,133,96,.15)"><div style="font-family:'Cinzel',serif;font-size:.42rem;letter-spacing:.14em;color:rgba(253,250,246,.35);text-transform:uppercase;margin-bottom:.3rem">Deportes</div><div style="font-family:'Cormorant Garamond',serif;font-size:.95rem;color:rgba(253,250,246,.8)">Kayak · Paddle · Snorkel</div></div>
+      </div>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap">
         <a href="https://qrcodes.pro/ViS8IV" target="_blank" class="btn bf">Ver el menú</a>
         <a href="#tu-experiencia" class="btn bo">Armá tu estadía</a>
       </div>
     </div>
-    <div class="rs-beach-facts">
-      <div class="rs-fact" data-reveal data-delay="1"><div class="rs-fn">Arena blanca</div><div class="rs-fd">Playa privada exclusiva para huéspedes del resort</div></div>
-      <div class="rs-fact" data-reveal data-delay="2"><div class="rs-fn">Gastronomía</div><div class="rs-fd">Cocina local e internacional con vistas al mar</div></div>
-      <div class="rs-fact" data-reveal data-delay="3"><div class="rs-fn">Ambiente</div><div class="rs-fd">Relajante y acogedor para veladas únicas</div></div>
-      <div class="rs-fact" data-reveal data-delay="4"><div class="rs-fn">Deportes</div><div class="rs-fd">Kayak, paddleboard, snorkeling y más</div></div>
+
+    <!-- Portrait video -->
+    <div style="position:relative;overflow:hidden;background:#0a0c08">
+      <div style="position:absolute;top:0;left:0;right:0;height:60px;background:linear-gradient(to bottom,rgba(10,12,8,.6),transparent);z-index:2;pointer-events:none"></div>
+      <div style="position:absolute;bottom:0;left:0;right:0;height:60px;background:linear-gradient(to top,rgba(10,12,8,.6),transparent);z-index:2;pointer-events:none"></div>
+      <div style="position:absolute;top:0;left:0;bottom:0;width:50px;background:linear-gradient(to right,rgba(10,12,8,.7),transparent);z-index:2;pointer-events:none"></div>
+      <iframe
+        style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(1.22);width:100%;height:100%;border:none;z-index:1"
+        src="https://player.vimeo.com/video/1193389171?badge=0&autopause=0&muted=1&autoplay=1&loop=1&title=0&byline=0&portrait=0&background=1"
+        allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+        title="Playa Minitas · Casa de Campo">
+      </iframe>
     </div>
+
   </div>
 </section>
 
@@ -1086,13 +1100,30 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
 
 <!-- RESORT INFO: ACTIVIDADES -->
 <section class="resort-section rv" id="actividades-resort">
-  <div class="rs-inner">
-    <div class="rs-head" data-reveal>
-      <span class="lbl">3.000 hectáreas de experiencias</span>
-      <h2 class="bigt">Actividades<br><em>en el resort</em></h2>
-      <div class="rule"></div>
-      <p class="prose">Casa de Campo es uno de los destinos más completos del Caribe.</p>
+  <!-- Video header strip -->
+  <div style="display:grid;grid-template-columns:320px 1fr;min-height:420px;margin-bottom:0;overflow:hidden">
+    <!-- Portrait video left -->
+    <div style="position:relative;overflow:hidden;background:#0a0c08">
+      <div style="position:absolute;top:0;left:0;right:0;height:60px;background:linear-gradient(to bottom,rgba(10,12,8,.6),transparent);z-index:2;pointer-events:none"></div>
+      <div style="position:absolute;bottom:0;left:0;right:0;height:60px;background:linear-gradient(to top,rgba(10,12,8,.6),transparent);z-index:2;pointer-events:none"></div>
+      <div style="position:absolute;top:0;right:0;bottom:0;width:50px;background:linear-gradient(to left,rgba(10,12,8,.7),transparent);z-index:2;pointer-events:none"></div>
+      <iframe
+        style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(1.22);width:100%;height:100%;border:none;z-index:1"
+        src="https://player.vimeo.com/video/1193389169?badge=0&autopause=0&muted=1&autoplay=1&loop=1&title=0&byline=0&portrait=0&background=1"
+        allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+        title="Actividades · Casa de Campo">
+      </iframe>
     </div>
+    <!-- Text right -->
+    <div style="display:flex;flex-direction:column;justify-content:center;padding:3.5rem 4rem">
+      <span class="lbl" style="display:block;margin-bottom:1rem">3.000 hectáreas de experiencias</span>
+      <h2 class="bigt" style="margin-bottom:.8rem">Actividades<br><em>en el resort</em></h2>
+      <div class="rule" style="margin-bottom:1.2rem"></div>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:rgba(253,250,246,.6);line-height:1.9">Polo, equitación, tiro al plato, tenis, deportes acuáticos y más. Casa de Campo es uno de los destinos más completos del Caribe.</p>
+    </div>
+  </div>
+
+  <div class="rs-inner" style="padding-top:0">
     <div class="rs-grid">
       <div class="rs-card" data-reveal data-delay="6"><div class="rs-icon">🌊</div><div class="rs-ct">Deportes Acuáticos</div><div class="rs-cd">Esquí acuático, windsurf, kayak, paddleboard, vela y mucho más en aguas cristalinas del Caribe.</div></div>
       <div class="rs-card" data-reveal data-delay="1"><div class="rs-icon">🐎</div><div class="rs-ct">Polo</div><div class="rs-cd">Uno de los pocos lugares del mundo donde podés ver y jugar polo profesional. Clases y partidos disponibles.</div></div>
