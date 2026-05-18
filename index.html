@@ -1963,6 +1963,46 @@ document.addEventListener('keydown', e => {
   <div id="vmodal-content"></div>
 </div>
 
+<!-- ══ VERIFICATION GATE MODAL ══ -->
+<div id="gate-modal" style="display:none;position:fixed;inset:0;z-index:9000;background:rgba(10,12,8,.92);backdrop-filter:blur(8px);align-items:center;justify-content:center">
+  <div style="background:#1C1E17;border:.5px solid rgba(174,133,96,.25);padding:3rem;max-width:420px;width:90%;position:relative">
+    <button onclick="document.getElementById('gate-modal').style.display='none'" 
+      style="position:absolute;top:1rem;right:1rem;background:none;border:none;color:rgba(253,250,246,.4);font-size:1.3rem;cursor:pointer">×</button>
+    
+    <div id="gate-step1">
+      <div style="font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.25em;color:var(--vl);margin-bottom:1.5rem;text-transform:uppercase">Para continuar</div>
+      <h3 style="font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:.5rem;font-weight:400">¿A dónde te mandamos el presupuesto?</h3>
+      <p style="font-family:'Cormorant Garamond',serif;color:rgba(253,250,246,.55);margin-bottom:1.8rem;font-size:.95rem">Te enviamos un código de verificación para continuar.</p>
+      <input id="gate-name" type="text" placeholder="Tu nombre" 
+        style="width:100%;padding:.75rem 1rem;background:rgba(253,250,246,.04);border:.5px solid rgba(174,133,96,.2);color:#FDFAF6;font-family:'Cormorant Garamond',serif;font-size:1rem;margin-bottom:.8rem;outline:none;box-sizing:border-box">
+      <input id="gate-email" type="email" placeholder="Tu email" 
+        style="width:100%;padding:.75rem 1rem;background:rgba(253,250,246,.04);border:.5px solid rgba(174,133,96,.2);color:#FDFAF6;font-family:'Cormorant Garamond',serif;font-size:1rem;margin-bottom:1.5rem;outline:none;box-sizing:border-box">
+      <button onclick="enviarOTP()" 
+        style="width:100%;padding:.9rem;background:var(--v);color:#1C1E17;font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;border:none;cursor:pointer">
+        Enviar código →
+      </button>
+    </div>
+    
+    <div id="gate-step2" style="display:none">
+      <div style="font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.25em;color:var(--vl);margin-bottom:1.5rem;text-transform:uppercase">Código enviado</div>
+      <h3 style="font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:.5rem;font-weight:400">Revisá tu email</h3>
+      <p style="font-family:'Cormorant Garamond',serif;color:rgba(253,250,246,.55);margin-bottom:1.8rem;font-size:.95rem">Ingresá el código de 6 dígitos que te enviamos.</p>
+      <input id="gate-otp" type="text" placeholder="Código de verificación" maxlength="6"
+        style="width:100%;padding:.75rem 1rem;background:rgba(253,250,246,.04);border:.5px solid rgba(174,133,96,.2);color:#FDFAF6;font-family:'Cormorant Garamond',serif;font-size:1.4rem;letter-spacing:.3em;text-align:center;margin-bottom:1.5rem;outline:none;box-sizing:border-box">
+      <button onclick="verificarOTP()" 
+        style="width:100%;padding:.9rem;background:var(--v);color:#1C1E17;font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;border:none;cursor:pointer">
+        Verificar →
+      </button>
+      <p style="text-align:center;margin-top:1rem">
+        <button onclick="document.getElementById('gate-step1').style.display='block';document.getElementById('gate-step2').style.display='none'" 
+          style="background:none;border:none;color:rgba(253,250,246,.35);font-size:.8rem;cursor:pointer;font-family:'Cormorant Garamond',serif">
+          ← Cambiar email
+        </button>
+      </p>
+    </div>
+  </div>
+</div>
+
 <!-- LIGHTBOX -->
 <div id="lb-overlay" onclick="closeLightbox()">
   <div id="lb-img-wrap" onclick="event.stopPropagation()">
@@ -2176,104 +2216,659 @@ function closeVModal() {
 }
 
 // ── CONFIGURADOR STATE ───────────────────────────────────
-const state = {step:1, nights:0, guests:8, villaId:null, svcs:{}, barcoId:null, golfId:null, aeropuertoId:null};
+const state = {step:1, nights:0, guests:8, villaId:null, svcs:{}, barcoId:null, golfId:null, aeropuertoId:null, openAccordion:null};
 
-function goStep(n) {
-  if(n > 1) {
-    if(!state.dateIn || !state.dateOut) { alert('Seleccioná las fechas de tu estadía.'); return; }
-    if(state.nights <= 0) { alert('La salida debe ser posterior a la llegada.'); return; }
+// ── VILLA CATALOG: select and jump to configurator
+function selectVillaAndGo(villaId){
+  state.villaId = villaId;
+  document.getElementById('tu-experiencia').scrollIntoView({behavior:'smooth', block:'start'});
+  // If already past step 1, jump to step 3
+  if(state.dateIn && state.dateOut && state.nights > 0){
+    setTimeout(()=>{ goStep(3); renderVillas(); }, 600);
   }
-  if(n > 3 && !state.villaId) { alert('Seleccioná una casa para continuar.'); return; }
-  document.getElementById('panel' + state.step).classList.remove('active');
-  state.step = n;
-  document.getElementById('panel' + n).classList.add('active');
-  document.querySelectorAll('.step-circle').forEach((c, i) => {
-    c.classList.toggle('done', i + 1 < n);
-    c.classList.toggle('cur', i + 1 === n);
+}
+
+// ── VILLA FILTER
+function filtVillas(size, btn){
+  document.querySelectorAll('.vfb').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('#villaGrid .vc').forEach(card=>{
+    if(size==='all') card.classList.remove('hidden');
+    else card.classList.toggle('hidden', card.dataset.size !== size);
   });
-  const conf = document.getElementById('tu-experiencia');
-  if(conf) conf.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  if(n === 3) renderVillasConf();
-  if(n === 5) renderResumen();
 }
+function goStep(n){
+  if(n>1){
+    if(!state.dateIn||!state.dateOut){alert('Seleccioná las fechas de tu estadía.');return}
+    if(state.nights<=0){alert('La salida debe ser posterior a la llegada.');return}
+  }
+  if(n>3&&!state.villaId){alert('Seleccioná una casa para continuar.');return}
+  document.getElementById('panel'+state.step).classList.remove('active');
+  state.step=n;
+  document.getElementById('panel'+n).classList.add('active');
+  updateStepBar();
+  if(n===3) renderVillas();
+  if(n===4) renderServices();
+[2846 lines total]",
+        "uuid": "186804f5-6e84-470c-96ad-1ba697008b79"
+      }
+    ],
+    "is_error": false,
+    "structured_content": null,
+    "meta": null,
+    "message": null,
+    "integration_name": null,
+    "mcp_server_url": null,
+    "integration_icon_url": null,
+    "icon_name": "file",
+    "display_content": {
+      "type": "json_block",
+      "json_block": "{"language": "html", "code": "// ── AEROPUERTO VIP (USD/persona)
+const aeropuerto = [
+  {id:'arr',    name:'Solo llegada VIP Fast Track',                          price:168, display:'Arrival VIP Fast Track'},
+  {id:'arrDep', name:'Llegada + Salida VIP Fast Track & Lounge',             price:274, display:'Arrival VIP Fast Track + Departure VIP Fast Track & Lounge Access'},
+  {id:'works',  name:'The Works — llegada + salida + concierge completo',    price:526, display:'The Works: Arrival & Departure VIP- Concierge Assisted'},
+  {id:'dep',    name:'Solo salida VIP Fast Track & Lounge (sin asistencia)', price:116, display:'Departure PLUS VIP Fast Track & Lounge Access (Unassisted)'},
+  {id:'depcon', name:'Solo salida VIP Concierge + Lounge',                   price:368, display:'Departure VIP Concierge + Lounge Access'},
+];
 
-function setDateIn(val) {
-  state.dateIn = val;
-  const out = document.getElementById('dateOut');
-  if(out && val) { out.min = val; }
-  calcNights();
-}
-function setDateOut(val) {
-  state.dateOut = val;
-  calcNights();
-}
-function calcNights() {
-  if(state.dateIn && state.dateOut) {
-    const d1 = new Date(state.dateIn), d2 = new Date(state.dateOut);
-    state.nights = Math.round((d2 - d1) / 86400000);
-    const el = document.getElementById('nights-display');
-    if(el) el.textContent = state.nights > 0 ? state.nights + ' noche' + (state.nights > 1 ? 's' : '') : '';
+// ── FEE CDC (USD/persona/d\ía)
+const feeCDC = 27;
+
+// ── STATE
+let state = {step:1, nights:0, guests:8, villaId:null, svcs:{}, barcoId:null, golfId:null, aeropuertoId:null, openAccordion:null};
+
+// ── VILLA CATALOG: select and jump to configurator
+function selectVillaAndGo(villaId){
+  state.villaId = villaId;
+  document.getElementById('tu-experiencia').scrollIntoView({behavior:'smooth', block:'start'});
+  // If already past step 1, jump to step 3
+  if(state.dateIn && state.dateOut && state.nights > 0){
+    setTimeout(()=>{ goStep(3); renderVillas(); }, 600);
   }
 }
-function setGuests(n) {
-  state.guests = n;
-  document.querySelectorAll('.guest-btn').forEach(b => b.classList.toggle('sel', parseInt(b.dataset.n) === n));
+
+// ── VILLA FILTER
+function filtVillas(size, btn){
+  document.querySelectorAll('.vfb').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('#villaGrid .vc').forEach(card=>{
+    if(size==='all') card.classList.remove('hidden');
+    else card.classList.toggle('hidden', card.dataset.size !== size);
+  });
+}
+function goStep(n){
+  if(n>1){
+    if(!state.dateIn||!state.dateOut){alert('Seleccion\á las fechas de tu estad\ía.');return}
+    if(state.nights<=0){alert('La salida debe ser posterior a la llegada.');return}
+  }
+  if(n>3&&!state.villaId){alert('Seleccion\á una casa para continuar.');return}
+  document.getElementById('panel'+state.step).classList.remove('active');
+  state.step=n;
+  document.getElementById('panel'+n).classList.add('active');
+  updateStepBar();
+  if(n===3) renderVillas();
+  if(n===4) renderServices();
+", "filename": "/home/claude/index.html"}"
+    }
+  },
+  {
+    "start_timestamp": "2026-05-11T15:18:42.527303Z",
+    "stop_timestamp": "2026-05-11T15:18:43.337954Z",
+    "flags": null,
+    "type": "tool_use",
+    "id": "toolu_01KfraHVuqsUUj6uu6QRwKoY",
+    "name": "bash_tool",
+    "input": {
+      "command": "grep -n "^// ── VILLAS (USD\|^const villas = \[" /home/claude/index.html",
+      "description": "Find old villas array declaration"
+    },
+    "message": "Find old villas array declaration",
+    "integration_name": null,
+    "integration_icon_url": null,
+    "icon_name": "commandLine",
+    "context": null,
+    "display_content": {
+      "type": "json_block",
+      "json_block": "{"language": "bash", "code": "grep -n \"^// ── VILLAS (USD\\|^const villas = \\[\" /home/claude/index.html"}"
+    },
+    "approval_options": null,
+    "approval_key": null,
+    "is_mcp_app": null,
+    "mcp_server_url": null
+  },
+  {
+    "start_timestamp": null,
+    "stop_timestamp": null,
+    "flags": null,
+    "type": "tool_result",
+    "tool_use_id": "toolu_01KfraHVuqsUUj6uu6QRwKoY",
+    "name": "bash_tool",
+    "content": [
+      {
+        "type": "text",
+        "text": "{"returncode":0,"stdout":"1249:// ── VILLAS (USD/noche)
+1250:const villas = [
+","stderr":""}",
+        "uuid": "1a522f38-b7cf-4838-bf64-4e5bc24a72a3"
+      }
+    ],
+    "is_error": false,
+    "structured_content": null,
+    "meta": null,
+    "message": null,
+    "integration_name": null,
+    "mcp_server_url": null,
+    "integration_icon_url": null,
+    "icon_name": "commandLine",
+    "display_content": {
+      "type": "json_block",
+      "json_block": "{"returncode":0,"stdout":"1249:// ── VILLAS (USD/noche)
+1250:const villas = [
+","stderr":""}"
+    }
+  },
+  {
+    "start_timestamp": "2026-05-11T15:18:45.901069Z",
+    "stop_timestamp": "2026-05-11T15:18:46.369285Z",
+    "flags": null,
+    "type": "tool_use",
+    "id": "toolu_019EkDXhf3JTtnidEWWdmabe",
+    "name": "view",
+    "input": {
+      "description": "View the old villas array to replace",
+      "path": "/home/claude/index.html",
+      "view_range": [
+        1249,
+        1280
+      ]
+    },
+    "message": "View the old villas array to replace",
+    "integration_name": null,
+    "integration_icon_url": null,
+    "icon_name": "file",
+    "context": null,
+    "display_content": {
+      "type": "text",
+      "text": "View the old villas array to replace"
+    },
+    "approval_options": null,
+    "approval_key": null,
+    "is_mcp_app": null,
+    "mcp_server_url": null
+  },
+  {
+    "start_timestamp": null,
+    "stop_timestamp": null,
+    "flags": null,
+    "type": "tool_result",
+    "tool_use_id": "toolu_019EkDXhf3JTtnidEWWdmabe",
+    "name": "view",
+    "content": [
+      {
+        "type": "text",
+        "text": "
+// ── VILLAS (USD/noche)
+const villas = [
+  {id:'townhouse',    name:'Townhouse Marina',    hab:3,  guests:8,  price:427,   display:'Townhouse Marina | 3 hab / 8 pax'},
+  {id:'altosChavon',  name:'Altos de Chavon',     hab:2,  guests:4,  price:332,   display:'Altos de Chavon'},
+  {id:'faro',         name:'Townhouse Faro',      hab:4,  guests:10, price:1326,  display:'Townhouse Faro | 4 hab / 10 pax'},
+  {id:'loslagos',     name:'Villa Los Lagos',     hab:5,  guests:10, price:1326,  display:'Villa Los Lagos'},
+  {id:'lagos94',      name:'Villa Lagos 94',      hab:5,  guests:10, price:1705,  display:'Villa Lagos 94 | 5 hab'},
+  {id:'canaria',      name:'Canaria',             hab:4,  guests:8,  price:2368,  display:'Canaria | 4 hab / 8 pax'},
+  {id:'vistamar',     name:'Vista Mar',           hab:7,  guests:18, price:2368,  display:'Vista Mar | 7 hab / 18 pax'},
+  {id:'laguna',       name:'Villa Laguna',        hab:5,  guests:10, price:2652,  display:'Villa Laguna | 5 hab / 10 pax'},
+  {id:'cacique',      name:'Du Cacique',          hab:8,  guests:14, price:2842,  display:'Du Cacique | 8 hab / 14 pax'},
+  {id:'ranchos',      name:'Villa Los Ranchos',   hab:6,  guests:14, price:2842,  display:'Villa Los Ranchos | 6 hab / 14 pax'},
+  {id:'colinas21',    name:'Villa Colinas 21',    hab:4,  guests:10, price:3126,  display:'Villa Colinas 21'},
+  {id:'laplaya',      name:'La Playa',            hab:3,  guests:8,  price:3315,  display:'La Playa | 3 hab / 8 pax'},
+  {id:'miralejos',    name:'Miralejos',           hab:6,  guests:16, price:3315,  display:'Miralejos | 6 hab / 16 pax'},
+  {id:'bali',         name:'Villa Bali',          hab:6,  guests:12, price:3789,  display:'Villa Bali | 6 hab / 12 pax'},
+  {id:'naranjos',     name:'Villa Naranjos',      hab:6,  guests:12, price:3789,  display:'Villa Naranjos'},
+  {id:'catalina',     name:'La Catalina',         hab:8,  guests:20, price:4262,  display:'La Catalina | 8 hab / 20 pax'},
+  {id:'puntaminitas', name:'Punta Minitas',       hab:6,  guests:12, price:5209,  display:'Punta Minitas vista al mar'},
+  {id:'royale',       name:'Clara Royale',        hab:10, guests:20, price:14206, display:'Clara Royale | 10 hab / 20 pax'},
+];
+
+// ── SERVICIOS EN VILLA (USD/día)
+const villaServices = [
+  {id:'limpieza',  name:'Limpieza + Desayuno',  price:79,  unit:'día'},
+  {id:'cocinera',  name:'Cocinera',             price:100, unit:'día'},
+  {id:'cocinera2', name:'Cocinera + Nocturno',  price:172, unit:'día'},
+  {id:'chef',      name:'Chef completo',        price:286, unit:'día'},
+  {id:'nineraD',   name:'Niñera (día)',         price:122, unit:'día'},
+  {id:'nineraH',   name:'Niñera (noche)',       price:172, unit:'noche'},
+];
+
+[2846 lines total]",
+        "uuid": "656d8190-b5e6-4583-8476-7d49fd92b90d"
+      }
+    ],
+    "is_error": false,
+    "structured_content": null,
+    "meta": null,
+    "message": null,
+    "integration_name": null,
+    "mcp_server_url": null,
+    "integration_icon_url": null,
+    "icon_name": "file",
+    "display_content": {
+      "type": "json_block",
+      "json_block": "{"language": "html", "code": "// ── VILLAS (USD/noche)
+const villas = [
+  {id:'townhouse',    name:'Townhouse Marina',    hab:3,  guests:8,  price:427,   display:'Townhouse Marina | 3 hab / 8 pax'},
+  {id:'altosChavon',  name:'Altos de Chavon',     hab:2,  guests:4,  price:332,   display:'Altos de Chavon'},
+  {id:'faro',         name:'Townhouse Faro',      hab:4,  guests:10, price:1326,  display:'Townhouse Faro | 4 hab / 10 pax'},
+  {id:'loslagos',     name:'Villa Los Lagos',     hab:5,  guests:10, price:1326,  display:'Villa Los Lagos'},
+  {id:'lagos94',      name:'Villa Lagos 94',      hab:5,  guests:10, price:1705,  display:'Villa Lagos 94 | 5 hab'},
+  {id:'canaria',      name:'Canaria',             hab:4,  guests:8,  price:2368,  display:'Canaria | 4 hab / 8 pax'},
+  {id:'vistamar',     name:'Vista Mar',           hab:7,  guests:18, price:2368,  display:'Vista Mar | 7 hab / 18 pax'},
+  {id:'laguna',       name:'Villa Laguna',        hab:5,  guests:10, price:2652,  display:'Villa Laguna | 5 hab / 10 pax'},
+  {id:'cacique',      name:'Du Cacique',          hab:8,  guests:14, price:2842,  display:'Du Cacique | 8 hab / 14 pax'},
+  {id:'ranchos',      name:'Villa Los Ranchos',   hab:6,  guests:14, price:2842,  display:'Villa Los Ranchos | 6 hab / 14 pax'},
+  {id:'colinas21',    name:'Villa Colinas 21',    hab:4,  guests:10, price:3126,  display:'Villa Colinas 21'},
+  {id:'laplaya',      name:'La Playa',            hab:3,  guests:8,  price:3315,  display:'La Playa | 3 hab / 8 pax'},
+  {id:'miralejos',    name:'Miralejos',           hab:6,  guests:16, price:3315,  display:'Miralejos | 6 hab / 16 pax'},
+  {id:'bali',         name:'Villa Bali',          hab:6,  guests:12, price:3789,  display:'Villa Bali | 6 hab / 12 pax'},
+  {id:'naranjos',     name:'Villa Naranjos',      hab:6,  guests:12, price:3789,  display:'Villa Naranjos'},
+  {id:'catalina',     name:'La Catalina',         hab:8,  guests:20, price:4262,  display:'La Catalina | 8 hab / 20 pax'},
+  {id:'puntaminitas', name:'Punta Minitas',       hab:6,  guests:12, price:5209,  display:'Punta Minitas vista al mar'},
+  {id:'royale',       name:'Clara Royale',        hab:10, guests:20, price:14206, display:'Clara Royale | 10 hab / 20 pax'},
+];
+
+// ── SERVICIOS EN VILLA (USD/d\ía)
+const villaServices = [
+  {id:'limpieza',  name:'Limpieza + Desayuno',  price:79,  unit:'d\ía'},
+  {id:'cocinera',  name:'Cocinera',             price:100, unit:'d\ía'},
+  {id:'cocinera2', name:'Cocinera + Nocturno',  price:172, unit:'d\ía'},
+  {id:'chef',      name:'Chef completo',        price:286, unit:'d\ía'},
+  {id:'nineraD',   name:'Ni\ñera (d\ía)',         price:122, unit:'d\ía'},
+  {id:'nineraH',   name:'Ni\ñera (noche)',       price:172, unit:'noche'},
+];
+
+", "filename": "/home/claude/index.html"}"
+    }
+  },
+  {
+    "start_timestamp": "2026-05-11T15:18:49.020293Z",
+    "stop_timestamp": "2026-05-11T15:18:49.789849Z",
+    "flags": null,
+    "type": "text",
+    "text": "Now I'll replace the `villas` array with the Sheets-driven loader and update the `filtVillas` function to work with dynamic cards:",
+    "citations": []
+  },
+  {
+    "start_timestamp": "2026-05-11T15:18:50.291326Z",
+    "stop_timestamp": "2026-05-11T15:19:37.345814Z",
+    "flags": null,
+    "type": "tool_use",
+    "id": "toolu_012DuMqhiywF5fdWuuMMq6Yu",
+    "name": "str_replace",
+    "input": {
+      "description": "Replace static villas array with Sheets-driven loader",
+      "new_str": "// ── VILLAS: cargadas dinámicamente desde Google Sheets ──────────────────────
+// Formato de la hoja "Villas" en el spreadsheet:
+// A=id | B=nombre | C=hab | D=banos | E=huespedes | F=precio_noche
+// G=label | H=descripcion | I=notas | J=amenities (sep por coma)
+// K=habitaciones (sep por |, formato "Nombre: descripcion")
+// L=foto_url | M=pdf_url | N=size (small/large) | O=bgcolor | P=display_sheet
+
+const SHEET_ID  = '1PaZ5YVzsUKwvr7PvdKwhwHtfJBtyQKF0G9t45po6OYo';
+const VILLAS_RANGE = 'Villas!A2:P100'; // empieza en fila 2 (fila 1 = headers)
+
+let villasFromSheet = []; // se llena al cargar la página
+let villaDataFromSheet = {}; // mapa id → objeto completo
+
+async function loadVillasFromSheet(){
+  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Villas&range=A2:P100`;
+  try {
+    const res  = await fetch(url);
+    const text = await res.text();
+    const json = JSON.parse(text.replace(/^[^(]+\(/, '').replace(/\);?$/, ''));
+    const rows = json.table.rows;
+
+    villasFromSheet = [];
+    villaDataFromSheet = {};
+
+    rows.forEach(row => {
+      const c = row.c;
+      if(!c || !c[0] || !c[0].v) return; // skip empty rows
+      const get = (i, def='') => (c[i] && c[i].v != null) ? String(c[i].v).trim() : def;
+      const id      = get(0);
+      const precio  = parseFloat(get(5,'0').replace(/[^0-9.]/g,'')) || 0;
+      const hab     = parseInt(get(2,'0')) || 0;
+      const guests  = parseInt(get(4,'0')) || 0;
+
+      const obj = {
+        id,
+        name:     get(1),
+        hab,
+        banos:    get(3),
+        huespedes: guests,
+        guests,
+        precio_noche: precio,
+        price:    precio,
+        label:    get(6),
+        descripcion: get(7),
+        notas:    get(8),
+        amenities:   get(9).split(',').map(s=>s.trim()).filter(Boolean),
+        habitaciones: get(10).split('|').map(s=>{
+          const [nombre,...rest] = s.split(':');
+          return { nombre: nombre.trim(), desc: rest.join(':').trim() };
+        }).filter(h=>h.nombre),
+        foto_url: get(11),
+        pdf_url:  get(12),
+        size:     get(13,'large'),
+        bgcolor:  get(14,'#1a2a1a'),
+        display:  get(15) || get(1), // col P = display para el sheet de presupuesto
+      };
+
+      villasFromSheet.push(obj);
+      villaDataFromSheet[id] = obj;
+    });
+
+    renderVillaGrid();
+    setupScrollReveal(); // re-init para las cards nuevas
+
+  } catch(e) {
+    console.error('Error cargando villas desde Sheets:', e);
+    renderVillaGridFallback();
+  }
 }
 
-function renderVillasConf() {
-  const grid = document.getElementById('villaGridConf');
+function renderVillaGrid(){
+  const grid = document.getElementById('villaGrid');
   if(!grid) return;
-  const villas = villasFromSheet.length ? villasFromSheet : [
-    {id:'townhousemarina',name:'Townhouse Marina',hab:3,guests:8,precio_noche:300,size:'small'},
-    {id:'messina',name:'Messina',hab:5,guests:12,precio_noche:1412,size:'large'},
-    {id:'loslagos92',name:'Los Lagos 92',hab:5,guests:10,precio_noche:1882,size:'small'},
-  ];
-  grid.innerHTML = villas.map(v => `
-    <div class="vconf-card ${v.id === state.villaId ? 'selected' : ''}" onclick="selectVillaConf('${v.id}','${v.name}',${v.precio_noche})">
-      <div class="vcn">${v.name}</div>
-      <div class="vcd">${v.hab} hab · hasta ${v.guests} huésp.</div>
-      ${v.precio_noche > 0 ? '<div class="vcp">$' + v.precio_noche.toLocaleString() + '/noche</div>' : ''}
-    </div>`).join('');
+
+  if(villasFromSheet.length === 0){
+    renderVillaGridFallback(); return;
+  }
+
+  grid.innerHTML = villasFromSheet.map((v, i) => {
+    const delay = (i % 4) + 1;
+    const imgEl = v.foto_url
+      ? `<img class="vi" src="${v.foto_url}" alt="${v.name}" loading="lazy">`
+      : `<div class="vpc-wrap">
+           <svg class="vpc" viewBox="0 0 300 400" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%">
+             <rect width="300" height="400" fill="${v.bgcolor}"/>
+             <text x="150" y="210" font-family="Cinzel,serif" font-size="13" fill="rgba(174,133,96,.25)" text-anchor="middle" letter-spacing="4">${v.name.toUpperCase()}</text>
+           </svg>
+         </div>`;
+
+    return `<div class="vc" data-reveal data-delay="${delay}" data-size="${v.size}" onclick="openVModal('${v.id}')">
+      ${imgEl}
+      <div class="vov"></div>
+      <div class="vinfo">
+        <div class="vname">${v.name}</div>
+        <div class="vdet">${v.hab} hab · ${v.huespedes} huéspedes</div>
+      </div>
+      <div class="vfoot">
+        <div class="vprice-l">Desde</div>
+        <div class="vprice-v">$${v.precio_noche.toLocaleString()}/noche</div>
+        <div class="vprice-x">${v.hab} hab · ${v.banos} baños · ${v.huespedes} huésp.</div>
+        <button class="vbtn">Ver villa</button>
+      </div>
+    </div>`;
+  }).join('');
 }
 
-function selectVillaConf(id, name, precio) {
-  state.villaId = id; state.villaName = name; state.villaPrecio = precio;
-  document.querySelectorAll('.vconf-card').forEach(c => c.classList.remove('selected'));
-  const el = event.currentTarget; if(el) el.classList.add('selected');
+function renderVillaGridFallback(){
+  // Si Sheets no carga, muestra mensaje
+  const grid = document.getElementById('villaGrid');
+  if(grid) grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:4rem;color:rgba(253,250,246,.4);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem">
+    Cargando catálogo de villas...<br><span style="font-size:.8rem;margin-top:.5rem;display:block">Si el problema persiste, escribinos por <a href="https://wa.me/541164388699" style="color:#AE8560">WhatsApp</a></span>
+  </div>`;
 }
 
-function toggleSvc(id, name, precio) {
-  if(state.svcs[id]) { delete state.svcs[id]; } 
-  else { state.svcs[id] = { name, precio }; }
-  document.querySelectorAll('[data-svc-id="' + id + '"]').forEach(el => el.classList.toggle('sel', !!state.svcs[id]));
-}
+// Cargar villas al iniciar
+loadVillasFromSheet();
 
-function renderResumen() {
-  const el = document.getElementById('resumen-content');
-  if(!el) return;
-  const total = (state.villaPrecio || 0) * state.nights + Object.values(state.svcs).reduce((s, v) => s + (v.precio || 0), 0);
-  const svcsHtml = Object.values(state.svcs).map(s => `<div class="res-item"><span>${s.name}</span></div>`).join('') || '<div class="res-item muted">Sin servicios adicionales</div>';
-  el.innerHTML = `
-    <div class="res-row"><span>Fechas</span><span>${state.dateIn} → ${state.dateOut} (${state.nights} noches)</span></div>
-    <div class="res-row"><span>Huéspedes</span><span>${state.guests}</span></div>
-    <div class="res-row"><span>Casa</span><span>${state.villaName || '—'}</span></div>
-    <div class="res-svc-title">Servicios adicionales</div>
-    ${svcsHtml}
-    ${total > 0 ? '<div class="res-total">Estimado: $' + total.toLocaleString() + ' USD</div>' : ''}
-  `;
-}
+// ── VILLAS: para el configurador interno (usa los datos del Sheet si ya cargaron)
+// Fallback con datos hardcodeados para el selector de villas en el paso 3
+const villasFallback = [
+  {id:'townhouse',    name:'Townhouse Marina',  hab:3,  guests:8,  price:300,   display:'Townhouse Marina | 3 hab / 8 pax'},
+  {id:'altosChavon',  name:'Altos de Chavon',   hab:2,  guests:4,  price:280,   display:'Altos de Chavon'},
+  {id:'faro',         name:'Townhouse Faro',    hab:4,  guests:10, price:1300,  display:'Townhouse Faro | 4 hab / 10 pax'},
+  {id:'loslagos',     name:'Villa Los Lagos',   hab:5,  guests:10, price:1120,  display:'Villa Los Lagos'},
+  {id:'lagos94',      name:'Villa Lagos 94',    hab:5,  guests:10, price:1440,  display:'Villa Lagos 94 | 5 hab'},
+  {id:'canaria',      name:'Canaria',           hab:4,  guests:8,  price:2500,  display:'Canaria | 4 hab / 8 pax'},
+  {id:'vistamar',     name:'Vista Mar',         hab:7,  guests:18, price:2500,  display:'Vista Mar | 7 hab / 18 pax'},
+  {id:'laguna',       name:'Villa Laguna',      hab:5,  guests:10, price:2240,  display:'Villa Laguna | 5 hab / 10 pax'},
+  {id:'cacique',      name:'Du Cacique',        hab:8,  guests:14, price:3000,  display:'Du Cacique | 8 hab / 14 pax'},
+  {id:'ranchos',      name:'Villa Los Ranchos', hab:6,  guests:14, price:2700,  display:'Villa Los Ranchos | 6 hab / 14 pax'},
+  {id:'colinas21',    name:'Villa Colinas 21',  hab:12, guests:24, price:2640,  display:'Villa Colinas 21'},
+  {id:'laplaya',      name:'La Playa',          hab:4,  guests:8,  price:3500,  display:'La Playa | 4 hab / 8 pax'},
+  {id:'miralejos',    name:'Miralejos',         hab:6,  guests:16, price:3500,  display:'Miralejos | 6 hab / 16 pax'},
+  {id:'bali',         name:'Villa Bali',        hab:6,  guests:12, price:3200,  display:'Villa Bali | 6 hab / 12 pax'},
+  {id:'naranjos',     name:'Villa Naranjos',    hab:6,  guests:12, price:3200,  display:'Villa Naranjos'},
+  {id:'catalina',     name:'La Catalina',       hab:8,  guests:20, price:4500,  display:'La Catalina | 8 hab / 20 pax'},
+  {id:'puntaminitas', name:'Punta Minitas',     hab:6,  guests:12, price:4400,  display:'Punta Minitas vista al mar'},
+  {id:'royale',       name:'Clara Royale',      hab:10, guests:20, price:15000, display:'Clara Royale | 10 hab / 20 pax'},
+];
+// El configurador siempre usa datos del Sheet si están disponibles, sino el fallback
+function getVillas(){ return villasFromSheet.length > 0 ? villasFromSheet : villasFallback; }
+",
+      "old_str": "// ── VILLAS (USD/noche)
+const villas = [
+  {id:'townhouse',    name:'Townhouse Marina',    hab:3,  guests:8,  price:427,   display:'Townhouse Marina | 3 hab / 8 pax'},
+  {id:'altosChavon',  name:'Altos de Chavon',     hab:2,  guests:4,  price:332,   display:'Altos de Chavon'},
+  {id:'faro',         name:'Townhouse Faro',      hab:4,  guests:10, price:1326,  display:'Townhouse Faro | 4 hab / 10 pax'},
+  {id:'loslagos',     name:'Villa Los Lagos',     hab:5,  guests:10, price:1326,  display:'Villa Los Lagos'},
+  {id:'lagos94',      name:'Villa Lagos 94',      hab:5,  guests:10, price:1705,  display:'Villa Lagos 94 | 5 hab'},
+  {id:'canaria',      name:'Canaria',             hab:4,  guests:8,  price:2368,  display:'Canaria | 4 hab / 8 pax'},
+  {id:'vistamar',     name:'Vista Mar',           hab:7,  guests:18, price:2368,  display:'Vista Mar | 7 hab / 18 pax'},
+  {id:'laguna',       name:'Villa Laguna',        hab:5,  guests:10, price:2652,  display:'Villa Laguna | 5 hab / 10 pax'},
+  {id:'cacique',      name:'Du Cacique',          hab:8,  guests:14, price:2842,  display:'Du Cacique | 8 hab / 14 pax'},
+  {id:'ranchos',      name:'Villa Los Ranchos',   hab:6,  guests:14, price:2842,  display:'Villa Los Ranchos | 6 hab / 14 pax'},
+  {id:'colinas21',    name:'Villa Colinas 21',    hab:4,  guests:10, price:3126,  display:'Villa Colinas 21'},
+  {id:'laplaya',      name:'La Playa',            hab:3,  guests:8,  price:3315,  display:'La Playa | 3 hab / 8 pax'},
+  {id:'miralejos',    name:'Miralejos',           hab:6,  guests:16, price:3315,  display:'Miralejos | 6 hab / 16 pax'},
+  {id:'bali',         name:'Villa Bali',          hab:6,  guests:12, price:3789,  display:'Villa Bali | 6 hab / 12 pax'},
+  {id:'naranjos',     name:'Villa Naranjos',      hab:6,  guests:12, price:3789,  display:'Villa Naranjos'},
+  {id:'catalina',     name:'La Catalina',         hab:8,  guests:20, price:4262,  display:'La Catalina | 8 hab / 20 pax'},
+  {id:'puntaminitas', name:'Punta Minitas',       hab:6,  guests:12, price:5209,  display:'Punta Minitas vista al mar'},
+  {id:'royale',       name:'Clara Royale',        hab:10, guests:20, price:14206, display:'Clara Royale | 10 hab / 20 pax'},
+];",
+      "path": "/home/claude/index.html"
+    },
+    "message": "Replace static villas array with Sheets-driven loader",
+    "integration_name": null,
+    "integration_icon_url": null,
+    "icon_name": "edit",
+    "context": null,
+    "display_content": {
+      "type": "text",
+      "text": "Replace static villas array with Sheets-driven loader"
+    },
+    "approval_options": null,
+    "approval_key": null,
+    "is_mcp_app": null,
+    "mcp_server_url": null
+  },
+  {
+    "start_timestamp": null,
+    "stop_timestamp": null,
+    "flags": null,
+    "type": "tool_result",
+    "tool_use_id": "toolu_012DuMqhiywF5fdWuuMMq6Yu",
+    "name": "str_replace",
+    "content": [
+      {
+        "type": "text",
+        "text": "Successfully replaced string in /home/claude/index.html",
+        "uuid": "708cf742-b746-43ed-a0a4-5c6f0898750b"
+      }
+    ],
+    "is_error": false,
+    "structured_content": null,
+    "meta": null,
+    "message": null,
+    "integration_name": null,
+    "mcp_server_url": null,
+    "integration_icon_url": null,
+    "icon_name": "edit",
+    "display_content": {
+      "type": "text",
+      "text": "Successfully replaced string in /home/claude/index.html"
+    }
+  },
+  {
+    "start_timestamp": "2026-05-11T15:19:39.564842Z",
+    "stop_timestamp": "2026-05-11T15:19:40.343805Z",
+    "flags": null,
+    "type": "text",
+    "text": "Now update all references from `villas` to `getVillas()`, update `openVModal` to use Sheet data, and fix `filtVillas`:",
+    "citations": []
+  },
+  {
+    "start_timestamp": "2026-05-11T15:19:40.820328Z",
+    "stop_timestamp": "2026-05-11T15:19:50.183967Z",
+    "flags": null,
+    "type": "tool_use",
+    "id": "toolu_01TbyZPbmYym7ihiFVXEdEAb",
+    "name": "bash_tool",
+    "input": {
+      "command": "python3 << 'EOF'
+content = open('/home/claude/index.html').read()
 
-function selectVillaFromModal(id) {
-  closeVModal();
-  state.villaId = id;
-  const villa = villasFromSheet.find(v => v.id === id);
-  if(villa) { state.villaName = villa.name; state.villaPrecio = villa.precio_noche; }
-  const conf = document.getElementById('tu-experiencia');
-  if(conf) conf.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  setTimeout(() => {
-    if(state.dateIn && state.dateOut && state.nights > 0) { goStep(3); }
-  }, 700);
-}
+# Update renderVillas() to use getVillas() instead of villas
+content = content.replace(
+    'const villa=villas.find(',
+    'const villa=getVillas().find('
+).replace(
+    'villas.filter(v=>',
+    'getVillas().filter(v=>'
+).replace(
+    'villas.find(v=>v.id===state.villaId)',
+    'getVillas().find(v=>v.id===state.villaId)'
+)
+
+# openVModal: use villaDataFromSheet first, then fall back to villaData
+old_open = "function openVModal(id) {
+  const d = villaData[id];
+  if (!d) return;"
+new_open = """function openVModal(id) {
+  // Use Sheet data if available, fall back to hardcoded villaData
+  const d = villaDataFromSheet[id] || villaData[id];
+  if (!d) return;
+  // Normalize amenities (Sheet uses array, hardcoded uses array too)
+  if(d.amenities && typeof d.amenities[0] === 'string' && !d.amenities.some) d.amenities = [];"""
+
+content = content.replace(old_open, new_open)
+
+# Update filtVillas to handle dynamically added cards
+old_filt = """function filtVillas(size, btn){
+  document.querySelectorAll('.vfb').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('#villaGrid .vc').forEach(card=>{
+    if(size==='all') card.classList.remove('hidden');
+    else card.classList.toggle('hidden', card.dataset.size !== size);
+  });
+}"""
+new_filt = """function filtVillas(size, btn){
+  document.querySelectorAll('.vfb').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('#villaGrid .vc').forEach(card=>{
+    if(size==='all'){ card.classList.remove('hidden'); }
+    else { card.classList.toggle('hidden', card.dataset.size !== size); }
+  });
+}"""
+content = content.replace(old_filt, new_filt)
+
+# Update selectVillaAndGo to use getVillas()
+content = content.replace(
+    "const villa=villas.find(v=>v.id===villaId)",
+    "const villa=getVillas().find(v=>v.id===villaId)"
+)
+
+open('/home/claude/index.html', 'w').write(content)
+print("Done")
+EOF",
+      "description": "Update all villas references to use getVillas()"
+    },
+    "message": "Update all villas references to use getVillas()",
+    "integration_name": null,
+    "integration_icon_url": null,
+    "icon_name": "commandLine",
+    "context": null,
+    "display_content": {
+      "type": "json_block",
+      "json_block": "{"language": "bash", "code": "python3 << 'EOF'
+content = open('/home/claude/index.html').read()
+
+# Update renderVillas() to use getVillas() instead of villas
+content = content.replace(
+    'const villa=villas.find(',
+    'const villa=getVillas().find('
+).replace(
+    'villas.filter(v=>',
+    'getVillas().filter(v=>'
+).replace(
+    'villas.find(v=>v.id===state.villaId)',
+    'getVillas().find(v=>v.id===state.villaId)'
+)
+
+# openVModal: use villaDataFromSheet first, then fall back to villaData
+old_open = \"function openVModal(id) {\
+  const d = villaData[id];\
+  if (!d) return;\"
+new_open = \"\"\"function openVModal(id) {
+  // Use Sheet data if available, fall back to hardcoded villaData
+  const d = villaDataFromSheet[id] || villaData[id];
+  if (!d) return;
+  // Normalize amenities (Sheet uses array, hardcoded uses array too)
+  if(d.amenities && typeof d.amenities[0] === 'string' && !d.amenities.some) d.amenities = [];\"\"\"
+
+content = content.replace(old_open, new_open)
+
+# Update filtVillas to handle dynamically added cards
+old_filt = \"\"\"function filtVillas(size, btn){
+  document.querySelectorAll('.vfb').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('#villaGrid .vc').forEach(card=>{
+    if(size==='all') card.classList.remove('hidden');
+    else card.classList.toggle('hidden', card.dataset.size !== size);
+  });
+}\"\"\"
+new_filt = \"\"\"function filtVillas(size, btn){
+  document.querySelectorAll('.vfb').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('#villaGrid .vc').forEach(card=>{
+    if(size==='all'){ card.classList.remove('hidden'); }
+    else { card.classList.toggle('hidden', card.dataset.size !== size); }
+  });
+}\"\"\"
+content = content.replace(old_filt, new_filt)
+
+# Update selectVillaAndGo to use getVillas()
+content = content.replace(
+    \"const villa=villas.find(v=>v.id===villaId)\",
+    \"const villa=getVillas().find(v=>v.id===villaId)\"
+)
+
+open('/home/claude/index.html', 'w').write(content)
+print(\"Done\")
+EOF"}"
+    },
+    "approval_options": null,
+    "approval_key": null,
+    "is_mcp_app": null,
+    "mcp_server_url": null
+  },
+  {
+    "start_timestamp": null,
+    "stop_timestamp": null,
+    "flags": null,
+    "type": "tool_result",
+    "tool_use_id": "toolu_01TbyZPbmYym7ihiFVXEdEAb",
+    "name": "bash_tool",
+    "content": [
+      {
+        "type": "text",
+        "text": "{"returncode":0,"stdout":"Done
+","stderr":""}",
+        "uuid": "a2159477-4ca1-41b5-85e3-1f210c4804cb"
+      }
 
 // ── OTP GATE ─────────────────────────────────────────────
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyOmyl7RCsJg92nL1FBuR4Y37hP2OVHxDj3NguqeQcoeuNYuM_g7YD3SNQw3HLxNFfqLw/exec';
@@ -2302,7 +2897,7 @@ async function verificarOTP() {
     const resp = await fetch(SCRIPT_URL + '?' + params);
     const data = await resp.json();
     if(data.ok) {
-      document.getElementById('gate-modal').classList.remove('active');
+      document.getElementById('gate-modal').style.display='none';
       state.gateVerified = true;
       guardarContactoParcial();
       goStep(4);
@@ -2316,7 +2911,7 @@ async function verificarOTP() {
 
 function checkGateAndGoStep4() {
   if(state.gateVerified) { goStep(4); return; }
-  document.getElementById('gate-modal').classList.add('active');
+  document.getElementById('gate-modal').style.display='flex';
   document.getElementById('gate-step1').style.display = 'block';
   document.getElementById('gate-step2').style.display = 'none';
 }
