@@ -2184,8 +2184,9 @@ async function enviarConsulta(){
   try {
     const params=new URLSearchParams();
     params.append('cliente',    JSON.stringify(clientData));
-    params.append('presupuestoTexto', 'Presupuesto generado desde el configurador web');
+    params.append('presupuestoTexto', 'Presupuesto generado desde el sitio web');
     params.append('clienteItems', JSON.stringify(pData));
+    params.append('source', 'web');
 
     const res = await fetch(APPS_SCRIPT_URL, {
       method:'POST',
