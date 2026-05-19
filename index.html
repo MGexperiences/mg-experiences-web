@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Tu hogar en el Caribe. Sin itinerarios, sin apuros. Una casa privada en Casa de Campo Resort con todo lo que necesitás — a tu manera.">
 <title>MG Experiences — Casa de Campo, República Dominicana</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;overflow-x:hidden;-webkit-text-size-adjust:100%}
+html{scroll-behavior:smooth}
 :root{
   --v:#AE8560;--vl:#D4B89A;--vd:#8A6540;
   --g:#1D4D3A;--gm:#2E6B50;
@@ -18,7 +18,7 @@ html{scroll-behavior:smooth;overflow-x:hidden;-webkit-text-size-adjust:100%}
   --bk:#1C1E17;--wh:#FDFAF6;
   --sand:#111310;
 }
-html{overflow-x:hidden;max-width:100%}body{background:var(--bk);color:var(--wh);font-family:'Cormorant Garamond',Georgia,serif;font-size:18px;line-height:1.6;overflow-x:hidden;width:100%;position:relative}
+body{background:var(--bk);color:var(--wh);font-family:'Cormorant Garamond',Georgia,serif;font-size:18px;line-height:1.6;overflow-x:hidden}
 
 /* ── NAV ── */
 nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 3rem;transition:all .5s}
@@ -158,7 +158,7 @@ nav.solid{background:rgba(28,30,23,.96);backdrop-filter:blur(20px);border-bottom
 .vm-cta-main:hover{background:var(--wh)}
 .vm-cta-sec{font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.18em;text-transform:uppercase;color:var(--vl);background:none;border:1px solid rgba(174,133,96,.35);padding:1rem;cursor:pointer;transition:all .2s;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:.4rem}
 .vm-cta-sec:hover{border-color:var(--vl);background:rgba(174,133,96,.06)}
-
+@media(max-width:640px){#vmodal{width:100vw;border-left:none}.vm-body{padding:1.5rem 1.3rem}.vm-stats{grid-template-columns:repeat(3,1fr)}.vm-amenities{grid-template-columns:1fr}.vm-ctas{grid-template-columns:1fr}}
 
 /* ── CARRUSEL MODAL ── */
 .vm-carousel{position:relative;width:100%;background:#000;flex-shrink:0}
@@ -681,18 +681,12 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
     <li><a href="#nosotros">Nosotros</a></li>
 
   </ul>
-  <a href="https://wa.me/541164388699" target="_blank" class="nwa" id="nav-wa-btn">WhatsApp →</a>
-  <button id="nav-hamburger" onclick="toggleMobileNav()" aria-label="Menú"
-    style="display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:.5rem;z-index:300;margin-left:.5rem">
-    <span style="display:block;width:22px;height:1.5px;background:var(--wh);transition:all .3s"></span>
-    <span style="display:block;width:22px;height:1.5px;background:var(--wh);transition:all .3s"></span>
-    <span style="display:block;width:22px;height:1.5px;background:var(--wh);transition:all .3s"></span>
-  </button>
+  <a href="https://wa.me/541164388699" target="_blank" class="nwa">WhatsApp →</a>
 </nav>
 
 
 <!-- MOBILE NAV OVERLAY -->
-<div id="mobile-nav-overlay" role="dialog" aria-label="Navegación" style="display:none">
+<div id="mobile-nav-overlay" role="dialog" aria-label="Navegación">
   <button id="mobile-nav-close" onclick="toggleMobileNav()" aria-label="Cerrar">×</button>
   <a href="#servicios" onclick="toggleMobileNav()">Servicios</a>
   <a href="#villas" onclick="toggleMobileNav()">Villas</a>
@@ -1545,58 +1539,7 @@ const nav=document.getElementById('nav');
 window.addEventListener('scroll',()=>nav.classList.toggle('solid',scrollY>80));
 
 // ── REVEAL
-const obs=
-// ── MOBILE NAV ──────────────────────────────────────
-window.toggleMobileNav = function() {
-  var ov  = document.getElementById('mobile-nav-overlay');
-  var btn = document.getElementById('nav-hamburger');
-  if (!ov) return;
-  var opening = (ov.style.display !== 'flex');
-  ov.style.display = opening ? 'flex' : 'none';
-  ov.classList.toggle('open', opening);
-  document.body.style.overflow = opening ? 'hidden' : '';
-  if (btn) {
-    var spans = btn.querySelectorAll('span');
-    if (opening) {
-      if(spans[0]) spans[0].style.transform = 'translateY(6.5px) rotate(45deg)';
-      if(spans[1]) spans[1].style.opacity = '0';
-      if(spans[2]) spans[2].style.transform = 'translateY(-6.5px) rotate(-45deg)';
-    } else {
-      spans.forEach(function(s){ s.style.transform=''; s.style.opacity=''; });
-    }
-  }
-};
-(function(){
-  var btn = document.getElementById('nav-hamburger');
-  if (!btn) return;
-  function upd() { btn.style.display = window.innerWidth <= 480 ? 'flex' : 'none'; }
-  upd(); window.addEventListener('resize', upd);
-}());
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') {
-    var ov = document.getElementById('mobile-nav-overlay');
-    if (ov && ov.style.display === 'flex') window.toggleMobileNav();
-  }
-});
-document.addEventListener('DOMContentLoaded', function() {
-  if (!('ontouchstart' in window)) return;
-  document.querySelectorAll('.act-card').forEach(function(card) {
-    card.addEventListener('click', function() {
-      var tip = card.querySelector('.act-tooltip');
-      if (!tip) return;
-      var old = document.getElementById('mob-act-sh');
-      if (old) old.remove();
-      var sh = document.createElement('div');
-      sh.id = 'mob-act-sh';
-      sh.style.cssText = 'position:fixed;bottom:0;left:0;right:0;z-index:9800;background:#111309;border-top:.5px solid rgba(174,133,96,.2);border-radius:14px 14px 0 0;padding:1.5rem 1rem 2.5rem;transform:translateY(100%);transition:transform .3s ease';
-      sh.innerHTML = '<button onclick="document.getElementById(\'mob-act-sh\').remove()" style="position:absolute;top:.7rem;right:.9rem;background:none;border:none;color:rgba(253,250,246,.4);font-size:1.5rem;cursor:pointer">×</button>' + tip.innerHTML;
-      document.body.appendChild(sh);
-      requestAnimationFrame(function(){ requestAnimationFrame(function(){ sh.style.transform='translateY(0)'; }); });
-    });
-  });
-});
-
-new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:.1});
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:.1});
 document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
 
 // ── SERVICE CARDS DRAG
@@ -2010,7 +1953,7 @@ function selectVillaAndGo(villaId){
 }
 
 // ── VILLA FILTER
-window.filtVillas = function filtVillas(size, btn){
+function filtVillas(size, btn){
   document.querySelectorAll('.vfb').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   document.querySelectorAll('#villaCatalog .vc').forEach(card=>{
@@ -2018,7 +1961,7 @@ window.filtVillas = function filtVillas(size, btn){
     else { card.classList.toggle('hidden', card.dataset.size !== size); }
   });
 }
-window.goStep = function goStep(n){
+function goStep(n){
   if(n>1){
     if(!state.dateIn||!state.dateOut){alert('Seleccioná las fechas de tu estadía.');return}
     if(state.nights<=0){alert('La salida debe ser posterior a la llegada.');return}
@@ -2850,7 +2793,7 @@ function buildLightboxSet(clickedEl, caption) {
   }
 }
 
-window.openLightbox = function openLightbox(el, caption) {
+function openLightbox(el, caption) {
   buildLightboxSet(el, caption);
   const overlay = document.getElementById('lb-overlay');
   const img = document.getElementById('lb-img');
@@ -2866,12 +2809,12 @@ window.openLightbox = function openLightbox(el, caption) {
   document.getElementById('lb-next').style.opacity = lbImages.length > 1 ? '1' : '0';
 }
 
-window.closeLightbox = function closeLightbox() {
+function closeLightbox() {
   document.getElementById('lb-overlay').classList.remove('active');
   document.body.style.overflow = '';
 }
 
-window.lbNav = function lbNav(dir) {
+function lbNav(dir) {
   lbIdx = (lbIdx + dir + lbImages.length) % lbImages.length;
   const img = document.getElementById('lb-img');
   img.style.opacity = '0';
@@ -3291,7 +3234,7 @@ const villaData = {
 };
 
 // ── OPEN / CLOSE MODAL ───────────────────────────────────────────────────────
-window.openVModal = function openVModal(id) {
+function openVModal(id) {
   // Use Sheet data if available, fall back to hardcoded villaData
   const d = villaDataFromSheet[id] || villaData[id];
   if (!d) return;
@@ -3391,13 +3334,38 @@ window.openVModal = function openVModal(id) {
 }
 
 // Abre la galería fullscreen desde el modal
-window.openGalleryFromModal = function openGalleryFromModal() {
+function openGalleryFromModal() {
   const folderId  = window._currentVillaFolderId;
   const portada   = window._currentVillaPortada;
   const name      = window._currentVillaName || '';
   const carpetaUrl = folderId ? 'https://drive.google.com/drive/folders/' + folderId : '';
-  // openVillaGallery is defined in a later script block — always available at call time
-  openVillaGallery('modal', name, carpetaUrl, portada);
+  // Call openVillaGallery — defined later in the page
+  if (typeof openVillaGallery === 'function') {
+    openVillaGallery('modal', name, carpetaUrl, portada);
+  } else {
+    // Fallback: open portada in lightbox
+    if (portada) {
+      window._galleryFotos = [{ url: portada, thumb: portada, name: name }];
+      window._galleryCur = 0;
+      const lb = document.getElementById('gallery-lb');
+      const img = document.getElementById('gallery-lb-img');
+      const title = document.getElementById('gallery-lb-title');
+      const counter = document.getElementById('gallery-lb-counter');
+      const thumbs = document.getElementById('gallery-lb-thumbs');
+      const prev = document.getElementById('gallery-lb-prev');
+      const next = document.getElementById('gallery-lb-next');
+      if (lb && img) {
+        title.textContent = name;
+        img.src = portada;
+        counter.textContent = '1 / 1';
+        if (thumbs) thumbs.style.display = 'none';
+        if (prev) prev.style.display = 'none';
+        if (next) next.style.display = 'none';
+        lb.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+  }
 }
 
 // ── CARRUSEL DE FOTOS ────────────────────────────────────────────────────────
@@ -3446,7 +3414,7 @@ async function initCarousel(folderId, portadaUrl) {
   window._carouselRender = render;
 }
 
-window.carouselMove = function carouselMove(dir) {
+function carouselMove(dir) {
   const fotos = window._carouselFotos || [];
   window._carouselCur = (window._carouselCur + dir + fotos.length) % fotos.length;
   const track = document.getElementById('vmTrack');
@@ -3457,13 +3425,13 @@ window.carouselMove = function carouselMove(dir) {
   }
 }
 
-window.closeVModal = function closeVModal() {
+function closeVModal() {
   document.getElementById('vmodal-overlay').classList.remove('open');
   document.getElementById('vmodal').classList.remove('open');
   document.body.style.overflow = '';
 }
 
-window.selectVillaFromModal = function selectVillaFromModal(id) {
+function selectVillaFromModal(id) {
   closeVModal();
   // Preselect villa in state
   state.villaId = id;
@@ -3546,6 +3514,16 @@ document.addEventListener('keydown', e => {
 
 
 /* ── LIGHTBOX TOUCH ── */
+@media(max-width:768px){
+  .vg{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:1rem;padding:1rem;scrollbar-width:none}
+  .vg::-webkit-scrollbar{display:none}
+  .vc{flex:0 0 78vw;scroll-snap-align:start}
+}
+@media(max-width:768px){
+  #lb-prev,#lb-next{padding:1rem;font-size:2rem}
+  #casa-de-campo{padding:4rem 1.5rem}
+  .cdc-grid{grid-template-columns:1fr;gap:3rem}
+}
 
 
 /* ── VILLA GALLERY BUTTON ── */
@@ -3861,269 +3839,475 @@ document.addEventListener('keydown', e => {
   border-top: .5px solid rgba(174,133,96,.15);
 }
 
+@media(max-width: 768px) {
+  .act-grid { grid-template-columns: 1fr 1fr; gap: .8rem; }
+  .act-tooltip { display: none; }
+}
 
-
-/* ══════════════════════════════════════════════
-   MOBILE WEBAPP — phones only (≤ 480px)
-   Un solo eje de scroll: vertical.
-   Sin zoom. Sin desborde horizontal.
-══════════════════════════════════════════════ */
-
-/* --- Overlays: siempre ocultos por defecto --- */
-#mobile-nav-overlay { display: none; }
-#nav-hamburger      { display: none; }
-
-@media (max-width: 480px) {
-
-  /* 1. BASE — lock the viewport */
-  html {
-    overflow-x: hidden;
-    -webkit-text-size-adjust: 100%;
+/* ── Widget button ── */
+  #val-btn {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    z-index: 9000;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #AE8560, #7A5C2E);
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 8px 32px rgba(174,133,91,.45), 0 2px 8px rgba(0,0,0,.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform .2s, box-shadow .2s;
+    overflow: hidden;
   }
-  body {
-    overflow-x: hidden;
+  #val-btn:hover { transform: scale(1.08); box-shadow: 0 12px 40px rgba(174,133,91,.55); }
+  #val-btn img  { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+
+  /* Pulse ring */
+  #val-btn::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 2px solid rgba(174,133,91,.4);
+    animation: valPulse 2.4s ease-out infinite;
+  }
+  @keyframes valPulse {
+    0%   { transform: scale(1);    opacity: .8; }
+    70%  { transform: scale(1.22); opacity: 0;  }
+    100% { transform: scale(1.22); opacity: 0;  }
+  }
+
+  /* Tooltip */
+  #val-tip {
+    position: fixed;
+    bottom: 38px;
+    right: 100px;
+    z-index: 8999;
+    background: rgba(14,26,18,.97);
+    border: 1px solid rgba(174,133,91,.2);
+    color: rgb(235,225,210);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-style: italic;
+    font-size: .95rem;
+    padding: .55rem 1rem;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateX(8px);
+    transition: opacity .3s, transform .3s;
+  }
+  #val-tip.show { opacity: 1; transform: translateX(0); }
+
+  /* ── Drawer ── */
+  #val-drawer {
+    position: fixed;
+    bottom: 0; right: 0;
+    z-index: 9100;
+    width: 420px;
+    max-width: 100vw;
+    height: 680px;
+    max-height: 92vh;
+    background: #0a0e0a;
+    border-radius: 20px 20px 0 0;
+    border: 1px solid rgba(174,133,91,.2);
+    border-bottom: none;
+    box-shadow: 0 -20px 60px rgba(0,0,0,.7);
+    display: flex;
+    flex-direction: column;
+    transform: translateY(100%);
+    transition: transform .38s cubic-bezier(.32,.72,0,1);
+    overflow: hidden;
+  }
+  #val-drawer.open { transform: translateY(0); }
+
+  /* Drawer header */
+  #val-dhead {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px 13px;
+    border-bottom: 1px solid rgba(174,133,91,.1);
+    background: rgba(174,133,91,.04);
+    flex-shrink: 0;
+  }
+  #val-dhead .dh-avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1.5px solid rgba(174,133,91,.35);
+    flex-shrink: 0;
+  }
+  #val-dhead .dh-avatar img { width: 100%; height: 100%; object-fit: cover; }
+  #val-dhead .dh-info { flex: 1; }
+  #val-dhead .dh-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: rgb(235,225,210);
+  }
+  #val-dhead .dh-sub {
+    font-family: 'Montserrat', sans-serif;
+    font-size: .58rem;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: #AE8560;
+    margin-top: 1px;
+  }
+  #val-close {
+    background: rgba(253,250,246,.12);
+    border: 1px solid rgba(253,250,246,.35);
+    border-radius: 50%;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(253,250,246,.9);
+    font-size: 1.1rem;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+    transition: all .2s;
+    flex-shrink: 0;
+    font-weight: 300;
+  }
+  #val-close:hover { color: rgba(174,133,91,.9); }
+
+  /* iframe fills the rest — offset to hide bot's own header */
+  #val-iframe {
+    flex: 1;
+    border: none;
     width: 100%;
-    min-width: 0;
+    background: #0a0e0a;
+    margin-top: -72px;        /* hides bot's duplicate header */
+    height: calc(100% + 72px);
   }
-  /* Kill any element that could bleed out */
-  * {
-    max-width: 100%;
-    min-width: 0;
-  }
-  img { width: 100%; height: auto; display: block; }
 
-  /* 2. NAV */
-  nav {
-    padding: .85rem 1rem !important;
-    justify-content: space-between !important;
+  /* Mobile adjustments */
+  @media (max-width: 480px) {
+    #val-drawer  { width: 100vw; border-radius: 20px 20px 0 0; height: 85vh; max-height: 85vh; }
+    #val-btn     { bottom: 20px; right: 20px; width: 54px; height: 54px; }
+    #val-tip     { display: none; }
   }
-  .logo img { width: 44px !important; height: 44px !important; }
-  .logo-n { font-size: .7rem !important; }
-  .logo-t { font-size: .55rem !important; }
+
+/* ════════════════════════════════════════════════════════
+   MOBILE RESPONSIVE SYSTEM — < 768px
+   Optimizado para clientes en celular
+════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+
+  /* ── BASE ── */
+  html { font-size: 17px; }
+  .sec { padding: 4rem 1.4rem; }
+
+  /* ── NAV ── */
+  nav { padding: 1rem 1.2rem; }
+  nav.solid { padding: .8rem 1.2rem; }
+  .nlinks { display: none; }  /* hidden — hamburger below */
+  .logo-n { font-size: .78rem; }
+  .logo-t { font-size: .62rem; }
+  .nwa { padding: .55rem 1.1rem; font-size: .48rem; }
+
+  /* Hamburger menu */
   #nav-hamburger {
-    display: flex !important;
+    display: flex;
     flex-direction: column;
     gap: 5px;
     background: none;
     border: none;
     cursor: pointer;
     padding: .5rem;
-    flex-shrink: 0;
+    z-index: 300;
   }
   #nav-hamburger span {
     display: block;
-    width: 20px;
+    width: 22px;
     height: 1.5px;
-    background: #fdfaf6;
-    transition: all .25s;
+    background: var(--wh);
+    transition: all .3s ease;
   }
-
-  /* 3. MOBILE NAV OVERLAY */
   #mobile-nav-overlay {
+    display: none;
     position: fixed;
     inset: 0;
-    z-index: 9999;
-    background: rgba(10,12,8,.97);
+    z-index: 250;
+    background: rgba(10,12,8,.98);
+    backdrop-filter: blur(12px);
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 2rem;
+    gap: 2.5rem;
   }
-  #mobile-nav-overlay.open { display: flex !important; }
-  #mobile-nav-close {
-    position: absolute;
-    top: 1rem; right: 1rem;
-    background: none; border: none;
-    color: rgba(253,250,246,.5);
-    font-size: 1.8rem; cursor: pointer;
-  }
+  #mobile-nav-overlay.open { display: flex; }
   #mobile-nav-overlay a {
     font-family: 'Cinzel', serif;
-    font-size: .95rem;
-    letter-spacing: .18em;
+    font-size: 1.1rem;
+    letter-spacing: .2em;
     text-transform: uppercase;
     color: rgba(253,250,246,.75);
     text-decoration: none;
+    transition: color .2s;
+  }
+  #mobile-nav-overlay a:hover { color: var(--vl); }
+  #mobile-nav-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: none;
+    border: none;
+    color: rgba(253,250,246,.5);
+    font-size: 1.8rem;
+    cursor: pointer;
+    line-height: 1;
   }
   #mobile-nav-wa {
-    background: var(--vl) !important;
-    color: #1c1e17 !important;
-    padding: .7rem 2rem !important;
-    font-size: .5rem !important;
-    margin-top: .5rem;
+    margin-top: 1rem;
+    font-family: 'Cinzel', serif;
+    font-size: .55rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--bk);
+    background: var(--vl);
+    padding: .75rem 2rem;
+    text-decoration: none;
+    display: inline-block;
   }
 
-  /* 4. HERO */
-  .hero { min-height: 100svh; height: 100svh; }
-  .hh1 {
-    font-size: clamp(1.9rem, 9.5vw, 2.8rem) !important;
-    line-height: 1.1;
-  }
-  .hh1 em { font-size: .62em; }
-  .hsub { font-size: .88rem; max-width: 90%; margin: 1rem auto 1.8rem; }
-  .hbtns { flex-direction: column !important; align-items: center; gap: .7rem; }
-  .btn {
-    width: min(270px, 80vw) !important;
-    text-align: center;
-    padding: .95rem 1.2rem !important;
-    font-size: .5rem !important;
-    min-height: 48px;
-  }
+  /* ── HERO ── */
+  .hero { min-height: 100svh; }
+  .hh1 { font-size: clamp(2.2rem, 11vw, 3.5rem); letter-spacing: .02em; }
+  .hh1 em { font-size: .62em; margin-top: .3rem; }
+  .hsub { font-size: .95rem; margin: 1.4rem auto 2.2rem; max-width: 90%; }
+  .hbtns { flex-direction: column; align-items: center; gap: .8rem; }
+  .hbtns .btn { width: min(280px, 80vw); text-align: center; padding: 1rem 1.5rem; font-size: .55rem; }
+  .hpre { font-size: .5rem; letter-spacing: .25em; margin-bottom: 1.4rem; }
   .scue { display: none; }
 
-  /* 5. BAND */
-  .band { padding: 2.2rem 1rem !important; flex-wrap: wrap; }
-  .bi {
-    flex: 0 0 50%; max-width: 50%;
-    border-right: none !important;
-    border-bottom: .5px solid rgba(253,250,246,.07) !important;
-    padding: 1.1rem .4rem !important;
+  /* ── BAND ── */
+  .band { padding: 2.5rem 1.4rem; gap: 0; flex-wrap: wrap; }
+  .bi { flex: 0 0 50%; max-width: 50%; border-right: none !important; padding: 1.2rem .5rem; border-bottom: .5px solid rgba(253,250,246,.1); }
+  .bi:nth-child(1), .bi:nth-child(2) { border-bottom: .5px solid rgba(253,250,246,.1); }
+  .bi:nth-child(3), .bi:nth-child(4) { border-bottom: none; }
+  .bn { font-size: 2rem; }
+  .bl { font-size: .7rem; }
+
+  /* ── SECTION TITLES ── */
+  .bigt { font-size: clamp(1.6rem, 7vw, 2.4rem); }
+  .prose { font-size: .9rem; }
+  .lbl { font-size: .48rem; }
+
+  /* ── SERVICES (carousel horizontal) ── */
+  .svcs { padding: 4rem 0; }
+  .si { padding: 0 1.4rem; margin-bottom: 2.5rem; text-align: center; }
+  .si .rule { margin: 1rem auto; }
+  .si .prose { margin: 0 auto; }
+  .ss { gap: 0; }
+  .sc {
+    flex: 0 0 78vw !important;
+    scroll-snap-align: start;
+    border-radius: 0;
+    padding: 1.6rem 1.4rem;
   }
-  .bi:last-child, .bi:nth-last-child(2) { border-bottom: none !important; }
-  .bn { font-size: 1.9rem !important; }
-  .bl { font-size: .6rem !important; }
 
-  /* 6. SECTION PADDING */
-  .svcs, .villas, .boats, .golf, .trsf, .vip,
-  .config, .contact, .sec, .resort-section,
-  #valentina, #casa-de-campo, #minitas, #altos,
-  #marina { padding: 3.5rem 1rem !important; }
-
-  /* 7. TYPOGRAPHY */
-  .bigt  { font-size: clamp(1.4rem, 6.5vw, 2rem) !important; }
-  .prose { font-size: .85rem !important; }
-  .lbl   { font-size: .44rem !important; }
-  .rule  { margin: .8rem 0 !important; }
-
-  /* 8. VILLAS — horizontal snap carousel */
-  #villas { padding: 3.5rem 0 !important; }
-  .vh { padding: 0 1rem 1.5rem !important; text-align: center; }
-  .vh .rule { margin: .8rem auto !important; }
-  .vfilt { padding: .5rem; overflow-x: auto; gap: .4rem; }
-  .vfb   { font-size: .42rem !important; padding: .4rem .8rem !important; min-height: 36px; }
+  /* ── VILLAS ── */
+  #villas { padding: 4rem 0; }
+  .vh { padding: 0 1.4rem; text-align: center; margin-bottom: 2rem; }
+  .vh .rule { margin: 1rem auto; }
+  .vfilt { padding: .8rem 1rem .5rem; gap: .4rem; }
+  .vfb { font-size: .44rem; padding: .4rem .8rem; }
+  /* Villa grid → horizontal scroll */
   .vg {
     display: flex !important;
     overflow-x: auto !important;
     scroll-snap-type: x mandatory !important;
-    -webkit-overflow-scrolling: touch;
-    gap: .8rem;
-    padding: .5rem 1rem 1.2rem !important;
-    scrollbar-width: none;
+    gap: .8rem !important;
+    padding: .5rem 1.2rem 1.5rem !important;
+    scrollbar-width: none !important;
   }
-  .vg::-webkit-scrollbar { display: none; }
+  .vg::-webkit-scrollbar { display: none !important; }
   .vc {
-    flex: 0 0 82vw !important;
-    max-width: 82vw !important;
-    scroll-snap-align: start;
-    min-height: 280px;
+    flex: 0 0 78vw !important;
+    scroll-snap-align: start !important;
+    min-height: 340px;
   }
-
-  /* 9. VILLA MODAL — fullscreen */
-  #vmodal-overlay.open { display: block !important; }
+  /* Villa modal → full screen */
   #vmodal {
-    position: fixed !important;
-    inset: 0 !important;
     width: 100vw !important;
     height: 100svh !important;
     max-width: 100vw !important;
     max-height: 100svh !important;
     border-radius: 0 !important;
+    top: 0 !important;
+    left: 0 !important;
     transform: none !important;
-    top: 0 !important; left: 0 !important;
     overflow-y: auto;
-    display: none;
   }
-  #vmodal.open { display: flex !important; }
-  .vm-carousel { height: 210px !important; min-height: 210px !important; }
-  .vm-body { padding: 1.2rem 1rem 2rem !important; }
-  .vm-ctas {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: .55rem !important;
-  }
-  .vm-cta-main, .vm-cta-sec, .vm-cta-gallery {
-    width: 100% !important;
-    justify-content: center !important;
-    min-height: 48px;
-  }
+  .vm-carousel { height: 240px !important; }
+  .vm-body { padding: 1.2rem !important; }
+  .vm-stats { gap: .5rem; }
+  .vm-ctas { flex-direction: column; gap: .6rem; }
+  .vm-cta-main, .vm-cta-sec, .vm-cta-gallery { width: 100%; text-align: center; justify-content: center; }
 
-  /* 10. ACTIVIDADES */
-  .act-grid { grid-template-columns: 1fr 1fr !important; gap: .55rem !important; }
-  .act-card { padding: 1rem .8rem !important; }
-  .act-name { font-size: .4rem !important; }
-  .act-tooltip { display: none !important; }
+  /* ── BOATS ── */
+  .bb { grid-template-columns: 1fr !important; gap: 0; }
+  .bb > div:first-child { padding: 3.5rem 1.4rem 2rem; text-align: center; }
+  .bb > div:first-child .rule { margin: 1rem auto; }
+  .bb > div:first-child .btn { margin: .3rem auto; display: block; width: fit-content; }
+  .bb-facts { grid-template-columns: 1fr 1fr !important; gap: .6rem; padding: 1.4rem !important; }
 
-  /* 11. CONFIGURADOR */
-  .step-bar { overflow-x: auto; gap: .2rem; padding-bottom: .4rem; }
-  .step-dot  { width: 26px !important; height: 26px !important; font-size: .48rem !important; flex-shrink: 0; }
-  .step-line { min-width: 12px; flex: 1; max-width: 28px; }
-  .step-label { display: none !important; }
-  .date-row  { flex-direction: column !important; gap: .7rem !important; align-items: stretch !important; }
+  /* ── GOLF ── */
+  .golf { padding: 0; }
+  .golf-inner { grid-template-columns: 1fr !important; gap: 0; }
+  .golf-inner > div:first-child { padding: 3.5rem 1.4rem 2rem; text-align: center; }
+  .golf-inner > div:first-child .rule { margin: 1rem auto; }
+  .golf-facts { grid-template-columns: 1fr 1fr !important; padding: 1.4rem !important; gap: .6rem; }
+  .golf-bg { min-height: 220px; }
+
+  /* ── TRANSFERS / VIP ── */
+  .trsf { padding: 3.5rem 1.4rem; }
+  .trsf > div, .vip > div { grid-template-columns: 1fr !important; gap: 1.5rem; }
+  .vip { padding: 3.5rem 1.4rem; }
+
+  /* ── RESORT SECTIONS ── */
+  .resort-section { padding: 3.5rem 1.4rem; }
+  .rs-inner { max-width: 100%; }
+  .rs-grid { grid-template-columns: 1fr 1fr !important; gap: .8rem; }
+  .rs-card { padding: 1.2rem 1rem; }
+  .rs-head { margin-bottom: 2rem; }
+  /* Minitas 2-col → 1 col */
+  #minitas > div { grid-template-columns: 1fr !important; min-height: auto !important; }
+  #minitas > div > div:first-child { padding: 3rem 1.4rem !important; }
+  #minitas > div > div:last-child { min-height: 260px !important; border-radius: 0; }
+  /* Marina foto grid */
+  .rs-inner > div[style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
+
+  /* ── CASA DE CAMPO ── */
+  #casa-de-campo > div { grid-template-columns: 1fr !important; max-width: 100%; padding: 3.5rem 1.4rem; }
+  .cdc-grid { grid-template-columns: 1fr !important; gap: 2rem; }
+  .cdc-img-grid { grid-template-columns: 1fr !important; gap: .6rem; }
+  .cdc-img:first-child { aspect-ratio: 16/9 !important; }
+  .cdc-img { aspect-ratio: 4/3 !important; }
+  .cdc-stat-n { font-size: 2.2rem; }
+
+  /* ── ACTIVIDADES ── */
+  .act-grid { grid-template-columns: 1fr 1fr !important; gap: .7rem; }
+  .act-card { padding: 1.2rem .9rem; }
+  .act-icon { font-size: 1.4rem; margin-bottom: .5rem; }
+  .act-name { font-size: .44rem; }
+  .act-tooltip { display: none !important; } /* tap → modal instead */
+
+  /* ── CONFIGURADOR ── */
+  .config { padding: 4rem 1.4rem; }
+  .config-head { text-align: center; margin-bottom: 2rem; }
+  .config-head .rule { margin: 1rem auto; }
+  .step-bar { gap: .3rem; overflow-x: auto; padding-bottom: .5rem; }
+  .step-dot { width: 26px; height: 26px; font-size: .55rem; flex-shrink: 0; }
+  .step-line { min-width: 18px; flex: 1; }
+  .step-label { display: none; } /* hide labels on mobile */
+  .config-panel { padding: 1.8rem 1.2rem; }
+  .date-row { flex-direction: column; gap: .8rem; align-items: stretch; }
   .date-row > span { display: none; }
-  .date-box  { padding: .95rem !important; }
+  .date-box { padding: 1rem 1.2rem; }
+  .guest-btns { gap: .4rem; flex-wrap: wrap; }
+  .guest-btn { padding: .65rem 1rem; font-size: .55rem; }
+  /* Villas en configurador → scroll horizontal */
   #villaGridConf {
     display: flex !important;
     overflow-x: auto !important;
     scroll-snap-type: x mandatory !important;
-    -webkit-overflow-scrolling: touch;
-    gap: .7rem; padding-bottom: .8rem;
+    gap: .8rem;
+    padding-bottom: .8rem;
     scrollbar-width: none;
   }
   #villaGridConf::-webkit-scrollbar { display: none; }
-  .vconf-card { flex: 0 0 74vw !important; scroll-snap-align: start; }
-  .cbtn-row  { flex-direction: column !important; gap: .5rem !important; }
-  .cbtn-next, .cbtn-back { width: 100% !important; min-height: 48px !important; font-size: .5rem !important; }
-
-  /* 12. MINITAS */
-  #minitas > div { grid-template-columns: 1fr !important; min-height: auto !important; }
-  #minitas > div > div:last-child { min-height: 220px !important; }
-
-  /* 13. MARINA */
-  #marina .rs-inner > div[style*="grid-template-columns"] {
-    grid-template-columns: 1fr !important;
+  .vconf-card { flex: 0 0 72vw !important; scroll-snap-align: start; }
+  .svc-opts { grid-template-columns: 1fr !important; }
+  .cbtn-next, .cbtn-back {
+    width: 100%;
+    padding: 1rem;
+    font-size: .55rem;
   }
+  .cbtn-row { flex-direction: column; gap: .6rem; }
 
-  /* 14. CDC — columns → stack */
-  #casa-de-campo > div { grid-template-columns: 1fr !important; padding: 0 !important; }
-  .cdc-img-grid { grid-template-columns: 1fr !important; gap: .5rem !important; }
-  .cdc-stats    { grid-template-columns: 1fr 1fr !important; }
+  /* ── VALENTINA SECTION ── */
+  #valentina > div { grid-template-columns: 1fr !important; gap: 2rem !important; }
+  #valentina { padding: 4rem 1.4rem !important; }
 
-  /* 15. FOUNDERS */
+  /* ── FOUNDERS ── */
   .founders { grid-template-columns: 1fr !important; }
-  .fimg { min-height: 220px !important; }
+  .fimg { min-height: 260px; }
 
-  /* 16. CONTACT */
-  .cb  { grid-template-columns: 1fr !important; }
-  .cf  { padding: 1.8rem 1rem !important; }
-  .cinput, .ctarea { min-height: 48px; font-size: .9rem !important; }
-  .cbtn { width: 100% !important; min-height: 48px; }
+  /* ── CONTACT ── */
+  .contact { padding: 4rem 1.4rem; }
+  .cb { grid-template-columns: 1fr !important; gap: 2rem; }
+  .cf { padding: 2rem 1.4rem; }
+  .cinput, .ctarea { padding: .85rem 1rem; font-size: .95rem; }
+  .cbtn { width: 100%; padding: 1rem; font-size: .55rem; }
 
-  /* 17. BOT VALENTINA */
+  /* ── LIGHTBOX ── */
+  #gallery-lb-header { padding: .8rem 1rem; }
+  #gallery-lb-title { font-size: .45rem; }
+  #gallery-lb-prev { left: .3rem; width: 38px; height: 38px; font-size: 1.3rem; }
+  #gallery-lb-next { right: .3rem; width: 38px; height: 38px; font-size: 1.3rem; }
+  #gallery-lb-thumbs { padding: .5rem; gap: .3rem; }
+  .gallery-thumb { width: 54px; height: 40px; }
+
+  /* ── BOT VALENTINA ── */
   #val-drawer {
     width: 100vw !important;
     height: 92svh !important;
-    border-radius: 14px 14px 0 0 !important;
+    border-radius: 16px 16px 0 0 !important;
     right: 0 !important;
   }
-  #val-btn { width: 50px !important; height: 50px !important; bottom: 16px !important; right: 12px !important; }
-  #val-tip { display: none !important; }
+  #val-btn { width: 52px !important; height: 52px !important; bottom: 20px !important; right: 16px !important; }
 
-  /* 18. GALERÍA LIGHTBOX */
-  #gallery-lb-prev { left: .3rem !important; width: 38px !important; height: 38px !important; }
-  #gallery-lb-next { right: .3rem !important; width: 38px !important; height: 38px !important; }
-  #gallery-lb-thumbs { padding: .4rem .6rem !important; }
+  /* ── GATE MODAL ── */
+  #gate-modal > div { padding: 2rem 1.4rem; max-width: 96vw; }
 
-  /* 19. LIGHTBOX FOTOS */
-  #lb-prev { left: .2rem !important; font-size: 2rem !important; padding: .8rem !important; }
-  #lb-next { right: .2rem !important; font-size: 2rem !important; padding: .8rem !important; }
+  /* ── FOOTER ── */
+  footer { padding: 3rem 1.4rem 2rem; }
+  .footer-grid { grid-template-columns: 1fr !important; gap: 2rem; }
 
-  /* 20. FOOTER */
-  footer { padding: 2.5rem 1rem 2rem !important; }
-  .ftg   { grid-template-columns: 1fr !important; gap: 1.5rem !important; }
+  /* ── LIGHTBOX BASIC ── */
+  #lb-close { top: .8rem; right: .8rem; font-size: 1.5rem; }
+  #lb-prev { left: .2rem; font-size: 2rem; padding: .8rem; }
+  #lb-next { right: .2rem; font-size: 2rem; padding: .8rem; }
 
-  /* 21. VALENTINA SECTION */
-  #valentina > div { grid-template-columns: 1fr !important; gap: 2rem !important; }
+  /* ── ACCESORIOS / EXTRAS ── */
+  .cb { padding: 1.4rem; }
+  .trsf-cards, .vip-cards { grid-template-columns: 1fr !important; }
+
+  /* ── MISC ── */
+  .btn { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; }
+  .rule { margin: 1rem 0; }
 }
+
+/* ── SMALL PHONES (< 390px) ── */
+@media (max-width: 390px) {
+  .hh1 { font-size: 2rem; }
+  .bigt { font-size: 1.5rem; }
+  .bi { padding: .9rem .3rem; }
+  .rs-grid { grid-template-columns: 1fr !important; }
+  .act-grid { grid-template-columns: 1fr !important; }
+  .bb-facts, .golf-facts { grid-template-columns: 1fr !important; }
+}
+
+/* ── TOUCH IMPROVEMENTS (all mobile) ── */
+@media (hover: none) {
+  /* Remove hover-only effects that don't work on touch */
+  .act-tooltip { display: none !important; }
+  .vc-zoom { opacity: 1 !important; } /* always show zoom btn */
+  .vc-gallery-btn { opacity: 1 !important; }
+  /* Bigger tap targets */
+  .vfb, .btn, .nwa, .cbtn-next, .cbtn-back { min-height: 44px; }
+  .vm-close-btn { width: 40px !important; height: 40px !important; font-size: 1.1rem !important; }
+}
+
 
 </style>
 
@@ -4192,7 +4376,7 @@ document.addEventListener('keydown', e => {
     setTimeout(() => valTip.classList.remove('show'), 3500);
   }, 3000);
 
-  window.openValentina = function openValentina() {
+  function openValentina() {
     valTip.classList.remove('show');
     // Load iframe only once
     if (!valLoaded) {
@@ -4204,12 +4388,12 @@ document.addEventListener('keydown', e => {
     document.body.style.overflow = '';
   }
 
-  window.closeValentina = function closeValentina() {
+  function closeValentina() {
     valDrawer.classList.remove('open');
     valBtn.style.display = 'flex';
   }
 
-  window.minimizeValentina = function minimizeValentina() {
+  function minimizeValentina() {
     valDrawer.classList.remove('open');
     valBtn.style.display = 'flex';
     // Keep iframe loaded for quick reopen
@@ -4222,7 +4406,7 @@ document.addEventListener('keydown', e => {
 </script>
 
 <!-- ── VILLA GALLERY FULLSCREEN LIGHTBOX ── -->
-<div id="gallery-lb" role="dialog" aria-label="Galería de fotos" style="display:none">
+<div id="gallery-lb" role="dialog" aria-label="Galería de fotos">
   <div id="gallery-lb-header">
     <div id="gallery-lb-title">Galería</div>
     <div id="gallery-lb-counter"></div>
@@ -4246,7 +4430,7 @@ let _galleryFotos = [];
 let _galleryCur   = 0;
 const DRIVE_KEY_GALLERY = 'AIzaSyAe9IVx4R47OJlV9nkI2PLSdEBbdZclnuc';
 
-window.openVillaGallery = async function openVillaGallery(villaId, villaName, carpetaUrl, fotoUrl) {
+async function openVillaGallery(villaId, villaName, carpetaUrl, fotoUrl) {
   const lb = document.getElementById('gallery-lb');
   const title = document.getElementById('gallery-lb-title');
   const img = document.getElementById('gallery-lb-img');
@@ -4255,7 +4439,6 @@ window.openVillaGallery = async function openVillaGallery(villaId, villaName, ca
   const counter = document.getElementById('gallery-lb-counter');
 
   // Show lightbox immediately
-  lb.style.display = 'flex';
   lb.classList.add('active');
   document.body.style.overflow = 'hidden';
   title.textContent = villaName;
@@ -4367,15 +4550,13 @@ function _galleryRenderThumbs() {
   thumbs.style.display = _galleryFotos.length > 1 ? '' : 'none';
 }
 
-window.galleryLbNav = function galleryLbNav(dir) {
+function galleryLbNav(dir) {
   const next = (_galleryCur + dir + _galleryFotos.length) % _galleryFotos.length;
   _galleryShowImg(next);
 }
 
-window.closeGalleryLb = function closeGalleryLb() {
-  const lb = document.getElementById('gallery-lb');
-  lb.classList.remove('active');
-  lb.style.display = 'none';
+function closeGalleryLb() {
+  document.getElementById('gallery-lb').classList.remove('active');
   document.body.style.overflow = '';
   _galleryFotos = [];
 }
@@ -4402,6 +4583,30 @@ document.getElementById('gallery-lb')?.addEventListener('touchend', e => {
 
 
 // ── MOBILE NAV ───────────────────────────────────────
+function toggleMobileNav() {
+  const overlay = document.getElementById('mobile-nav-overlay');
+  const hamburger = document.getElementById('nav-hamburger');
+  const isOpen = overlay.classList.toggle('open');
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+  // Animate hamburger → X
+  const spans = hamburger.querySelectorAll('span');
+  if (isOpen) {
+    spans[0].style.cssText = 'transform:translateY(6.5px) rotate(45deg)';
+    spans[1].style.cssText = 'opacity:0';
+    spans[2].style.cssText = 'transform:translateY(-6.5px) rotate(-45deg)';
+  } else {
+    spans.forEach(s => s.style.cssText = '');
+  }
+}
+
+// ── SHOW HAMBURGER ON MOBILE ─────────────────────────
+function checkMobileNav() {
+  const hamburger = document.getElementById('nav-hamburger');
+  if (hamburger) hamburger.style.display = window.innerWidth <= 768 ? 'flex' : 'none';
+}
+checkMobileNav();
+window.addEventListener('resize', checkMobileNav);
+
 // ── CLOSE MOBILE NAV ON ESCAPE ───────────────────────
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
