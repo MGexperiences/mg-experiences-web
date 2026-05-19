@@ -535,6 +535,48 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
 @media(max-width:900px){
   .rev-card{flex:0 0 calc(50% - .75rem)}
 }
+
+/* ── TRASLADOS GRID ── */
+.tr-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.tr-card{background:rgba(255,255,255,.04);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(174,133,96,.14);border-radius:18px;padding:1.6rem 1.4rem;text-align:center;transition:all .4s cubic-bezier(.25,.46,.45,.94)}
+.tr-card:hover{border-color:rgba(174,133,96,.35);background:rgba(255,255,255,.07);transform:translateY(-3px);box-shadow:0 12px 36px rgba(0,0,0,.25)}
+.tr-icon{display:flex;align-items:center;justify-content:center;color:var(--v);margin-bottom:1rem;opacity:.85}
+.tr-name{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.14em;color:var(--wh);text-transform:uppercase;margin-bottom:.3rem}
+.tr-cap{font-family:'Cormorant Garamond',serif;font-size:.96rem;color:rgba(253,250,246,.5);margin-bottom:.8rem}
+.tr-badge{display:inline-block;font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.16em;text-transform:uppercase;color:var(--vd);background:rgba(174,133,96,.12);border:1px solid rgba(174,133,96,.2);border-radius:100px;padding:.25rem .7rem}
+
+/* ── NOSOTROS STATS ── */
+.f-stats{display:flex;gap:2rem;margin-top:1.8rem;margin-bottom:.5rem}
+.f-stat{text-align:center}
+.f-stat-n{font-family:'Cinzel',serif;font-size:1.6rem;color:var(--vl);letter-spacing:.04em;line-height:1}
+.f-stat-l{font-family:'Cormorant Garamond',serif;font-size:.88rem;color:rgba(253,250,246,.4);margin-top:.3rem}
+
+/* ── INTENT GRID (configurador step 0) ── */
+.intent-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin:2rem 0}
+.intent-card{background:rgba(255,255,255,.04);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:2px solid rgba(174,133,96,.14);border-radius:20px;padding:2rem 1.4rem;text-align:center;cursor:pointer;transition:all .4s cubic-bezier(.25,.46,.45,.94);display:flex;flex-direction:column;align-items:center;gap:.8rem}
+.intent-card:hover{border-color:rgba(174,133,96,.4);background:rgba(174,133,96,.08);transform:translateY(-3px);box-shadow:0 12px 36px rgba(0,0,0,.2)}
+.intent-card.selected{border-color:var(--vl);background:rgba(29,77,58,.2);box-shadow:0 0 24px rgba(174,133,96,.2)}
+.intent-icon{color:var(--v);opacity:.85;transition:all .35s}
+.intent-card:hover .intent-icon,.intent-card.selected .intent-icon{opacity:1;transform:scale(1.08)}
+.intent-name{font-family:'Cinzel',serif;font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--wh)}
+.intent-desc{font-family:'Cormorant Garamond',serif;font-size:.92rem;color:rgba(253,250,246,.45);font-style:italic}
+
+/* ── FOOTER REDESIGN ── */
+.f-cta-strip{background:linear-gradient(135deg,var(--g) 0%,rgba(29,77,58,.7) 100%);padding:6rem 4rem;text-align:center;position:relative;overflow:hidden}
+.f-cta-strip::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(174,133,96,.12) 0%,transparent 70%);pointer-events:none}
+.f-cta-inner{max-width:600px;margin:0 auto;position:relative}
+.f-brand-col .fbn{font-family:'Cinzel',serif;font-size:1rem;letter-spacing:.3em;color:var(--vl)}
+.f-brand-col .fdesc{font-size:.92rem;color:rgba(253,250,246,.35);line-height:1.8;margin-top:.5rem}
+.f-social{display:flex;gap:.6rem;margin-top:1.4rem}
+.f-soc-btn{width:38px;height:38px;border-radius:50%;border:1px solid rgba(174,133,96,.2);background:rgba(174,133,96,.06);color:rgba(253,250,246,.5);display:flex;align-items:center;justify-content:center;transition:all .35s cubic-bezier(.25,.46,.45,.94);text-decoration:none}
+.f-soc-btn:hover{border-color:rgba(174,133,96,.5);background:rgba(174,133,96,.14);color:var(--vl);transform:translateY(-2px)}
+
+/* ── RESORT ZONE TABS ── */
+.resort-tab-nav{position:sticky;top:60px;z-index:100;background:rgba(28,30,23,.9);backdrop-filter:saturate(180%) blur(16px);-webkit-backdrop-filter:saturate(180%) blur(16px);border-bottom:1px solid rgba(174,133,96,.12)}
+.rtab-inner{max-width:600px;margin:0 auto;display:flex;justify-content:center;gap:.5rem;padding:.7rem 1rem}
+.rtab{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(253,250,246,.4);background:none;border:none;padding:.55rem 1.2rem;cursor:pointer;transition:all .35s cubic-bezier(.25,.46,.45,.94);border-radius:100px}
+.rtab:hover{color:rgba(253,250,246,.7);background:rgba(174,133,96,.07)}
+.rtab.active{color:var(--vl);background:rgba(174,133,96,.12);border:1px solid rgba(174,133,96,.2)}
 </style>
 
 <!-- Verification modal styles -->
@@ -798,10 +840,10 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
 
 <!-- BAND -->
 <div class="band rv">
-  <div class="bi" data-reveal data-delay="1"><span class="bn">50</span><span class="bl">años de historia en la isla</span></div>
-  <div class="bi" data-reveal data-delay="2"><span class="bn">3</span><span class="bl">campos de golf diseñados por Pete Dye</span></div>
-  <div class="bi" data-reveal data-delay="3"><span class="bn">12+</span><span class="bl">casas privadas disponibles</span></div>
-  <div class="bi" data-reveal data-delay="4"><span class="bn">15</span><span class="bl">años conociéndola de adentro</span></div>
+  <div class="bi" data-reveal data-delay="1"><span class="bn" data-count="50">0</span><span class="bl">años de historia en la isla</span></div>
+  <div class="bi" data-reveal data-delay="2"><span class="bn" data-count="3">0</span><span class="bl">campos de golf diseñados por Pete Dye</span></div>
+  <div class="bi" data-reveal data-delay="3"><span class="bn" data-count="12" data-suffix="+">0</span><span class="bl">casas privadas disponibles</span></div>
+  <div class="bi" data-reveal data-delay="4"><span class="bn" data-count="15">0</span><span class="bl">años conociéndola de adentro</span></div>
 </div>
 
 <!-- ════════════════════════════════════════
@@ -819,28 +861,78 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
     <!-- Progress bar -->
     <div class="steps-bar">
       <div class="step-item">
-        <div class="step-dot active" id="dot1">1</div>
-        <span class="step-label active" id="lbl1">Fechas</span>
+        <div class="step-dot active" id="dot0">1</div>
+        <span class="step-label active" id="lbl0">Estadía</span>
       </div>
       <div class="step-line"></div>
       <div class="step-item">
-        <div class="step-dot" id="dot2">2</div>
+        <div class="step-dot" id="dot1">2</div>
+        <span class="step-label" id="lbl1">Fechas</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step-item">
+        <div class="step-dot" id="dot2">3</div>
         <span class="step-label" id="lbl2">Personas</span>
       </div>
       <div class="step-line"></div>
       <div class="step-item">
-        <div class="step-dot" id="dot3">3</div>
+        <div class="step-dot" id="dot3">4</div>
         <span class="step-label" id="lbl3">Villa</span>
       </div>
       <div class="step-line"></div>
       <div class="step-item">
-        <div class="step-dot" id="dot4">4</div>
+        <div class="step-dot" id="dot4">5</div>
         <span class="step-label" id="lbl4">Servicios</span>
       </div>
       <div class="step-line"></div>
       <div class="step-item">
-        <div class="step-dot" id="dot5">5</div>
+        <div class="step-dot" id="dot5">6</div>
         <span class="step-label" id="lbl5">Resumen</span>
+      </div>
+    </div>
+
+    <!-- STEP 0: Intent -->
+    <div class="cpanel active" id="panel0">
+      <div class="cpanel-title">¿Qué tipo de estadía buscás?</div>
+      <p class="cpanel-sub">Elegí lo que mejor describe tu viaje — personalizamos las opciones para vos.</p>
+      <div class="intent-grid">
+        <button class="intent-card" onclick="selectIntent('familia')">
+          <div class="intent-icon">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="14" cy="10" r="4"/><circle cx="26" cy="10" r="4"/>
+              <path d="M6 32 C6 24 10 20 14 20 C18 20 22 24 22 32"/>
+              <path d="M22 32 C22 26 24 22 26 22 C28 22 30 25 31 28"/>
+              <circle cx="20" cy="33" r="1.5" fill="currentColor"/>
+            </svg>
+          </div>
+          <div class="intent-name">Familia</div>
+          <div class="intent-desc">Con chicos · Espacios amplios · Pileta</div>
+        </button>
+        <button class="intent-card" onclick="selectIntent('amigos')">
+          <div class="intent-icon">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="4"/><circle cx="20" cy="10" r="4"/><circle cx="28" cy="12" r="4"/>
+              <path d="M4 32 C4 25 8 21 12 21"/>
+              <path d="M20 20 C24 20 28 24 28 30"/>
+              <path d="M28 21 C32 21 36 25 36 32"/>
+              <path d="M12 21 C16 21 20 22 20 20"/>
+            </svg>
+          </div>
+          <div class="intent-name">Grupo de amigos</div>
+          <div class="intent-desc">Barco · Golf · Vida nocturna</div>
+        </button>
+        <button class="intent-card" onclick="selectIntent('pareja')">
+          <div class="intent-icon">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="14" cy="11" r="4"/><circle cx="26" cy="11" r="4"/>
+              <path d="M6 32 C6 24 10 20 14 20 C18 20 22 24 22 32"/>
+              <path d="M26 20 C30 20 34 24 34 32"/>
+              <path d="M20 17 C20 14 23 12 26 15"/>
+            </svg>
+          </div>
+          <div class="intent-name">Pareja</div>
+          <div class="intent-desc">Privacidad · Romance · Spa</div>
+        </button>
       </div>
     </div>
 
@@ -882,7 +974,7 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
 
       <div id="nights-display" style="text-align:center;font-family:'Playfair Display',serif;font-style:italic;font-size:1.2rem;color:var(--vl);min-height:1.8rem;margin-top:.5rem"></div>
       <div class="cnav">
-        <span></span>
+        <button class="cbtn-back" onclick="goStep(0)">← Volver</button>
         <button class="cbtn-next" onclick="goStep(2)">Siguiente →</button>
       </div>
     </div>
@@ -1110,19 +1202,90 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
 <!-- TRANSFERS -->
 <section class="trsf rv" id="traslados">
   <div class="trb">
-    <div>
+    <div data-reveal>
       <span class="lbl">Desde el primer momento</span>
       <h2 class="bigt">Alguien<br><em>te espera</em></h2>
       <div class="rule"></div>
-      <p class="prose">Experimentá traslados terrestres de alta gama durante tu estadía en la isla. Nuestros vehículos de lujo premium y choferes profesionales aseguran tu seguridad y comodidad para una experiencia exclusiva. Nuestros conductores están altamente capacitados para brindarte un servicio seguro y puntual — ya sea desde el aeropuerto o cualquier destino dentro del resort.</p>
-      <img class="carimg" src="https://img1.wsimg.com/isteam/ip/28e700c9-c37b-485d-b636-01fcfc9acb86/The-Mercedes-Benz-Sprinter-Ready-for-Anything.jpeg" alt="Traslado" loading="lazy">
+      <p class="prose">Choferes profesionales, vehículos premium. Desde el aeropuerto hasta el resort — sin esperas, sin complicaciones.</p>
+      <a href="#tu-experiencia" class="btn bf" style="margin-top:1.8rem">Reservar traslado ✦</a>
     </div>
-    <div class="tg rv rv2">
-      <div class="tc" data-reveal><div class="tt">Ejecutivo</div><div class="tn">SUV</div><div class="td">2 personas</div></div>
-      <div class="tc" data-reveal data-delay="1"><div class="tt">Ejecutivo</div><div class="tn">Full Size SUV</div><div class="td">6 personas</div></div>
-      <div class="tc" data-reveal data-delay="2"><div class="tt">Estándar</div><div class="tn">Minivan</div><div class="td">6 personas</div></div>
-      <div class="tc" data-reveal data-delay="3"><div class="tt">Estándar</div><div class="tn">Van</div><div class="td">11 personas</div></div>
-      <div class="tc" style="grid-column:span 2"><div class="tt">Estándar</div><div class="tn">Mini Bus / Sprinter</div><div class="td">16 personas</div></div>
+    <div class="tr-grid" data-reveal>
+
+      <div class="tr-card">
+        <div class="tr-icon">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="9" width="26" height="14" rx="4"/>
+            <circle cx="9" cy="23" r="2.5"/><circle cx="23" cy="23" r="2.5"/>
+            <path d="M3 15 L29 15"/><path d="M10 9 L8 4 L24 4 L22 9"/>
+          </svg>
+        </div>
+        <div class="tr-name">Executive SUV</div>
+        <div class="tr-cap">2 personas</div>
+        <div class="tr-badge">Luxury</div>
+      </div>
+
+      <div class="tr-card">
+        <div class="tr-icon">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="9" width="28" height="14" rx="4"/>
+            <circle cx="8" cy="23" r="2.5"/><circle cx="24" cy="23" r="2.5"/>
+            <path d="M2 15 L30 15"/><path d="M9 9 L7 4 L25 4 L23 9"/>
+            <line x1="16" y1="9" x2="16" y2="15"/>
+          </svg>
+        </div>
+        <div class="tr-name">Full Size SUV</div>
+        <div class="tr-cap">6 personas</div>
+        <div class="tr-badge">Luxury</div>
+      </div>
+
+      <div class="tr-card">
+        <div class="tr-icon">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="8" width="28" height="16" rx="3"/>
+            <circle cx="8" cy="24" r="2.5"/><circle cx="24" cy="24" r="2.5"/>
+            <path d="M2 14 L30 14"/>
+            <line x1="10" y1="8" x2="10" y2="14"/>
+            <line x1="18" y1="8" x2="18" y2="14"/>
+          </svg>
+        </div>
+        <div class="tr-name">Minivan</div>
+        <div class="tr-cap">6 personas</div>
+        <div class="tr-badge">Premium</div>
+      </div>
+
+      <div class="tr-card">
+        <div class="tr-icon">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="1" y="7" width="30" height="17" rx="3"/>
+            <circle cx="7" cy="24" r="2.5"/><circle cx="25" cy="24" r="2.5"/>
+            <path d="M1 13 L31 13"/>
+            <line x1="9" y1="7" x2="9" y2="13"/>
+            <line x1="16" y1="7" x2="16" y2="13"/>
+            <line x1="23" y1="7" x2="23" y2="13"/>
+          </svg>
+        </div>
+        <div class="tr-name">Van</div>
+        <div class="tr-cap">11 personas</div>
+        <div class="tr-badge">Premium</div>
+      </div>
+
+      <div class="tr-card">
+        <div class="tr-icon">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="1" y="6" width="30" height="18" rx="3"/>
+            <circle cx="7" cy="24" r="2.5"/><circle cx="25" cy="24" r="2.5"/>
+            <path d="M1 12 L31 12"/>
+            <line x1="8" y1="6" x2="8" y2="12"/>
+            <line x1="14" y1="6" x2="14" y2="12"/>
+            <line x1="20" y1="6" x2="20" y2="12"/>
+            <line x1="26" y1="6" x2="26" y2="12"/>
+          </svg>
+        </div>
+        <div class="tr-name">Mini Bus</div>
+        <div class="tr-cap">16 personas</div>
+        <div class="tr-badge">Premium</div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -1167,6 +1330,15 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
 </section>
 
 <!-- RESORT INFO: LA MARINA -->
+<!-- RESORT ZONES TAB NAV -->
+<div class="resort-tab-nav">
+  <div class="rtab-inner">
+    <button class="rtab active" onclick="scrollToZone('marina', this)">La Marina</button>
+    <button class="rtab" onclick="scrollToZone('minitas', this)">Minitas Beach</button>
+    <button class="rtab" onclick="scrollToZone('chavon', this)">Altos de Chavón</button>
+  </div>
+</div>
+
 <section class="resort-section rv" id="marina" style="background:rgba(0,0,0,.25);padding:0">
   <div class="rs-inner" style="max-width:1200px;margin:0 auto;padding:6rem 4rem">
     <div class="rs-head" data-reveal style="margin-bottom:2.5rem">
@@ -1431,72 +1603,25 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
     <div class="frule"></div>
     <p class="fp">Somos de Argentina. 15 años en la isla, los últimos 5 como anfitriones en Casa de Campo.</p>
     <p class="fp">No somos una agencia. Somos quienes atienden cuando llamás y conocen el resort por dentro.</p>
+    <div class="f-stats">
+      <div class="f-stat"><div class="f-stat-n">15+</div><div class="f-stat-l">Años en la isla</div></div>
+      <div class="f-stat"><div class="f-stat-n">5</div><div class="f-stat-l">Como anfitriones</div></div>
+      <div class="f-stat"><div class="f-stat-n">100%</div><div class="f-stat-l">Reseñas 5 ★</div></div>
+    </div>
     <blockquote class="fquote">"Queremos que llegués, te instalés, y no tengas que pensar en nada más. Eso es todo."</blockquote>
   </div>
 </div>
 
 <!-- BOT VALENTINA -->
-<section class="rv" id="valentina" style="padding:6rem 4rem;background:var(--bg);overflow:hidden">
-  <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center">
-    <!-- Text -->
-    <div>
-      <span class="lbl">Asistente inteligente</span>
-      <h2 class="bigt" style="margin-bottom:1rem">Hablá con<br><em>Valentina</em></h2>
-      <div class="rule" style="margin-bottom:1.5rem"></div>
-      <p style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:rgba(253,250,246,.65);line-height:1.9;margin-bottom:1.2rem">
-        Valentina es la asistente virtual de MG Experiences. Disponible las 24 horas, responde preguntas sobre villas, servicios, disponibilidad y precios — y te ayuda a armar tu estadía ideal desde el primer mensaje.
-      </p>
-      <p style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:rgba(253,250,246,.65);line-height:1.9;margin-bottom:2.5rem">
-        Si preferís hablar con una persona, también puede conectarte con el equipo directamente.
-      </p>
-      <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:center">
-        <a href="https://bot.mg-experiences.com/" target="_blank" class="btn bp" style="display:inline-flex;align-items:center;gap:.6rem;text-decoration:none">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
-          Chatear con Valentina
-        </a>
-        <button onclick="openValentina()" class="btn bo" style="cursor:pointer;border:none;display:inline-flex;align-items:center;gap:.6rem">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          Abrir acá
-        </button>
-      </div>
-    </div>
-    <!-- Bot visual -->
-    <div style="position:relative;display:flex;justify-content:center">
-      <!-- Phone mockup -->
-      <div style="width:280px;background:rgba(253,250,246,.04);border:.5px solid rgba(174,133,96,.2);border-radius:2rem;padding:1.5rem;box-shadow:0 40px 80px rgba(0,0,0,.5)">
-        <!-- Chat header -->
-        <div style="display:flex;align-items:center;gap:.8rem;padding-bottom:1rem;border-bottom:.5px solid rgba(174,133,96,.15);margin-bottom:1rem">
-          <div style="width:36px;height:36px;border-radius:50%;overflow:hidden;flex-shrink:0;background:rgba(174,133,96,.2);display:flex;align-items:center;justify-content:center">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#AE8560" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          </div>
-          <div>
-            <div style="font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.15em;color:var(--vl);text-transform:uppercase">Valentina</div>
-            <div style="font-size:.68rem;color:rgba(174,133,96,.5)">MG Experiences · en línea</div>
-          </div>
-          <div style="margin-left:auto;width:7px;height:7px;border-radius:50%;background:#4ade80;box-shadow:0 0 8px #4ade80"></div>
-        </div>
-        <!-- Messages -->
-        <div style="display:flex;flex-direction:column;gap:.8rem;margin-bottom:1rem">
-          <div style="background:rgba(174,133,96,.12);border:.5px solid rgba(174,133,96,.2);border-radius:1rem 1rem 1rem .2rem;padding:.7rem .9rem;max-width:85%">
-            <p style="font-family:'Cormorant Garamond',serif;font-size:.8rem;color:rgba(253,250,246,.85);line-height:1.5;margin:0">¡Hola! Soy Valentina. ¿En qué fechas están pensando viajar?</p>
-          </div>
-          <div style="background:rgba(253,250,246,.07);border-radius:1rem 1rem .2rem 1rem;padding:.7rem .9rem;max-width:80%;margin-left:auto">
-            <p style="font-family:'Cormorant Garamond',serif;font-size:.8rem;color:rgba(253,250,246,.75);line-height:1.5;margin:0">Semana Santa, 4 adultos y 2 niños</p>
-          </div>
-          <div style="background:rgba(174,133,96,.12);border:.5px solid rgba(174,133,96,.2);border-radius:1rem 1rem 1rem .2rem;padding:.7rem .9rem;max-width:85%">
-            <p style="font-family:'Cormorant Garamond',serif;font-size:.8rem;color:rgba(253,250,246,.85);line-height:1.5;margin:0">Perfecto. Tengo 3 casas ideales para ese grupo...</p>
-          </div>
-        </div>
-        <!-- Input -->
-        <div style="background:rgba(253,250,246,.05);border:.5px solid rgba(174,133,96,.2);border-radius:.8rem;padding:.6rem .8rem;display:flex;align-items:center;gap:.5rem">
-          <span style="font-family:'Cormorant Garamond',serif;font-size:.75rem;color:rgba(253,250,246,.25);flex:1">Escribí tu consulta...</span>
-          <div style="width:24px;height:24px;border-radius:50%;background:var(--v);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-          </div>
-        </div>
-      </div>
-      <!-- Decorative glow -->
-      <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:300px;height:300px;background:radial-gradient(circle,rgba(174,133,96,.08) 0%,transparent 70%);border-radius:50%;pointer-events:none;z-index:-1"></div>
+<section id="valentina" class="rv" style="padding:7rem 4rem;background:var(--sand);overflow:hidden">
+  <div style="max-width:800px;margin:0 auto;text-align:center" data-reveal>
+    <span class="lbl">Asistente inteligente</span>
+    <h2 class="bigt" style="margin-bottom:1rem">Hablá con<br><em>Valentina</em></h2>
+    <div class="rule rc" style="margin:0 auto 1.5rem"></div>
+    <p class="prose" style="margin:0 auto 2rem;max-width:480px">Disponible 24/7 para responder sobre villas, servicios y precios — y si preferís hablar con nosotros directamente, también puede conectarte al toque.</p>
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+      <button class="btn bf" onclick="openValentina()">Chatear con Valentina ✦</button>
+      <a href="https://wa.me/541164388699" target="_blank" class="btn bo">WhatsApp directo</a>
     </div>
   </div>
 </section>
@@ -1690,11 +1815,35 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
 
 <!-- FOOTER -->
 <footer>
+  <!-- Final CTA strip -->
+  <div class="f-cta-strip">
+    <div class="f-cta-inner" data-reveal>
+      <span class="lbl" style="color:rgba(212,184,154,.5)">¿Listo para empezar?</span>
+      <h2 class="bigt" style="color:var(--wh);margin:.8rem 0 1.8rem">Tu próxima estadía<br><em style="color:var(--vl)">empieza acá</em></h2>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+        <a href="#tu-experiencia" class="btn bf">Diseñá tu estadía ✦</a>
+        <a href="https://wa.me/541164388699" target="_blank" class="btn bo">WhatsApp directo</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer grid -->
   <div class="ftg">
-    <div>
+    <div class="f-brand-col">
       <div class="fbn">MG EXPERIENCES</div>
-      <span class="fbt">Elevate your travel experience</span>
-      <p class="fdesc">Una casa en el Caribe donde el tiempo es tuyo. Casa de Campo Resort & Villas, La Romana, República Dominicana.</p>
+      <div class="frule" style="margin:1rem 0"></div>
+      <p class="fdesc">Casa de Campo Resort & Villas<br>La Romana, República Dominicana</p>
+      <div class="f-social">
+        <a href="https://www.instagram.com/mg.experiences/" target="_blank" class="f-soc-btn" aria-label="Instagram">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="https://wa.me/541164388699" target="_blank" class="f-soc-btn" aria-label="WhatsApp">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zm-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884zm8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        </a>
+        <a href="https://g.page/r/CYqkRwsYCdNLEAE/review" target="_blank" class="f-soc-btn" aria-label="Google Reviews">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 11h8.533c.044.385.067.78.067 1.184 0 2.734-.98 5.036-2.678 6.6C16.42 20.227 14.393 21 12 21c-4.97 0-9-4.03-9-9s4.03-9 9-9c2.395 0 4.39.87 5.942 2.3L16.2 7.04C15.094 6.017 13.613 5.4 12 5.4 8.356 5.4 5.4 8.356 5.4 12c0 3.644 2.956 6.6 6.6 6.6 2.842 0 5.01-1.55 5.9-3.8H12v-3.8z"/></svg>
+        </a>
+      </div>
     </div>
     <div>
       <div class="fct">Servicios</div>
@@ -1714,28 +1863,20 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
         <li><a href="#minitas">Minitas Beach</a></li>
         <li><a href="#chavon">Altos de Chavón</a></li>
         <li><a href="#actividades-resort">Actividades</a></li>
-        <li><a href="#accesorios">Accesorios</a></li>
-        <li><a href="#golf">Golf</a></li>
+        <li><a href="#casa-de-campo">Casa de Campo</a></li>
       </ul>
     </div>
     <div>
-      <div class="fct">Contacto</div>
+      <div class="fct">Nosotros</div>
       <ul class="flinks">
+        <li><a href="#nosotros">Luciano & Josefina</a></li>
+        <li><a href="#resenas">Reseñas</a></li>
+        <li><a href="#contacto">Contacto</a></li>
         <li><a href="https://wa.me/541164388699" target="_blank">WhatsApp</a></li>
-        <li><a href="mailto:info@mg-experiences.com">Email</a></li>
-        <li><a href="https://www.instagram.com/mgexperiencess/" target="_blank">Instagram</a></li>
-        <li><a href="#tu-experiencia">Diseñá tu estadía</a></li>
-        <li><a href="https://climate.stripe.com/eWFiCh" target="_blank">Impacto Climático</a></li>
       </ul>
     </div>
   </div>
-  <div class="ftbot">
-    <p class="fcopy">© 2026 MG Experiences · Casa de Campo, La Romana · República Dominicana</p>
-    <div class="fsoc">
-      <a href="https://www.instagram.com/mgexperiencess/" target="_blank" class="soc"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
-      <a href="https://wa.me/541164388699" target="_blank" class="soc"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zm-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884zm8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
-    </div>
-  </div>
+  <div class="fcopy">© 2025 MG Experiences · Casa de Campo, República Dominicana · Todos los derechos reservados</div>
 </footer>
 
 <script>
@@ -1748,6 +1889,82 @@ const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.targ
 document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
 
 // ── SERVICE CARDS DRAG (removed with servicios section)
+
+// ── COUNTER ANIMATION
+function animateCounter(el) {
+  const target = parseInt(el.dataset.count);
+  const suffix = el.dataset.suffix || '';
+  const duration = 1800;
+  const start = performance.now();
+  const ease = t => t < .5 ? 2*t*t : -1+(4-2*t)*t;
+  function step(now) {
+    const p = Math.min((now - start) / duration, 1);
+    el.textContent = Math.floor(ease(p) * target) + suffix;
+    if (p < 1) requestAnimationFrame(step);
+    else el.textContent = target + suffix;
+  }
+  requestAnimationFrame(step);
+}
+// Trigger counters when band comes into view
+const counterObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('[data-count]').forEach(animateCounter);
+      counterObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.4 });
+const band = document.querySelector('.band');
+if (band) counterObs.observe(band);
+
+// ── PARALLAX ON HERO
+(function(){
+  const hbg = document.querySelector('.hbg');
+  if (!hbg) return;
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        const y = window.scrollY;
+        hbg.style.transform = `scale(1.06) translateY(${y * 0.25}px)`;
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, { passive: true });
+})();
+
+// ── SCROLL TO TOP BUTTON
+(function(){
+  const btn = document.getElementById('scrollTopBtn');
+  if (!btn) return;
+  window.addEventListener('scroll', () => {
+    btn.style.opacity = window.scrollY > 600 ? '1' : '0';
+    btn.style.pointerEvents = window.scrollY > 600 ? 'all' : 'none';
+  }, { passive: true });
+  btn.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+})();
+
+
+function scrollToZone(id, btn) {
+  document.querySelectorAll('.rtab').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+// Highlight correct tab on scroll
+(function(){
+  const zones = ['marina','minitas','chavon'];
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const id = e.target.id;
+        document.querySelectorAll('.rtab').forEach((b,i) => b.classList.toggle('active', zones[i] === id));
+      }
+    });
+  }, { threshold: 0.3 });
+  zones.forEach(id => { const el = document.getElementById(id); if(el) obs.observe(el); });
+})();
 
 // ── SMOOTH SCROLL
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
@@ -2169,7 +2386,7 @@ const aeropuerto = [
 const feeCDC = 27;
 
 // ── STATE
-let state = {step:1, nights:0, guests:8, villaId:null, svcs:{}, barcoId:null, golfId:null, aeropuertoId:null, openAccordion:null};
+let state = {step:0, nights:0, guests:8, villaId:null, svcs:{}, barcoId:null, golfId:null, aeropuertoId:null, openAccordion:null};
 
 // ── VILLA CATALOG: select and jump to configurator
 function selectVillaAndGo(villaId){
@@ -2191,6 +2408,7 @@ window.filtVillas = function filtVillas(size, btn){
   });
 }
 function goStep(n){
+  // Step 0 = intent, step 1 = fechas, 2 = personas, 3 = villas, 4 = servicios, 5 = resumen
   if(n>1){
     if(!state.dateIn||!state.dateOut){alert('Seleccioná las fechas de tu estadía.');return}
     if(state.nights<=0){alert('La salida debe ser posterior a la llegada.');return}
@@ -2206,88 +2424,28 @@ function goStep(n){
   document.getElementById('tu-experiencia').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
+function selectIntent(type){
+  state.intent = type;
+  document.querySelectorAll('.intent-card').forEach(c => c.classList.remove('selected'));
+  event.currentTarget.classList.add('selected');
+  setTimeout(() => goStep(1), 350);
+}
+
+
 function updateStepBar(){
-  for(let i=1;i<=5;i++){
+  for(let i=0;i<=5;i++){
     const dot=document.getElementById('dot'+i);
     const lbl=document.getElementById('lbl'+i);
+    if(!dot) continue;
     dot.classList.remove('active','done');
     lbl.classList.remove('active','done');
     if(i<state.step){dot.classList.add('done');dot.textContent='✓';lbl.classList.add('done')}
-    else if(i===state.step){dot.classList.add('active');dot.textContent=i;lbl.classList.add('active')}
-    else{dot.textContent=i}
+    else if(i===state.step){dot.classList.add('active');dot.textContent=i+1;lbl.classList.add('active')}
+    else{dot.textContent=i+1}
   }
 }
 
-// ── DATES
-// ── CUSTOM CALENDAR ──────────────────────────────────────────────────────────
-(function(){
-  const MONTHS=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-  let calMode='in', calYear, calMonth;
-  let selIn=null, selOut=null;
 
-  function today(){ const d=new Date(); d.setHours(0,0,0,0); return d; }
-  function fmtDisplay(d){ return d?d.toLocaleDateString('es-AR',{day:'numeric',month:'long'}):null; }
-  function fmtISO(d){ return d?d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'):''; }
-
-  function updateFields(){
-    const inEl=document.getElementById('cfInVal');
-    const outEl=document.getElementById('cfOutVal');
-    if(selIn){ inEl.textContent=fmtDisplay(selIn); inEl.classList.remove('empty'); }
-    else { inEl.textContent='Seleccioná'; inEl.classList.add('empty'); }
-    if(selOut){ outEl.textContent=fmtDisplay(selOut); outEl.classList.remove('empty'); }
-    else { outEl.textContent='Seleccioná'; outEl.classList.add('empty'); }
-    state.dateIn=fmtISO(selIn); state.dateOut=fmtISO(selOut);
-    const nd=document.getElementById('nights-display');
-    if(selIn&&selOut){
-      const diff=Math.round((selOut-selIn)/86400000);
-      state.nights=diff;
-      nd.textContent=diff>0?diff+(diff===1?' noche':' noches'):'';
-    } else { state.nights=0; nd.textContent=''; }
-  }
-
-  function renderCal(){
-    document.getElementById('calMonthLabel').textContent=MONTHS[calMonth]+' '+calYear;
-    document.getElementById('calHint').textContent=calMode==='in'?'Seleccioná la fecha de llegada':'Seleccioná la fecha de salida';
-    const first=new Date(calYear,calMonth,1);
-    const last=new Date(calYear,calMonth+1,0);
-    const startDow=(first.getDay()+6)%7;
-    const t=today();
-    let html='';
-    for(let i=0;i<startDow;i++) html+='<div class="cal-day empty"></div>';
-    for(let d=1;d<=last.getDate();d++){
-      const cur=new Date(calYear,calMonth,d);
-      const iso=fmtISO(cur);
-      let cls='cal-day';
-      if(cur<t) cls+=' past';
-      if(selIn&&iso===fmtISO(selIn)) cls+=' selected-in';
-      if(selOut&&iso===fmtISO(selOut)) cls+=' selected-out';
-      if(selIn&&selOut&&cur>selIn&&cur<selOut) cls+=' in-range';
-      html+=`<div class="${cls}" data-iso="${iso}">${d}</div>`;
-    }
-    const grid=document.getElementById('calDays');
-    grid.innerHTML=html;
-    grid.querySelectorAll('.cal-day:not(.empty):not(.past)').forEach(el=>{
-      el.addEventListener('click',()=>{
-        const picked=new Date(el.dataset.iso+'T12:00:00');
-        if(calMode==='in'){ selIn=picked; selOut=null; calMode='out'; document.getElementById('cfIn').classList.remove('active'); document.getElementById('cfOut').classList.add('active'); }
-        else { if(picked<=selIn){ selIn=picked; calMode='out'; } else { selOut=picked; closeCal(); } }
-        updateFields(); renderCal();
-      });
-    });
-  }
-
-  window.openCal=function(mode){
-    calMode=mode;
-    const now=new Date(); calYear=now.getFullYear(); calMonth=now.getMonth();
-    document.getElementById('calDrop').classList.add('open');
-    document.getElementById('cfIn').classList.toggle('active',mode==='in');
-    document.getElementById('cfOut').classList.toggle('active',mode==='out');
-    renderCal();
-  };
-  window.closeCal=function(){ document.getElementById('calDrop').classList.remove('open'); document.getElementById('cfIn').classList.remove('active'); document.getElementById('cfOut').classList.remove('active'); };
-  window.calShift=function(delta){ calMonth+=delta; if(calMonth>11){calMonth=0;calYear++;} if(calMonth<0){calMonth=11;calYear--;} renderCal(); };
-  document.addEventListener('click',e=>{ const drop=document.getElementById('calDrop'); const wrap=document.querySelector('.cal-wrap'); if(drop&&drop.classList.contains('open')&&wrap&&!wrap.contains(e.target)) closeCal(); });
-})();
 function calcNights(){ /* legacy noop — handled by calendar */ }
 
 // ── GUESTS
@@ -4385,6 +4543,14 @@ document.addEventListener('keydown', e => {
   .rev-arrows { display: none !important; }
   .rev-stars-row { flex-wrap: wrap; gap: .3rem; }
 
+    .tr-grid { grid-template-columns: repeat(2,1fr) !important; gap: .7rem !important; }
+  .tr-card { padding: 1.2rem 1rem !important; }
+  .trb { grid-template-columns: 1fr !important; gap: 2.5rem !important; }
+    .intent-grid { grid-template-columns: 1fr !important; gap: .8rem !important; }
+  .intent-card { flex-direction: row !important; text-align: left !important; padding: 1.2rem !important; gap: 1rem !important; }
+  .intent-icon { flex-shrink: 0; }
+    .f-cta-strip { padding: 4rem 1.5rem !important; }
+  .f-cta-strip .bigt { font-size: clamp(1.4rem, 5.5vw, 2rem) !important; }
 }
 
 </style>
@@ -4769,5 +4935,10 @@ function setupScrollReveal() {
 }
 document.addEventListener('DOMContentLoaded', setupScrollReveal);
 </script>
+
+<!-- SCROLL TO TOP -->
+<button id="scrollTopBtn" aria-label="Volver arriba" style="position:fixed;bottom:110px;right:28px;width:44px;height:44px;border-radius:50%;background:rgba(28,30,23,.85);backdrop-filter:blur(10px);border:1px solid rgba(174,133,96,.25);color:rgba(253,250,246,.6);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:900;opacity:0;pointer-events:none;transition:all .4s cubic-bezier(.25,.46,.45,.94)">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
 </body>
 </html>
