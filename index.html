@@ -3340,7 +3340,7 @@ function openVModal(id) {
 }
 
 // Abre la galería fullscreen desde el modal
-function openGalleryFromModal() {
+window.openGalleryFromModal = function openGalleryFromModal() {
   const folderId  = window._currentVillaFolderId;
   const portada   = window._currentVillaPortada;
   const name      = window._currentVillaName || '';
@@ -3598,6 +3598,157 @@ document.addEventListener('keydown', e => {
   .act-grid{grid-template-columns:repeat(3,1fr)}
 }
 
+/* ══════════════════════════════════════════
+   BOT VALENTINA — floating widget
+══════════════════════════════════════════ */
+
+/* Floating button */
+#val-btn {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  box-shadow: 0 4px 24px rgba(0,0,0,.45);
+  transition: transform .3s ease, box-shadow .3s ease;
+  overflow: hidden;
+  background: transparent;
+}
+#val-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 32px rgba(0,0,0,.55);
+}
+#val-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+
+/* Tooltip */
+#val-tip {
+  position: fixed;
+  bottom: 102px;
+  right: 28px;
+  background: rgba(18,20,14,.97);
+  border: .5px solid rgba(174,133,96,.35);
+  border-radius: 8px;
+  padding: .6rem 1rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: .88rem;
+  color: rgba(253,250,246,.8);
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity .25s ease, transform .25s ease;
+  pointer-events: none;
+  z-index: 999;
+}
+#val-tip.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+#val-tip::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  right: 24px;
+  width: 9px;
+  height: 9px;
+  background: rgba(18,20,14,.97);
+  border-right: .5px solid rgba(174,133,96,.35);
+  border-bottom: .5px solid rgba(174,133,96,.35);
+  transform: rotate(45deg);
+}
+
+/* Drawer */
+#val-drawer {
+  position: fixed;
+  bottom: 0;
+  right: 28px;
+  width: 420px;
+  height: 680px;
+  max-height: 90vh;
+  background: #111310;
+  border: .5px solid rgba(174,133,96,.2);
+  border-bottom: none;
+  border-radius: 14px 14px 0 0;
+  display: none;
+  flex-direction: column;
+  z-index: 1001;
+  box-shadow: 0 -8px 48px rgba(0,0,0,.5);
+  overflow: hidden;
+}
+#val-drawer.open {
+  display: flex;
+}
+
+/* Drawer header */
+#val-dhead {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+  padding: .9rem 1.1rem;
+  background: rgba(29,77,58,.85);
+  border-bottom: .5px solid rgba(174,133,96,.15);
+  flex-shrink: 0;
+}
+.dh-avatar img {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.dh-info { flex: 1; }
+.dh-name {
+  font-family: 'Cinzel', serif;
+  font-size: .58rem;
+  letter-spacing: .12em;
+  color: var(--wh);
+}
+.dh-sub {
+  font-size: .72rem;
+  color: rgba(253,250,246,.5);
+  font-style: italic;
+}
+#val-minimize, #val-close {
+  background: rgba(253,250,246,.08);
+  border: .5px solid rgba(253,250,246,.2);
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(253,250,246,.6);
+  font-size: .85rem;
+  cursor: pointer;
+  transition: all .2s;
+  flex-shrink: 0;
+}
+#val-minimize:hover, #val-close:hover {
+  background: rgba(253,250,246,.15);
+  color: var(--wh);
+}
+
+/* Iframe */
+#val-iframe {
+  flex: 1;
+  border: none;
+  width: 100%;
+  background: #0d0f0c;
+}
+
+
 /* ═══════════════════════════════════════════════════
    MOBILE WEBAPP — ≤ 520px
    Un eje: scroll vertical. Sin zoom. Sin desborde.
@@ -3802,10 +3953,19 @@ document.addEventListener('keydown', e => {
   .cbtn { width: 100% !important; }
 
   /* ── 16. BOT VALENTINA ── */
-  #val-drawer { width: 100vw !important; height: 92svh !important;
-                border-radius: 14px 14px 0 0 !important; right: 0 !important; }
-  #val-btn    { width: 50px !important; height: 50px !important;
-                bottom: 16px !important; right: 12px !important; }
+  #val-drawer {
+    width: 100vw !important;
+    height: 92svh !important;
+    border-radius: 14px 14px 0 0 !important;
+    right: 0 !important;
+    left: 0 !important;
+  }
+  #val-btn {
+    width: 52px !important;
+    height: 52px !important;
+    bottom: 16px !important;
+    right: 14px !important;
+  }
   #val-tip    { display: none !important; }
 
   /* ── 17. GALLERY ── */
