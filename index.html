@@ -1715,6 +1715,22 @@ async function loadVillasFromSheet() {
         habitaciones: [],
       };
 
+      // Normalizar precio: si el Sheet no tiene precio o tiene uno que parece
+      // ser de estadía completa (>5x el fallback), usar el precio del fallback
+      const fb = villasFallback.find(f => f.id === id);
+      if(fb) {
+        const fbPrice = fb.price;
+        // Sin precio o precio 0 → usar fallback
+        if(!obj.precio_noche || obj.precio_noche <= 0) {
+          obj.precio_noche = fbPrice; obj.price = fbPrice;
+        }
+        // Precio parece estadía (>4x el precio por noche del fallback) → usar fallback
+        else if(obj.precio_noche > fbPrice * 4) {
+          obj.precio_noche = fbPrice; obj.price = fbPrice;
+        }
+      }
+
+      console.log(`[Sheet] ${id}: precio_noche=${obj.precio_noche}, r[8]=${r[8]}, r[10]=${r[10]}`);
       villasFromSheet.push(obj);
       villaDataFromSheet[id] = obj;
     }
