@@ -684,6 +684,20 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
   <a href="https://wa.me/541164388699" target="_blank" class="nwa">WhatsApp →</a>
 </nav>
 
+
+<!-- MOBILE NAV OVERLAY -->
+<div id="mobile-nav-overlay" role="dialog" aria-label="Navegación">
+  <button id="mobile-nav-close" onclick="toggleMobileNav()" aria-label="Cerrar">×</button>
+  <a href="#servicios" onclick="toggleMobileNav()">Servicios</a>
+  <a href="#villas" onclick="toggleMobileNav()">Villas</a>
+  <a href="#embarcaciones" onclick="toggleMobileNav()">Embarcaciones</a>
+  <a href="#golf" onclick="toggleMobileNav()">Golf</a>
+  <a href="#tu-experiencia" onclick="toggleMobileNav()">Diseñá tu estadía</a>
+  <a href="#casa-de-campo" onclick="toggleMobileNav()">Resort</a>
+  <a href="#nosotros" onclick="toggleMobileNav()">Nosotros</a>
+  <a href="https://wa.me/541164388699" class="nwa" target="_blank" id="mobile-nav-wa">WhatsApp →</a>
+</div>
+
 <!-- HERO -->
 <section class="hero">
   <div class="hbg"></div>
@@ -3979,6 +3993,322 @@ document.addEventListener('keydown', e => {
     #val-btn     { bottom: 20px; right: 20px; width: 54px; height: 54px; }
     #val-tip     { display: none; }
   }
+
+/* ════════════════════════════════════════════════════════
+   MOBILE RESPONSIVE SYSTEM — < 768px
+   Optimizado para clientes en celular
+════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+
+  /* ── BASE ── */
+  html { font-size: 17px; }
+  .sec { padding: 4rem 1.4rem; }
+
+  /* ── NAV ── */
+  nav { padding: 1rem 1.2rem; }
+  nav.solid { padding: .8rem 1.2rem; }
+  .nlinks { display: none; }  /* hidden — hamburger below */
+  .logo-n { font-size: .78rem; }
+  .logo-t { font-size: .62rem; }
+  .nwa { padding: .55rem 1.1rem; font-size: .48rem; }
+
+  /* Hamburger menu */
+  #nav-hamburger {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: .5rem;
+    z-index: 300;
+  }
+  #nav-hamburger span {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: var(--wh);
+    transition: all .3s ease;
+  }
+  #mobile-nav-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 250;
+    background: rgba(10,12,8,.98);
+    backdrop-filter: blur(12px);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+  }
+  #mobile-nav-overlay.open { display: flex; }
+  #mobile-nav-overlay a {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: rgba(253,250,246,.75);
+    text-decoration: none;
+    transition: color .2s;
+  }
+  #mobile-nav-overlay a:hover { color: var(--vl); }
+  #mobile-nav-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: none;
+    border: none;
+    color: rgba(253,250,246,.5);
+    font-size: 1.8rem;
+    cursor: pointer;
+    line-height: 1;
+  }
+  #mobile-nav-wa {
+    margin-top: 1rem;
+    font-family: 'Cinzel', serif;
+    font-size: .55rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--bk);
+    background: var(--vl);
+    padding: .75rem 2rem;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  /* ── HERO ── */
+  .hero { min-height: 100svh; }
+  .hh1 { font-size: clamp(2.2rem, 11vw, 3.5rem); letter-spacing: .02em; }
+  .hh1 em { font-size: .62em; margin-top: .3rem; }
+  .hsub { font-size: .95rem; margin: 1.4rem auto 2.2rem; max-width: 90%; }
+  .hbtns { flex-direction: column; align-items: center; gap: .8rem; }
+  .hbtns .btn { width: min(280px, 80vw); text-align: center; padding: 1rem 1.5rem; font-size: .55rem; }
+  .hpre { font-size: .5rem; letter-spacing: .25em; margin-bottom: 1.4rem; }
+  .scue { display: none; }
+
+  /* ── BAND ── */
+  .band { padding: 2.5rem 1.4rem; gap: 0; flex-wrap: wrap; }
+  .bi { flex: 0 0 50%; max-width: 50%; border-right: none !important; padding: 1.2rem .5rem; border-bottom: .5px solid rgba(253,250,246,.1); }
+  .bi:nth-child(1), .bi:nth-child(2) { border-bottom: .5px solid rgba(253,250,246,.1); }
+  .bi:nth-child(3), .bi:nth-child(4) { border-bottom: none; }
+  .bn { font-size: 2rem; }
+  .bl { font-size: .7rem; }
+
+  /* ── SECTION TITLES ── */
+  .bigt { font-size: clamp(1.6rem, 7vw, 2.4rem); }
+  .prose { font-size: .9rem; }
+  .lbl { font-size: .48rem; }
+
+  /* ── SERVICES (carousel horizontal) ── */
+  .svcs { padding: 4rem 0; }
+  .si { padding: 0 1.4rem; margin-bottom: 2.5rem; text-align: center; }
+  .si .rule { margin: 1rem auto; }
+  .si .prose { margin: 0 auto; }
+  .ss { gap: 0; }
+  .sc {
+    flex: 0 0 78vw !important;
+    scroll-snap-align: start;
+    border-radius: 0;
+    padding: 1.6rem 1.4rem;
+  }
+
+  /* ── VILLAS ── */
+  #villas { padding: 4rem 0; }
+  .vh { padding: 0 1.4rem; text-align: center; margin-bottom: 2rem; }
+  .vh .rule { margin: 1rem auto; }
+  .vfilt { padding: .8rem 1rem .5rem; gap: .4rem; }
+  .vfb { font-size: .44rem; padding: .4rem .8rem; }
+  /* Villa grid → horizontal scroll */
+  .vg {
+    display: flex !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    gap: .8rem !important;
+    padding: .5rem 1.2rem 1.5rem !important;
+    scrollbar-width: none !important;
+  }
+  .vg::-webkit-scrollbar { display: none !important; }
+  .vc {
+    flex: 0 0 78vw !important;
+    scroll-snap-align: start !important;
+    min-height: 340px;
+  }
+  /* Villa modal → full screen */
+  #vmodal {
+    width: 100vw !important;
+    height: 100svh !important;
+    max-width: 100vw !important;
+    max-height: 100svh !important;
+    border-radius: 0 !important;
+    top: 0 !important;
+    left: 0 !important;
+    transform: none !important;
+    overflow-y: auto;
+  }
+  .vm-carousel { height: 240px !important; }
+  .vm-body { padding: 1.2rem !important; }
+  .vm-stats { gap: .5rem; }
+  .vm-ctas { flex-direction: column; gap: .6rem; }
+  .vm-cta-main, .vm-cta-sec, .vm-cta-gallery { width: 100%; text-align: center; justify-content: center; }
+
+  /* ── BOATS ── */
+  .bb { grid-template-columns: 1fr !important; gap: 0; }
+  .bb > div:first-child { padding: 3.5rem 1.4rem 2rem; text-align: center; }
+  .bb > div:first-child .rule { margin: 1rem auto; }
+  .bb > div:first-child .btn { margin: .3rem auto; display: block; width: fit-content; }
+  .bb-facts { grid-template-columns: 1fr 1fr !important; gap: .6rem; padding: 1.4rem !important; }
+
+  /* ── GOLF ── */
+  .golf { padding: 0; }
+  .golf-inner { grid-template-columns: 1fr !important; gap: 0; }
+  .golf-inner > div:first-child { padding: 3.5rem 1.4rem 2rem; text-align: center; }
+  .golf-inner > div:first-child .rule { margin: 1rem auto; }
+  .golf-facts { grid-template-columns: 1fr 1fr !important; padding: 1.4rem !important; gap: .6rem; }
+  .golf-bg { min-height: 220px; }
+
+  /* ── TRANSFERS / VIP ── */
+  .trsf { padding: 3.5rem 1.4rem; }
+  .trsf > div, .vip > div { grid-template-columns: 1fr !important; gap: 1.5rem; }
+  .vip { padding: 3.5rem 1.4rem; }
+
+  /* ── RESORT SECTIONS ── */
+  .resort-section { padding: 3.5rem 1.4rem; }
+  .rs-inner { max-width: 100%; }
+  .rs-grid { grid-template-columns: 1fr 1fr !important; gap: .8rem; }
+  .rs-card { padding: 1.2rem 1rem; }
+  .rs-head { margin-bottom: 2rem; }
+  /* Minitas 2-col → 1 col */
+  #minitas > div { grid-template-columns: 1fr !important; min-height: auto !important; }
+  #minitas > div > div:first-child { padding: 3rem 1.4rem !important; }
+  #minitas > div > div:last-child { min-height: 260px !important; border-radius: 0; }
+  /* Marina foto grid */
+  .rs-inner > div[style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
+
+  /* ── CASA DE CAMPO ── */
+  #casa-de-campo > div { grid-template-columns: 1fr !important; max-width: 100%; padding: 3.5rem 1.4rem; }
+  .cdc-grid { grid-template-columns: 1fr !important; gap: 2rem; }
+  .cdc-img-grid { grid-template-columns: 1fr !important; gap: .6rem; }
+  .cdc-img:first-child { aspect-ratio: 16/9 !important; }
+  .cdc-img { aspect-ratio: 4/3 !important; }
+  .cdc-stat-n { font-size: 2.2rem; }
+
+  /* ── ACTIVIDADES ── */
+  .act-grid { grid-template-columns: 1fr 1fr !important; gap: .7rem; }
+  .act-card { padding: 1.2rem .9rem; }
+  .act-icon { font-size: 1.4rem; margin-bottom: .5rem; }
+  .act-name { font-size: .44rem; }
+  .act-tooltip { display: none !important; } /* tap → modal instead */
+
+  /* ── CONFIGURADOR ── */
+  .config { padding: 4rem 1.4rem; }
+  .config-head { text-align: center; margin-bottom: 2rem; }
+  .config-head .rule { margin: 1rem auto; }
+  .step-bar { gap: .3rem; overflow-x: auto; padding-bottom: .5rem; }
+  .step-dot { width: 26px; height: 26px; font-size: .55rem; flex-shrink: 0; }
+  .step-line { min-width: 18px; flex: 1; }
+  .step-label { display: none; } /* hide labels on mobile */
+  .config-panel { padding: 1.8rem 1.2rem; }
+  .date-row { flex-direction: column; gap: .8rem; align-items: stretch; }
+  .date-row > span { display: none; }
+  .date-box { padding: 1rem 1.2rem; }
+  .guest-btns { gap: .4rem; flex-wrap: wrap; }
+  .guest-btn { padding: .65rem 1rem; font-size: .55rem; }
+  /* Villas en configurador → scroll horizontal */
+  #villaGridConf {
+    display: flex !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    gap: .8rem;
+    padding-bottom: .8rem;
+    scrollbar-width: none;
+  }
+  #villaGridConf::-webkit-scrollbar { display: none; }
+  .vconf-card { flex: 0 0 72vw !important; scroll-snap-align: start; }
+  .svc-opts { grid-template-columns: 1fr !important; }
+  .cbtn-next, .cbtn-back {
+    width: 100%;
+    padding: 1rem;
+    font-size: .55rem;
+  }
+  .cbtn-row { flex-direction: column; gap: .6rem; }
+
+  /* ── VALENTINA SECTION ── */
+  #valentina > div { grid-template-columns: 1fr !important; gap: 2rem !important; }
+  #valentina { padding: 4rem 1.4rem !important; }
+
+  /* ── FOUNDERS ── */
+  .founders { grid-template-columns: 1fr !important; }
+  .fimg { min-height: 260px; }
+
+  /* ── CONTACT ── */
+  .contact { padding: 4rem 1.4rem; }
+  .cb { grid-template-columns: 1fr !important; gap: 2rem; }
+  .cf { padding: 2rem 1.4rem; }
+  .cinput, .ctarea { padding: .85rem 1rem; font-size: .95rem; }
+  .cbtn { width: 100%; padding: 1rem; font-size: .55rem; }
+
+  /* ── LIGHTBOX ── */
+  #gallery-lb-header { padding: .8rem 1rem; }
+  #gallery-lb-title { font-size: .45rem; }
+  #gallery-lb-prev { left: .3rem; width: 38px; height: 38px; font-size: 1.3rem; }
+  #gallery-lb-next { right: .3rem; width: 38px; height: 38px; font-size: 1.3rem; }
+  #gallery-lb-thumbs { padding: .5rem; gap: .3rem; }
+  .gallery-thumb { width: 54px; height: 40px; }
+
+  /* ── BOT VALENTINA ── */
+  #val-drawer {
+    width: 100vw !important;
+    height: 92svh !important;
+    border-radius: 16px 16px 0 0 !important;
+    right: 0 !important;
+  }
+  #val-btn { width: 52px !important; height: 52px !important; bottom: 20px !important; right: 16px !important; }
+
+  /* ── GATE MODAL ── */
+  #gate-modal > div { padding: 2rem 1.4rem; max-width: 96vw; }
+
+  /* ── FOOTER ── */
+  footer { padding: 3rem 1.4rem 2rem; }
+  .footer-grid { grid-template-columns: 1fr !important; gap: 2rem; }
+
+  /* ── LIGHTBOX BASIC ── */
+  #lb-close { top: .8rem; right: .8rem; font-size: 1.5rem; }
+  #lb-prev { left: .2rem; font-size: 2rem; padding: .8rem; }
+  #lb-next { right: .2rem; font-size: 2rem; padding: .8rem; }
+
+  /* ── ACCESORIOS / EXTRAS ── */
+  .cb { padding: 1.4rem; }
+  .trsf-cards, .vip-cards { grid-template-columns: 1fr !important; }
+
+  /* ── MISC ── */
+  .btn { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; }
+  .rule { margin: 1rem 0; }
+}
+
+/* ── SMALL PHONES (< 390px) ── */
+@media (max-width: 390px) {
+  .hh1 { font-size: 2rem; }
+  .bigt { font-size: 1.5rem; }
+  .bi { padding: .9rem .3rem; }
+  .rs-grid { grid-template-columns: 1fr !important; }
+  .act-grid { grid-template-columns: 1fr !important; }
+  .bb-facts, .golf-facts { grid-template-columns: 1fr !important; }
+}
+
+/* ── TOUCH IMPROVEMENTS (all mobile) ── */
+@media (hover: none) {
+  /* Remove hover-only effects that don't work on touch */
+  .act-tooltip { display: none !important; }
+  .vc-zoom { opacity: 1 !important; } /* always show zoom btn */
+  .vc-gallery-btn { opacity: 1 !important; }
+  /* Bigger tap targets */
+  .vfb, .btn, .nwa, .cbtn-next, .cbtn-back { min-height: 44px; }
+  .vm-close-btn { width: 40px !important; height: 40px !important; font-size: 1.1rem !important; }
+}
+
+
 </style>
 
 
@@ -4249,6 +4579,63 @@ document.getElementById('gallery-lb')?.addEventListener('touchend', e => {
   const dx = e.changedTouches[0].clientX - _galTouchX;
   if (Math.abs(dx) > 50) galleryLbNav(dx < 0 ? 1 : -1);
 });
+
+
+
+// ── MOBILE NAV ───────────────────────────────────────
+function toggleMobileNav() {
+  const overlay = document.getElementById('mobile-nav-overlay');
+  const hamburger = document.getElementById('nav-hamburger');
+  const isOpen = overlay.classList.toggle('open');
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+  // Animate hamburger → X
+  const spans = hamburger.querySelectorAll('span');
+  if (isOpen) {
+    spans[0].style.cssText = 'transform:translateY(6.5px) rotate(45deg)';
+    spans[1].style.cssText = 'opacity:0';
+    spans[2].style.cssText = 'transform:translateY(-6.5px) rotate(-45deg)';
+  } else {
+    spans.forEach(s => s.style.cssText = '');
+  }
+}
+
+// ── SHOW HAMBURGER ON MOBILE ─────────────────────────
+function checkMobileNav() {
+  const hamburger = document.getElementById('nav-hamburger');
+  if (hamburger) hamburger.style.display = window.innerWidth <= 768 ? 'flex' : 'none';
+}
+checkMobileNav();
+window.addEventListener('resize', checkMobileNav);
+
+// ── CLOSE MOBILE NAV ON ESCAPE ───────────────────────
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    const overlay = document.getElementById('mobile-nav-overlay');
+    if (overlay && overlay.classList.contains('open')) toggleMobileNav();
+  }
+});
+
+// ── MOBILE: MAKE ACT CARDS TAPPABLE (show info) ──────
+if ('ontouchstart' in window) {
+  document.querySelectorAll('.act-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const name = card.querySelector('.act-name')?.textContent || '';
+      const tooltip = card.querySelector('.act-tooltip');
+      if (!tooltip) return;
+      // Build a simple bottom sheet
+      const existing = document.getElementById('act-mobile-sheet');
+      if (existing) existing.remove();
+      const sheet = document.createElement('div');
+      sheet.id = 'act-mobile-sheet';
+      sheet.style.cssText = 'position:fixed;bottom:0;left:0;right:0;z-index:9000;background:rgba(18,20,16,.98);border:.5px solid rgba(174,133,96,.3);border-bottom:none;border-radius:16px 16px 0 0;padding:1.8rem 1.4rem;transform:translateY(100%);transition:transform .3s cubic-bezier(.22,1,.36,1)';
+      sheet.innerHTML = tooltip.innerHTML + '<button onclick="document.getElementById(\'act-mobile-sheet\').remove()" style="position:absolute;top:1rem;right:1rem;background:none;border:none;color:rgba(253,250,246,.5);font-size:1.3rem;cursor:pointer">×</button>';
+      document.body.appendChild(sheet);
+      requestAnimationFrame(() => { sheet.style.transform = 'translateY(0)'; });
+      // Close on outside tap
+      sheet.addEventListener('click', e => { if (e.target === sheet) sheet.remove(); });
+    });
+  });
+}
 
 
 <!-- ── SCROLL REVEAL ── -->
