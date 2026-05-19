@@ -3522,6 +3522,82 @@ document.addEventListener('keydown', e => {
 /* ── LIGHTBOX TOUCH ── */
 
 
+/* ── ACTIVIDADES ── */
+.act-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;margin-top:3rem}
+.act-card{
+  background:rgba(253,250,246,.04);
+  border:.5px solid rgba(174,133,96,.18);
+  padding:1.8rem 1.4rem 1.5rem;
+  cursor:pointer;
+  position:relative;
+  transition:border-color .3s,background .3s;
+  overflow:visible;
+}
+.act-card:hover{background:rgba(174,133,96,.07);border-color:rgba(174,133,96,.4)}
+.act-icon{font-size:1.8rem;margin-bottom:.8rem;display:block}
+.act-name{
+  font-family:'Cinzel',serif;
+  font-size:.52rem;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--wh);
+  display:block;
+  margin-bottom:.5rem;
+}
+.act-tooltip{
+  display:none;
+  position:absolute;
+  bottom:calc(100% + .6rem);
+  left:50%;
+  transform:translateX(-50%);
+  background:rgba(18,20,14,.97);
+  border:.5px solid rgba(174,133,96,.3);
+  backdrop-filter:blur(12px);
+  padding:1.2rem 1.4rem;
+  width:220px;
+  z-index:500;
+  pointer-events:none;
+}
+.act-card:hover .act-tooltip{display:block}
+.act-tt-title{
+  font-family:'Cinzel',serif;
+  font-size:.48rem;
+  letter-spacing:.18em;
+  color:var(--vl);
+  text-transform:uppercase;
+  margin-bottom:.7rem;
+}
+.act-tt-list{
+  list-style:none;
+  margin-bottom:.6rem;
+}
+.act-tt-list li{
+  font-size:.82rem;
+  color:rgba(253,250,246,.6);
+  padding:.15rem 0;
+  padding-left:.8rem;
+  position:relative;
+}
+.act-tt-list li::before{
+  content:'◆';
+  position:absolute;
+  left:0;
+  color:var(--v);
+  font-size:.4rem;
+  top:.25rem;
+}
+.act-tt-stat{
+  font-size:.76rem;
+  color:rgba(174,133,96,.6);
+  font-style:italic;
+  border-top:.5px solid rgba(174,133,96,.15);
+  padding-top:.5rem;
+  margin-top:.3rem;
+}
+@media(max-width:900px){
+  .act-grid{grid-template-columns:repeat(3,1fr)}
+}
+
 /* ═══════════════════════════════════════════════════
    MOBILE WEBAPP — ≤ 520px
    Un eje: scroll vertical. Sin zoom. Sin desborde.
@@ -3630,11 +3706,14 @@ document.addEventListener('keydown', e => {
   }
   .vg::-webkit-scrollbar { display: none !important; }
   .vc {
-    flex: 0 0 82vw !important;
-    max-width: 82vw !important;
+    flex: 0 0 72vw !important;
+    max-width: 72vw !important;
     min-width: 0 !important;
+    width: 72vw !important;
     scroll-snap-align: start !important;
-    min-height: 280px !important;
+    aspect-ratio: 2/3 !important;
+    min-height: 0 !important;
+    height: auto !important;
   }
 
   /* ── 8. VILLA MODAL ── */
@@ -3644,17 +3723,38 @@ document.addEventListener('keydown', e => {
     max-width: 100vw !important; max-height: 100svh !important;
     border-radius: 0 !important; top: 0 !important; left: 0 !important;
   }
-  .vm-carousel { height: 210px !important; min-height: 210px !important; }
-  .vm-body { padding: 1.2rem 1rem 2rem !important; }
+  .vm-carousel { height: 260px !important; min-height: 260px !important; }
+  .vm-img { height: 260px !important; }
+  .vm-img-placeholder { height: 260px !important; }
+  .vm-body { padding: 1.4rem 1rem 2.5rem !important; }
+  .vm-title { font-size: 1.6rem !important; margin-bottom: 1rem !important; }
   .vm-ctas { display: flex !important; flex-direction: column !important; gap: .55rem !important; }
   .vm-cta-main, .vm-cta-sec, .vm-cta-gallery {
-    width: 100% !important; justify-content: center !important; }
+    width: 100% !important; justify-content: center !important; min-height: 48px !important; }
 
   /* ── 9. ACTIVIDADES ── */
-  .act-grid    { grid-template-columns: 1fr 1fr !important; gap: .6rem !important; }
-  .act-card    { padding: 1rem .8rem !important; }
-  .act-name    { font-size: .42rem !important; }
+  .act-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: .7rem !important;
+  }
+  .act-card {
+    padding: 1.2rem 1rem 1rem !important;
+    border-radius: 4px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+  }
+  .act-card:hover .act-tooltip { display: none !important; }
+  .act-icon { font-size: 1.6rem !important; margin-bottom: .5rem !important; }
+  .act-name {
+    font-size: .4rem !important;
+    line-height: 1.4 !important;
+    color: rgba(253,250,246,.85) !important;
+  }
   .act-tooltip { display: none !important; }
+  /* Show first 2 list items inline below card name on mobile */
+  .act-tt-title { display: none !important; }
 
   /* ── 10. CONFIGURADOR ── */
   .config  { padding: 3.5rem 1.2rem !important; }
@@ -3709,11 +3809,15 @@ document.addEventListener('keydown', e => {
   #val-tip    { display: none !important; }
 
   /* ── 17. GALLERY ── */
+  #gallery-lb { flex-direction: column !important; }
+  #gallery-lb-main { flex: 1 !important; min-height: 0 !important; }
+  #gallery-lb-img { max-height: 60svh !important; object-fit: contain !important; }
   #gallery-lb-prev { left: .3rem !important; width: 40px !important;
-                     height: 40px !important; font-size: 1.3rem !important; }
+                     height: 40px !important; font-size: 1.5rem !important; }
   #gallery-lb-next { right: .3rem !important; width: 40px !important;
-                     height: 40px !important; font-size: 1.3rem !important; }
+                     height: 40px !important; font-size: 1.5rem !important; }
   #gallery-lb-thumbs { padding: .4rem .6rem !important; }
+  #gallery-lb-header { padding: .7rem 1rem !important; }
 
   /* ── 18. FOOTER ── */
   footer { padding: 2.5rem 1rem 2rem !important; }
@@ -3787,7 +3891,7 @@ document.addEventListener('keydown', e => {
     setTimeout(() => valTip.classList.remove('show'), 3500);
   }, 3000);
 
-  function openValentina() {
+  window.openValentina = function openValentina() {
     valTip.classList.remove('show');
     // Load iframe only once
     if (!valLoaded) {
@@ -3799,12 +3903,12 @@ document.addEventListener('keydown', e => {
     document.body.style.overflow = '';
   }
 
-  function closeValentina() {
+  window.closeValentina = function closeValentina() {
     valDrawer.classList.remove('open');
     valBtn.style.display = 'flex';
   }
 
-  function minimizeValentina() {
+  window.minimizeValentina = function minimizeValentina() {
     valDrawer.classList.remove('open');
     valBtn.style.display = 'flex';
     // Keep iframe loaded for quick reopen
@@ -3850,6 +3954,7 @@ window.openVillaGallery = async function openVillaGallery(villaId, villaName, ca
   const counter = document.getElementById('gallery-lb-counter');
 
   // Show lightbox immediately
+  lb.style.display = 'flex';
   lb.classList.add('active');
   document.body.style.overflow = 'hidden';
   title.textContent = villaName;
@@ -3967,7 +4072,9 @@ window.galleryLbNav = function galleryLbNav(dir) {
 }
 
 window.closeGalleryLb = function closeGalleryLb() {
-  document.getElementById('gallery-lb').classList.remove('active');
+  const _lb = document.getElementById('gallery-lb');
+  _lb.classList.remove('active');
+  _lb.style.display = 'none';
   document.body.style.overflow = '';
   _galleryFotos = [];
 }
