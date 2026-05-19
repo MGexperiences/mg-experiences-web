@@ -491,6 +491,50 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
 
 .step-dot.active{background:var(--vl);box-shadow:0 0 16px rgba(174,133,96,.5)}
 .step-dot.done{background:var(--g)}
+
+/* ══════════════════════════════════════════
+   RESEÑAS
+══════════════════════════════════════════ */
+.reviews-sec{padding:9rem 4rem;background:var(--sand);position:relative;overflow:hidden}
+.reviews-sec::before{content:'';position:absolute;top:-200px;right:-200px;width:600px;height:600px;background:radial-gradient(circle,rgba(174,133,96,.06) 0%,transparent 70%);pointer-events:none}
+.rev-inner{max-width:1100px;margin:0 auto}
+.rev-head{text-align:center;margin-bottom:3rem}
+.rev-stars-row{display:flex;align-items:center;justify-content:center;gap:.4rem;margin-top:1.2rem}
+.rev-gstar{width:20px;height:20px;fill:#AE8560}
+.rev-score{font-family:'Cinzel',serif;font-size:.8rem;color:var(--v);margin-left:.3rem}
+.rev-count{font-family:'Cormorant Garamond',serif;font-size:.88rem;color:rgba(253,250,246,.35)}
+
+/* Track & cards */
+.rev-track-wrap{position:relative;overflow:hidden;padding-bottom:3rem}
+.rev-track{display:flex;gap:1.5rem;transition:transform .6s cubic-bezier(.25,.46,.45,.94);will-change:transform}
+.rev-card{flex:0 0 calc(33.333% - 1rem);background:rgba(255,255,255,.04);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(174,133,96,.14);border-radius:24px;padding:2rem 1.8rem;position:relative;transition:all .4s cubic-bezier(.25,.46,.45,.94)}
+.rev-card:hover{border-color:rgba(174,133,96,.32);background:rgba(255,255,255,.07);transform:translateY(-4px);box-shadow:0 16px 48px rgba(0,0,0,.25)}
+.rev-quote-icon{color:var(--v);margin-bottom:1.2rem}
+.rev-text{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:rgba(253,250,246,.72);line-height:1.85;font-style:italic;margin-bottom:1.6rem;flex:1}
+.rev-footer{display:flex;align-items:center;gap:.9rem;margin-top:auto}
+.rev-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--v),var(--vd));display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:.55rem;color:#fff;letter-spacing:.06em;flex-shrink:0}
+.rev-name{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.12em;color:rgba(253,250,246,.85);text-transform:uppercase;margin-bottom:.2rem}
+.rev-meta{font-family:'Cormorant Garamond',serif;font-size:.88rem;color:rgba(253,250,246,.35)}
+.rev-stars-sm{display:flex;gap:.15rem;margin-left:auto;flex-shrink:0}
+.rev-stars-sm svg{width:12px;height:12px;fill:#AE8560}
+
+/* Dots */
+.rev-dots{display:flex;justify-content:center;gap:.6rem;margin-top:1.8rem}
+.rev-dot{width:8px;height:8px;border-radius:50%;background:rgba(174,133,96,.2);border:none;cursor:pointer;transition:all .35s cubic-bezier(.25,.46,.45,.94);padding:0}
+.rev-dot.active{background:var(--vl);width:24px;border-radius:4px}
+
+/* Arrows */
+.rev-arrows{position:absolute;top:50%;transform:translateY(-60%);width:100%;display:flex;justify-content:space-between;pointer-events:none;padding:0 .5rem}
+.rev-arrow{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.06);backdrop-filter:blur(8px);border:1px solid rgba(174,133,96,.2);color:rgba(253,250,246,.6);display:flex;align-items:center;justify-content:center;cursor:pointer;pointer-events:all;transition:all .35s cubic-bezier(.25,.46,.45,.94)}
+.rev-arrow:hover{background:rgba(174,133,96,.15);border-color:rgba(174,133,96,.45);color:var(--vl);transform:scale(1.08)}
+
+/* CTA */
+.rev-cta{text-align:center;margin-top:3rem}
+
+/* Mobile */
+@media(max-width:900px){
+  .rev-card{flex:0 0 calc(50% - .75rem)}
+}
 </style>
 
 <!-- Verification modal styles -->
@@ -704,6 +748,7 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
     <li><a href="#golf">Golf</a></li>
     <li><a href="#tu-experiencia">Diseñá tu estadía</a></li>
     <li><a href="#casa-de-campo">Resort</a></li>
+    <li><a href="#resenas">Reseñas</a></li>
     <li><a href="#nosotros">Nosotros</a></li>
 
   </ul>
@@ -726,6 +771,7 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
   <a href="#golf" onclick="toggleMobileNav()">Golf</a>
   <a href="#tu-experiencia" onclick="toggleMobileNav()">Diseñá tu estadía</a>
   <a href="#casa-de-campo" onclick="toggleMobileNav()">Resort</a>
+  <a href="#resenas" onclick="toggleMobileNav()">Reseñas</a>
   <a href="#nosotros" onclick="toggleMobileNav()">Nosotros</a>
   <a href="https://wa.me/541164388699" class="nwa" target="_blank" id="mobile-nav-wa">WhatsApp →</a>
 </div>
@@ -1455,6 +1501,146 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
   </div>
 </section>
 
+<!-- RESEÑAS -->
+<section class="reviews-sec rv" id="resenas">
+  <div class="rev-inner">
+    <div class="rev-head" data-reveal>
+      <span class="lbl">Lo que dicen nuestros huéspedes</span>
+      <h2 class="bigt">Experiencias<br><em>reales</em></h2>
+      <div class="rule rc"></div>
+      <div class="rev-stars-row">
+        <svg class="rev-gstar" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7"/></svg>
+        <svg class="rev-gstar" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7"/></svg>
+        <svg class="rev-gstar" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7"/></svg>
+        <svg class="rev-gstar" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7"/></svg>
+        <svg class="rev-gstar" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7"/></svg>
+        <span class="rev-score">5.0</span>
+        <span class="rev-count">· 5.0 en Google · 16 reseñas</span>
+      </div>
+    </div>
+
+    <div class="rev-track-wrap">
+      <div class="rev-track" id="revTrack">
+        <div class="rev-card" data-reveal data-delay="1">
+          <div class="rev-quote-icon"><svg width="24" height="18" viewBox="0 0 24 18" fill="none"><path d="M0 18V11.1C0 4.77 3.9 1.14 11.7 0L12.6 2.1C9.54 2.82 7.5 4.08 6.48 5.88C5.94 6.84 5.76 7.8 5.88 8.76H10.8V18H0ZM13.2 18V11.1C13.2 4.77 17.1 1.14 24.9 0L25.8 2.1C22.74 2.82 20.7 4.08 19.68 5.88C19.14 6.84 18.96 7.8 19.08 8.76H24V18H13.2Z" fill="currentColor" opacity="0.3"/></svg></div>
+          <p class="rev-text">Muy buena experiencia. Todo fue muy bien planificado y con mucha flexibilidad para adaptarse a nuestras variaciones. La casa que nos recomendaron fue excelente y un destacadísimo nivel de servicio. Difícil encontrar algún punto que no sea muy bueno.</p>
+          <div class="rev-footer">
+            <div class="rev-avatar">PM</div>
+            <div>
+              <div class="rev-name">Pedro Morrone</div>
+              <div class="rev-meta">Argentina</div>
+            </div>
+            <div class="rev-stars-sm">
+              <svg viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7"/></svg>
+              <svg viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7"/></svg>
+              <svg viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7"/></svg>
+              <svg viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7"/></svg>
+              <svg viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="rev-card" data-reveal data-delay="2">
+          <div class="rev-quote-icon"><svg width="24" height="18" viewBox="0 0 24 18" fill="none"><path d="M0 18V11.1C0 4.77 3.9 1.14 11.7 0L12.6 2.1C9.54 2.82 7.5 4.08 6.48 5.88C5.94 6.84 5.76 7.8 5.88 8.76H10.8V18H0ZM13.2 18V11.1C13.2 4.77 17.1 1.14 24.9 0L25.8 2.1C22.74 2.82 20.7 4.08 19.68 5.88C19.14 6.84 18.96 7.8 19.08 8.76H24V18H13.2Z" fill="currentColor" opacity="0.3"/></svg></div>
+          <p class="rev-text">The service was outstanding. From the very first moment, I felt like I was living a dream, with flawless management and attention to every detail. We stayed at La Dársena with a stunning view of the boats, and had a private chef cooking for us. I highly recommend this agency to anyone looking to enjoy a truly complete experience.</p>
+          <div class="rev-footer">
+            <div class="rev-avatar">NM</div>
+            <div>
+              <div class="rev-name">Nicolas Macchiavello</div>
+              <div class="rev-meta">Argentina</div>
+            </div>
+            <div class="rev-stars-sm">
+              <svg viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7"/></svg>
+              <svg viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7"/></svg>
+              <svg viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7"/></svg>
+              <svg viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7"/></svg>
+              <svg viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="rev-card" data-reveal data-delay="3">
+          <div class="rev-quote-icon"><svg width="24" height="18" viewBox="0 0 24 18" fill="none"><path d="M0 18V11.1C0 4.77 3.9 1.14 11.7 0L12.6 2.1C9.54 2.82 7.5 4.08 6.48 5.88C5.94 6.84 5.76 7.8 5.88 8.76H10.8V18H0ZM13.2 18V11.1C13.2 4.77 17.1 1.14 24.9 0L25.8 2.1C22.74 2.82 20.7 4.08 19.68 5.88C19.14 6.84 18.96 7.8 19.08 8.76H24V18H13.2Z" fill="currentColor" opacity="0.3"/></svg></div>
+          <p class="rev-text">We recently had the pleasure of staying at Casa de Campo and it was nothing short of a dream vacation. The house was perfect — equipped with everything you could need. The host was incredibly kind, attentive, and always ready to help. His commitment to ensuring we had a great time was evident from the moment we arrived.</p>
+          <div class="rev-footer">
+            <div class="rev-avatar">AC</div>
+            <div>
+              <div class="rev-name">Ana Campomar</div>
+              <div class="rev-meta">Argentina</div>
+            </div>
+            <div class="rev-stars-sm">
+              <svg viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7"/></svg>
+              <svg viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7"/></svg>
+              <svg viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7"/></svg>
+              <svg viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7"/></svg>
+              <svg viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="rev-card" data-reveal data-delay="4">
+          <div class="rev-quote-icon"><svg width="24" height="18" viewBox="0 0 24 18" fill="none"><path d="M0 18V11.1C0 4.77 3.9 1.14 11.7 0L12.6 2.1C9.54 2.82 7.5 4.08 6.48 5.88C5.94 6.84 5.76 7.8 5.88 8.76H10.8V18H0ZM13.2 18V11.1C13.2 4.77 17.1 1.14 24.9 0L25.8 2.1C22.74 2.82 20.7 4.08 19.68 5.88C19.14 6.84 18.96 7.8 19.08 8.76H24V18H13.2Z" fill="currentColor" opacity="0.3"/></svg></div>
+          <p class="rev-text">La mejor experiencia a la hora de buscar un momento de descanso, exclusividad y entretenimiento. Poder salir a navegar, recorrer las instalaciones en tu propio carro de golf y contar con actividades para toda la familia es realmente un placer.</p>
+          <div class="rev-footer">
+            <div class="rev-avatar">MT</div>
+            <div>
+              <div class="rev-name">Matías Tufaro</div>
+              <div class="rev-meta">Argentina</div>
+            </div>
+            <div class="rev-stars-sm">
+              <svg viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7"/></svg>
+              <svg viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7"/></svg>
+              <svg viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7"/></svg>
+              <svg viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7"/></svg>
+              <svg viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="rev-card" data-reveal data-delay="5">
+          <div class="rev-quote-icon"><svg width="24" height="18" viewBox="0 0 24 18" fill="none"><path d="M0 18V11.1C0 4.77 3.9 1.14 11.7 0L12.6 2.1C9.54 2.82 7.5 4.08 6.48 5.88C5.94 6.84 5.76 7.8 5.88 8.76H10.8V18H0ZM13.2 18V11.1C13.2 4.77 17.1 1.14 24.9 0L25.8 2.1C22.74 2.82 20.7 4.08 19.68 5.88C19.14 6.84 18.96 7.8 19.08 8.76H24V18H13.2Z" fill="currentColor" opacity="0.3"/></svg></div>
+          <p class="rev-text">Increíbles días pasamos en Casa de Campo. Gracias a Lucho por la perfecta organización y la atención en todo momento. El lugar es soñado y todo funciona muy bien. Ideal para ir en familia y descansar. Sin dudas, volveriamos.</p>
+          <div class="rev-footer">
+            <div class="rev-avatar">FT</div>
+            <div>
+              <div class="rev-name">Felicitas Travella</div>
+              <div class="rev-meta">Argentina</div>
+            </div>
+            <div class="rev-stars-sm">
+              <svg viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7"/></svg>
+              <svg viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7"/></svg>
+              <svg viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7"/></svg>
+              <svg viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7"/></svg>
+              <svg viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7"/></svg>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /rev-track -->
+
+      <!-- Navigation dots -->
+      <div class="rev-dots" id="revDots">
+        <button class="rev-dot active" onclick="goRev(0)"></button>
+        <button class="rev-dot" onclick="goRev(1)"></button>
+        <button class="rev-dot" onclick="goRev(2)"></button>
+        <button class="rev-dot" onclick="goRev(3)"></button>
+        <button class="rev-dot" onclick="goRev(4)"></button>
+      </div>
+
+      <!-- Arrow nav -->
+      <div class="rev-arrows">
+        <button class="rev-arrow" id="revPrev" onclick="shiftRev(-1)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button class="rev-arrow" id="revNext" onclick="shiftRev(1)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="rev-cta" data-reveal>
+      <a href="https://g.page/r/YOUR_GOOGLE_PLACE_ID/review" target="_blank" class="btn bf">Dejá tu reseña en Google ✦</a>
+    </div>
+
+  </div>
+</section>
+
 <!-- CONTACT -->
 <section class="contact rv" id="contacto">
   <div class="cb">
@@ -1724,22 +1910,35 @@ async function loadVillasFromSheet() {
         habitaciones: [],
       };
 
-      // Normalizar precio: si el Sheet no tiene precio o tiene uno que parece
-      // ser de estadía completa (>5x el fallback), usar el precio del fallback
-      const fb = villasFallback.find(f => f.id === id);
+      // Normalizar precio usando fallback
+      // El ID del Sheet puede ser "townhousemarina3hab8pax" (incluye detalle)
+      // mientras el fallback usa "townhousemarina" — hacer match flexible por prefijo
+      const fb = villasFallback.find(f => {
+        // Match exacto primero
+        if (f.id === id) return true;
+        // Match por prefijo: el ID del Sheet empieza con el ID del fallback
+        if (id.startsWith(f.id)) return true;
+        // Match inverso: el ID del fallback empieza con el ID del Sheet
+        if (f.id.startsWith(id)) return true;
+        // Match por nombre normalizado (primeras 12 chars)
+        const fbNorm = f.name.toLowerCase().replace(/[^a-z0-9]/g,'').substring(0,12);
+        const shNorm = nombre.toLowerCase().replace(/[^a-z0-9]/g,'').substring(0,12);
+        return fbNorm === shNorm;
+      });
       if(fb) {
         const fbPrice = fb.price;
         // Sin precio o precio 0 → usar fallback
         if(!obj.precio_noche || obj.precio_noche <= 0) {
           obj.precio_noche = fbPrice; obj.price = fbPrice;
         }
-        // Precio parece estadía (>4x el precio por noche del fallback) → usar fallback
+        // Precio parece estadía completa (>4x precio/noche del fallback) → usar fallback
         else if(obj.precio_noche > fbPrice * 4) {
           obj.precio_noche = fbPrice; obj.price = fbPrice;
         }
       }
 
-      console.log(`[Sheet] ${id}: precio_noche=${obj.precio_noche}, r[8]=${r[8]}, r[10]=${r[10]}`);
+      console.log(`[Sheet] ${id}: precio_noche=${obj.precio_noche}, fb=${fb?.id||'none'}, r[8]=${r[8]}, r[10]=${r[10]}`);
+
       villasFromSheet.push(obj);
       villaDataFromSheet[id] = obj;
     }
@@ -4179,6 +4378,13 @@ document.addEventListener('keydown', e => {
   .fh     { text-align: center !important; font-size: 1.6rem !important; }
   .frule  { margin: .8rem auto !important; }
   .ftxt   { text-align: center !important; padding: 2rem 1.2rem !important; }
+
+  /* ── RESEÑAS MOBILE ── */
+  .reviews-sec { padding: 5rem 1.2rem !important; }
+  .rev-card { flex: 0 0 85vw !important; }
+  .rev-arrows { display: none !important; }
+  .rev-stars-row { flex-wrap: wrap; gap: .3rem; }
+
 }
 
 </style>
@@ -4514,6 +4720,43 @@ if ('ontouchstart' in window) {
 
 <!-- ── SCROLL REVEAL ── -->
 <script>
+// ── REVIEWS CAROUSEL
+let revIdx = 0;
+const revTotal = 5;
+function getRevVisible() {
+  return window.innerWidth <= 900 ? 1 : (window.innerWidth <= 1200 ? 2 : 3);
+}
+function goRev(n) {
+  const visible = getRevVisible();
+  const max = revTotal - visible;
+  revIdx = Math.max(0, Math.min(n, max));
+  const track = document.getElementById('revTrack');
+  if (!track) return;
+  const card = track.querySelector('.rev-card');
+  if (!card) return;
+  const gap = 24;
+  const cardW = card.offsetWidth + gap;
+  track.style.transform = `translateX(-${revIdx * cardW}px)`;
+  document.querySelectorAll('.rev-dot').forEach((d,i) => d.classList.toggle('active', i === revIdx));
+}
+function shiftRev(dir) { goRev(revIdx + dir); }
+// Auto-advance
+let revTimer = setInterval(() => shiftRev(1), 5000);
+document.getElementById('revTrack')?.addEventListener('mouseenter', () => clearInterval(revTimer));
+document.getElementById('revTrack')?.addEventListener('mouseleave', () => { revTimer = setInterval(() => shiftRev(1), 5000); });
+// Touch swipe
+(function(){
+  const el = document.getElementById('revTrack');
+  if (!el) return;
+  let startX = 0;
+  el.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, {passive:true});
+  el.addEventListener('touchend', e => {
+    const diff = startX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) shiftRev(diff > 0 ? 1 : -1);
+  }, {passive:true});
+})();
+
+
 function setupScrollReveal() {
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => {
