@@ -1535,12 +1535,7 @@ window.addEventListener('scroll',()=>nav.classList.toggle('solid',scrollY>80));
 const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:.1});
 document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
 
-// ── SERVICE CARDS DRAG
-const ss=document.getElementById('svcScroll');
-let dragging=false,sx,sl;
-ss.addEventListener('mousedown',e=>{dragging=true;sx=e.pageX-ss.offsetLeft;sl=ss.scrollLeft;ss.classList.add('grab')});
-document.addEventListener('mouseup',()=>{dragging=false;ss.classList.remove('grab')});
-document.addEventListener('mousemove',e=>{if(!dragging)return;e.preventDefault();ss.scrollLeft=sl-(e.pageX-ss.offsetLeft-sx)*1.5});
+// ── SERVICE CARDS DRAG (removed with servicios section)
 
 // ── SMOOTH SCROLL
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
