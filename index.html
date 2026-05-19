@@ -350,7 +350,7 @@ nav.solid{background:rgba(28,30,23,.96);backdrop-filter:blur(20px);border-bottom
 .guest-label{font-size:.82rem;color:rgba(253,250,246,.4);font-style:italic;text-align:center;margin-top:.3rem}
 
 /* Villa selector */
-.villa-sel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem}
+.villa-sel-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-bottom:2rem}
 .villa-opt{border:1px solid rgba(174,133,96,.18);padding:1.2rem;cursor:pointer;transition:all .3s;position:relative;text-align:center}
 .villa-opt:hover{border-color:rgba(174,133,96,.5);background:rgba(174,133,96,.06)}
 .villa-opt.selected{border-color:var(--g);background:rgba(29,77,58,.25)}
@@ -359,7 +359,7 @@ nav.solid{background:rgba(28,30,23,.96);backdrop-filter:blur(20px);border-bottom
 .vo-name{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.15em;color:var(--wh);text-transform:uppercase;margin-bottom:.3rem}
 .vo-spec{font-size:.76rem;color:rgba(253,250,246,.42);margin-bottom:.4rem}
 .vo-price{font-family:'Playfair Display',serif;font-style:italic;font-size:.95rem;color:var(--vl)}
-.filter-note{text-align:center;font-size:.8rem;color:rgba(253,250,246,.3);font-style:italic;margin-bottom:1.5rem}
+.filter-note{text-align:center;font-size:.82rem;color:rgba(174,133,96,.7);font-style:italic;margin-bottom:1.5rem;letter-spacing:.02em}
 
 /* Service options */
 .svc-opts{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-bottom:2rem}
@@ -1747,7 +1747,7 @@ function renderVillaGrid() {
       ${imgEl}<div class="vov"></div>
       <div class="vinfo"><div class="vname">${v.name}</div><div class="vdet">${v.hab} hab · ${v.guests} huésp.</div></div>
       <div class="vfoot"><div class="vprice-l">Desde</div><div class="vprice-v">${precioDisplay}</div>
-      <div class="vprice-x">${v.hab} hab · ${v.guests} huésp.</div><button class="vbtn">Ver villa</button></div>
+      <div class="vprice-x">${v.hab} hab · ${v.guests} huésp.</div><button class="vbtn">Ver villa ›</button></div>
     </div>`;
   }).join('');
 }
@@ -2078,24 +2078,40 @@ function renderVillas(){
   const g=state.guests;
   const grid=document.getElementById('villaGrid');
   const note=document.getElementById('filterNote');
-  const suitable=getVillas().filter(v=>v.guests>=g);
-  const toShow=suitable.length>0?suitable:getVillas();
-  note.textContent = suitable.length>0
-    ? `Casas para ${g} personas o más (${suitable.length} disponibles)`
-    : 'Mostrando todas las casas — consultanos por grupos grandes';
+
+  // Filter: only villas that fit the group, sorted cheapest first
+  const allVillas=getVillas();
+  const suitable=allVillas
+    .filter(v=>v.guests>=g)
+    .sort((a,b)=>(a.precio_noche||a.price||0)-(b.precio_noche||b.price||0));
+  const toShow=suitable.length>0?suitable:allVillas.sort((a,b)=>(a.precio_noche||a.price||0)-(b.precio_noche||b.price||0));
+
+  if(suitable.length>0){
+    note.textContent=`${suitable.length} casa${suitable.length>1?'s':''} disponible${suitable.length>1?'s':''} para ${g} personas · ordenadas de menor a mayor precio`;
+  } else {
+    note.textContent='Mostrando todas las casas — consultanos por grupos grandes';
+  }
+
   grid.innerHTML=toShow.map(v=>`
-    <div class="villa-opt ${v.id===state.villaId?'selected':''}"
+    <div class="villa-opt ${v.id===state.villaId?'selected':''} ${v.guests<g?'villa-opt-insuf':''}"
          onclick="selectVilla('${v.id}')">
       <div class="vo-name">${v.name}</div>
       <div class="vo-spec">${v.hab} hab · hasta ${v.guests} pers.</div>
       <div class="vo-price">desde USD $${(v.precio_noche||v.price||0).toLocaleString()}/noche</div>
     </div>`).join('');
+
   // Scroll to preselected villa if coming from modal
   if(state.villaId){
     setTimeout(()=>{
       const sel=grid.querySelector('.villa-opt.selected');
       if(sel) sel.scrollIntoView({behavior:'smooth',block:'nearest'});
     },200);
+  }
+  // If a villa was preselected but doesn't appear (filtered out by guests), show warning
+  if(state.villaId && !toShow.find(v=>v.id===state.villaId)){
+    state.villaId=null;
+    const n=note.textContent;
+    note.textContent=n+' — La villa que habías elegido no tiene capacidad suficiente para tu grupo.';
   }
 }
 
@@ -3443,13 +3459,15 @@ function selectVillaFromModal(id) {
   // Scroll to configurator
   const conf = document.getElementById('tu-experiencia');
   if(conf) conf.scrollIntoView({behavior:'smooth', block:'start'});
-  // If dates already set, jump to step 3 (villa confirmation) then step 4
   setTimeout(()=>{
     if(state.dateIn && state.dateOut && state.nights > 0){
+      // Dates set → go straight to villa step
       goStep(3);
       renderVillas();
+    } else {
+      // No dates yet → start from step 1, villa already preselected for later
+      goStep(1);
     }
-    // else stay on step 1 (dates) with villa preselected
   }, 700);
 }
 
