@@ -3324,9 +3324,34 @@ function openGalleryFromModal() {
   const folderId  = window._currentVillaFolderId;
   const portada   = window._currentVillaPortada;
   const name      = window._currentVillaName || '';
-  // Construir carpetaUrl desde folderId
   const carpetaUrl = folderId ? 'https://drive.google.com/drive/folders/' + folderId : '';
-  openVillaGallery('modal', name, carpetaUrl, portada);
+  // Call openVillaGallery — defined later in the page
+  if (typeof openVillaGallery === 'function') {
+    openVillaGallery('modal', name, carpetaUrl, portada);
+  } else {
+    // Fallback: open portada in lightbox
+    if (portada) {
+      window._galleryFotos = [{ url: portada, thumb: portada, name: name }];
+      window._galleryCur = 0;
+      const lb = document.getElementById('gallery-lb');
+      const img = document.getElementById('gallery-lb-img');
+      const title = document.getElementById('gallery-lb-title');
+      const counter = document.getElementById('gallery-lb-counter');
+      const thumbs = document.getElementById('gallery-lb-thumbs');
+      const prev = document.getElementById('gallery-lb-prev');
+      const next = document.getElementById('gallery-lb-next');
+      if (lb && img) {
+        title.textContent = name;
+        img.src = portada;
+        counter.textContent = '1 / 1';
+        if (thumbs) thumbs.style.display = 'none';
+        if (prev) prev.style.display = 'none';
+        if (next) next.style.display = 'none';
+        lb.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+  }
 }
 
 // ── CARRUSEL DE FOTOS ────────────────────────────────────────────────────────
