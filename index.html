@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="description" content="Tu hogar en el Caribe. Sin itinerarios, sin apuros. Una casa privada en Casa de Campo Resort con todo lo que necesitás — a tu manera.">
 <title>MG Experiences — Casa de Campo, República Dominicana</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -692,7 +692,7 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
 
 
 <!-- MOBILE NAV OVERLAY -->
-<div id="mobile-nav-overlay" role="dialog" aria-label="Navegación">
+<div id="mobile-nav-overlay" role="dialog" aria-label="Navegación" style="display:none">
   <button id="mobile-nav-close" onclick="toggleMobileNav()" aria-label="Cerrar">×</button>
   <a href="#servicios" onclick="toggleMobileNav()">Servicios</a>
   <a href="#villas" onclick="toggleMobileNav()">Villas</a>
@@ -4393,7 +4393,7 @@ document.addEventListener('keydown', e => {
 </script>
 
 <!-- ── VILLA GALLERY FULLSCREEN LIGHTBOX ── -->
-<div id="gallery-lb" role="dialog" aria-label="Galería de fotos">
+<div id="gallery-lb" role="dialog" aria-label="Galería de fotos" style="display:none">
   <div id="gallery-lb-header">
     <div id="gallery-lb-title">Galería</div>
     <div id="gallery-lb-counter"></div>
@@ -4426,6 +4426,7 @@ async function openVillaGallery(villaId, villaName, carpetaUrl, fotoUrl) {
   const counter = document.getElementById('gallery-lb-counter');
 
   // Show lightbox immediately
+  lb.style.display = 'flex';
   lb.classList.add('active');
   document.body.style.overflow = 'hidden';
   title.textContent = villaName;
@@ -4543,7 +4544,9 @@ function galleryLbNav(dir) {
 }
 
 function closeGalleryLb() {
-  document.getElementById('gallery-lb').classList.remove('active');
+  const lb = document.getElementById('gallery-lb');
+  lb.classList.remove('active');
+  lb.style.display = 'none';
   document.body.style.overflow = '';
   _galleryFotos = [];
 }
@@ -4574,6 +4577,7 @@ function toggleMobileNav() {
   const overlay = document.getElementById('mobile-nav-overlay');
   const hamburger = document.getElementById('nav-hamburger');
   const isOpen = overlay.classList.toggle('open');
+  overlay.style.display = isOpen ? 'flex' : 'none';
   document.body.style.overflow = isOpen ? 'hidden' : '';
   // Animate hamburger → X
   const spans = hamburger.querySelectorAll('span');
