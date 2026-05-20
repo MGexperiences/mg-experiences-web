@@ -1729,41 +1729,66 @@ nav.solid{background:rgba(28,30,23,.85);backdrop-filter:saturate(180%) blur(20px
 
 /* Desktop: improved spacing for panels */
 @media(min-width:1024px){
-  .config{padding:6rem 3rem}
-  .cpanel{padding:3rem}
-  .cpanel-title{font-size:2rem;margin-bottom:1rem}
-  .cpanel-sub{font-size:1rem;margin-bottom:2rem}
+  .config{padding:5rem 2rem}
+  .config-inner{max-width:90vw;margin:0 auto}
   
-  /* Grid for services - 3 columns en desktop para mejor distribución */
-  .svc-opts{grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-bottom:2.5rem}
-  .villa-sel-grid{grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-bottom:2.5rem}
+  .cpanel{
+    padding:3.5rem;
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(174,133,96,.15);
+    border-radius:24px;
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px)
+  }
+  .cpanel-title{font-size:2.2rem;margin-bottom:1.2rem}
+  .cpanel-sub{font-size:1.05rem;margin-bottom:2.5rem;max-width:680px;margin-left:auto;margin-right:auto}
+  
+  /* Grid para services - 3 columnas responsive */
+  .svc-opts{grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-bottom:2.5rem}
+  .villa-sel-grid{grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem;margin-bottom:2.5rem}
   
   /* Steps bar desktop */
-  .steps-bar{gap:.3rem;margin-bottom:5rem}
-  .step-dot{width:40px;height:40px;font-size:.7rem}
-  .step-label{font-size:.66rem;margin-left:.8rem}
-  .step-line{width:50px;margin:0 1rem}
+  .steps-bar{gap:0;margin-bottom:5rem;flex-wrap:nowrap}
+  .step-dot{width:44px;height:44px;font-size:.75rem;flex-shrink:0}
+  .step-label{font-size:.7rem;margin-left:.9rem;flex-shrink:0}
+  .step-line{width:60px;margin:0 1.2rem;flex-shrink:0}
   
   /* Mejor spacing general */
-  .date-row{gap:2rem;max-width:100%}
-  .guest-row{gap:2rem;margin:0 auto 3rem}
-  .guest-num{font-size:3.5rem;min-width:4rem}
+  .date-row{gap:3rem;max-width:100%;justify-content:center}
+  .guest-row{gap:3rem;margin:0 auto 3.5rem;width:fit-content}
+  .guest-num{font-size:4rem;min-width:5rem}
+  .guest-btn{width:64px;height:64px;font-size:1.8rem}
   
   /* Summary en desktop */
-  .summary-box{padding:3rem;margin-bottom:2.5rem}
-  .summary-line{padding:.6rem 0}
-  .sl-name{font-size:.95rem}
-  .sl-val{font-size:1.05rem}
-  .cnav{gap:1.5rem;margin-top:3rem}
+  .summary-box{padding:3.5rem;margin-bottom:3rem;border-radius:20px}
+  .summary-title{font-size:.8rem;margin-bottom:2rem}
+  .summary-line{padding:.7rem 0;font-size:1.05rem}
+  .sl-name{font-size:1rem}
+  .sl-val{font-size:1.1rem}
+  .st-label{font-size:.75rem}
+  .st-val{font-size:2rem}
+  .cnav{gap:2rem;margin-top:3.5rem;justify-content:center}
+  .cbtn-back{padding:1rem 0;font-size:.75rem}
+  .cbtn-next,.cbtn-wa{padding:1.1rem 3rem;font-size:.75rem}
+}
+
+@media(min-width:1440px){
+  .config{padding:6rem 4rem}
+  .config-inner{max-width:1400px}
+  
+  .svc-opts{grid-template-columns:repeat(4,1fr)}
+  .villa-sel-grid{grid-template-columns:repeat(4,1fr)}
+  .acc-body-wrapper{grid-template-columns:repeat(4,1fr)}
 }
 
 /* Tablet improvement */
 @media(min-width:768px) and (max-width:1023px){
-  .config{padding:6rem 2.5rem}
+  .config{padding:5rem 2rem}
   .cpanel{padding:2.5rem}
   
   .svc-opts{grid-template-columns:repeat(2,1fr)}
   .villa-sel-grid{grid-template-columns:repeat(2,1fr)}
+  .acc-body-wrapper{grid-template-columns:repeat(2,1fr)}
 }
 
 /* Trust badges under config header */
@@ -1803,12 +1828,12 @@ nav.solid{background:rgba(28,30,23,.85);backdrop-filter:saturate(180%) blur(20px
 .step-line{width:40px;height:1px;background:rgba(174,133,96,.2);margin:0 .8rem;flex-shrink:0}
 
 /* Panels */
-.cpanel{display:none;animation:fadePanel .5s ease both;background:rgba(255,255,255,.03);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(174,133,96,.1);border-radius:20px;padding:2.5rem}
+.cpanel{display:none;animation:fadePanel .5s ease both;background:rgba(255,255,255,.02);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(174,133,96,.08);border-radius:16px;padding:2rem}
 .cpanel.active{display:block}
 @keyframes fadePanel{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 
-.cpanel-title{font-family:'Playfair Display',serif;font-style:italic;font-size:1.7rem;color:var(--wh);margin-bottom:.5rem;text-align:center}
-.cpanel-sub{font-size:.9rem;color:rgba(253,250,246,.45);text-align:center;margin-bottom:2.5rem;font-style:italic}
+.cpanel-title{font-family:'Playfair Display',serif;font-style:italic;font-size:1.5rem;color:var(--wh);margin-bottom:.6rem;text-align:center}
+.cpanel-sub{font-size:.9rem;color:rgba(253,250,246,.5);text-align:center;margin-bottom:2rem;font-style:italic}
 
 /* Date inputs */
 .date-row{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;max-width:520px;margin:0 auto 2rem}
