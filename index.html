@@ -4192,8 +4192,8 @@ function selectVilla(id){
     el.classList.toggle('selected',el.getAttribute('onclick').includes("'"+id+"'"));
   });
   
-  // Track villa seleccionada
-  const villaData = villaDataFromSheet.find(v => v.id === id);
+  // Track villa seleccionada (villaDataFromSheet es un objeto, no array)
+  const villaData = villaDataFromSheet[id];
   if(villaData) {
     trackVillaSelected(villaData.name, villaData.precio_noche || villaData.price || 0);
   }
@@ -5835,49 +5835,34 @@ async function initCarousel(folderId, portadaUrl) {
 
   let fotos = [];
 
-  // Intentar obtener fotos de Google Drive si hay folderID
   if(folderId) {
     try {
-      const url = `https://www.googleapis.com/drive/v3/files?q='${folderId}'+in+parents+and+(mimeType+contains+'image/jpeg'+or+mimeType+contains+'image/png'+or+mimeType+contains+'image/webp')&fields=files(id,name,webContentLink)&orderBy=name&pageSize=50&key=${DRIVE_KEY}`;
+      const url = `https://www.googleapis.com/drive/v3/files?q='${folderId}'+in+parents+and+mimeType+contains+'image/'&fields=files(id,name)&orderBy=name&pageSize=100&key=${DRIVE_KEY}`;
       const res  = await fetch(url);
       const data = await res.json();
       if(data.files && data.files.length > 0) {
-        // Usar webContentLink para obtener URLs directas
-        fotos = data.files.map(f => {
-          // URL directa a thumbnail de Google Drive
-          return `https://drive.google.com/thumbnail?id=${f.id}&sz=w1200`;
-        });
-        console.log('Drive fotos encontradas:', fotos.length);
-      } else {
-        console.log('Drive carpeta vacía o sin imágenes');
+        fotos = data.files.map(f => `https://drive.google.com/thumbnail?id=${f.id}&sz=w1200`);
       }
-    } catch(e) { 
-      console.log('Error trayendo fotos de Drive:', e);
-    }
+    } catch(e) { console.log('Drive folder error:', e); }
   }
 
-  // Fallback: si no hay fotos de Drive, usar portada
-  if(fotos.length === 0 && portadaUrl) {
-    fotos = [portadaUrl];
-    console.log('Usando portada como fallback');
-  }
-  
-  // Si no hay fotos, mostrar mensaje
+  // Fallback: si no hay fotos de carpeta, usar solo la portada
+  if(fotos.length === 0 && portadaUrl) fotos = [portadaUrl];
   if(fotos.length === 0) {
-    el.innerHTML = '<div class="vm-carousel-loading" style="display:flex;align-items:center;justify-content:center;height:300px;background:rgba(30,40,35,.5);color:rgba(212,184,154,.5);font-size:.85rem">Sin fotos disponibles</div>';
+    el.innerHTML = '<div class="vm-carousel-loading">Sin fotos disponibles</div>';
     return;
   }
 
   let cur = 0;
   const render = () => {
     el.innerHTML = `
-      <div class="vm-carousel-track" id="vmTrack" style="transform:translateX(-${cur*100}%);display:flex;transition:transform .3s ease">
-        ${fotos.map((u, idx) => `<div style="min-width:100%;flex-shrink:0"><img src="${u}" loading="lazy" alt="foto villa ${idx+1}" style="width:100%;height:300px;object-fit:cover;display:block"></div>`).join('')}
+      <div class="vm-carousel-track" id="vmTrack" style="transform:translateX(-${cur*100}%)">
+        ${fotos.map(u => `<img src="${u}" loading="lazy" alt="foto villa">`).join('')}
       </div>
       ${fotos.length > 1 ? `
-        <button class="vm-carousel-btn prev" onclick="carouselMove(-1)" style="position:absolute;left:.5rem;top:50%;transform:translateY(-50%);z-index:5;background:rgba(10,12,8,.8);border:none;color:var(--vl);width:40px;height:40px;font-size:1.5rem;cursor:pointer;border-radius:50%;transition:all .2s">‹</button>
-        <button class="vm-carousel-btn next" onclick="carouselMove(1)" style="position:absolute;right:.5rem;top:50%;transform:translateY(-50%);z-index:5;background:rgba(10,12,8,.8);border:none;color:var(--vl);width:40px;height:40px;font-size:1.5rem;cursor:pointer;border-radius:50%;transition:all .2s">›</button>
-        <div class="vm-carousel-counter" style="position:absolute;bottom:.8rem;left:.8rem;background:rgba(10,12,8,.8);color:var(--vl);padding:.3rem .6rem;font-size:.7rem;border-radius:4px;font-family:'Cinzel',serif;letter-spacing:.1em">${cur+1} / ${fotos.length}</div>
+        <button class="vm-carousel-btn prev" onclick="carouselMove(-1)">‹</button>
+        <button class="vm-carousel-btn next" onclick="carouselMove(1)">›</button>
+        <div class="vm-carousel-counter">${cur+1} / ${fotos.length}</div>
       ` : ''}`;
   };
 
@@ -5889,8 +5874,6 @@ async function initCarousel(folderId, portadaUrl) {
 
 function carouselMove(dir) {
   const fotos = window._carouselFotos || [];
-  if(fotos.length === 0) return;
-  
   window._carouselCur = (window._carouselCur + dir + fotos.length) % fotos.length;
   const track = document.getElementById('vmTrack');
   if(track) {
