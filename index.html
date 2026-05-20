@@ -1723,9 +1723,48 @@ nav.solid{background:rgba(28,30,23,.85);backdrop-filter:saturate(180%) blur(20px
   background:radial-gradient(ellipse 80% 60% at 50% 0%, rgba(174,133,96,.06) 0%, transparent 70%);
   pointer-events:none;
 }
-.config-inner{max-width:1000px;margin:0 auto;position:relative;z-index:1}
+.config-inner{max-width:1200px;margin:0 auto;position:relative;z-index:1}
 .config-head{text-align:center;margin-bottom:4rem}
 .config-head .rule{margin:1.4rem auto}
+
+/* Desktop: improved spacing for panels */
+@media(min-width:1024px){
+  .config{padding:6rem 3rem}
+  .cpanel{padding:3rem}
+  .cpanel-title{font-size:2rem;margin-bottom:1rem}
+  .cpanel-sub{font-size:1rem;margin-bottom:2rem}
+  
+  /* Grid for services - 3 columns en desktop para mejor distribución */
+  .svc-opts{grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-bottom:2.5rem}
+  .villa-sel-grid{grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-bottom:2.5rem}
+  
+  /* Steps bar desktop */
+  .steps-bar{gap:.3rem;margin-bottom:5rem}
+  .step-dot{width:40px;height:40px;font-size:.7rem}
+  .step-label{font-size:.66rem;margin-left:.8rem}
+  .step-line{width:50px;margin:0 1rem}
+  
+  /* Mejor spacing general */
+  .date-row{gap:2rem;max-width:100%}
+  .guest-row{gap:2rem;margin:0 auto 3rem}
+  .guest-num{font-size:3.5rem;min-width:4rem}
+  
+  /* Summary en desktop */
+  .summary-box{padding:3rem;margin-bottom:2.5rem}
+  .summary-line{padding:.6rem 0}
+  .sl-name{font-size:.95rem}
+  .sl-val{font-size:1.05rem}
+  .cnav{gap:1.5rem;margin-top:3rem}
+}
+
+/* Tablet improvement */
+@media(min-width:768px) and (max-width:1023px){
+  .config{padding:6rem 2.5rem}
+  .cpanel{padding:2.5rem}
+  
+  .svc-opts{grid-template-columns:repeat(2,1fr)}
+  .villa-sel-grid{grid-template-columns:repeat(2,1fr)}
+}
 
 /* Trust badges under config header */
 .config-trust-badges{
@@ -4413,15 +4452,41 @@ function renderSummary(){
 
   let extrasTotal=0;
   const extras=[];
+  
+  // ── TRASLADOS (Multi - ida + vuelta)
+  let trasladoTotal=0;
+  const trasladosUsados=[];
   Object.entries(state.svcs).forEach(([k,v])=>{
-    if(k==='traslado'||!v.price) return;
+    if(k.startsWith('traslado_') && v.price){
+      let amt=v.price*v.qty;
+      trasladoTotal+=amt;
+      trasladosUsados.push({name:v.name, qty:v.qty, price:v.price, amt});
+    }
+  });
+  if(trasladosUsados.length>0){
+    trasladosUsados.forEach(t=>{
+      const label=`Traslado Aeropuerto Punta Cana → Casa de Campo (Ida + Vuelta) - ${t.name} × ${t.qty}`;
+      extras.push({label,amt:t.amt});
+    });
+    extrasTotal+=trasladoTotal;
+  }
+  
+  // ── OTROS SERVICIOS (Barcos, Golf, Villa, Aeropuerto VIP, etc)
+  Object.entries(state.svcs).forEach(([k,v])=>{
+    if(k.startsWith('traslado_')||k.startsWith('barco_dias')||!v.price) return;
     let amt=v.price;
     let label=v.name;
-    if(v.perPerson){amt=v.price*guests;label+=` × ${guests} pers.`}
-    else if(v.perNight){amt=v.price*nights;label+=` × ${nights} ${nights===1?'noche':'noches'}`}
+    if(v.qty && v.qty>1){
+      label+=` × ${v.qty}`;
+      amt=v.price*v.qty;
+    }
+    if(v.perPerson){amt=v.price*guests;label+=` (${guests} pers.)`}
+    else if(v.perNight){amt=v.price*nights;label+=` (${nights} ${nights===1?'noche':'noches'})`}
+    else if(k.startsWith('aeropuerto_')){amt=v.price*v.qty;label+=` × ${v.qty} personas`}
     extrasTotal+=amt;
     extras.push({label,amt});
   });
+  
   if(extras.length>0){
     html+=`<div style="height:1px;background:rgba(174,133,96,.15);margin:1rem 0"></div>`;
     extras.forEach(e=>{
