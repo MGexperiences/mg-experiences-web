@@ -2288,14 +2288,14 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
 <section class="config rv" id="tu-experiencia">
   <div class="config-inner">
     <div class="config-head" data-reveal>
-      <span class="lbl">Sin compromiso · Sin tarjeta de crédito</span>
-      <h2 class="bigt">Tu estadía ideal,<br><em>calculada en 2 minutos</em></h2>
+      <span class="lbl">Rápido · Personalizado · Sin obligaciones</span>
+      <h2 class="bigt">Tu presupuesto,<br><em>en 5 pasos</em></h2>
       <div class="rule rc"></div>
-      <p class="prose" style="margin:0 auto">Elegís fechas, villa y servicios. Nosotros armamos tu presupuesto personalizado y te lo enviamos por WhatsApp.</p>
+      <p class="prose" style="margin:0 auto;max-width:520px">Elegís fechas, villa y servicios. Generamos un presupuesto aproximado que verificamos en tiempo real y te enviamos personalizado.</p>
       <div class="config-trust-badges">
-        <span class="ctb"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Respuesta en menos de 2hs</span>
-        <span class="ctb"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Sin compromiso de reserva</span>
-        <span class="ctb"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Precio real, sin sorpresas</span>
+        <span class="ctb"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Presupuesto personalizado</span>
+        <span class="ctb"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Verificamos disponibilidad</span>
+        <span class="ctb"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Sin compromiso</span>
       </div>
     </div>
 
@@ -2303,40 +2303,35 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
     <div class="steps-bar">
       <div class="step-item">
         <div class="step-dot active" id="dot0">1</div>
-        <span class="step-label active" id="lbl0">Estadía</span>
+        <span class="step-label active" id="lbl0">Fechas</span>
       </div>
       <div class="step-line"></div>
       <div class="step-item">
         <div class="step-dot" id="dot1">2</div>
-        <span class="step-label" id="lbl1">Fechas</span>
+        <span class="step-label" id="lbl1">Personas</span>
       </div>
       <div class="step-line"></div>
       <div class="step-item">
         <div class="step-dot" id="dot2">3</div>
-        <span class="step-label" id="lbl2">Personas</span>
+        <span class="step-label" id="lbl2">Villa</span>
       </div>
       <div class="step-line"></div>
       <div class="step-item">
         <div class="step-dot" id="dot3">4</div>
-        <span class="step-label" id="lbl3">Villa</span>
+        <span class="step-label" id="lbl3">Servicios</span>
       </div>
       <div class="step-line"></div>
       <div class="step-item">
         <div class="step-dot" id="dot4">5</div>
-        <span class="step-label" id="lbl4">Servicios</span>
-      </div>
-      <div class="step-line"></div>
-      <div class="step-item">
-        <div class="step-dot" id="dot5">6</div>
-        <span class="step-label" id="lbl5">Resumen</span>
+        <span class="step-label" id="lbl4">Resumen</span>
       </div>
     </div>
 
-    <!-- STEP 0: Intent -->
-    <div class="cpanel active" id="panel0">
+    <!-- STEP 0: Intent - HIDDEN (redirect to step 1 directly) -->
+    <div class="cpanel" id="panel0" style="display:none">
       <div class="cpanel-title">¿Qué tipo de estadía buscás?</div>
       <p class="cpanel-sub">Elegí lo que mejor describe tu viaje — personalizamos las opciones para vos.</p>
-      <div class="intent-grid">
+      <div class="intent-grid" style="display:none">
         <button class="intent-card" onclick="selectIntent('familia')">
           <div class="intent-icon">
             <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
@@ -2379,8 +2374,8 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
 
     <!-- STEP 1: Fechas -->
     <div class="cpanel active" id="panel1">
-      <div class="cpanel-title">¿Cuándo viajan?</div>
-      <p class="cpanel-sub">Las fechas ayudan a ver qué casas están disponibles para ese período.</p>
+      <div class="cpanel-title">¿Cuándo querés viajar?</div>
+      <p class="cpanel-sub">Las fechas afectan disponibilidad y temporada. Elegí el período que te interesa.</p>
 
       <!-- Custom date picker -->
       <div class="cal-wrap">
@@ -2415,7 +2410,7 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
 
       <div id="nights-display" style="text-align:center;font-family:'Playfair Display',serif;font-style:italic;font-size:1.2rem;color:var(--vl);min-height:1.8rem;margin-top:.5rem"></div>
       <div class="cnav">
-        <button class="cbtn-back" onclick="goStep(0)">← Volver</button>
+        <button class="cbtn-back" style="visibility:hidden">← Volver</button>
         <button class="cbtn-next" onclick="goStep(2)">Siguiente →</button>
       </div>
     </div>
@@ -2440,8 +2435,8 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
 
     <!-- STEP 3: Villa -->
     <div class="cpanel" id="panel3">
-      <div class="cpanel-title">¿Dónde se quedan?</div>
-      <p class="cpanel-sub filter-note" id="filterNote">Casas disponibles para tu grupo</p>
+      <div class="cpanel-title">¿Qué casa te gusta?</div>
+      <p class="cpanel-sub filter-note" id="filterNote">Casas sugeridas para tu grupo</p>
       <div class="villa-sel-grid" id="villaGrid"></div>
       <div class="cnav">
         <button class="cbtn-back" onclick="goStep(2)">← Volver</button>
@@ -2451,8 +2446,8 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
 
     <!-- STEP 4: Servicios -->
     <div class="cpanel" id="panel4">
-      <div class="cpanel-title">¿Qué querés agregar?</div>
-      <p class="cpanel-sub">Todo es opcional. Sumá lo que tiene sentido para este viaje, dejá afuera lo que no.</p>
+      <div class="cpanel-title">Servicios adicionales</div>
+      <p class="cpanel-sub">Sumá lo que necesitás: traslados, golf, embarcaciones, chef privado. Los precios se ajustan según disponibilidad.</p>
       <div class="svc-opts" id="svcOptsContainer" style="grid-template-columns:1fr 1fr">
         <!-- Renderizado dinámico desde renderServices() -->
       </div>
@@ -2464,22 +2459,23 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
 
     <!-- STEP 5: Summary -->
     <div class="cpanel" id="panel5">
-      <div class="cpanel-title">Tu estadía</div>
-      <p class="cpanel-sub">Revisá el detalle. Si querés cambiar algo, volvé atrás. Si está todo bien, envianos la consulta y nos contactamos a la brevedad.</p>
+      <div class="cpanel-title">Tu presupuesto aproximado</div>
+      <p class="cpanel-sub">Estos precios son referenciales según temporada. Nos contactamos para confirmar disponibilidad, tarifas exactas y detalles de tu viaje.</p>
       <div class="summary-box" id="summaryBox"></div>
       <div class="cnav">
         <button class="cbtn-back" onclick="goStep(4)">← Modificar</button>
         <button class="cbtn-wa" id="submitBtn" onclick="enviarConsulta()">
-          Enviar consulta ✦
+          Confirmar presupuesto ✦
         </button>
       </div>
       <!-- Pantalla de confirmación -->
-      <div id="confirmBox" style="display:none;text-align:center;padding:2rem 1rem">
-        <div style="font-size:2rem;margin-bottom:1rem">✓</div>
-        <div style="font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.25em;color:var(--v);text-transform:uppercase;margin-bottom:.8rem">Consulta enviada</div>
-        <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.15rem;color:rgba(253,250,246,.7);line-height:1.8">
-          Gracias. El equipo de MG Experiences<br>se contacta con vos a la brevedad.
+      <div id="confirmBox" style="display:none;text-align:center;padding:2.5rem 1.5rem">
+        <div style="font-size:2.4rem;margin-bottom:1.2rem">✓</div>
+        <div style="font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.25em;color:var(--vl);text-transform:uppercase;margin-bottom:1rem">Presupuesto confirmado</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:rgba(253,250,246,.75);line-height:1.9;margin-bottom:1.5rem">
+          Tu presupuesto fue enviado.<br>Nos contactamos en menos de 2 horas para confirmar disponibilidad, ajustar detalles y cerrar tu viaje.
         </div>
+        <button class="btn bf" style="font-size:.65rem" onclick="openAsistente()">Hablar con tu Asistente ✦</button>
       </div>
     </div>
 
@@ -3853,7 +3849,7 @@ function selectCalDay(y, m, d) {
 }
 
 // ── STATE
-let state = {step:0, nights:0, guests:8, villaId:null, svcs:{}, barcoId:null, golfId:null, aeropuertoId:null, openAccordion:null};
+let state = {step:1, nights:0, guests:8, villaId:null, svcs:{}, barcoId:null, golfId:null, aeropuertoId:null, openAccordion:null};
 
 // ── VILLA CATALOG: select and jump to configurator
 function selectVillaAndGo(villaId){
@@ -3936,9 +3932,9 @@ function renderVillas(){
   const toShow=suitable.length>0?suitable:allVillas.sort((a,b)=>(a.precio_noche||a.price||0)-(b.precio_noche||b.price||0));
 
   if(suitable.length>0){
-    note.textContent=`${suitable.length} casa${suitable.length>1?'s':''} disponible${suitable.length>1?'s':''} para ${g} personas · ordenadas de menor a mayor precio`;
+    note.textContent=`${suitable.length} casa${suitable.length>1?'s':''} sugerida${suitable.length>1?'s':''} para ${g} personas — confirmamos disponibilidad para tus fechas`;
   } else {
-    note.textContent='Mostrando todas las casas — consultanos por grupos grandes';
+    note.textContent='Mostrando todas las casas — nos contactamos para confirmar qué está disponible';
   }
 
   grid.innerHTML=toShow.map(v=>`
@@ -4165,13 +4161,18 @@ function renderSummary(){
   const dout=new Date(state.dateOut+'T12:00:00');
   const fmt=d=>d.toLocaleDateString('es-AR',{day:'numeric',month:'long'});
 
-  let html=`<div class="summary-title">Detalle de tu estadía</div>`;
-  html+=`<div class="summary-line"><span class="sl-name">Fechas</span><span class="sl-val">${fmt(di)} → ${fmt(dout)} · ${nights} ${nights===1?'noche':'noches'}</span></div>`;
+  let html=`<div class="summary-title">Tu presupuesto</div>`;
+  html+=`<div style="background:rgba(174,133,96,.08);border-left:3px solid var(--vl);padding:1rem 1.2rem;margin-bottom:1.5rem;border-radius:4px;font-size:.9rem;color:rgba(253,250,246,.7)">
+    <strong>Precios aproximados</strong> · Temporada, disponibilidad y detalles específicos se confirman en la conversación.
+  </div>`;
+  html+=`<div class="summary-line"><span class="sl-name">Período</span><span class="sl-val">${fmt(di)} → ${fmt(dout)}</span></div>`;
+  html+=`<div class="summary-line"><span class="sl-name">Noches</span><span class="sl-val">${nights} ${nights===1?'noche':'noches'}</span></div>`;
   html+=`<div class="summary-line"><span class="sl-name">Personas</span><span class="sl-val">${guests}</span></div>`;
+  html+=`<div style="height:1px;background:rgba(174,133,96,.15);margin:1rem 0"></div>`;
   if(villa){
-    html+=`<div class="summary-line"><span class="sl-name">${villa.name}</span><span class="sl-val">$${villa.price.toLocaleString()}/noche × ${nights} = $${villaTotal.toLocaleString()}</span></div>`;
+    html+=`<div class="summary-line"><span class="sl-name">${villa.name}</span><span class="sl-val" style="color:var(--vl)">≈ $${villa.price.toLocaleString()}/noche</span></div>`;
   }
-  html+=`<div class="summary-line"><span class="sl-name">Fee Casa de Campo</span><span class="sl-val">$${cdcTotal.toLocaleString()}</span></div>`;
+  html+=`<div class="summary-line"><span class="sl-name">Gestión Casa de Campo</span><span class="sl-val" style="color:var(--vl)">≈ $${cdcTotal.toLocaleString()}</span></div>`;
 
   let extrasTotal=0;
   const extras=[];
@@ -4184,16 +4185,20 @@ function renderSummary(){
     extrasTotal+=amt;
     extras.push({label,amt});
   });
-  extras.forEach(e=>{
-    html+=`<div class="summary-line"><span class="sl-name">${e.label}</span><span class="sl-val">$${e.amt.toLocaleString()}</span></div>`;
-  });
+  if(extras.length>0){
+    html+=`<div style="height:1px;background:rgba(174,133,96,.15);margin:1rem 0"></div>`;
+    extras.forEach(e=>{
+      html+=`<div class="summary-line"><span class="sl-name">${e.label}</span><span class="sl-val" style="color:var(--vl)">≈ $${e.amt.toLocaleString()}</span></div>`;
+    });
+  }
 
   const total=villaTotal+cdcTotal+extrasTotal;
   const perPerson=guests>0?Math.round(total/guests):0;
+  html+=`<div style="height:1px;background:rgba(174,133,96,.15);margin:1.2rem 0"></div>`;
   html+=`<div class="summary-total">
     <div>
-      <div class="st-label">Estimado total</div>
-      <div class="st-note">USD $${perPerson.toLocaleString()} por persona · Sujeto a disponibilidad</div>
+      <div class="st-label">Presupuesto aproximado</div>
+      <div class="st-note">USD $${perPerson.toLocaleString()} por persona · Antes de impuestos y ajustes finales</div>
     </div>
     <div class="st-val">USD $${total.toLocaleString()}</div>
   </div>`;
