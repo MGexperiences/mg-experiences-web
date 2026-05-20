@@ -190,6 +190,15 @@ nav.solid{background:rgba(28,30,23,.85);backdrop-filter:saturate(180%) blur(20px
   .config{padding:6rem 1.2rem}
   .resort-section{padding:5rem 1.2rem}
   
+  /* Remove max-width from inner containers */
+  .vh{max-width:none !important;margin:0 auto 3rem !important;padding:0 !important}
+  .vg{max-width:none !important;margin:0 !important}
+  .vfilt{max-width:none !important;margin:0 !important}
+  .config-inner{max-width:none !important;margin:0 !important}
+  .rs-inner{max-width:none !important}
+  .rs-head{max-width:none !important;margin:0 !important}
+  .bi{max-width:none !important}
+  
   /* Headers */
   .config-head .rule{width:35px}
   .lbl{font-size:.55rem;margin-bottom:.6rem}
@@ -1172,6 +1181,29 @@ nav.solid{background:rgba(28,30,23,.85);backdrop-filter:saturate(180%) blur(20px
   .cdc-prog-name{font-size:.5rem;letter-spacing:.14em}
   .cdc-prog-roman{font-size:.85rem}
   .cdc-prog-track{width:20px}
+  
+  /* ─── FULL WIDTH ON MOBILE ─── */
+  .cdc-experience{padding:0 !important}
+  .cdc-act-1-wrap{width:100%;margin:0;padding:0}
+  .cdc-act-1{
+    max-width:none !important;
+    margin:0 !important;
+    padding:3.5rem 1.2rem 3rem;
+    width:100%;
+  }
+  .cdc-transition{
+    max-width:none !important;
+    margin:0 !important;
+    padding:1.8rem 1.2rem 2.2rem;
+    width:100%;
+  }
+  .cdc-domain{
+    max-width:none !important;
+    margin:0 !important;
+    padding:3.5rem 1.2rem 3rem;
+    width:100%;
+  }
+  .cdc-act-2{width:100%;margin:0;padding:0}
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -1335,7 +1367,7 @@ nav.solid{background:rgba(28,30,23,.85);backdrop-filter:saturate(180%) blur(20px
 
 /* ── MOBILE ── */
 @media(max-width:640px){
-  .rzc-header{padding:2rem 1.2rem 1rem}
+  .rzc-header{padding:1.5rem 1rem 1rem;width:100vw;margin-left:calc(-50vw + 50%);padding-left:1rem;padding-right:1rem}
   .rzc-header .bigt{font-size:clamp(1.7rem,6.5vw,2.1rem);line-height:1.15}
   .rzc-header .lbl{font-size:.55rem}
   .rzc-header .rule{width:35px}
@@ -1348,18 +1380,20 @@ nav.solid{background:rgba(28,30,23,.85);backdrop-filter:saturate(180%) blur(20px
     scroll-behavior:smooth;
     margin:0;
     display:flex;
+    width:100vw;
+    margin-left:calc(-50vw + 50%);
   }
   .rzc-scroll-wrap::-webkit-scrollbar{display:none}
   .rzc-grid{
     display:flex;
-    gap:5px;
+    gap:4px;
     background:none;
     width:max-content;
-    padding:0 0.7rem 0.4rem;
+    padding:0 0.6rem 0.3rem;
     overflow-x:visible;
   }
   .rzc-card{
-    flex:0 0 min(92vw, 370px);
+    flex:0 0 min(94vw, 380px);
     aspect-ratio:3/4;
     height:auto;
     min-height:unset;
