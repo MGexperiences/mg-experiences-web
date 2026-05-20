@@ -5,6 +5,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="description" content="Tu hogar en el Caribe. Sin itinerarios, sin apuros. Una casa privada en Casa de Campo Resort con todo lo que necesitás — a tu manera.">
 <title>MG Experiences — Casa de Campo, República Dominicana</title>
+
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbq.js');
+fbq('init', '1992657445461788');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1992657445461788&ev=PageView&noscript=1" /></noscript>
+<!-- End Meta Pixel Code -->
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
@@ -3711,8 +3729,8 @@ const villaServices = [
   {id:'cocinera',  name:'Cocinera',             price:100, unit:'día'},
   {id:'cocinera2', name:'Cocinera + Nocturno',  price:172, unit:'día'},
   {id:'chef',      name:'Chef completo',        price:286, unit:'día'},
-  {id:'nineraD',   name:'Niñera 2 niños (día)',   price:122, unit:'día'},
-  {id:'nineraH',   name:'Niñera 2 niños (noche)', price:172, unit:'noche'},
+  {id:'nineraD',   name:'Niñera (día)',         price:122, unit:'día'},
+  {id:'nineraH',   name:'Niñera (noche)',       price:172, unit:'noche'},
 ];
 
 // ── TRASLADOS (USD ida+vuelta)
@@ -3983,6 +4001,68 @@ function selectCalDay(y, m, d) {
   renderCalendar();
 }
 
+// ── META PIXEL TRACKING FUNCTIONS ──
+function trackViewConfigurador() {
+  if (typeof fbq !== 'undefined') {
+    fbq('track', 'ViewContent', {
+      content_name: 'Configurador de Presupuesto',
+      content_type: 'product',
+      value: 1.00,
+      currency: 'USD'
+    });
+  }
+}
+
+function trackVillaSelected(villaName, villaPrice) {
+  if (typeof fbq !== 'undefined') {
+    fbq('track', 'ViewContent', {
+      content_name: 'Villa Seleccionada: ' + villaName,
+      content_type: 'product',
+      value: villaPrice,
+      currency: 'USD'
+    });
+  }
+}
+
+function trackPresupuestoViewed(presupuestoTotal) {
+  if (typeof fbq !== 'undefined') {
+    fbq('track', 'AddToCart', {
+      content_name: 'Presupuesto Generado',
+      content_type: 'product',
+      value: presupuestoTotal,
+      currency: 'USD'
+    });
+  }
+}
+
+function trackLeadCapturado(email, nombre, presupuesto) {
+  if (typeof fbq !== 'undefined') {
+    fbq('track', 'Lead', {
+      content_name: 'Lead Capturado',
+      content_type: 'lead',
+      value: presupuesto,
+      currency: 'USD'
+    });
+    
+    fbq('track', 'Contact', {
+      content_name: 'Cliente de Alto Valor',
+      value: presupuesto,
+      currency: 'USD'
+    });
+  }
+}
+
+function trackPresupuestoCompleto(montoTotal) {
+  if (typeof fbq !== 'undefined') {
+    fbq('track', 'Purchase', {
+      content_name: 'Presupuesto Completado',
+      content_type: 'product',
+      value: montoTotal,
+      currency: 'USD'
+    });
+  }
+}
+
 // ── STATE
 let state = {step:1, nights:0, guests:8, villaId:null, svcs:{}, barcoId:null, golfId:null, aeropuertoId:null, openAccordion:null};
 
@@ -4018,7 +4098,18 @@ function goStep(n){
   updateStepBar();
   if(n===3) renderVillas();
   if(n===4) renderServices();
-  if(n===5) renderSummary();
+  if(n===5) {
+    renderSummary();
+    // Track presupuesto visto
+    const total = calculateTotal();
+    trackPresupuestoViewed(total);
+  }
+  
+  // Track cuando entra al configurador (paso 1)
+  if(n===1) {
+    trackViewConfigurador();
+  }
+  
   document.getElementById('tu-experiencia').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
@@ -4100,6 +4191,12 @@ function selectVilla(id){
   document.querySelectorAll('.villa-opt').forEach(el=>{
     el.classList.toggle('selected',el.getAttribute('onclick').includes("'"+id+"'"));
   });
+  
+  // Track villa seleccionada
+  const villaData = villaDataFromSheet.find(v => v.id === id);
+  if(villaData) {
+    trackVillaSelected(villaData.name, villaData.precio_noche || villaData.price || 0);
+  }
 }
 
 // ── STEP 4: SERVICES — renderizado dinámico con datos reales
@@ -4627,17 +4724,13 @@ function buildPresupuestoData(){
 
   // Servicios villa
   villaServices.forEach(s=>{
-    if(state.svcs[s.id]){
-      // Niñeras y servicios por día/noche se multiplican por el número de noches
-      const esPerNight = s.unit === 'día' || s.unit === 'noche';
-      items.push({
-        categoria:'Servicio Villa',
-        descripcion:s.name,
-        display: s.name,
-        cantidad: esPerNight ? nights : 1,
-        unidad:s.unit
-      });
-    }
+    if(state.svcs[s.id]) items.push({
+      categoria:'Servicio Villa',
+      descripcion:s.name,
+      display: s.name,
+      cantidad:1,
+      unidad:s.unit
+    });
   });
 
   // Actividades seleccionadas
@@ -4864,6 +4957,10 @@ async function sendCode(e){
     document.getElementById('c0').focus();
     btn.disabled = false;
     btn.textContent = 'Recibir código →';
+    
+    // Track lead capturado
+    const totalPresupuesto = calculateTotal();
+    trackLeadCapturado(email, nombre, totalPresupuesto);
 
   } catch(err) {
     errEl.textContent = 'No pudimos enviar el código. Revisá tu conexión e intentá de nuevo.';
@@ -4910,6 +5007,10 @@ function verifyCode(){
 
     // Guardar contacto en el log inmediatamente (antes de que complete el presupuesto)
     guardarContactoParcial();
+    
+    // Track presupuesto completado
+    const totalPresupuesto = calculateTotal();
+    trackPresupuestoCompleto(totalPresupuesto);
 
     setTimeout(() => {
       closeGate();
