@@ -1878,7 +1878,20 @@ nav.solid{background:rgba(28,30,23,.85);backdrop-filter:saturate(180%) blur(20px
 .svc-opt-desc{font-size:.88rem;color:rgba(253,250,246,.42);line-height:1.6}
 .svc-opt-price{font-family:'Playfair Display',serif;font-style:italic;font-size:.88rem;color:var(--vl);margin-top:.3rem}
 
-/* Summary */
+/* Accordion body for activities */
+.acc-body-wrapper{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;background:rgba(174,133,96,.05);padding:1rem;margin-bottom:1rem;border-radius:12px;border:1px solid rgba(174,133,96,.15)}
+.acc-body-wrapper .svc-opt{padding:1.2rem 1.4rem}
+.acc-body-wrapper .svc-opt-name{font-size:.65rem}
+.acc-body-wrapper .svc-opt-price{font-size:.8rem}
+
+@media(max-width:640px){
+  .acc-body-wrapper{grid-template-columns:1fr;gap:.8rem;padding:.8rem}
+  .acc-body-wrapper .svc-opt{padding:1rem 1.2rem}
+}
+
+@media(min-width:1024px){
+  .acc-body-wrapper{grid-template-columns:repeat(3,1fr);gap:1.2rem;padding:1.2rem}
+}
 .summary-box{border:1px solid rgba(174,133,96,.22);padding:2.5rem;margin-bottom:2rem;background:rgba(253,250,246,.02);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px}
 .summary-title{font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.25em;color:var(--v);text-transform:uppercase;margin-bottom:1.5rem}
 .summary-line{display:flex;justify-content:space-between;align-items:baseline;padding:.5rem 0;border-bottom:.5px solid rgba(253,250,246,.06)}
@@ -4112,7 +4125,7 @@ function renderServices(){
 
   const accBody = (key, content) => {
     const open = state.openAccordion === key;
-    return open ? `<div style="grid-column:span 2;display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(174,133,96,.1);margin-bottom:.5rem">${content}</div>` : '';
+    return open ? `<div class="acc-body-wrapper" style="grid-column:span 2">${content}</div>` : '';
   };
 
   let html = '';
