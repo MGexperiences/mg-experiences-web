@@ -180,8 +180,8 @@ nav.solid{background:rgba(28,30,23,.85);backdrop-filter:saturate(180%) blur(20px
   .cta-strip-title{font-size:1.2rem}
   .cta-strip-btn{width:100%;text-align:center;padding:.95rem}
   .hero-social-proof{flex-direction:column;gap:.3rem}
-  .hero-sp-text{font-size:.75rem;text-align:center}
-  .hero-primary-cta{padding:1.1rem 1.8rem !important;font-size:.68rem !important;width:min(300px,88vw);text-align:center}
+  .hero-sp-text{font-size:.85rem;text-align:center}
+  .hero-primary-cta{padding:1.1rem 1.8rem !important;font-size:.75rem !important;width:min(300px,88vw);text-align:center}
   .hero-ghost-link{font-size:.85rem}
   
   /* Sections padding */
@@ -201,7 +201,7 @@ nav.solid{background:rgba(28,30,23,.85);backdrop-filter:saturate(180%) blur(20px
   
   /* Headers */
   .config-head .rule{width:35px}
-  .lbl{font-size:.55rem;margin-bottom:.6rem}
+  .lbl{font-size:.65rem;margin-bottom:.6rem}
   .bigt{font-size:clamp(1.65rem,5.5vw,2.4rem)}
   .prose{font-size:1rem;line-height:1.7}
   
@@ -2403,7 +2403,7 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
       <span class="hero-sp-text">5.0 en Google · 16 reseñas · Huéspedes de 12 países</span>
     </div>
     <div class="hero-secondary-link anim-up" style="animation-delay:1.35s">
-      <button onclick="openValentina()" class="hero-ghost-link">¿Tenés dudas? Hablá con Valentina →</button>
+      <button onclick="openValentina()" class="hero-ghost-link" style="background:rgba(212,184,154,.12);border:1.5px solid rgba(212,184,154,.4);padding:.9rem 1.8rem;border-radius:100px;transition:all .3s;color:rgba(212,184,154,.8);font-style:normal;font-weight:500;letter-spacing:.05em;font-size:.9rem" onmouseover="this.style.background='rgba(212,184,154,.2)';this.style.borderColor='rgba(212,184,154,.7)';this.style.color='rgba(212,184,154,1)'" onmouseout="this.style.background='rgba(212,184,154,.12)';this.style.borderColor='rgba(212,184,154,.4)';this.style.color='rgba(212,184,154,.8)'">¿Tenés dudas? Hablá con Asistente Virtual ↗</button>
     </div>
   </div>
   <div class="scue"><span>Descubrí</span><div class="sln"></div></div>
@@ -6526,10 +6526,10 @@ document.addEventListener('keydown', e => {
 </button>
 
 <!-- Tooltip -->
-<div id="val-tip">Hablá con Valentina</div>
+<div id="val-tip">Hablá con Asistente Virtual</div>
 
 <!-- Drawer -->
-<div id="val-drawer" role="dialog" aria-label="Chat con Valentina">
+<div id="val-drawer" role="dialog" aria-label="Chat con Asistente Virtual">
   <div id="val-dhead">
     <div style="display:flex;gap:.4rem;align-items:center;margin-left:auto">
       <button id="val-minimize" onclick="window.minimizeValentina()" aria-label="Minimizar" title="Minimizar" style="
@@ -6542,7 +6542,7 @@ document.addEventListener('keydown', e => {
         color:rgba(253,250,246,.7);font-size:1rem;cursor:pointer;transition:all .2s;flex-shrink:0">✕</button>
     </div>
   </div>
-  <iframe id="val-iframe" src="" title="Chat con Valentina" allow="microphone" loading="lazy"></iframe>
+  <iframe id="val-iframe" src="" title="Chat con Asistente Virtual" allow="microphone" loading="lazy"></iframe>
 </div>
 
 <script>
