@@ -411,6 +411,23 @@ nav.solid{background:rgba(28,30,23,.85);backdrop-filter:saturate(180%) blur(20px
   max-width:980px;
   margin:0 auto;
   text-align:center;
+  position:relative;
+  z-index:1;
+}
+
+/* Real CDC photo as section background */
+.cdc-act-1-bg{
+  position:absolute;
+  inset:0;
+  width:100%;height:100%;
+  background:url('img/cdc-aerial.jpg') center 40%/cover no-repeat;
+  filter:brightness(.18) saturate(.7);
+  pointer-events:none;
+}
+
+.cdc-act-1-wrap{
+  position:relative;
+  overflow:hidden;
 }
 
 .cdc-prelude{
@@ -2420,7 +2437,9 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
 <section id="casa-de-campo" class="cdc-experience">
   
   <!-- === ACT I: THE OPENING === -->
-  <div class="cdc-act-1">
+  <div class="cdc-act-1-wrap">
+    <div class="cdc-act-1-bg"></div>
+    <div class="cdc-act-1">
     <div class="cdc-prelude">
       <span class="cdc-roman">I.</span>
       <span class="cdc-prelude-text">El destino</span>
@@ -2463,6 +2482,7 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
       <span class="cdc-hero-cta-sub">Presupuesto a medida en 2 minutos</span>
     </a>
   </div>
+  </div><!-- /cdc-act-1-wrap -->
 
   <!-- === ACT II: RESORT ZONES CAROUSEL === -->
   <div class="cdc-act-2">
@@ -2481,7 +2501,7 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
 
         <!-- MARINA -->
         <div class="rzc-card" onclick="openResortModal('marina')" id="marina" role="button" tabindex="0">
-          <div class="rzc-img" style="background-image:url('https://images.unsplash.com/photo-1473116763249-2faaef81ccda?w=800&h=1100&fit=crop&q=85')"></div>
+          <div class="rzc-img" style="background-image:url('img/marina-aerial.jpg')"></div>
           <div class="rzc-overlay"></div>
           <div class="rzc-info">
             <div class="rzc-cat">Puerto deportivo</div>
@@ -2496,7 +2516,7 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
 
         <!-- MINITAS -->
         <div class="rzc-card" onclick="openResortModal('minitas')" id="minitas" role="button" tabindex="0">
-          <div class="rzc-img" style="background-image:url('https://images.unsplash.com/photo-1540541338287-41700207dee6?w=800&h=1100&fit=crop&q=85')"></div>
+          <div class="rzc-img" style="background-image:url('img/minitas-beach.jpg')"></div>
           <div class="rzc-overlay rzc-overlay-teal"></div>
           <div class="rzc-info">
             <div class="rzc-cat">Playa privada</div>
@@ -2511,7 +2531,7 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
 
         <!-- CHAVÓN -->
         <div class="rzc-card" onclick="openResortModal('chavon')" id="chavon" role="button" tabindex="0">
-          <div class="rzc-img" style="background-image:url('https://images.unsplash.com/photo-1518091043644-c1d4457512c6?w=800&h=1100&fit=crop&q=85')"></div>
+          <div class="rzc-img" style="background-image:url('img/chavon-aerial.jpg')"></div>
           <div class="rzc-overlay rzc-overlay-amber"></div>
           <div class="rzc-info">
             <div class="rzc-cat">Pueblo artesanal</div>
@@ -4591,7 +4611,7 @@ const resortZoneData = {
   marina: {
     label: 'Puerto deportivo',
     title: 'La Marina de Casa de Campo',
-    img: 'https://images.unsplash.com/photo-1473116763249-2faaef81ccda?w=1200&h=500&fit=crop&q=90',
+    img: 'img/marina-wide.jpg',
     desc: 'La marina más exclusiva del Caribe. Yates de bandera europea, restaurantes de autor y boutiques de firmas internacionales, todo a orillas del río Chavón dentro del resort. Un lugar donde la tarde puede extenderse indefinidamente sin ninguna razón para irse.',
     highlights: [
       'Amarradero para embarcaciones de hasta 250 pies',
@@ -4610,7 +4630,7 @@ const resortZoneData = {
   minitas: {
     label: 'Playa privada del resort',
     title: 'Minitas Beach Club',
-    img: 'https://images.unsplash.com/photo-1540541338287-41700207dee6?w=1200&h=500&fit=crop&q=90',
+    img: 'img/minitas-drone.jpg',
     desc: 'Arena blanca, agua turquesa cristalina y el primer Veuve Clicquot Sun Club del Caribe. Playa de acceso exclusivo para huéspedes del resort — sin vendedores, sin multitud, sin nada que interrumpa. Solo el mar, una copa fría y el ritmo que te impongas.',
     highlights: [
       'Acceso exclusivo para huéspedes del resort',
@@ -4629,7 +4649,7 @@ const resortZoneData = {
   chavon: {
     label: 'Pueblo artesanal · Siglo XVI',
     title: 'Altos de Chavón',
-    img: 'https://images.unsplash.com/photo-1518091043644-c1d4457512c6?w=1200&h=500&fit=crop&q=90',
+    img: 'img/chavon-aerial.jpg',
     desc: 'Un pueblo mediterráneo del siglo XVI construido en piedra coralina sobre un acantilado con vista al río Chavón. No es una recreación turística — es una comunidad artística viva con galerías, talleres de arte, boutiques de diseño y un anfiteatro que recibió a Frank Sinatra, Julio Iglesias y Shakira.',
     highlights: [
       'Anfiteatro para 5,000 espectadores — artistas de talla internacional',
