@@ -3590,19 +3590,6 @@ async function loadVillasFromSheet() {
       else if(det.includes('golf') || det.includes('garden') || det.includes('jardín')) bgcolor = '#0f1f17';
       else if(hab >= 8) bgcolor = '#1a1a2e';
 
-      // Determinar la carpeta_url correctamente
-      // Si col O (linkFoto) es un link de carpeta, usar ese
-      // Si col O es un thumbnail, intentar usar col N (linkPDF) como carpeta
-      let carpetaUrl = '';
-      if(linkFoto && linkFoto.includes('/folders/')) {
-        carpetaUrl = linkFoto;
-      } else if(linkPDF && linkPDF.includes('/folders/')) {
-        carpetaUrl = linkPDF;
-      } else if(linkFoto) {
-        // Fallback: usar linkFoto aunque no sea carpeta (puede ser un PDF link)
-        carpetaUrl = linkFoto;
-      }
-
       const obj = {
         id, name: nombre,
         hab, guests, huespedes: guests,
@@ -3610,7 +3597,7 @@ async function loadVillasFromSheet() {
         label: detalle, display: display || nombre,
         descripcion: notas, notas: '',
         foto_url: fotoUrl, pdf_url: linkPDF,
-        carpeta_url: carpetaUrl,
+        carpeta_url: linkFoto,
         descripcion: docDesc,
         amenities: docAmen ? docAmen.split(',').map(s=>s.trim()).filter(Boolean) : detalle.split('/').map(s=>s.trim()).filter(s=>s.length>2),
         bgcolor,
@@ -4204,12 +4191,6 @@ function selectVilla(id){
   document.querySelectorAll('.villa-opt').forEach(el=>{
     el.classList.toggle('selected',el.getAttribute('onclick').includes("'"+id+"'"));
   });
-  
-  // Track villa seleccionada (villaDataFromSheet es un objeto, no array)
-  const villaData = villaDataFromSheet[id];
-  if(villaData) {
-    trackVillaSelected(villaData.name, villaData.precio_noche || villaData.price || 0);
-  }
 }
 
 // ── STEP 4: SERVICES — renderizado dinámico con datos reales
@@ -5740,22 +5721,10 @@ function openVModal(id) {
   // PDF button if available - REMOVED (all contact through Asistente Virtual)
   const pdfBtn = '';
 
-  // Extraer folder ID de la URL de carpeta Drive (probar carpeta_url Y pdf_url)
-  let folderId = null;
-  const folderUrl1 = d.carpeta_url || '';
-  const folderUrl2 = d.pdf_url || '';
-  
-  // Intentar primero con carpeta_url
-  let folderMatch = folderUrl1.match(/folders\/([a-zA-Z0-9_-]+)/);
-  if(folderMatch) {
-    folderId = folderMatch[1];
-  } else {
-    // Si no, intentar con pdf_url
-    folderMatch = folderUrl2.match(/folders\/([a-zA-Z0-9_-]+)/);
-    if(folderMatch) folderId = folderMatch[1];
-  }
-  
-  console.log('[Villa Modal]', d.name, '- folderId:', folderId, '| carpeta_url:', folderUrl1, '| pdf_url:', folderUrl2);
+  // Extraer folder ID de la URL de carpeta Drive
+  const folderUrl = d.carpeta_url || d.pdf_url || '';
+  const folderMatch = folderUrl.match(/folders\/([a-zA-Z0-9_-]+)/);
+  const folderId = folderMatch ? folderMatch[1] : null;
 
   // Imagen inicial (portada)
   const portadaUrl = d.foto_url || d.img;
@@ -5805,7 +5774,6 @@ function openVModal(id) {
 
   // Guardar referencias globales para galería
   window._currentVillaFolderId = folderId;
-  window._currentVillaCarpetaUrl = folderUrl1 || folderUrl2 || '';
   window._currentVillaPortada  = portadaUrl;
   window._currentVillaName     = d.name;
 
@@ -5822,11 +5790,7 @@ window.openGalleryFromModal = function openGalleryFromModal() {
   const folderId  = window._currentVillaFolderId;
   const portada   = window._currentVillaPortada;
   const name      = window._currentVillaName || '';
-  // Usar URL completa guardada O construir desde folderId
-  let carpetaUrl = window._currentVillaCarpetaUrl || '';
-  if(!carpetaUrl && folderId) {
-    carpetaUrl = 'https://drive.google.com/drive/folders/' + folderId;
-  }
+  const carpetaUrl = folderId ? 'https://drive.google.com/drive/folders/' + folderId : '';
   // Call openVillaGallery — defined later in the page
   if (typeof openVillaGallery === 'function') {
     openVillaGallery('modal', name, carpetaUrl, portada);
