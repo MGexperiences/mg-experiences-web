@@ -1043,25 +1043,25 @@ nav.solid{background:rgba(28,30,23,.85);backdrop-filter:saturate(180%) blur(20px
 
 /* ─── RESPONSIVE: MOBILE ─────────────────────────────────── */
 @media(max-width:640px){
-  .cdc-act-1{padding:5rem 1.5rem 3.5rem}
-  .cdc-roman{font-size:1.3rem}
-  .cdc-prelude-text{font-size:.6rem;letter-spacing:.32em;padding-left:1.5rem}
-  .cdc-prelude-text::before{width:1rem}
-  .cdc-prelude{margin-bottom:2rem}
+  .cdc-act-1{padding:3.5rem 1.5rem 3rem}
+  .cdc-roman{font-size:1.2rem}
+  .cdc-prelude-text{font-size:.58rem;letter-spacing:.28em;padding-left:1.2rem}
+  .cdc-prelude-text::before{width:.8rem}
+  .cdc-prelude{margin-bottom:1.5rem}
   
-  .cdc-headline{margin-bottom:1.8rem;font-size:clamp(3.2rem, 14vw, 4.5rem)}
-  .cdc-tagline{margin-bottom:2.5rem;font-size:1.15rem;line-height:1.65;padding:0 .5rem}
+  .cdc-headline{margin-bottom:1.2rem;font-size:clamp(2.8rem, 12vw, 3.8rem);line-height:1.1}
+  .cdc-tagline{margin-bottom:1.8rem;font-size:1.05rem;line-height:1.6;padding:0 .3rem}
   
   .cdc-quick-stats{
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:1.8rem 0;
-    padding-top:2.5rem;
+    gap:1.2rem 0;
+    padding-top:1.5rem;
   }
   .cdc-qs-divider{display:none}
   .cdc-qs-item{padding:0;position:relative}
-  .cdc-qs-n{font-size:2.4rem}
-  .cdc-qs-l{font-size:.58rem;letter-spacing:.18em}
+  .cdc-qs-n{font-size:2rem}
+  .cdc-qs-l{font-size:.54rem;letter-spacing:.16em}
   .cdc-qs-item:nth-child(odd)::after{
     content:'';
     position:absolute;
@@ -1077,21 +1077,22 @@ nav.solid{background:rgba(28,30,23,.85);backdrop-filter:saturate(180%) blur(20px
   
   /* Hero CTA mobile - prominent and thumb-friendly */
   .cdc-hero-cta{
-    margin-top:2.5rem;
-    padding:1.2rem 2.4rem;
+    margin-top:1.8rem;
+    padding:1rem 2rem;
     width:calc(100% - 1rem);
-    max-width:380px;
+    max-width:340px;
+    font-size:.68rem;
   }
-  .cdc-hero-cta-label{font-size:.82rem;letter-spacing:.18em}
-  .cdc-hero-cta-sub{font-size:.82rem}
+  .cdc-hero-cta-label{font-size:.68rem;letter-spacing:.16em}
+  .cdc-hero-cta-sub{font-size:.75rem;line-height:1.3}
   
-  .cdc-transition{padding:2.5rem 1.5rem 3.5rem;gap:.8rem}
-  .cdc-trans-line{max-width:40px}
-  .cdc-trans-text{font-size:.92rem;letter-spacing:.02em}
+  .cdc-transition{padding:2rem 1.5rem 2.5rem;gap:.6rem}
+  .cdc-trans-line{max-width:35px;height:.75px}
+  .cdc-trans-text{font-size:.88rem;letter-spacing:0}
   
   .cdc-domain{
-    padding:5rem 1.5rem 4rem;
-    min-height:75vh;
+    padding:3.5rem 1.5rem 3rem;
+    min-height:70vh;
     align-items:flex-end;
   }
   
@@ -1099,50 +1100,52 @@ nav.solid{background:rgba(28,30,23,.85);backdrop-filter:saturate(180%) blur(20px
   .cdc-domain-reverse .cdc-domain-overlay{
     background:linear-gradient(
       to top,
-      rgba(14,16,10,.97) 0%,
-      rgba(14,16,10,.9) 40%,
-      rgba(14,16,10,.6) 75%,
-      rgba(14,16,10,.35) 100%
+      rgba(14,16,10,.98) 0%,
+      rgba(14,16,10,.92) 35%,
+      rgba(14,16,10,.5) 70%,
+      rgba(14,16,10,.2) 100%
     );
   }
   .cdc-overlay-teal{
     background:linear-gradient(
       to top,
-      rgba(10,30,40,.97) 0%,
-      rgba(14,40,55,.88) 40%,
-      rgba(20,60,75,.55) 75%,
-      rgba(30,80,95,.3) 100%
+      rgba(10,30,40,.98) 0%,
+      rgba(14,40,55,.9) 35%,
+      rgba(20,60,75,.5) 70%,
+      rgba(30,80,95,.2) 100%
     ) !important;
   }
   .cdc-overlay-amber{
     background:linear-gradient(
       to top,
-      rgba(30,18,8,.97) 0%,
-      rgba(50,30,12,.88) 40%,
-      rgba(80,50,20,.55) 75%,
-      rgba(120,75,35,.3) 100%
+      rgba(30,18,8,.98) 0%,
+      rgba(50,30,12,.9) 35%,
+      rgba(80,50,20,.5) 70%,
+      rgba(120,75,35,.2) 100%
     ) !important;
   }
   
   .cdc-domain-reverse{justify-content:flex-start}
   
-  .cdc-domain-num{font-size:2.8rem}
-  .cdc-domain-cat{font-size:.58rem;letter-spacing:.26em;padding-left:1rem}
-  .cdc-domain-cat::before{width:.7rem}
-  .cdc-domain-meta{gap:.9rem;margin-bottom:1.2rem}
+  .cdc-domain-num{font-size:2.4rem}
+  .cdc-domain-cat{font-size:.54rem;letter-spacing:.22em;padding-left:.9rem}
+  .cdc-domain-cat::before{width:.6rem}
+  .cdc-domain-meta{gap:.7rem;margin-bottom:1rem}
   
-  .cdc-domain-title{margin-bottom:1.4rem;font-size:clamp(2.4rem, 9vw, 3.4rem)}
-  .cdc-domain-body{font-size:1.1rem;margin-bottom:1.8rem;line-height:1.7}
-  .cdc-feat-text{font-size:1rem}
+  .cdc-domain-title{margin-bottom:1.2rem;font-size:clamp(1.95rem, 8vw, 2.8rem);line-height:1.15}
+  .cdc-domain-body{font-size:1.02rem;margin-bottom:1.5rem;line-height:1.65}
+  .cdc-feat{margin-bottom:.6rem}
+  .cdc-feat-text{font-size:.95rem}
   
   /* Domain CTA mobile - prominent */
   .cdc-domain-cta{
-    margin-top:1.8rem;
-    padding:1rem 1.6rem;
+    margin-top:1.5rem;
+    padding:.95rem 1.4rem;
     align-self:stretch;
     justify-content:center;
+    font-size:.64rem;
   }
-  .cdc-cta-label{font-size:.7rem;letter-spacing:.18em}
+  .cdc-cta-label{font-size:.64rem;letter-spacing:.16em}
   
   /* Progress bar mobile - sticky top */
   .cdc-progress-sticky{
@@ -1320,29 +1323,54 @@ nav.solid{background:rgba(28,30,23,.85);backdrop-filter:saturate(180%) blur(20px
 
 /* ── MOBILE ── */
 @media(max-width:640px){
-  .rzc-header{padding:3rem 1.5rem 1.5rem}
-  .rzc-scroll-wrap{padding:0}
+  .rzc-header{padding:2.5rem 1.5rem 1.5rem}
+  .rzc-header .bigt{font-size:clamp(1.75rem,7vw,2.2rem)}
+  .rzc-scroll-wrap{
+    padding:0;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    scroll-snap-type:x mandatory;
+    scrollbar-width:none;
+    scroll-behavior:smooth;
+    margin:0;
+  }
+  .rzc-scroll-wrap::-webkit-scrollbar{display:none}
   .rzc-grid{
-    padding:0 1.2rem 1.5rem;
-    gap:12px;
+    display:flex;
+    gap:8px;
+    background:none;
+    width:max-content;
+    padding:0 1rem 0.5rem;
+    overflow-x:visible;
   }
   .rzc-card{
-    flex:0 0 78vw;
-    aspect-ratio:unset;
-    height:105vw;
-    min-height:480px;
-    border-radius:14px;
+    flex:0 0 min(84vw, 340px);
+    aspect-ratio:3/4;
+    height:auto;
+    min-height:unset;
+    border-radius:12px;
+    scroll-snap-align:start;
+    scroll-snap-stop:always;
   }
   .rzc-img{
     background-size:cover !important;
     background-position:center center !important;
     background-attachment:scroll !important;
+    height:100%;
   }
-  .rzc-info{padding:1.4rem 1.2rem 1.6rem}
-  .rzc-name{font-size:1.45rem}
-  .rzc-cat{font-size:.52rem;letter-spacing:.22em}
-  .rzc-detail{font-size:.85rem}
+  .rzc-info{
+    padding:1rem 0.95rem 1.3rem;
+    bottom:0;
+  }
+  .rzc-cat{font-size:.48rem;letter-spacing:.16em;margin-bottom:.25rem}
+  .rzc-name{font-size:1.28rem;margin-bottom:.25rem;line-height:1.1}
+  .rzc-detail{font-size:.8rem;line-height:1.4}
   .rzc-hover{display:none}
+  .rzc-hint{
+    font-size:.48rem;
+    padding:.7rem;
+    letter-spacing:.12em;
+  }
 }
 
 /* Hide old sticky progress — replaced by cards */
