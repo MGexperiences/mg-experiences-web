@@ -175,14 +175,26 @@ nav.solid{background:rgba(28,30,23,.85);backdrop-filter:saturate(180%) blur(20px
 }
 
 @media(max-width:640px){
-  .cta-strip{padding:2rem 1.5rem}
-  .cta-strip-inner{flex-direction:column;align-items:flex-start;gap:1.2rem}
-  .cta-strip-title{font-size:1.25rem}
-  .cta-strip-btn{width:100%;text-align:center;padding:1rem}
-  .hero-social-proof{flex-direction:column;gap:.4rem}
-  .hero-sp-text{font-size:.8rem;text-align:center}
-  .hero-primary-cta{padding:1.15rem 2rem !important;font-size:.72rem !important;width:min(320px,88vw);text-align:center}
-  .hero-ghost-link{font-size:.88rem}
+  .cta-strip{padding:1.5rem 1rem}
+  .cta-strip-inner{flex-direction:column;align-items:flex-start;gap:1rem}
+  .cta-strip-title{font-size:1.2rem}
+  .cta-strip-btn{width:100%;text-align:center;padding:.95rem}
+  .hero-social-proof{flex-direction:column;gap:.3rem}
+  .hero-sp-text{font-size:.75rem;text-align:center}
+  .hero-primary-cta{padding:1.1rem 1.8rem !important;font-size:.68rem !important;width:min(300px,88vw);text-align:center}
+  .hero-ghost-link{font-size:.85rem}
+  
+  /* Sections padding */
+  .sec{padding:5rem 1.2rem}
+  .villas{padding:5rem 1.2rem}
+  .config{padding:6rem 1.2rem}
+  .resort-section{padding:5rem 1.2rem}
+  
+  /* Headers */
+  .config-head .rule{width:35px}
+  .lbl{font-size:.55rem;margin-bottom:.6rem}
+  .bigt{font-size:clamp(1.65rem,5.5vw,2.4rem)}
+  .prose{font-size:1rem;line-height:1.7}
 }
 
 .scue{position:absolute;bottom:2.2rem;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:.4rem;animation:fu .9s ease 1.4s both}
@@ -1323,8 +1335,10 @@ nav.solid{background:rgba(28,30,23,.85);backdrop-filter:saturate(180%) blur(20px
 
 /* ── MOBILE ── */
 @media(max-width:640px){
-  .rzc-header{padding:2.5rem 1.5rem 1.5rem}
-  .rzc-header .bigt{font-size:clamp(1.75rem,7vw,2.2rem)}
+  .rzc-header{padding:2rem 1.2rem 1rem}
+  .rzc-header .bigt{font-size:clamp(1.7rem,6.5vw,2.1rem);line-height:1.15}
+  .rzc-header .lbl{font-size:.55rem}
+  .rzc-header .rule{width:35px}
   .rzc-scroll-wrap{
     padding:0;
     overflow-x:auto;
@@ -1333,22 +1347,23 @@ nav.solid{background:rgba(28,30,23,.85);backdrop-filter:saturate(180%) blur(20px
     scrollbar-width:none;
     scroll-behavior:smooth;
     margin:0;
+    display:flex;
   }
   .rzc-scroll-wrap::-webkit-scrollbar{display:none}
   .rzc-grid{
     display:flex;
-    gap:8px;
+    gap:5px;
     background:none;
     width:max-content;
-    padding:0 1rem 0.5rem;
+    padding:0 0.7rem 0.4rem;
     overflow-x:visible;
   }
   .rzc-card{
-    flex:0 0 min(84vw, 340px);
+    flex:0 0 min(92vw, 370px);
     aspect-ratio:3/4;
     height:auto;
     min-height:unset;
-    border-radius:12px;
+    border-radius:11px;
     scroll-snap-align:start;
     scroll-snap-stop:always;
   }
@@ -1359,12 +1374,35 @@ nav.solid{background:rgba(28,30,23,.85);backdrop-filter:saturate(180%) blur(20px
     height:100%;
   }
   .rzc-info{
-    padding:1rem 0.95rem 1.3rem;
+    padding:1.1rem 1rem 1.2rem;
     bottom:0;
   }
   .rzc-cat{font-size:.48rem;letter-spacing:.16em;margin-bottom:.25rem}
   .rzc-name{font-size:1.28rem;margin-bottom:.25rem;line-height:1.1}
-  .rzc-detail{font-size:.8rem;line-height:1.4}
+  .rzc-detail{font-size:.8rem;line-height:1.4;margin-bottom:.6rem}
+  
+  /* CTA button visible on mobile */
+  .rzc-cta-mobile{
+    display:inline-block;
+    font-family:'Cinzel',serif;
+    font-size:.62rem;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--wh);
+    background:rgba(174,133,96,.25);
+    border:.5px solid rgba(174,133,96,.5);
+    padding:.5rem 1rem;
+    border-radius:20px;
+    text-decoration:none;
+    transition:all .3s;
+    cursor:pointer;
+    border:none;
+  }
+  .rzc-cta-mobile:active{
+    background:rgba(174,133,96,.4);
+    transform:scale(.98);
+  }
+  
   .rzc-hover{display:none}
   .rzc-hint{
     font-size:.48rem;
@@ -2535,6 +2573,7 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
             <div class="rzc-cat">Puerto deportivo</div>
             <div class="rzc-name">La Marina</div>
             <div class="rzc-detail">Yates · Restaurantes · Boutiques</div>
+            <button class="rzc-cta-mobile" onclick="openResortModal('marina'); event.stopPropagation();">+ Info</button>
           </div>
           <div class="rzc-hover">
             <div class="rzc-hover-icon">↗</div>
@@ -2550,6 +2589,7 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
             <div class="rzc-cat">Playa privada</div>
             <div class="rzc-name">Minitas Beach</div>
             <div class="rzc-detail">Arena blanca · Veuve Clicquot · Mar</div>
+            <button class="rzc-cta-mobile" onclick="openResortModal('minitas'); event.stopPropagation();">+ Info</button>
           </div>
           <div class="rzc-hover">
             <div class="rzc-hover-icon">↗</div>
@@ -2565,6 +2605,7 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
             <div class="rzc-cat">Pueblo artesanal</div>
             <div class="rzc-name">Altos de Chavón</div>
             <div class="rzc-detail">Arte · Anfiteatro · Gastronomía</div>
+            <button class="rzc-cta-mobile" onclick="openResortModal('chavon'); event.stopPropagation();">+ Info</button>
           </div>
           <div class="rzc-hover">
             <div class="rzc-hover-icon">↗</div>
