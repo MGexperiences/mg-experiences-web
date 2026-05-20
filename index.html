@@ -204,7 +204,64 @@ nav.solid{background:rgba(28,30,23,.85);backdrop-filter:saturate(180%) blur(20px
   .lbl{font-size:.55rem;margin-bottom:.6rem}
   .bigt{font-size:clamp(1.65rem,5.5vw,2.4rem)}
   .prose{font-size:1rem;line-height:1.7}
-}
+  
+  /* ── CONFIGURADOR MOBILE IMPROVEMENTS ── */
+  .cpanel{padding:1.8rem 1.2rem;gap:1.2rem}
+  .cpanel-title{font-size:1.4rem;margin-bottom:.8rem}
+  .cpanel-sub{font-size:.85rem;margin-bottom:1.8rem}
+  .config-trust-badges{gap:.4rem;margin-top:1rem}
+  .ctb{font-size:.48rem;padding:.35rem .7rem}
+  
+  /* Steps bar mobile */
+  .steps-bar{gap:0;margin-bottom:2.5rem;overflow-x:auto;padding-bottom:.8rem}
+  .step-item{flex-shrink:0}
+  .step-dot{width:28px;height:28px;font-size:.56rem}
+  .step-label{font-size:.52rem;margin-left:.4rem}
+  .step-line{width:25px;margin:0 .4rem;flex-shrink:0}
+  
+  /* Calendar mobile */
+  .cal-wrap{max-width:100%}
+  .cal-fields{gap:.6rem}
+  .cal-field{padding:.8rem 1rem;font-size:.95rem}
+  .cal-flabel{font-size:.58rem;margin-bottom:.25rem}
+  .cal-fval{font-size:.95rem}
+  .cal-drop{padding:1rem}
+  
+  /* Guests mobile */
+  .guest-row{gap:1rem;margin:0 auto 1.5rem}
+  .guest-btn{width:48px;height:48px;font-size:1.3rem}
+  .guest-num{font-size:2.2rem}
+  .guest-label{font-size:.8rem;margin-top:.2rem}
+  
+  /* Villa selector mobile */
+  .villa-sel-grid{grid-template-columns:1fr;gap:.8rem;margin-bottom:1.5rem}
+  .villa-opt{padding:1.2rem;border-radius:12px}
+  .vo-name{font-size:.65rem;margin-bottom:.25rem}
+  .vo-spec{font-size:.8rem;margin-bottom:.3rem}
+  .vo-price{font-size:.88rem}
+  .filter-note{font-size:.85rem;margin-bottom:1.2rem}
+  
+  /* Service options mobile */
+  .svc-opts{grid-template-columns:1fr;gap:.8rem;margin-bottom:1.5rem}
+  .svc-opt{padding:1.2rem 1.4rem;gap:.8rem;border-radius:12px}
+  .svc-opt-name{font-size:.64rem;margin-bottom:.2rem}
+  .svc-opt-desc{font-size:.82rem}
+  .svc-opt-price{font-size:.82rem;margin-top:.25rem}
+  
+  /* Summary mobile */
+  .summary-box{padding:1.5rem;margin-bottom:1.5rem;border-radius:12px}
+  .summary-title{font-size:.65rem;margin-bottom:1.2rem}
+  .summary-line{padding:.4rem 0}
+  .sl-name{font-size:.8rem}
+  .sl-val{font-size:.88rem}
+  .st-label{font-size:.64rem}
+  .st-val{font-size:1.3rem}
+  .st-note{font-size:.65rem;margin-top:.25rem}
+  
+  /* Nav buttons mobile */
+  .cnav{gap:.8rem;margin-top:1.5rem}
+  .cbtn-back{font-size:.62rem;padding:.6rem 0}
+  .cbtn-next,.cbtn-wa{font-size:.62rem;padding:.9rem 1.2rem}
 
 .scue{position:absolute;bottom:2.2rem;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:.4rem;animation:fu .9s ease 1.4s both}
 .scue span{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.3em;color:rgba(253,250,246,.35)}
@@ -4021,17 +4078,98 @@ function renderServices(){
 
   let html = '';
 
-  // ── EMBARCACIONES
+  // ── EMBARCACIONES (Grouped by boat type)
   html += secHeader('Un día en el agua');
-  html += barcos.map(b => radioCard(b.id, b.name, `${b.pax} pasajeros · 9 a 18 hs`, b.price, 'salida', state.barcoId, `selectBarco('${b.id}')`)).join('');
+  html += `<div style="grid-column:span 2;display:grid;grid-template-columns:1fr;gap:1rem">`;
+  
+  // Group boats by name (same boat, different beaches)
+  const boatGroups = {};
+  barcos.forEach(b => {
+    const boatType = b.name.split(' — ')[0]; // Get boat name without beach
+    if(!boatGroups[boatType]) boatGroups[boatType] = [];
+    boatGroups[boatType].push(b);
+  });
+  
+  Object.entries(boatGroups).forEach(([boatType, boats]) => {
+    const selected = state.barcoId && boats.some(b => b.id === state.barcoId);
+    const selectedBoat = selected ? boats.find(b => b.id === state.barcoId) : null;
+    const days = state.svcs['barco_dias'] || 1;
+    
+    html += `<div style="border:1px solid rgba(174,133,96,.18);padding:1.2rem;border-radius:12px;background:${selected?'rgba(29,77,58,.22)':'rgba(255,255,255,.03)'};transition:all .3s">
+      <div style="margin-bottom:.8rem">
+        <div style="font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.15em;color:var(--wh);text-transform:uppercase;margin-bottom:.5rem">${boatType}</div>
+        <div style="font-size:.8rem;color:rgba(253,250,246,.5)">${boats[0].pax} pasajeros · 9 a 18 hs</div>
+      </div>
+      
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-bottom:${selected?'.8rem':'0'}">
+        ${boats.map(b => `<button style="padding:.6rem;background:${state.barcoId === b.id?'var(--vl)':'rgba(174,133,96,.15)'};color:${state.barcoId === b.id?'var(--bk)':'rgba(253,250,246,.7)'};border:.5px solid ${state.barcoId === b.id?'var(--vl)':'rgba(174,133,96,.3)'};border-radius:8px;font-size:.75rem;cursor:pointer;transition:all .2s;text-transform:uppercase;letter-spacing:.08em" onclick="selectBarco('${b.id}')">
+          ${b.name.split(' — ')[1] || 'General'}<br><span style="font-size:.65rem;opacity:.8">USD $${b.price.toLocaleString()}</span>
+        </button>`).join('')}
+      </div>
+      
+      ${selected?`<div style="display:flex;align-items:center;gap:.5rem;background:rgba(174,133,96,.1);padding:.5rem .8rem;border-radius:8px;font-size:.75rem;color:rgba(253,250,246,.7)">
+        Días:
+        <button style="background:rgba(174,133,96,.3);border:none;width:20px;height:20px;cursor:pointer;color:var(--vl);font-size:.7rem" onclick="changeBoatDays(-1)">−</button>
+        <span style="min-width:15px;text-align:center">${days}</span>
+        <button style="background:rgba(174,133,96,.3);border:none;width:20px;height:20px;cursor:pointer;color:var(--vl);font-size:.7rem" onclick="changeBoatDays(1)">+</button>
+        <span style="margin-left:auto">USD $${(selectedBoat.price * days).toLocaleString()}</span>
+      </div>`:''}
+    </div>`;
+  });
+  
+  html += `</div>`;
 
-  // ── TRASLADOS
+  // ── TRASLADOS (Permitir múltiples vehículos)
   html += secHeader('Traslados — ida + vuelta');
-  html += traslados.map(t => radioCard(t.id, t.name, t.pax, t.price, null, state.svcs['traslado'], `selectTraslado('${t.id}',${t.price})`)).join('');
+  html += `<div style="grid-column:span 2;display:grid;grid-template-columns:1fr 1fr;gap:1rem">`;
+  html += traslados.map(t => {
+    const key = `traslado_${t.id}`;
+    const selected = state.svcs[key] ? true : false;
+    const qty = selected ? (state.svcs[key].qty || 1) : 1;
+    return `<div style="border:1px solid rgba(174,133,96,.18);padding:1.2rem;border-radius:12px;background:${selected?'rgba(29,77,58,.22)':'rgba(255,255,255,.03)'};transition:all .3s">
+      <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:.8rem;cursor:pointer" onclick="toggleTransladoMulti('${t.id}','${t.name}',${t.price},'${t.pax}')">
+        <div style="width:18px;height:18px;border:1px solid rgba(174,133,96,.35);border-radius:2px;background:${selected?'var(--teal)':'transparent'};flex-shrink:0;display:flex;align-items:center;justify-content:center">
+          ${selected?'<span style="color:var(--bk);font-size:.8rem">✓</span>':''}
+        </div>
+        <div>
+          <div style="font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.15em;color:var(--wh);text-transform:uppercase">${t.name}</div>
+          <div style="font-size:.8rem;color:rgba(253,250,246,.4)">${t.pax}</div>
+        </div>
+      </div>
+      ${selected?`<div style="display:flex;align-items:center;gap:.5rem;background:rgba(174,133,96,.1);padding:.5rem .8rem;border-radius:8px;font-size:.75rem;color:rgba(253,250,246,.7)">
+        <button style="background:rgba(174,133,96,.3);border:none;width:24px;height:24px;cursor:pointer;color:var(--vl)" onclick="event.stopPropagation();changeTransladoQty('${t.id}',-1)">−</button>
+        <span style="min-width:20px;text-align:center">${qty}</span>
+        <button style="background:rgba(174,133,96,.3);border:none;width:24px;height:24px;cursor:pointer;color:var(--vl)" onclick="event.stopPropagation();changeTransladoQty('${t.id}',1)">+</button>
+        <span style="margin-left:auto">USD $${(t.price*qty).toLocaleString()}</span>
+      </div>`:''}
+    </div>`;
+  }).join('');
+  html += `</div>`;
 
-  // ── CARRITOS
+  // ── CARRITOS (Permitir múltiples)
   html += secHeader('Carritos de golf');
-  html += carritos.map(c => checkCard(c.id, c.name, '', c.price, c.unit, `toggleSvcItem('${c.id}',${c.price},'${c.name}','${c.unit}')`)).join('');
+  html += `<div style="grid-column:span 2;display:grid;grid-template-columns:1fr 1fr;gap:1rem">`;
+  html += carritos.map(c => {
+    const selected = state.svcs[c.id] ? true : false;
+    const qty = selected ? (state.svcs[c.id].qty || 1) : 1;
+    return `<div style="border:1px solid rgba(174,133,96,.18);padding:1.2rem;border-radius:12px;background:${selected?'rgba(29,77,58,.22)':'rgba(255,255,255,.03)'};transition:all .3s;cursor:pointer" onclick="toggleGolfQty('${c.id}','${c.name}',${c.price},'${c.unit}')">
+      <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:${selected?'.8rem':'0'}">
+        <div style="width:18px;height:18px;border:1px solid rgba(174,133,96,.35);border-radius:2px;background:${selected?'var(--teal)':'transparent'};flex-shrink:0;display:flex;align-items:center;justify-content:center">
+          ${selected?'<span style="color:var(--bk);font-size:.8rem">✓</span>':''}
+        </div>
+        <div>
+          <div style="font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.15em;color:var(--wh);text-transform:uppercase">${c.name}</div>
+          <div style="font-size:.8rem;color:rgba(253,250,246,.4)">USD $${c.price.toLocaleString()} / ${c.unit}</div>
+        </div>
+      </div>
+      ${selected?`<div style="display:flex;align-items:center;gap:.5rem;background:rgba(174,133,96,.1);padding:.5rem .8rem;border-radius:8px;font-size:.75rem;color:rgba(253,250,246,.7)" onclick="event.stopPropagation()">
+        <button style="background:rgba(174,133,96,.3);border:none;width:24px;height:24px;cursor:pointer;color:var(--vl)" onclick="changeGolfQty('${c.id}',-1)">−</button>
+        <span style="min-width:20px;text-align:center">${qty}</span>
+        <button style="background:rgba(174,133,96,.3);border:none;width:24px;height:24px;cursor:pointer;color:var(--vl)" onclick="changeGolfQty('${c.id}',1)">+</button>
+      </div>`:''}
+    </div>`;
+  }).join('');
+  html += `</div>`;
 
   // ── AEROPUERTO VIP
   html += secHeader('Aeropuerto VIP');
@@ -4087,9 +4225,29 @@ function renderServices(){
 // Selectors para opciones únicas (radio-style)
 function selectBarco(id){
   const b=barcos.find(x=>x.id===id);
-  if(state.barcoId===id){state.barcoId=null;delete state.svcs['_barco'];}
-  else{state.barcoId=id;state.svcs['_barco']={price:b.price,name:b.name};}
+  if(state.barcoId===id){state.barcoId=null;delete state.svcs['_barco'];delete state.svcs['barco_dias'];}
+  else{
+    state.barcoId=id;
+    const days = state.svcs['barco_dias'] || 1;
+    state.svcs['_barco']={price:b.price, name:b.name, qty:days, perNight:true};
+    if(!state.svcs['barco_dias']) state.svcs['barco_dias'] = 1;
+  }
   renderServices();
+}
+
+function changeBoatDays(delta){
+  if(state.barcoId){
+    const maxDays = state.nights || 1;
+    const newDays = Math.max(1, Math.min(maxDays, (state.svcs['barco_dias'] || 1) + delta));
+    state.svcs['barco_dias'] = newDays;
+    
+    // Update barco price with new qty
+    const b = barcos.find(x => x.id === state.barcoId);
+    if(b) {
+      state.svcs['_barco'] = {price: b.price, name: b.name, qty: newDays, perNight: true};
+    }
+    renderServices();
+  }
 }
 function selectGolf(id){
   // Kept for legacy — golf is now in actividades
@@ -4100,6 +4258,43 @@ function selectTraslado(id,price){
   if(state.svcs['traslado']===id){delete state.svcs['traslado'];delete state.svcs['_traslado'];}
   else{state.svcs['traslado']=id;state.svcs['_traslado']={price,name:t.name};}
   renderServices();
+}
+
+function toggleTransladoMulti(id,name,price,pax){
+  const key = `traslado_${id}`;
+  if(state.svcs[key]){
+    delete state.svcs[key];
+  } else {
+    state.svcs[key] = {price, name, qty: 1, perQty: true};
+  }
+  renderServices();
+}
+
+function changeTransladoQty(id,delta){
+  const key = `traslado_${id}`;
+  if(state.svcs[key]){
+    const newQty = Math.max(1, (state.svcs[key].qty || 1) + delta);
+    const maxNeeded = Math.ceil(state.guests / 6); // Asume max 6 pax por vehículo
+    state.svcs[key].qty = Math.min(newQty, maxNeeded + 2);
+    renderServices();
+  }
+}
+
+function toggleGolfQty(id,name,price,unit){
+  if(state.svcs[id]){
+    delete state.svcs[id];
+  } else {
+    state.svcs[id] = {price, name, qty: 1, perNight: true};
+  }
+  renderServices();
+}
+
+function changeGolfQty(id,delta){
+  if(state.svcs[id]){
+    const newQty = Math.max(1, (state.svcs[id].qty || 1) + delta);
+    state.svcs[id].qty = newQty;
+    renderServices();
+  }
 }
 function selectAeropuerto(id){
   const a=aeropuerto.find(x=>x.id===id);
