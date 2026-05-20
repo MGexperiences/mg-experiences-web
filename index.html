@@ -4191,6 +4191,23 @@ function selectVilla(id){
   document.querySelectorAll('.villa-opt').forEach(el=>{
     el.classList.toggle('selected',el.getAttribute('onclick').includes("'"+id+"'"));
   });
+  
+  // Track villa seleccionada (de forma segura, sin romper si falla)
+  try {
+    if(typeof fbq !== 'undefined' && villaDataFromSheet && villaDataFromSheet[id]) {
+      const v = villaDataFromSheet[id];
+      const precio = v.precio_noche || v.price || 0;
+      fbq('track', 'ViewContent', {
+        content_name: 'Villa: ' + (v.name || id),
+        content_type: 'product',
+        value: precio,
+        currency: 'USD'
+      });
+    }
+  } catch(e) {
+    // Si falla el tracking, no rompe el flujo
+    console.log('Tracking villa error:', e);
+  }
 }
 
 // ── STEP 4: SERVICES — renderizado dinámico con datos reales
