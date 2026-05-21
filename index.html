@@ -3729,8 +3729,8 @@ const villaServices = [
   {id:'cocinera',  name:'Cocinera',             price:100, unit:'día'},
   {id:'cocinera2', name:'Cocinera + Nocturno',  price:172, unit:'día'},
   {id:'chef',      name:'Chef completo',        price:286, unit:'día'},
-  {id:'nineraD',   name:'Niñera (día)',         price:122, unit:'día'},
-  {id:'nineraH',   name:'Niñera (noche)',       price:172, unit:'noche'},
+  {id:'nineraD',   name:'Niñera 2 niños (día)',   price:122, unit:'día'},
+  {id:'nineraH',   name:'Niñera 2 niños (noche)', price:172, unit:'noche'},
 ];
 
 // ── TRASLADOS (USD ida+vuelta)
@@ -3999,6 +3999,27 @@ function selectCalDay(y, m, d) {
   }
 
   renderCalendar();
+}
+
+// ── Calcula el total del presupuesto actual (usado por pixel y resumen)
+function calculateTotal(){
+  const villa=getVillas().find(v=>v.id===state.villaId);
+  const nights=state.nights||0;
+  const guests=state.guests||1;
+  const villaTotal=villa?villa.price*nights:0;
+  const cdcTotal=feeCDC*guests*nights;
+  let extrasTotal=0;
+  Object.entries(state.svcs).forEach(([k,v])=>{
+    if(k.startsWith('barco_dias')||!v.price) return;
+    if(k.startsWith('traslado_')){extrasTotal+=v.price*(v.qty||1);return;}
+    let amt=v.price;
+    if(v.qty&&v.qty>1) amt=v.price*v.qty;
+    if(v.perPerson) amt=v.price*guests;
+    else if(v.perNight) amt=v.price*nights;
+    else if(k.startsWith('aeropuerto_')) amt=v.price*(v.qty||1);
+    extrasTotal+=amt;
+  });
+  return villaTotal+cdcTotal+extrasTotal;
 }
 
 // ── META PIXEL TRACKING FUNCTIONS ──
@@ -4735,13 +4756,16 @@ function buildPresupuestoData(){
 
   // Servicios villa
   villaServices.forEach(s=>{
-    if(state.svcs[s.id]) items.push({
-      categoria:'Servicio Villa',
-      descripcion:s.name,
-      display: s.name,
-      cantidad:1,
-      unidad:s.unit
-    });
+    if(state.svcs[s.id]){
+      const esPerNight = s.unit === 'día' || s.unit === 'noche';
+      items.push({
+        categoria:'Servicio Villa',
+        descripcion:s.name,
+        display: s.name,
+        cantidad: esPerNight ? nights : 1,
+        unidad:s.unit
+      });
+    }
   });
 
   // Actividades seleccionadas
