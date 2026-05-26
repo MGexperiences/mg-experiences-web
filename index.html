@@ -1849,6 +1849,16 @@ nav.solid{background:rgba(28,30,23,.85);backdrop-filter:saturate(180%) blur(20px
 /* Panels */
 .cpanel{display:none;animation:fadePanel .5s ease both;background:rgba(255,255,255,.02);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(174,133,96,.08);border-radius:16px;padding:2rem}
 .cpanel.active{display:block}
+#panel5.active{min-height:100vh;}
+/* Cuando se muestra el resumen, ocultar las secciones que quedan debajo del configurador */
+body.showing-summary #villas,
+body.showing-summary .villas,
+body.showing-summary #casa-de-campo,
+body.showing-summary .founders,
+body.showing-summary .reviews-sec,
+body.showing-summary footer {
+  display: none !important;
+}
 @keyframes fadePanel{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 
 .cpanel-title{font-family:'Playfair Display',serif;font-style:italic;font-size:1.5rem;color:var(--wh);margin-bottom:.6rem;text-align:center}
@@ -4153,7 +4163,21 @@ function goStep(n){
     trackViewConfigurador();
   }
   
-  document.getElementById('tu-experiencia').scrollIntoView({behavior:'smooth',block:'start'});
+  // Clase en body para ocultar secciones debajo del configurador en el resumen
+  if(n===5){
+    document.body.classList.add('showing-summary');
+    setTimeout(()=>{
+      const p5 = document.getElementById('panel5');
+      if(p5){
+        const rect = p5.getBoundingClientRect();
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        window.scrollTo({ top: scrollTop + rect.top - 80, behavior:'smooth' });
+      }
+    }, 80);
+  } else {
+    document.body.classList.remove('showing-summary');
+    document.getElementById('tu-experiencia').scrollIntoView({behavior:'smooth',block:'start'});
+  }
 }
 
 function selectIntent(type){
@@ -4451,17 +4475,46 @@ function renderServices(){
 
   Object.entries(actividades).forEach(([cat, items]) => {
     html += accHeader(cat, cat, actEmojis[cat]||'');
+    const isGolfCat = cat === 'Golf';
     const bodyHtml = items.map(a => {
       const sel = !!state.svcs[a.id];
-      const qty = sel ? (state.svcs[a.id].cantidad || 1) : 1;
-      const qtySelector = sel ? `
-        <div onclick="event.stopPropagation()" style="display:flex;align-items:center;gap:.5rem;margin-top:.5rem">
-          <button onclick="changeActivCantidad('${a.id}',-1)" style="width:24px;height:24px;border:1px solid rgba(174,133,96,.4);background:none;color:var(--vl);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;line-height:1">−</button>
-          <span id="actqty-${a.id}" style="font-family:'Cinzel',serif;font-size:.65rem;color:var(--wh);min-width:20px;text-align:center">${qty}</span>
-          <button onclick="changeActivCantidad('${a.id}',1)" style="width:24px;height:24px;border:1px solid rgba(174,133,96,.4);background:none;color:var(--vl);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;line-height:1">+</button>
-          <span style="font-size:.72rem;color:rgba(253,250,246,.4)">${a.unit}</span>
-        </div>` : '';
-      return `<div class="svc-opt ${sel?'selected':''}" onclick="toggleActiv('${a.id}',${a.price},'${a.name.replace(/'/g,"\\'")}','${a.unit}')">
+      const isGolfItem = isGolfCat && a.unit === 'persona';
+
+      let qtySelector = '';
+      if(sel && isGolfItem){
+        const personas = state.svcs[a.id].golfPersonas || 1;
+        const dias     = state.svcs[a.id].golfDias     || 1;
+        const subtotal = a.price * personas * dias;
+        qtySelector = `
+          <div onclick="event.stopPropagation()" style="margin-top:.7rem;display:flex;flex-direction:column;gap:.5rem">
+            <div style="display:flex;align-items:center;gap:.5rem">
+              <span style="font-size:.7rem;color:rgba(253,250,246,.5);min-width:60px">Personas</span>
+              <button onclick="changeGolfPersonas('${a.id}',-1)" style="width:24px;height:24px;border:1px solid rgba(174,133,96,.4);background:none;color:var(--vl);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center">−</button>
+              <span style="font-family:'Cinzel',serif;font-size:.7rem;color:var(--wh);min-width:20px;text-align:center">${personas}</span>
+              <button onclick="changeGolfPersonas('${a.id}',1)" style="width:24px;height:24px;border:1px solid rgba(174,133,96,.4);background:none;color:var(--vl);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center">+</button>
+            </div>
+            <div style="display:flex;align-items:center;gap:.5rem">
+              <span style="font-size:.7rem;color:rgba(253,250,246,.5);min-width:60px">Días</span>
+              <button onclick="changeGolfDias('${a.id}',-1)" style="width:24px;height:24px;border:1px solid rgba(174,133,96,.4);background:none;color:var(--vl);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center">−</button>
+              <span style="font-family:'Cinzel',serif;font-size:.7rem;color:var(--wh);min-width:20px;text-align:center">${dias}</span>
+              <button onclick="changeGolfDias('${a.id}',1)" style="width:24px;height:24px;border:1px solid rgba(174,133,96,.4);background:none;color:var(--vl);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center">+</button>
+            </div>
+            <div style="font-size:.7rem;color:var(--vl);margin-top:.2rem">
+              ${personas} pers. × ${dias} día${dias>1?'s':''} = USD $${subtotal.toLocaleString()}
+            </div>
+          </div>`;
+      } else if(sel){
+        const qty = state.svcs[a.id].cantidad || 1;
+        qtySelector = `
+          <div onclick="event.stopPropagation()" style="display:flex;align-items:center;gap:.5rem;margin-top:.5rem">
+            <button onclick="changeActivCantidad('${a.id}',-1)" style="width:24px;height:24px;border:1px solid rgba(174,133,96,.4);background:none;color:var(--vl);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;line-height:1">−</button>
+            <span id="actqty-${a.id}" style="font-family:'Cinzel',serif;font-size:.65rem;color:var(--wh);min-width:20px;text-align:center">${qty}</span>
+            <button onclick="changeActivCantidad('${a.id}',1)" style="width:24px;height:24px;border:1px solid rgba(174,133,96,.4);background:none;color:var(--vl);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;line-height:1">+</button>
+            <span style="font-size:.72rem;color:rgba(253,250,246,.4)">${a.unit}</span>
+          </div>`;
+      }
+
+      return `<div class="svc-opt ${sel?'selected':''}" onclick="toggleActiv('${a.id}',${a.price},'${a.name.replace(/'/g,"\'")}','${a.unit}')">
         <div class="svc-check"></div>
         <div style="flex:1">
           <div class="svc-opt-name">${a.name}</div>
@@ -4601,9 +4654,12 @@ function toggleActiv(id,price,name,unit){
   if(state.svcs[id]){
     delete state.svcs[id];
   } else {
-    // Default cantidad: number of guests for person-based, 1 otherwise
     const defaultQty = ['persona','adulto','niño'].includes(unit) ? state.guests : 1;
-    state.svcs[id]={price,name,unit,perPerson:false,cantidad:defaultQty};
+    // Para golf: guardar personas y dias separados
+    const isGolf = unit === 'persona' && (id==='teeth'||id==='dye'||id==='links');
+    state.svcs[id]={price,name,unit,perPerson:false,cantidad:defaultQty,
+      ...(isGolf ? {golfPersonas: defaultQty, golfDias: 1} : {})
+    };
   }
   renderServices();
 }
@@ -4612,9 +4668,25 @@ function changeActivCantidad(id, delta){
   const current = state.svcs[id].cantidad || 1;
   const newVal = Math.max(1, current + delta);
   state.svcs[id].cantidad = newVal;
-  // Update display inline without full re-render
   const el = document.getElementById('actqty-'+id);
   if(el) el.textContent = newVal;
+}
+function changeGolfPersonas(id, delta){
+  if(!state.svcs[id]) return;
+  const cur = state.svcs[id].golfPersonas || 1;
+  const newVal = Math.max(1, cur + delta);
+  state.svcs[id].golfPersonas = newVal;
+  state.svcs[id].cantidad = newVal * (state.svcs[id].golfDias || 1);
+  renderServices();
+}
+function changeGolfDias(id, delta){
+  if(!state.svcs[id]) return;
+  const maxDias = state.nights || 1;
+  const cur = state.svcs[id].golfDias || 1;
+  const newVal = Math.max(1, Math.min(maxDias, cur + delta));
+  state.svcs[id].golfDias = newVal;
+  state.svcs[id].cantidad = (state.svcs[id].golfPersonas || 1) * newVal;
+  renderServices();
 }
 function toggleAccordion(key){
   state.openAccordion = state.openAccordion===key ? null : key;
@@ -4678,7 +4750,16 @@ function renderSummary(){
     if(k.startsWith('traslado_')||k.startsWith('barco_dias')||!v.price) return;
     let amt=v.price;
     let label=v.name;
-    if(v.qty && v.qty>1){
+    // Golf: tiene golfPersonas y golfDias
+    if(v.golfPersonas && v.golfDias){
+      const personas = v.golfPersonas;
+      const dias = v.golfDias;
+      amt = v.price * personas * dias;
+      label += ` (${personas} pers. × ${dias} día${dias>1?'s':''})`;
+    } else if(v.cantidad && v.cantidad>1){
+      label+=` (${v.cantidad} ${v.unit||''})`;
+      amt=v.price*v.cantidad;
+    } else if(v.qty && v.qty>1){
       label+=` × ${v.qty}`;
       amt=v.price*v.qty;
     }
@@ -4803,13 +4884,24 @@ function buildPresupuestoData(){
   // Actividades seleccionadas
   Object.entries(actividades).forEach(([cat,actList])=>{
     actList.forEach(act=>{
-      if(state.svcs[act.id]) items.push({
-        categoria:'Actividad',
-        descripcion:act.name,
-        display: act.display || act.name,
-        cantidad: state.svcs[act.id].cantidad || 1,
-        unidad:act.unit
-      });
+      if(state.svcs[act.id]){
+        const svc = state.svcs[act.id];
+        // Para golf: cantidad = personas × días, y el display lo aclara
+        const isGolf = svc.golfPersonas && svc.golfDias;
+        const cantidad = isGolf
+          ? svc.golfPersonas * svc.golfDias
+          : (svc.cantidad || 1);
+        const displayName = isGolf
+          ? `${act.display || act.name} (${svc.golfPersonas} pers. × ${svc.golfDias} día${svc.golfDias>1?'s':''})`
+          : (act.display || act.name);
+        items.push({
+          categoria:'Actividad',
+          descripcion: act.name,
+          display: displayName,
+          cantidad,
+          unidad: act.unit
+        });
+      }
     });
   });
 
@@ -4907,6 +4999,8 @@ async function enviarConsulta(){
     document.getElementById('summaryBox').style.display='none';
     document.querySelector('#panel5 .cnav').style.display='none';
     document.querySelector('#panel5 .cpanel-sub').style.display='none';
+    // Restaurar secciones ocultas durante el resumen
+    document.body.classList.remove('showing-summary');
 
     // Construir pantalla de confirmación con valores reales si los hay
     const nombre = gateState.userData?.nombre || '';
