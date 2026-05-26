@@ -3569,8 +3569,48 @@ async function loadVillasFromSheet() {
 
       if(!nombre) continue;
 
-      const precioK = parseFloat((r[10] || '').replace(/[^0-9.,]/g,'').replace(',','.')) || 0;
-      const precioI = parseFloat((r[8]  || '').replace(/[^0-9.,]/g,'').replace(',','.')) || 0;
+      // ✅ FIX: parseo robusto de precios
+      // Maneja formatos: "$5,176", "$5.176", "5176", "5176.00", "$5,176.50"
+      function parsePrice(s) {
+        if (!s) return 0;
+        // Eliminar todo excepto dígitos, comas y puntos
+        let cleaned = String(s).replace(/[^0-9.,]/g,'').trim();
+        if (!cleaned) return 0;
+        // Si tiene tanto coma como punto, el último es el decimal
+        const lastComma = cleaned.lastIndexOf(',');
+        const lastDot   = cleaned.lastIndexOf('.');
+        if (lastComma > -1 && lastDot > -1) {
+          // Ambos presentes: el último carácter es el decimal real
+          if (lastComma > lastDot) {
+            // formato europeo: "5.176,50" → 5176.50
+            cleaned = cleaned.replace(/\./g,'').replace(',','.');
+          } else {
+            // formato US: "5,176.50" → 5176.50
+            cleaned = cleaned.replace(/,/g,'');
+          }
+        } else if (lastComma > -1) {
+          // Solo coma: puede ser separador de miles "5,176" o decimal "5,50"
+          // Heurística: si después de la coma hay 3 dígitos exactos, es separador de miles
+          const afterComma = cleaned.substring(lastComma+1);
+          if (afterComma.length === 3 && /^\d{3}$/.test(afterComma)) {
+            cleaned = cleaned.replace(/,/g,'');
+          } else {
+            cleaned = cleaned.replace(',','.');
+          }
+        } else if (lastDot > -1) {
+          // Solo punto: puede ser separador de miles "5.176" o decimal "5.50"
+          // Heurística: si después del último punto hay 3 dígitos exactos, es separador de miles
+          const afterDot = cleaned.substring(lastDot+1);
+          if (afterDot.length === 3 && /^\d{3}$/.test(afterDot)) {
+            cleaned = cleaned.replace(/\./g,'');
+          }
+          // si no, dejarlo como está (es decimal)
+        }
+        const n = parseFloat(cleaned);
+        return isNaN(n) ? 0 : n;
+      }
+      const precioK = parsePrice(r[10]);
+      const precioI = parsePrice(r[8]);
       const precio  = precioK > 0 ? precioK : precioI;
 
       const habM  = detalle.match(/(\d+)\s*hab/i);
