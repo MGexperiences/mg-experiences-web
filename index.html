@@ -1853,10 +1853,16 @@ nav.solid{background:rgba(28,30,23,.85);backdrop-filter:saturate(180%) blur(20px
 /* Cuando se muestra el resumen, ocultar las secciones que quedan debajo del configurador */
 body.showing-summary #villas,
 body.showing-summary .villas,
+body.showing-summary #embarcaciones,
+body.showing-summary #golf,
 body.showing-summary #casa-de-campo,
 body.showing-summary .founders,
 body.showing-summary .reviews-sec,
-body.showing-summary footer {
+body.showing-summary footer,
+body.showing-summary .hero,
+body.showing-summary .band,
+body.showing-summary .cta-strip,
+body.showing-summary .nl-sec {
   display: none !important;
 }
 @keyframes fadePanel{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
@@ -4221,14 +4227,8 @@ function goStep(n){
   // Clase en body para ocultar secciones debajo del configurador en el resumen
   if(n===5){
     document.body.classList.add('showing-summary');
-    setTimeout(()=>{
-      const p5 = document.getElementById('panel5');
-      if(p5){
-        const rect = p5.getBoundingClientRect();
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        window.scrollTo({ top: scrollTop + rect.top - 80, behavior:'smooth' });
-      }
-    }, 80);
+    // Scroll al tope — las secciones de arriba están ocultas, el configurador queda primero
+    setTimeout(()=>{ window.scrollTo({ top: 0, behavior:'smooth' }); }, 80);
   } else {
     document.body.classList.remove('showing-summary');
     document.getElementById('tu-experiencia').scrollIntoView({behavior:'smooth',block:'start'});
@@ -4965,9 +4965,7 @@ function buildPresupuestoData(){
         const cantidad = isGolf
           ? svc.golfPersonas * svc.golfDias
           : (svc.cantidad || 1);
-        const displayName = isGolf
-          ? `${act.display || act.name} (${svc.golfPersonas} pers. × ${svc.golfDias} día${svc.golfDias>1?'s':''})`
-          : (act.display || act.name);
+        const displayName = act.display || act.name; // siempre nombre simple, la cantidad ya va aparte
         items.push({
           categoria:'Actividad',
           descripcion: act.name,
