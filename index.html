@@ -2707,8 +2707,8 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
     
     <div class="cdc-quick-stats">
       <div class="cdc-qs-item">
-        <span class="cdc-qs-n">7,000</span>
-        <span class="cdc-qs-l">Acres</span>
+        <span class="cdc-qs-n">3.000</span>
+        <span class="cdc-qs-l">Hectáreas</span>
       </div>
       <div class="cdc-qs-divider"></div>
       <div class="cdc-qs-item">
@@ -4155,10 +4155,14 @@ function renderVillas(){
 
   // Filter: only villas that fit the group, sorted cheapest first
   const allVillas=getVillas();
+  const getPrice = v => {
+    const p = Number(v.precio_noche || v.price || 0);
+    return isNaN(p) ? 999999 : p; // las villas sin precio van al final
+  };
   const suitable=allVillas
-    .filter(v=>v.guests>=g)
-    .sort((a,b)=>(a.precio_noche||a.price||0)-(b.precio_noche||b.price||0));
-  const toShow=suitable.length>0?suitable:allVillas.sort((a,b)=>(a.precio_noche||a.price||0)-(b.precio_noche||b.price||0));
+    .filter(v=>Number(v.guests||v.huespedes||0)>=g)
+    .sort((a,b)=>getPrice(a)-getPrice(b));
+  const toShow=suitable.length>0?suitable:[...allVillas].sort((a,b)=>getPrice(a)-getPrice(b));
 
   if(suitable.length>0){
     note.textContent=`${suitable.length} casa${suitable.length>1?'s':''} sugerida${suitable.length>1?'s':''} para ${g} personas — confirmamos disponibilidad para tus fechas`;
@@ -4915,6 +4919,7 @@ function jsonpRequest(params, timeoutMs) {
     const cbName = 'jsonp_cb_' + Date.now() + '_' + Math.floor(Math.random()*100000);
     const script = document.createElement('script');
     let timer;
+    let loaded = false;
 
     const cleanup = () => {
       if(timer) clearTimeout(timer);
@@ -4923,19 +4928,37 @@ function jsonpRequest(params, timeoutMs) {
     };
 
     window[cbName] = (data) => {
+      loaded = true;
       cleanup();
       resolve(data);
     };
 
     timer = setTimeout(() => {
       cleanup();
-      reject(new Error('timeout'));
-    }, timeoutMs || 15000);
+      console.warn('JSONP timeout — Apps Script no devolvió callback dentro del límite. Verificar que el Apps Script tenga soporte JSONP en jsonResponse()');
+      reject(new Error('timeout — el servidor tardó demasiado o no soporta JSONP'));
+    }, timeoutMs || 30000);
 
     const allParams = new URLSearchParams(params);
     allParams.set('callback', cbName);
     script.src = APPS_SCRIPT_URL + '?' + allParams.toString();
-    script.onerror = () => { cleanup(); reject(new Error('network')); };
+    script.onload = () => {
+      // Si el script cargó pero el callback NO se ejecutó, significa que el Apps Script
+      // devolvió JSON puro (sin envolver en callback). Eso indica que la versión deployada
+      // del Apps Script no tiene soporte JSONP.
+      setTimeout(() => {
+        if(!loaded) {
+          cleanup();
+          console.error('Apps Script respondió pero sin callback JSONP. La versión deployada no soporta JSONP — re-deploy necesario.');
+          reject(new Error('Apps Script sin soporte JSONP'));
+        }
+      }, 500);
+    };
+    script.onerror = () => {
+      cleanup();
+      console.error('Error de red en JSONP request');
+      reject(new Error('network'));
+    };
     document.body.appendChild(script);
   });
 }
