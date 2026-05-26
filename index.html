@@ -4951,6 +4951,9 @@ async function enviarConsulta(){
 
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyOmyl7RCsJg92nL1FBuR4Y37hP2OVHxDj3NguqeQcoeuNYuM_g7YD3SNQw3HLxNFfqLw/exec';
 
+// VERSION TAG — para confirmar en consola qué HTML está activo
+console.log('%c[MG] HTML version: 2026-05-26-v3 con JSONP + parser de precios', 'color:#AE8560;font-weight:bold');
+
 // ─── JSONP HELPER ────────────────────────────────────────────────────────────
 // Apps Script redirige a script.googleusercontent.com que no devuelve headers CORS.
 // JSONP usa un <script> tag dinámico que no tiene la restricción CORS.
@@ -4959,45 +4962,42 @@ function jsonpRequest(params, timeoutMs) {
     const cbName = 'jsonp_cb_' + Date.now() + '_' + Math.floor(Math.random()*100000);
     const script = document.createElement('script');
     let timer;
-    let loaded = false;
+    let resolved = false;
 
     const cleanup = () => {
       if(timer) clearTimeout(timer);
-      delete window[cbName];
+      try { delete window[cbName]; } catch(e) { window[cbName] = undefined; }
       if(script.parentNode) script.parentNode.removeChild(script);
     };
 
     window[cbName] = (data) => {
-      loaded = true;
+      if(resolved) return;
+      resolved = true;
+      console.log('[JSONP] callback ejecutado:', data);
       cleanup();
       resolve(data);
     };
 
     timer = setTimeout(() => {
+      if(resolved) return;
+      resolved = true;
       cleanup();
-      console.warn('JSONP timeout — Apps Script no devolvió callback dentro del límite. Verificar que el Apps Script tenga soporte JSONP en jsonResponse()');
-      reject(new Error('timeout — el servidor tardó demasiado o no soporta JSONP'));
-    }, timeoutMs || 30000);
+      console.error('[JSONP] timeout — Apps Script no devolvió callback. Verificar que la versión deployada tenga jsonResponse(obj, e.parameter.callback) y soporte JSONP');
+      reject(new Error('Timeout: el servidor tardó demasiado o no soporta JSONP'));
+    }, timeoutMs || 20000);
 
     const allParams = new URLSearchParams(params);
     allParams.set('callback', cbName);
-    script.src = APPS_SCRIPT_URL + '?' + allParams.toString();
-    script.onload = () => {
-      // Si el script cargó pero el callback NO se ejecutó, significa que el Apps Script
-      // devolvió JSON puro (sin envolver en callback). Eso indica que la versión deployada
-      // del Apps Script no tiene soporte JSONP.
-      setTimeout(() => {
-        if(!loaded) {
-          cleanup();
-          console.error('Apps Script respondió pero sin callback JSONP. La versión deployada no soporta JSONP — re-deploy necesario.');
-          reject(new Error('Apps Script sin soporte JSONP'));
-        }
-      }, 500);
-    };
-    script.onerror = () => {
+    const finalUrl = APPS_SCRIPT_URL + '?' + allParams.toString();
+    console.log('[JSONP] enviando request:', params.action || '?');
+
+    script.src = finalUrl;
+    script.onerror = (e) => {
+      if(resolved) return;
+      resolved = true;
       cleanup();
-      console.error('Error de red en JSONP request');
-      reject(new Error('network'));
+      console.error('[JSONP] error de red:', e);
+      reject(new Error('Error de red al contactar el servidor'));
     };
     document.body.appendChild(script);
   });
