@@ -2384,8 +2384,8 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
   <ul class="nlinks">
     <li><a href="#casa-de-campo">El Resort</a></li>
     <li><a href="#villas">Villas</a></li>
-    <li><a href="#tu-experiencia">Embarcaciones</a></li>
-    <li><a href="#tu-experiencia">Golf</a></li>
+    <li><a href="#embarcaciones">Embarcaciones</a></li>
+    <li><a href="#tu-experiencia" onclick="event.preventDefault();navToSection('Golf')">Golf</a></li>
     <li><a href="#tu-experiencia">Diseñá tu estadía</a></li>
     <li><a href="#casa-de-campo">Resort</a></li>
     <li><a href="#resenas">Reseñas</a></li>
@@ -2406,8 +2406,8 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
   <button id="mobile-nav-close" onclick="toggleMobileNav()" aria-label="Cerrar">×</button>
   <a href="#casa-de-campo" onclick="toggleMobileNav()">El Resort</a>
   <a href="#villas" onclick="toggleMobileNav()">Villas</a>
-  <a href="#tu-experiencia" onclick="toggleMobileNav()">Embarcaciones</a>
-  <a href="#tu-experiencia" onclick="toggleMobileNav()">Golf</a>
+  <a href="#embarcaciones" onclick="toggleMobileNav()">Embarcaciones</a>
+  <a href="#tu-experiencia" onclick="toggleMobileNav();navToSection('Golf')">Golf</a>
   <a href="#tu-experiencia" onclick="toggleMobileNav()">Diseñá tu estadía</a>
   <a href="#casa-de-campo" onclick="toggleMobileNav()">Resort</a>
   <a href="#resenas" onclick="toggleMobileNav()">Reseñas</a>
@@ -2694,6 +2694,38 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
 </div>
 
 <!-- CASA DE CAMPO: EDITORIAL EXPERIENCE -->
+
+<!-- EMBARCACIONES -->
+<section class="boats rv" id="embarcaciones">
+  <div class="bbg"></div>
+  <div class="bb">
+    <div>
+      <span class="lbl">Un día en el agua</span>
+      <h2 class="bigt">Sin otros<br><em>pasajeros</em></h2>
+      <div class="rule"></div>
+      <p class="prose" style="font-size:1rem;color:rgba(253,250,246,.55)">El barco es tuyo. Elegís destino, horario y ritmo.</p>
+      <div class="ibox">
+        <div class="ibt">Incluido en toda salida</div>
+        <div class="ibg">
+          <div class="ii">Capitán y Marinero</div>
+          <div class="ii">Aguas y Refrescos</div>
+          <div class="ii">Cervezas</div>
+          <div class="ii">Bolsas de Hielo</div>
+        </div>
+      </div>
+      <p style="font-size:.76rem;color:rgba(253,250,246,.32);font-style:italic;margin-top:1rem">9:00 hs a 18:00 hs · Saona, Palmillas, Isla Catalina</p>
+    </div>
+    <div>
+      <div class="fleet">
+        <div class="frow"><div><div class="fn">Azimuth Flybridge 55</div><div class="fs2">Flybridge · Motor</div></div><div class="fc">16 pas.</div></div>
+        <div class="frow"><div><div class="fn">Tiara 38 LS</div><div class="fs2">Sport Cruiser</div></div><div class="fc">12 pas.</div></div>
+        <div class="frow"><div><div class="fn">Boston Whaler Conquest 305</div><div class="fs2">Open Sport</div></div><div class="fc">9 pas.</div></div>
+      </div>
+      <div style="margin-top:1.8rem"><a href="#tu-experiencia" class="btn bf">Reservar salida</a></div>
+    </div>
+  </div>
+</section>
+
 <section id="casa-de-campo" class="cdc-experience">
   
   <!-- === ACT I: THE OPENING === -->
@@ -4691,6 +4723,25 @@ function changeGolfDias(id, delta){
 function toggleAccordion(key){
   state.openAccordion = state.openAccordion===key ? null : key;
   renderServices();
+}
+
+// Nav links: llevar al configurador y abrir sección específica
+function navToSection(seccion){
+  const el = document.getElementById('tu-experiencia');
+  if(!el) return;
+  el.scrollIntoView({behavior:'smooth', block:'start'});
+  // Si ya tiene fechas y villa, ir directo al paso de servicios
+  if(state.dateIn && state.dateOut && state.nights > 0 && state.villaId){
+    setTimeout(()=>{
+      window.goStep(4);
+      setTimeout(()=>{
+        // Abrir el accordion correspondiente
+        if(seccion === 'Golf') state.openAccordion = 'Golf';
+        else if(seccion === 'Embarcaciones') state.openAccordion = null; // embarcaciones siempre visible
+        renderServices();
+      }, 300);
+    }, 400);
+  }
 }
 // Legacy compatibility
 function toggleSvc(el,key,price){
@@ -7388,6 +7439,23 @@ document.addEventListener('DOMContentLoaded', setupScrollReveal);
 }
 /* Hide when configurator is in viewport */
 #floatingBudgetBtn.in-config{opacity:0!important;pointer-events:none!important}
+
+/* ── EMBARCACIONES SECTION ── */
+.boats{min-height:90vh;display:flex;align-items:center;position:relative;overflow:hidden;padding:8rem 4rem}
+.bbg{position:absolute;inset:0;background:url('https://img1.wsimg.com/isteam/ip/28e700c9-c37b-485d-b636-01fcfc9acb86/blob-d80dc22.png') center/cover no-repeat;filter:brightness(.28)}
+.bb{position:relative;z-index:2;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center}
+.fleet{display:flex;flex-direction:column;gap:1px;background:rgba(253,250,246,.07)}
+.frow{background:rgba(253,250,246,.04);padding:1.4rem 1.8rem;display:flex;justify-content:space-between;align-items:center;transition:background .3s}
+.frow:hover{background:rgba(253,250,246,.09)}
+.fn{font-family:'Playfair Display',serif;font-style:italic;font-size:1.15rem;color:var(--wh)}
+.fs2{font-size:.73rem;color:rgba(253,250,246,.38);margin-top:.12rem}
+.fc{font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.2em;color:var(--teal);text-transform:uppercase}
+.ibox{margin-top:2.2rem;padding:1.6rem;border:1px solid rgba(109,195,205,.18)}
+.ibt{font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.28em;color:var(--teal);text-transform:uppercase;margin-bottom:.9rem}
+.ibg{display:grid;grid-template-columns:1fr 1fr;gap:.45rem}
+.ii{font-size:.8rem;color:rgba(253,250,246,.48);display:flex;align-items:center;gap:.45rem}
+.ii::before{content:'';width:3px;height:3px;background:var(--teal);border-radius:50%;flex-shrink:0}
+@media(max-width:768px){.bb{grid-template-columns:1fr}.boats{padding:5rem 1.5rem}}
 </style>
 
 <script>
