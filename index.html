@@ -5189,11 +5189,26 @@ function codeInput(idx){
   if(idx===5&&val) verifyCode();
 }
 
+// Guard global para evitar doble verificación (auto al completar dígito 6 + click manual)
+let _verifyInProgress = false;
+let _verifyLastCode = null;
+
 // ── STEP B: Verificar código — verificación 100% server-side
 async function verifyCode(){
   const entered=[0,1,2,3,4,5].map(i=>document.getElementById('c'+i).value).join('');
   const errEl  =document.getElementById('gateErrorB');
   const btn    =document.getElementById('gateBtnB');
+
+  // Guard: si ya hay una verificación en curso, ignorar
+  if(_verifyInProgress) {
+    console.log('[Verify] verificación en curso, ignorando llamada duplicada');
+    return;
+  }
+  // Guard: si el código ya fue intentado (mismo código), ignorar
+  if(entered === _verifyLastCode) {
+    console.log('[Verify] código ya intentado, ignorando');
+    return;
+  }
 
   if(entered.length<6){errEl.textContent='Ingresá los 6 dígitos.';return;}
   if(!/^\d{6}$/.test(entered)){errEl.textContent='Solo números.';return;}
@@ -5208,6 +5223,8 @@ async function verifyCode(){
     }
   }
 
+  _verifyInProgress = true;
+  _verifyLastCode = entered;
   btn.disabled=true;
   btn.textContent='Verificando...';
 
@@ -5259,12 +5276,17 @@ async function verifyCode(){
       document.getElementById('c0').focus();
       btn.disabled=false;
       btn.textContent='Verificar →';
+      _verifyInProgress = false;
+      // No resetear _verifyLastCode: ese código ya fue rechazado
     }
 
   } catch(err){
+    console.error('[Verify] error:', err);
     errEl.textContent='Error de conexión. Revisá tu internet e intentá de nuevo.';
     btn.disabled=false;
     btn.textContent='Verificar →';
+    _verifyInProgress = false;
+    _verifyLastCode = null; // permitir reintentar con el mismo código si fue error de red
   }
 }
 
@@ -5276,6 +5298,9 @@ function resendCode(){
       `Límite alcanzado. Esperá ${mins} minuto${mins!==1?'s':''}.`;
     return;
   }
+  // Resetear guards al pedir nuevo código
+  _verifyInProgress = false;
+  _verifyLastCode = null;
   document.getElementById('gateStepB').style.display='none';
   document.getElementById('gateStepA').style.display='block';
   document.getElementById('gateErrorA').textContent='';
