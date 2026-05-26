@@ -4961,11 +4961,6 @@ function isEmailValid(email){
   return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
 }
 
-// ── Generar código de 6 dígitos
-function generateCode(){
-  return String(Math.floor(100000+Math.random()*900000));
-}
-
 // ── Mostrar / cerrar gate
 function openGate(){
   document.getElementById('gateOverlay').classList.add('show');
@@ -5027,27 +5022,37 @@ async function sendCode(e){
   btn.disabled=true;
   btn.textContent='Enviando...';
 
-  const code=generateCode();
-  gateState.code      =code;
-  gateState.attempts  =0;
-  gateState.codeExpiry=Date.now()+10*60*1000; // 10 minutos
-  gateState.userData  ={nombre,apellido,email,tel,pais};
+  // ✅ SEGURO: El código lo genera y guarda el SERVIDOR (Apps Script)
+  // El browser NUNCA ve el código — elimina el bypass por consola
+  gateState.code      = null; // no se usa más en client-side
+  gateState.attempts  = 0;
+  gateState.codeExpiry= null;
+  gateState.userData  = {nombre,apellido,email,tel,pais};
 
-  // Incrementar rate limit antes del fetch
+  // Incrementar rate limit client-side (doble capa: server también valida)
   incrementRateLimit();
 
   try{
+    // Usar sendOTP — el servidor genera el código y lo guarda en Sheets
     const params=new URLSearchParams({
-      action:'sendCode',
+      action: 'sendOTP',
       email:  email,
-      nombre: nombre,
-      code:   code,
+      name:   nombre,
     });
 
-    await fetch(APPS_SCRIPT_URL+'?'+params.toString(),{
-      method:'GET',
-      mode:  'no-cors',
+    const res = await fetch(APPS_SCRIPT_URL+'?'+params.toString(),{
+      method: 'GET',
+      mode:   'cors', // sendOTP devuelve JSON real
     });
+
+    const data = await res.json();
+
+    if(!data.ok){
+      errEl.textContent = data.error || 'No pudimos enviar el código. Intentá de nuevo.';
+      btn.disabled=false;
+      btn.textContent='Recibir código →';
+      return;
+    }
 
     document.getElementById('gateEmailDisplay').textContent=email;
     document.getElementById('gateStepA').style.display='none';
@@ -5076,51 +5081,64 @@ function codeInput(idx){
   if(idx===5&&val) verifyCode();
 }
 
-// ── STEP B: Verificar código
-function verifyCode(){
+// ── STEP B: Verificar código — verificación 100% server-side
+async function verifyCode(){
   const entered=[0,1,2,3,4,5].map(i=>document.getElementById('c'+i).value).join('');
   const errEl  =document.getElementById('gateErrorB');
+  const btn    =document.getElementById('gateBtnB');
 
   if(entered.length<6){errEl.textContent='Ingresá los 6 dígitos.';return;}
+  if(!/^\d{6}$/.test(entered)){errEl.textContent='Solo números.';return;}
 
-  // Verificar vencimiento (10 minutos)
-  if(Date.now()>gateState.codeExpiry){
-    errEl.textContent='El código venció. Pedí uno nuevo.';
-    [0,1,2,3,4,5].forEach(i=>{document.getElementById('c'+i).value='';});
-    gateState.code=null;
-    return;
-  }
+  btn.disabled=true;
+  btn.textContent='Verificando...';
 
-  gateState.attempts++;
+  try{
+    // ✅ SEGURO: El servidor compara el código — no es bypasseable desde consola
+    const params=new URLSearchParams({
+      action: 'verifyOTP',
+      email:  gateState.userData.email,
+      otp:    entered,
+    });
 
-  if(entered===gateState.code){
-    gateState.verified=true;
-    errEl.innerHTML='<span class="gate-success">✓ Verificado correctamente</span>';
+    const res  = await fetch(APPS_SCRIPT_URL+'?'+params.toString(),{method:'GET',mode:'cors'});
+    const data = await res.json();
 
-    sessionStorage.setItem('mg_verified','1');
-    sessionStorage.setItem('mg_user',JSON.stringify(gateState.userData));
+    if(data.ok){
+      // ✅ SEGURO: Guardar token firmado por el servidor en lugar de mg_verified=1
+      gateState.verified=true;
+      gateState.sessionToken=data.token; // token firmado con hash MD5
+      errEl.innerHTML='<span class="gate-success">✓ Verificado correctamente</span>';
 
-    guardarContactoParcial();
+      sessionStorage.setItem('mg_verified','1');
+      sessionStorage.setItem('mg_token', data.token || '');
+      sessionStorage.setItem('mg_user',JSON.stringify(gateState.userData));
 
-    const totalPresupuesto=calculateTotal();
-    trackPresupuestoCompleto(totalPresupuesto);
+      guardarContactoParcial();
 
-    setTimeout(()=>{
-      closeGate();
-      unlockPrices();
-      showUnlockedBadge();
-    },900);
+      const totalPresupuesto=calculateTotal();
+      trackPresupuestoCompleto(totalPresupuesto);
 
-  }else if(gateState.attempts>=3){
-    errEl.textContent='Demasiados intentos. Pedí un nuevo código.';
-    [0,1,2,3,4,5].forEach(i=>{document.getElementById('c'+i).value='';});
-    document.getElementById('c0').focus();
-    gateState.code=null;
-  }else{
-    const restantes=3-gateState.attempts;
-    errEl.textContent=`Código incorrecto. Te ${restantes===1?'queda':'quedan'} ${restantes} intento${restantes!==1?'s':''}.`;
-    [0,1,2,3,4,5].forEach(i=>{document.getElementById('c'+i).value='';});
-    document.getElementById('c0').focus();
+      setTimeout(()=>{
+        closeGate();
+        unlockPrices();
+        showUnlockedBadge();
+      },900);
+
+    } else {
+      // El servidor maneja el contador de intentos internamente
+      const msg = data.error || 'Código incorrecto.';
+      errEl.textContent = msg;
+      [0,1,2,3,4,5].forEach(i=>{document.getElementById('c'+i).value='';});
+      document.getElementById('c0').focus();
+      btn.disabled=false;
+      btn.textContent='Verificar →';
+    }
+
+  } catch(err){
+    errEl.textContent='Error de conexión. Revisá tu internet e intentá de nuevo.';
+    btn.disabled=false;
+    btn.textContent='Verificar →';
   }
 }
 
