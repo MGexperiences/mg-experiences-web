@@ -4824,30 +4824,34 @@ function buildPresupuestoData(){
 }
 
 // ── Guarda contacto en el log apenas se verifica (antes de completar presupuesto)
+// Fire-and-forget — no debe bloquear el flujo de verificación
 async function guardarContactoParcial(){
-  const u = gateState.userData;
-  if(!u) return;
-  const villa = getVillas().find(v=>v.id===state.villaId);
-  const clientData = {
-    nombre:   u.nombre,
-    apellido: u.apellido,
-    email:    u.email,
-    pais:     u.pais,
-    telefono: u.tel
-  };
-  const nota = villa ? `Villa de interés: ${villa.name}` : 'No completó el presupuesto';
   try {
+    const u = gateState.userData;
+    if(!u) return;
+    const villa = getVillas().find(v=>v.id===state.villaId);
+    const clientData = {
+      nombre:   u.nombre,
+      apellido: u.apellido,
+      email:    u.email,
+      pais:     u.pais,
+      telefono: u.tel
+    };
+    const nota = villa ? `Villa de interés: ${villa.name}` : 'No completó el presupuesto';
     const params = new URLSearchParams();
     params.append('action', 'guardarContacto');
     params.append('cliente', JSON.stringify(clientData));
     params.append('nota', nota);
+    // mode:'no-cors' evita problemas CORS — no necesitamos leer la respuesta
     fetch(APPS_SCRIPT_URL, {
       method:'POST',
       headers:{'Content-Type':'application/x-www-form-urlencoded'},
       body: params.toString(),
-      mode:'cors'
-    });
-  } catch(_){}
+      mode:'no-cors'
+    }).catch(err => console.warn('[guardarContacto] error no crítico:', err));
+  } catch(err){
+    console.warn('[guardarContacto] error capturado:', err);
+  }
 }
 
 // ── Envía la consulta al Apps Script (flujo completo)
@@ -5248,25 +5252,36 @@ async function verifyCode(){
 
     if(data.ok){
       // ✅ SEGURO: Guardar token firmado por el servidor en lugar de mg_verified=1
-      gateState.verified=true;
-      gateState.sessionToken=data.token; // token firmado con hash MD5
-      errEl.innerHTML='<span class="gate-success">✓ Verificado correctamente</span>';
+      try {
+        gateState.verified=true;
+        gateState.sessionToken=data.token; // token firmado con hash MD5
+        errEl.innerHTML='<span class="gate-success">✓ Verificado correctamente</span>';
 
-      sessionStorage.setItem('mg_verified','1');
-      sessionStorage.setItem('mg_token', data.token || '');
-      sessionStorage.setItem('mg_user',JSON.stringify(gateState.userData));
+        sessionStorage.setItem('mg_verified','1');
+        sessionStorage.setItem('mg_token', data.token || '');
+        sessionStorage.setItem('mg_user',JSON.stringify(gateState.userData));
 
-      guardarContactoParcial();
+        // Fire-and-forget — no debe bloquear ni romper el flujo
+        try { guardarContactoParcial(); } catch(e) { console.warn('guardarContactoParcial:', e); }
+        try {
+          const totalPresupuesto=calculateTotal();
+          trackPresupuestoCompleto(totalPresupuesto);
+        } catch(e) { console.warn('tracking error:', e); }
 
-      const totalPresupuesto=calculateTotal();
-      trackPresupuestoCompleto(totalPresupuesto);
-
-      setTimeout(()=>{
-        closeGate();
-        unlockPrices();
-        showUnlockedBadge();
-        _origGoStep(4); // ✅ BUG FIX: avanzar al paso de servicios después de verificar
-      },900);
+        setTimeout(()=>{
+          try {
+            closeGate();
+            unlockPrices();
+            showUnlockedBadge();
+            _origGoStep(4); // ✅ BUG FIX: avanzar al paso de servicios después de verificar
+          } catch(e) { console.error('error post-verify:', e); }
+        },900);
+      } catch(innerErr) {
+        // Si algo crashea acá, el usuario YA está verificado en sessionStorage
+        // Solo loggeamos y continuamos
+        console.error('[Verify] error post-success (verificación OK, error secundario):', innerErr);
+        setTimeout(()=>{ try { closeGate(); _origGoStep(4); } catch(_){} }, 500);
+      }
 
     } else {
       // El servidor maneja el contador de intentos internamente
