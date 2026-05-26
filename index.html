@@ -5041,8 +5041,9 @@ async function sendCode(e){
     });
 
     const res = await fetch(APPS_SCRIPT_URL+'?'+params.toString(),{
-      method: 'GET',
-      mode:   'cors', // sendOTP devuelve JSON real
+      method:   'GET',
+      mode:     'cors',
+      redirect: 'follow',
     });
 
     const data = await res.json();
@@ -5090,6 +5091,16 @@ async function verifyCode(){
   if(entered.length<6){errEl.textContent='Ingresá los 6 dígitos.';return;}
   if(!/^\d{6}$/.test(entered)){errEl.textContent='Solo números.';return;}
 
+  // Guard: si por alguna razón userData no tiene email, recuperarlo del sessionStorage
+  if(!gateState.userData || !gateState.userData.email){
+    const saved=sessionStorage.getItem('mg_user');
+    if(saved) gateState.userData=JSON.parse(saved);
+    if(!gateState.userData || !gateState.userData.email){
+      errEl.textContent='Sesión expirada. Recargá la página e intentá de nuevo.';
+      return;
+    }
+  }
+
   btn.disabled=true;
   btn.textContent='Verificando...';
 
@@ -5101,7 +5112,14 @@ async function verifyCode(){
       otp:    entered,
     });
 
-    const res  = await fetch(APPS_SCRIPT_URL+'?'+params.toString(),{method:'GET',mode:'cors'});
+    // Apps Script soporta CORS cuando está publicado como "Cualquiera"
+    // Si falla por CORS, usar no-cors con workaround de iframe no es viable —
+    // la URL correcta de Apps Script ya incluye los headers necesarios
+    const res  = await fetch(APPS_SCRIPT_URL+'?'+params.toString(),{
+      method:'GET',
+      mode:'cors',
+      redirect:'follow',
+    });
     const data = await res.json();
 
     if(data.ok){
@@ -5123,6 +5141,7 @@ async function verifyCode(){
         closeGate();
         unlockPrices();
         showUnlockedBadge();
+        _origGoStep(4); // ✅ BUG FIX: avanzar al paso de servicios después de verificar
       },900);
 
     } else {
