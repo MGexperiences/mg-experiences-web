@@ -2335,6 +2335,9 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
             </select>
           </div>
         </div>
+        <!-- HONEYPOT: campo trampa para bots — NO mover ni hacer visible -->
+        <input type="text" name="website" id="hpField" tabindex="-1" autocomplete="off"
+          style="position:absolute;left:-9999px;opacity:0;height:0;width:0;pointer-events:none" aria-hidden="true">
         <div class="gate-error" id="gateErrorA"></div>
         <button class="gate-btn" type="submit" id="gateBtnA">Recibir código →</button>
       </form>
@@ -3729,8 +3732,8 @@ const villaServices = [
   {id:'cocinera',  name:'Cocinera',             price:100, unit:'día'},
   {id:'cocinera2', name:'Cocinera + Nocturno',  price:172, unit:'día'},
   {id:'chef',      name:'Chef completo',        price:286, unit:'día'},
-  {id:'nineraD',   name:'Niñera 2 niños (día)',   price:122, unit:'día'},
-  {id:'nineraH',   name:'Niñera 2 niños (noche)', price:172, unit:'noche'},
+  {id:'nineraD',   name:'Niñera (día)',         price:122, unit:'día'},
+  {id:'nineraH',   name:'Niñera (noche)',       price:172, unit:'noche'},
 ];
 
 // ── TRASLADOS (USD ida+vuelta)
@@ -3999,27 +4002,6 @@ function selectCalDay(y, m, d) {
   }
 
   renderCalendar();
-}
-
-// ── Calcula el total del presupuesto actual (usado por pixel y resumen)
-function calculateTotal(){
-  const villa=getVillas().find(v=>v.id===state.villaId);
-  const nights=state.nights||0;
-  const guests=state.guests||1;
-  const villaTotal=villa?villa.price*nights:0;
-  const cdcTotal=feeCDC*guests*nights;
-  let extrasTotal=0;
-  Object.entries(state.svcs).forEach(([k,v])=>{
-    if(k.startsWith('barco_dias')||!v.price) return;
-    if(k.startsWith('traslado_')){extrasTotal+=v.price*(v.qty||1);return;}
-    let amt=v.price;
-    if(v.qty&&v.qty>1) amt=v.price*v.qty;
-    if(v.perPerson) amt=v.price*guests;
-    else if(v.perNight) amt=v.price*nights;
-    else if(k.startsWith('aeropuerto_')) amt=v.price*(v.qty||1);
-    extrasTotal+=amt;
-  });
-  return villaTotal+cdcTotal+extrasTotal;
 }
 
 // ── META PIXEL TRACKING FUNCTIONS ──
@@ -4756,16 +4738,13 @@ function buildPresupuestoData(){
 
   // Servicios villa
   villaServices.forEach(s=>{
-    if(state.svcs[s.id]){
-      const esPerNight = s.unit === 'día' || s.unit === 'noche';
-      items.push({
-        categoria:'Servicio Villa',
-        descripcion:s.name,
-        display: s.name,
-        cantidad: esPerNight ? nights : 1,
-        unidad:s.unit
-      });
-    }
+    if(state.svcs[s.id]) items.push({
+      categoria:'Servicio Villa',
+      descripcion:s.name,
+      display: s.name,
+      cantidad:1,
+      unidad:s.unit
+    });
   });
 
   // Actividades seleccionadas
@@ -4914,8 +4893,8 @@ async function enviarConsulta(){
   }
 }
 // ══════════════════════════════════════════
-// SISTEMA DE VERIFICACIÓN — Google Apps Script
-// ══════════════════════════════════════════
+// SISTEMA DE VERIFICACIÓN — Google Apps Script (VERSIÓN SEGURA v2)
+// ══════════════════════════════════════════════════════════════════
 
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyOmyl7RCsJg92nL1FBuR4Y37hP2OVHxDj3NguqeQcoeuNYuM_g7YD3SNQw3HLxNFfqLw/exec';
 
@@ -4928,6 +4907,65 @@ let gateState = {
   codeExpiry: null,
 };
 
+// ── RATE LIMITING — máx 3 envíos por sesión, bloqueo 10 min
+const RATE_LIMIT_KEY  = 'mg_rl';
+const RATE_LIMIT_MAX  = 3;
+const RATE_LIMIT_WAIT = 10 * 60 * 1000;
+
+function getRateLimit(){
+  try{
+    const raw=sessionStorage.getItem(RATE_LIMIT_KEY);
+    return raw?JSON.parse(raw):{count:0,resetAt:0};
+  }catch(e){return{count:0,resetAt:0};}
+}
+
+function incrementRateLimit(){
+  const rl=getRateLimit();
+  const now=Date.now();
+  if(now>rl.resetAt){
+    sessionStorage.setItem(RATE_LIMIT_KEY,JSON.stringify({count:1,resetAt:now+RATE_LIMIT_WAIT}));
+  } else {
+    sessionStorage.setItem(RATE_LIMIT_KEY,JSON.stringify({count:rl.count+1,resetAt:rl.resetAt}));
+  }
+}
+
+function isRateLimited(){
+  const rl=getRateLimit();
+  if(Date.now()>rl.resetAt) return false;
+  return rl.count>=RATE_LIMIT_MAX;
+}
+
+function rateLimitMinutesLeft(){
+  const rl=getRateLimit();
+  return Math.ceil((rl.resetAt-Date.now())/60000);
+}
+
+// ── VALIDACIÓN DE NOMBRE — detecta strings aleatorios de bots
+function isNameValid(nombre,apellido){
+  if(nombre.length<2||apellido.length<2) return false;
+  const nameRegex=/^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑàèìòùÀÈÌÒÙ\s'-]+$/;
+  if(!nameRegex.test(nombre)||!nameRegex.test(apellido)) return false;
+  if(nombre.length>20&&!/\s/.test(nombre)) return false;
+  // Detectar patrón bot: alternancia excesiva mayúscula/minúscula
+  let alt=0;
+  for(let i=1;i<nombre.length;i++){
+    const p=nombre[i-1],c=nombre[i];
+    if((p.match(/[a-z]/)&&c.match(/[A-Z]/)) || (p.match(/[A-Z]/)&&c.match(/[a-z]/))) alt++;
+  }
+  if(alt/nombre.length>0.7) return false;
+  return true;
+}
+
+// ── VALIDACIÓN EMAIL básica
+function isEmailValid(email){
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+}
+
+// ── Generar código de 6 dígitos
+function generateCode(){
+  return String(Math.floor(100000+Math.random()*900000));
+}
+
 // ── Mostrar / cerrar gate
 function openGate(){
   document.getElementById('gateOverlay').classList.add('show');
@@ -4937,70 +4975,95 @@ function closeGate(){
   document.getElementById('gateOverlay').classList.remove('show');
 }
 
-// ── Generar código de 6 dígitos
-function generateCode(){
-  return String(Math.floor(100000 + Math.random() * 900000));
-}
-
 // ── STEP A: Enviar código via Apps Script (Gmail)
 async function sendCode(e){
   e.preventDefault();
-  const btn    = document.getElementById('gateBtnA');
-  const errEl  = document.getElementById('gateErrorA');
-  errEl.textContent = '';
-  btn.disabled = true;
-  btn.textContent = 'Enviando...';
+  const btn   =document.getElementById('gateBtnA');
+  const errEl =document.getElementById('gateErrorA');
+  errEl.textContent='';
 
-  const nombre   = document.getElementById('gNombre').value.trim();
-  const apellido = document.getElementById('gApellido').value.trim();
-  const email    = document.getElementById('gEmail').value.trim();
-  const tel      = document.getElementById('gTel').value.trim();
-  const pais     = document.getElementById('gPais').value;
-
-  if(!nombre || !apellido || !email || !tel || !pais){
-    errEl.textContent = 'Por favor completá todos los campos.';
-    btn.disabled = false;
-    btn.textContent = 'Recibir código →';
+  // ── HONEYPOT: si el bot llenó el campo trampa, simular éxito sin enviar nada
+  const hp=document.getElementById('hpField');
+  if(hp&&hp.value.trim()!==''){
+    btn.disabled=true;
+    btn.textContent='Enviando...';
+    await new Promise(r=>setTimeout(r,2000));
+    document.getElementById('gateEmailDisplay').textContent=document.getElementById('gEmail').value.trim();
+    document.getElementById('gateStepA').style.display='none';
+    document.getElementById('gateStepB').style.display='block';
     return;
   }
 
-  const code = generateCode();
-  gateState.code      = code;
-  gateState.attempts  = 0;
-  gateState.codeExpiry = Date.now() + 5 * 60 * 1000; // 5 minutos
-  gateState.userData  = { nombre, apellido, email, tel, pais };
+  // ── RATE LIMIT CHECK
+  if(isRateLimited()){
+    const mins=rateLimitMinutesLeft();
+    errEl.textContent=`Demasiados intentos. Esperá ${mins} minuto${mins!==1?'s':''} antes de intentar nuevamente.`;
+    return;
+  }
 
-  // Llamada al Apps Script
-  try {
-    const params = new URLSearchParams({
-      action:  'sendCode',
-      email:   email,
-      nombre:  nombre,
-      code:    code,
+  const nombre   =document.getElementById('gNombre').value.trim();
+  const apellido =document.getElementById('gApellido').value.trim();
+  const email    =document.getElementById('gEmail').value.trim();
+  const tel      =document.getElementById('gTel').value.trim();
+  const pais     =document.getElementById('gPais').value;
+
+  if(!nombre||!apellido||!email||!tel||!pais){
+    errEl.textContent='Por favor completá todos los campos.';
+    return;
+  }
+
+  // ── VALIDACIÓN NOMBRE
+  if(!isNameValid(nombre,apellido)){
+    errEl.textContent='Por favor ingresá tu nombre real (solo letras).';
+    return;
+  }
+
+  // ── VALIDACIÓN EMAIL
+  if(!isEmailValid(email)){
+    errEl.textContent='El email no tiene un formato válido.';
+    return;
+  }
+
+  btn.disabled=true;
+  btn.textContent='Enviando...';
+
+  const code=generateCode();
+  gateState.code      =code;
+  gateState.attempts  =0;
+  gateState.codeExpiry=Date.now()+10*60*1000; // 10 minutos
+  gateState.userData  ={nombre,apellido,email,tel,pais};
+
+  // Incrementar rate limit antes del fetch
+  incrementRateLimit();
+
+  try{
+    const params=new URLSearchParams({
+      action:'sendCode',
+      email:  email,
+      nombre: nombre,
+      code:   code,
     });
 
-    const res = await fetch(APPS_SCRIPT_URL + '?' + params.toString(), {
-      method: 'GET',
-      mode:   'no-cors', // Apps Script requiere no-cors
+    await fetch(APPS_SCRIPT_URL+'?'+params.toString(),{
+      method:'GET',
+      mode:  'no-cors',
     });
 
-    // no-cors siempre devuelve opaque — asumimos éxito si no hay error
-    document.getElementById('gateEmailDisplay').textContent = email;
-    document.getElementById('gateStepA').style.display = 'none';
-    document.getElementById('gateStepB').style.display = 'block';
-    document.getElementById('gateErrorB').textContent = '';
+    document.getElementById('gateEmailDisplay').textContent=email;
+    document.getElementById('gateStepA').style.display='none';
+    document.getElementById('gateStepB').style.display='block';
+    document.getElementById('gateErrorB').textContent='';
     document.getElementById('c0').focus();
-    btn.disabled = false;
-    btn.textContent = 'Recibir código →';
-    
-    // Track lead capturado
-    const totalPresupuesto = calculateTotal();
-    trackLeadCapturado(email, nombre, totalPresupuesto);
+    btn.disabled=false;
+    btn.textContent='Recibir código →';
 
-  } catch(err) {
-    errEl.textContent = 'No pudimos enviar el código. Revisá tu conexión e intentá de nuevo.';
-    btn.disabled = false;
-    btn.textContent = 'Recibir código →';
+    const totalPresupuesto=calculateTotal();
+    trackLeadCapturado(email,nombre,totalPresupuesto);
+
+  }catch(err){
+    errEl.textContent='No pudimos enviar el código. Revisá tu conexión e intentá de nuevo.';
+    btn.disabled=false;
+    btn.textContent='Recibir código →';
   }
 }
 
@@ -5010,64 +5073,65 @@ function codeInput(idx){
   const val=el.value.replace(/\D/g,'');
   el.value=val;
   if(val&&idx<5) document.getElementById('c'+(idx+1)).focus();
-  // Auto-verify when all 6 filled
   if(idx===5&&val) verifyCode();
 }
 
 // ── STEP B: Verificar código
 function verifyCode(){
-  const entered = [0,1,2,3,4,5].map(i => document.getElementById('c'+i).value).join('');
-  const errEl   = document.getElementById('gateErrorB');
+  const entered=[0,1,2,3,4,5].map(i=>document.getElementById('c'+i).value).join('');
+  const errEl  =document.getElementById('gateErrorB');
 
-  if(entered.length < 6){ errEl.textContent = 'Ingresá los 6 dígitos.'; return; }
+  if(entered.length<6){errEl.textContent='Ingresá los 6 dígitos.';return;}
 
-  // Verificar vencimiento (5 minutos)
-  if(Date.now() > gateState.codeExpiry){
-    errEl.textContent = 'El código venció. Pedí uno nuevo.';
-    [0,1,2,3,4,5].forEach(i=>{ document.getElementById('c'+i).value=''; });
-    gateState.code = null;
+  // Verificar vencimiento (10 minutos)
+  if(Date.now()>gateState.codeExpiry){
+    errEl.textContent='El código venció. Pedí uno nuevo.';
+    [0,1,2,3,4,5].forEach(i=>{document.getElementById('c'+i).value='';});
+    gateState.code=null;
     return;
   }
 
   gateState.attempts++;
 
-  if(entered === gateState.code){
-    // ✅ Verificado
-    gateState.verified = true;
-    errEl.innerHTML = '<span class="gate-success">✓ Verificado correctamente</span>';
+  if(entered===gateState.code){
+    gateState.verified=true;
+    errEl.innerHTML='<span class="gate-success">✓ Verificado correctamente</span>';
 
-    // Guardar en sessionStorage
-    sessionStorage.setItem('mg_verified', '1');
-    sessionStorage.setItem('mg_user', JSON.stringify(gateState.userData));
+    sessionStorage.setItem('mg_verified','1');
+    sessionStorage.setItem('mg_user',JSON.stringify(gateState.userData));
 
-    // Guardar contacto en el log inmediatamente (antes de que complete el presupuesto)
     guardarContactoParcial();
-    
-    // Track presupuesto completado
-    const totalPresupuesto = calculateTotal();
+
+    const totalPresupuesto=calculateTotal();
     trackPresupuestoCompleto(totalPresupuesto);
 
-    setTimeout(() => {
+    setTimeout(()=>{
       closeGate();
       unlockPrices();
       showUnlockedBadge();
-    }, 900);
+    },900);
 
-  } else if(gateState.attempts >= 3){
-    errEl.textContent = 'Demasiados intentos. Pedí un nuevo código.';
-    [0,1,2,3,4,5].forEach(i=>{ document.getElementById('c'+i).value=''; });
+  }else if(gateState.attempts>=3){
+    errEl.textContent='Demasiados intentos. Pedí un nuevo código.';
+    [0,1,2,3,4,5].forEach(i=>{document.getElementById('c'+i).value='';});
     document.getElementById('c0').focus();
-    gateState.code = null;
-  } else {
-    const restantes = 3 - gateState.attempts;
-    errEl.textContent = `Código incorrecto. Te ${restantes === 1 ? 'queda' : 'quedan'} ${restantes} intento${restantes !== 1 ? 's' : ''}.`;
-    [0,1,2,3,4,5].forEach(i=>{ document.getElementById('c'+i).value=''; });
+    gateState.code=null;
+  }else{
+    const restantes=3-gateState.attempts;
+    errEl.textContent=`Código incorrecto. Te ${restantes===1?'queda':'quedan'} ${restantes} intento${restantes!==1?'s':''}.`;
+    [0,1,2,3,4,5].forEach(i=>{document.getElementById('c'+i).value='';});
     document.getElementById('c0').focus();
   }
 }
 
 // ── Reenviar código
 function resendCode(){
+  if(isRateLimited()){
+    const mins=rateLimitMinutesLeft();
+    document.getElementById('gateErrorB').textContent=
+      `Límite alcanzado. Esperá ${mins} minuto${mins!==1?'s':''}.`;
+    return;
+  }
   document.getElementById('gateStepB').style.display='none';
   document.getElementById('gateStepA').style.display='block';
   document.getElementById('gateErrorA').textContent='';
