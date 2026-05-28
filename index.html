@@ -1849,30 +1849,15 @@ nav.solid{background:rgba(28,30,23,.85);backdrop-filter:saturate(180%) blur(20px
 /* Panels */
 .cpanel{display:none;animation:fadePanel .5s ease both;background:rgba(255,255,255,.02);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(174,133,96,.08);border-radius:16px;padding:2rem}
 .cpanel.active{display:block}
-#panel5.active{min-height:100vh;}
-/* Cuando se muestra el resumen, ocultar las secciones que quedan debajo del configurador */
-body.showing-summary #villas,
-body.showing-summary .villas,
-body.showing-summary #embarcaciones,
-body.showing-summary #golf,
-body.showing-summary #casa-de-campo,
-body.showing-summary .founders,
-body.showing-summary .reviews-sec,
-body.showing-summary footer,
-body.showing-summary .hero,
-body.showing-summary .band,
-body.showing-summary .cta-strip,
-body.showing-summary .nl-sec,
-body.showing-summary .resort-section,
-body.showing-summary #asistente,
-body.showing-summary #actividades-resort {
+/* En modo resumen: todo se oculta menos el nav y el configurador */
+body.showing-summary > *:not(nav):not(#tu-experiencia):not(.nav-mobile):not(script) {
   display: none !important;
 }
-/* El configurador ocupa toda la pantalla al mostrar el resumen */
 body.showing-summary #tu-experiencia {
   min-height: 100vh;
-  padding-top: 2rem;
+  padding-top: 1rem;
 }
+#panel5.active{min-height:80vh;}
 @keyframes fadePanel{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 
 .cpanel-title{font-family:'Playfair Display',serif;font-style:italic;font-size:1.5rem;color:var(--wh);margin-bottom:.6rem;text-align:center}
@@ -4243,17 +4228,16 @@ function goStep(n){
     trackViewConfigurador();
   }
   
-  // Clase en body para ocultar secciones debajo del configurador en el resumen
+  // Clase en body para ocultar secciones y fijar el configurador arriba
   if(n===5){
     document.body.classList.add('showing-summary');
-    // Esperar a que el CSS oculte las secciones, luego scrollear al configurador
-    setTimeout(()=>{
-      const el = document.getElementById('tu-experiencia');
-      if(el){
-        const top = el.getBoundingClientRect().top + window.pageYOffset - 0;
-        window.scrollTo({ top: Math.max(0, top), behavior:'smooth' });
-      }
-    }, 120);
+    // Doble requestAnimationFrame: garantiza que el DOM se repintó con display:none
+    // antes de hacer el scroll, evitando que se vea la sección de villas
+    requestAnimationFrame(()=>{
+      requestAnimationFrame(()=>{
+        window.scrollTo({ top: 0, behavior:'instant' });
+      });
+    });
   } else {
     document.body.classList.remove('showing-summary');
     document.getElementById('tu-experiencia').scrollIntoView({behavior:'smooth',block:'start'});
