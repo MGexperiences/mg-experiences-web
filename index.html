@@ -1862,8 +1862,16 @@ body.showing-summary footer,
 body.showing-summary .hero,
 body.showing-summary .band,
 body.showing-summary .cta-strip,
-body.showing-summary .nl-sec {
+body.showing-summary .nl-sec,
+body.showing-summary .resort-section,
+body.showing-summary #asistente,
+body.showing-summary #actividades-resort {
   display: none !important;
+}
+/* El configurador ocupa toda la pantalla al mostrar el resumen */
+body.showing-summary #tu-experiencia {
+  min-height: 100vh;
+  padding-top: 2rem;
 }
 @keyframes fadePanel{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 
@@ -3865,23 +3873,23 @@ const carritos = [
 // ── EMBARCACIONES (USD/salida)
 const barcos = [
   {id:'bw305palm', name:'Boston Whaler 305 — Palmillas', pax:'hasta 9',  price:1553, display:'Boston Whaler 305 | Palmillas',
-   tipo:'Open sport · cubierta descubierta', destDesc:'Playa tranquila dentro del resort · arena blanca · aguas calmas', duracion:'~15 min'},
+   tipo:'Open sport · cubierta descubierta', destDesc:'Banco de arena natural · aguas poco profundas · ideal para relajarse · dentro del Parque Nacional del Este', duracion:'~30 min'},
   {id:'bw305cat',  name:'Boston Whaler 305 — Catalina',  pax:'hasta 9',  price:1553, display:'Boston Whaler 305 | Catalina',
-   tipo:'Open sport · cubierta descubierta', destDesc:'Isla virgen · aguas cristalinas · fondo de coral', duracion:'~30 min'},
+   tipo:'Open sport · cubierta descubierta', destDesc:'Isla virgen · aguas cristalinas · fondo de coral · playa blanca', duracion:'~25 min'},
   {id:'bw305saon', name:'Boston Whaler 305 — Saona',     pax:'hasta 9',  price:2259, display:'Boston Whaler 305 | Saona',
-   tipo:'Open sport · cubierta descubierta', destDesc:'Isla Saona · playa remota · aguas turquesas · piscina natural', duracion:'~90 min'},
+   tipo:'Open sport · cubierta descubierta', destDesc:'Isla Saona · playa remota · aguas turquesas · reserva natural protegida', duracion:'~1 hora'},
   {id:'tiara38p',  name:'Tiara 38LS — Palmillas',        pax:'10 a 12',  price:1765, display:'Tiara 38LS | Palmillas',
-   tipo:'Sport cruiser · cabina con aire acondicionado', destDesc:'Playa tranquila dentro del resort · arena blanca · aguas calmas', duracion:'~15 min'},
+   tipo:'Sport cruiser · cabina con aire acondicionado', destDesc:'Banco de arena natural · aguas poco profundas · ideal para relajarse · dentro del Parque Nacional del Este', duracion:'~30 min'},
   {id:'tiara38s',  name:'Tiara 38LS — Saona',            pax:'10 a 12',  price:2942, display:'Tiara 38LS | Saona',
-   tipo:'Sport cruiser · cabina con aire acondicionado', destDesc:'Isla Saona · playa remota · aguas turquesas · piscina natural', duracion:'~90 min'},
+   tipo:'Sport cruiser · cabina con aire acondicionado', destDesc:'Isla Saona · playa remota · aguas turquesas · reserva natural protegida', duracion:'~1 hora'},
   {id:'azimuthp',  name:'Azimuth Flybridge 55 — Palmillas', pax:'13 a 16', price:4706, display:'Azimuth Flybridge 55 | Palmillas',
-   tipo:'Flybridge de lujo · cubierta superior · sombra amplia', destDesc:'Playa tranquila dentro del resort · arena blanca · aguas calmas', duracion:'~15 min'},
+   tipo:'Flybridge de lujo · cubierta superior · sombra amplia', destDesc:'Banco de arena natural · aguas poco profundas · ideal para relajarse · dentro del Parque Nacional del Este', duracion:'~30 min'},
   {id:'azimuthc',  name:'Azimuth Flybridge 55 — Catalina',  pax:'13 a 16', price:4706, display:'Azimuth Flybridge 55 | Catalina',
-   tipo:'Flybridge de lujo · cubierta superior · sombra amplia', destDesc:'Isla virgen · aguas cristalinas · fondo de coral', duracion:'~30 min'},
+   tipo:'Flybridge de lujo · cubierta superior · sombra amplia', destDesc:'Isla virgen · aguas cristalinas · fondo de coral · playa blanca', duracion:'~25 min'},
   {id:'catamaranp',name:'Catamarán — Palmillas',          pax:'17 a 35',  price:2589, display:'Catamaran | Palmillas',
-   tipo:'Catamarán · cubierta amplia · ideal grupos grandes', destDesc:'Playa tranquila dentro del resort · arena blanca · aguas calmas', duracion:'~15 min'},
+   tipo:'Catamarán · cubierta amplia · ideal grupos grandes', destDesc:'Banco de arena natural · aguas poco profundas · ideal para relajarse · dentro del Parque Nacional del Este', duracion:'~30 min'},
   {id:'catamaranc',name:'Catamarán — Catalina',           pax:'17 a 35',  price:2589, display:'Catamaran | Catalina',
-   tipo:'Catamarán · cubierta amplia · ideal grupos grandes', destDesc:'Isla virgen · aguas cristalinas · fondo de coral', duracion:'~30 min'},
+   tipo:'Catamarán · cubierta amplia · ideal grupos grandes', destDesc:'Isla virgen · aguas cristalinas · fondo de coral · playa blanca', duracion:'~25 min'},
 ];
 
 // ── ACTIVIDADES — organizadas por subcategoría
@@ -4238,8 +4246,14 @@ function goStep(n){
   // Clase en body para ocultar secciones debajo del configurador en el resumen
   if(n===5){
     document.body.classList.add('showing-summary');
-    // Scroll al tope — las secciones de arriba están ocultas, el configurador queda primero
-    setTimeout(()=>{ window.scrollTo({ top: 0, behavior:'smooth' }); }, 80);
+    // Esperar a que el CSS oculte las secciones, luego scrollear al configurador
+    setTimeout(()=>{
+      const el = document.getElementById('tu-experiencia');
+      if(el){
+        const top = el.getBoundingClientRect().top + window.pageYOffset - 0;
+        window.scrollTo({ top: Math.max(0, top), behavior:'smooth' });
+      }
+    }, 120);
   } else {
     document.body.classList.remove('showing-summary');
     document.getElementById('tu-experiencia').scrollIntoView({behavior:'smooth',block:'start'});
