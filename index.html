@@ -3864,13 +3864,24 @@ const carritos = [
 
 // ── EMBARCACIONES (USD/salida)
 const barcos = [
-  {id:'bw305palm', name:'Boston Whaler 305 — Palmillas', pax:'hasta 9',  price:1553, display:'Boston Whaler 305 | Palmillas'},
-  {id:'bw305cat',  name:'Boston Whaler 305 — Catalina',  pax:'hasta 9',  price:1553, display:'Boston Whaler 305 | Catalina'},
-  {id:'bw305saon', name:'Boston Whaler 305 — Saona',     pax:'hasta 9',  price:2259, display:'Boston Whaler 305 | Saona'},
-  {id:'tiara38p',  name:'Tiara 38LS — Palmillas',        pax:'10 a 12',  price:1765, display:'Tiara 38LS | Palmillas'},
-  {id:'tiara38s',  name:'Tiara 38LS — Saona',            pax:'10 a 12',  price:2942, display:'Tiara 38LS | Saona'},
-  {id:'azimuth',   name:'Azimuth Flybridge 55',          pax:'13 a 16',  price:4706, display:'Azimuth Flybridge 55 | Salida general'},
-  {id:'catamaran', name:'Catamarán',                     pax:'17 a 35',  price:2589, display:'Catamaran | Salida general'},
+  {id:'bw305palm', name:'Boston Whaler 305 — Palmillas', pax:'hasta 9',  price:1553, display:'Boston Whaler 305 | Palmillas',
+   tipo:'Open sport · cubierta descubierta', destDesc:'Playa tranquila dentro del resort · arena blanca · aguas calmas', duracion:'~15 min'},
+  {id:'bw305cat',  name:'Boston Whaler 305 — Catalina',  pax:'hasta 9',  price:1553, display:'Boston Whaler 305 | Catalina',
+   tipo:'Open sport · cubierta descubierta', destDesc:'Isla virgen · aguas cristalinas · fondo de coral', duracion:'~30 min'},
+  {id:'bw305saon', name:'Boston Whaler 305 — Saona',     pax:'hasta 9',  price:2259, display:'Boston Whaler 305 | Saona',
+   tipo:'Open sport · cubierta descubierta', destDesc:'Isla Saona · playa remota · aguas turquesas · piscina natural', duracion:'~90 min'},
+  {id:'tiara38p',  name:'Tiara 38LS — Palmillas',        pax:'10 a 12',  price:1765, display:'Tiara 38LS | Palmillas',
+   tipo:'Sport cruiser · cabina con aire acondicionado', destDesc:'Playa tranquila dentro del resort · arena blanca · aguas calmas', duracion:'~15 min'},
+  {id:'tiara38s',  name:'Tiara 38LS — Saona',            pax:'10 a 12',  price:2942, display:'Tiara 38LS | Saona',
+   tipo:'Sport cruiser · cabina con aire acondicionado', destDesc:'Isla Saona · playa remota · aguas turquesas · piscina natural', duracion:'~90 min'},
+  {id:'azimuthp',  name:'Azimuth Flybridge 55 — Palmillas', pax:'13 a 16', price:4706, display:'Azimuth Flybridge 55 | Palmillas',
+   tipo:'Flybridge de lujo · cubierta superior · sombra amplia', destDesc:'Playa tranquila dentro del resort · arena blanca · aguas calmas', duracion:'~15 min'},
+  {id:'azimuthc',  name:'Azimuth Flybridge 55 — Catalina',  pax:'13 a 16', price:4706, display:'Azimuth Flybridge 55 | Catalina',
+   tipo:'Flybridge de lujo · cubierta superior · sombra amplia', destDesc:'Isla virgen · aguas cristalinas · fondo de coral', duracion:'~30 min'},
+  {id:'catamaranp',name:'Catamarán — Palmillas',          pax:'17 a 35',  price:2589, display:'Catamaran | Palmillas',
+   tipo:'Catamarán · cubierta amplia · ideal grupos grandes', destDesc:'Playa tranquila dentro del resort · arena blanca · aguas calmas', duracion:'~15 min'},
+  {id:'catamaranc',name:'Catamarán — Catalina',           pax:'17 a 35',  price:2589, display:'Catamaran | Catalina',
+   tipo:'Catamarán · cubierta amplia · ideal grupos grandes', destDesc:'Isla virgen · aguas cristalinas · fondo de coral', duracion:'~30 min'},
 ];
 
 // ── ACTIVIDADES — organizadas por subcategoría
@@ -4404,17 +4415,28 @@ function renderServices(){
   
   Object.entries(boatGroups).forEach(([boatType, boats]) => {
     const anySelected = boats.some(b => state.barcos[b.id]);
+    const rep = boats[0]; // datos del barco (mismo para todos los destinos)
     
     html += `<div style="border:1px solid rgba(174,133,96,.18);padding:1.4rem;border-radius:12px;background:${anySelected?'rgba(29,77,58,.22)':'rgba(255,255,255,.03)'};transition:all .3s">
       <div style="margin-bottom:1rem">
-        <div style="font-family:'Cinzel',serif;font-size:.8rem;letter-spacing:.15em;color:var(--wh);text-transform:uppercase;margin-bottom:.35rem">${boatType}</div>
-        <div style="font-size:.85rem;color:rgba(253,250,246,.5)">${boats[0].pax} pasajeros · Salida privada completa</div>
+        <div style="font-family:'Cinzel',serif;font-size:.8rem;letter-spacing:.15em;color:var(--wh);text-transform:uppercase;margin-bottom:.3rem">${boatType}</div>
+        <div style="font-size:.82rem;color:rgba(253,250,246,.55);margin-bottom:.25rem">${rep.tipo||''}</div>
+        <div style="font-size:.8rem;color:rgba(253,250,246,.4)">hasta ${rep.pax} pasajeros</div>
       </div>
+
       <div style="font-size:.78rem;color:rgba(253,250,246,.38);margin-bottom:.9rem;font-style:italic">Elegí destino — podés sumar más de uno</div>
+
       <div style="display:grid;grid-template-columns:${boats.length === 1 ? '1fr' : boats.length === 2 ? '1fr 1fr' : 'repeat(auto-fit,minmax(130px,1fr))'};gap:.7rem;margin-bottom:${anySelected?'1rem':'0'}">
-        ${boats.map(b => `<button style="padding:.9rem .6rem;background:${state.barcos[b.id]?'var(--vl)':'rgba(174,133,96,.12)'};color:${state.barcos[b.id]?'var(--bk)':'rgba(253,250,246,.75)'};border:1px solid ${state.barcos[b.id]?'var(--vl)':'rgba(174,133,96,.25)'};border-radius:10px;font-size:.78rem;cursor:pointer;transition:all .2s;text-transform:uppercase;letter-spacing:.08em;line-height:1.5" onclick="selectBarco('${b.id}')">
-          ${b.name.split(' — ')[1] || 'General'}<br><span style="font-size:.75rem;font-weight:600;${state.barcos[b.id]?'':'color:var(--vl)'}">USD $${b.price.toLocaleString()}</span><span style="font-size:.62rem;opacity:.6"> /salida</span>
-        </button>`).join('')}
+        ${boats.map(b => {
+          const destName = b.name.split(' — ')[1] || 'General';
+          const sel = state.barcos[b.id];
+          return `<button style="padding:.9rem .7rem;text-align:left;background:${sel?'var(--vl)':'rgba(174,133,96,.1)'};color:${sel?'var(--bk)':'rgba(253,250,246,.8)'};border:1px solid ${sel?'var(--vl)':'rgba(174,133,96,.22)'};border-radius:10px;cursor:pointer;transition:all .2s;line-height:1.5" onclick="selectBarco('${b.id}')">
+            <div style="font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.35rem">${destName}</div>
+            <div style="font-size:.72rem;opacity:.75;margin-bottom:.4rem">${b.destDesc||''}</div>
+            <div style="font-size:.7rem;opacity:.6;margin-bottom:.5rem">⏱ ${b.duracion||''} desde el resort</div>
+            <div style="font-size:.82rem;font-weight:600;${sel?'':'color:var(--vl)'}">USD $${b.price.toLocaleString()}<span style="font-size:.65rem;font-weight:400;opacity:.7"> /salida</span></div>
+          </button>`;
+        }).join('')}
       </div>
       
       ${boats.filter(b => state.barcos[b.id]).map(b => {
@@ -4854,13 +4876,20 @@ function renderSummary(){
   const total=villaTotal+cdcTotal+extrasTotal;
   const perPerson=guests>0?Math.round(total/guests):0;
   html+=`<div style="height:1px;background:rgba(174,133,96,.15);margin:1.2rem 0"></div>`;
-  html+=`<div class="summary-total">
-    <div>
-      <div class="st-label">Presupuesto aproximado</div>
-      <div class="st-note">USD $${perPerson.toLocaleString()} por persona · Antes de impuestos y ajustes finales</div>
+
+  html+=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.2rem">
+    <div style="background:rgba(29,77,58,.25);border:1px solid rgba(29,77,58,.4);border-radius:12px;padding:1.2rem;text-align:center">
+      <div style="font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.2em;color:rgba(212,184,154,.6);text-transform:uppercase;margin-bottom:.5rem">Total estadía</div>
+      <div style="font-family:'Cinzel',serif;font-size:1.5rem;color:var(--vl);font-weight:400">USD $${total.toLocaleString()}</div>
+      <div style="font-size:.72rem;color:rgba(253,250,246,.35);margin-top:.3rem">${nights} noche${nights!==1?'s':''} · ${guests} persona${guests!==1?'s':''}</div>
     </div>
-    <div class="st-val">USD $${total.toLocaleString()}</div>
-  </div>`;
+    <div style="background:rgba(174,133,96,.12);border:1px solid rgba(174,133,96,.25);border-radius:12px;padding:1.2rem;text-align:center">
+      <div style="font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.2em;color:rgba(212,184,154,.6);text-transform:uppercase;margin-bottom:.5rem">Por persona</div>
+      <div style="font-family:'Cinzel',serif;font-size:1.5rem;color:var(--vl);font-weight:400">USD $${perPerson.toLocaleString()}</div>
+      <div style="font-size:.72rem;color:rgba(253,250,246,.35);margin-top:.3rem">todo incluido · aprox.</div>
+    </div>
+  </div>
+  <div style="font-size:.72rem;color:rgba(253,250,246,.28);font-style:italic;text-align:center">Precios referenciales · confirmamos disponibilidad, tarifas exactas y detalles en la conversación</div>`;
   document.getElementById('summaryBox').innerHTML=html;
 }
 
