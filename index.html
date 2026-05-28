@@ -4392,43 +4392,41 @@ function renderServices(){
   let html = '';
 
   // ── EMBARCACIONES (Grouped by boat type, responsive layout)
-  html += secHeader('Un día en el agua', 'Opcional · podés sumar uno o varios, o saltearlo si no te interesa');
+  html += secHeader('Embarcaciones', 'El barco es exclusivo para tu grupo · 9 a 18 hs · Capitán, marinero, aguas y cervezas incluidos');
   html += `<div style="grid-column:span 2;display:grid;grid-template-columns:1fr;gap:1rem">`;
   
-  // Group boats by name (same boat, different beaches)
   const boatGroups = {};
   barcos.forEach(b => {
-    const boatType = b.name.split(' — ')[0]; // Get boat name without beach
+    const boatType = b.name.split(' — ')[0];
     if(!boatGroups[boatType]) boatGroups[boatType] = [];
     boatGroups[boatType].push(b);
   });
   
   Object.entries(boatGroups).forEach(([boatType, boats]) => {
-    // Múltiples destinos del mismo barco pueden seleccionarse — cada uno con su contador
     const anySelected = boats.some(b => state.barcos[b.id]);
     
-    html += `<div style="border:1px solid rgba(174,133,96,.18);padding:1.2rem;border-radius:12px;background:${anySelected?'rgba(29,77,58,.22)':'rgba(255,255,255,.03)'};transition:all .3s">
-      <div style="margin-bottom:.8rem">
-        <div style="font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.15em;color:var(--wh);text-transform:uppercase;margin-bottom:.5rem">${boatType}</div>
-        <div style="font-size:.8rem;color:rgba(253,250,246,.5)">${boats[0].pax} pasajeros · 9 a 18 hs</div>
+    html += `<div style="border:1px solid rgba(174,133,96,.18);padding:1.4rem;border-radius:12px;background:${anySelected?'rgba(29,77,58,.22)':'rgba(255,255,255,.03)'};transition:all .3s">
+      <div style="margin-bottom:1rem">
+        <div style="font-family:'Cinzel',serif;font-size:.8rem;letter-spacing:.15em;color:var(--wh);text-transform:uppercase;margin-bottom:.35rem">${boatType}</div>
+        <div style="font-size:.85rem;color:rgba(253,250,246,.5)">${boats[0].pax} pasajeros · Salida privada completa</div>
       </div>
-      
-      <div style="display:grid;grid-template-columns:${boats.length === 1 ? '1fr' : boats.length === 2 ? '1fr 1fr' : 'repeat(auto-fit,minmax(120px,1fr))'};gap:.6rem;margin-bottom:${anySelected?'.8rem':'0'}">
-        ${boats.map(b => `<button style="padding:.6rem .4rem;background:${state.barcos[b.id]?'var(--vl)':'rgba(174,133,96,.15)'};color:${state.barcos[b.id]?'var(--bk)':'rgba(253,250,246,.7)'};border:.5px solid ${state.barcos[b.id]?'var(--vl)':'rgba(174,133,96,.3)'};border-radius:8px;font-size:.7rem;cursor:pointer;transition:all .2s;text-transform:uppercase;letter-spacing:.08em;word-break:break-word" onclick="selectBarco('${b.id}')">
-          ${b.name.split(' — ')[1] || 'General'}<br><span style="font-size:.6rem;opacity:.8">USD $${b.price.toLocaleString()}</span>
+      <div style="font-size:.78rem;color:rgba(253,250,246,.38);margin-bottom:.9rem;font-style:italic">Elegí destino — podés sumar más de uno</div>
+      <div style="display:grid;grid-template-columns:${boats.length === 1 ? '1fr' : boats.length === 2 ? '1fr 1fr' : 'repeat(auto-fit,minmax(130px,1fr))'};gap:.7rem;margin-bottom:${anySelected?'1rem':'0'}">
+        ${boats.map(b => `<button style="padding:.9rem .6rem;background:${state.barcos[b.id]?'var(--vl)':'rgba(174,133,96,.12)'};color:${state.barcos[b.id]?'var(--bk)':'rgba(253,250,246,.75)'};border:1px solid ${state.barcos[b.id]?'var(--vl)':'rgba(174,133,96,.25)'};border-radius:10px;font-size:.78rem;cursor:pointer;transition:all .2s;text-transform:uppercase;letter-spacing:.08em;line-height:1.5" onclick="selectBarco('${b.id}')">
+          ${b.name.split(' — ')[1] || 'General'}<br><span style="font-size:.75rem;font-weight:600;${state.barcos[b.id]?'':'color:var(--vl)'}">USD $${b.price.toLocaleString()}</span><span style="font-size:.62rem;opacity:.6"> /salida</span>
         </button>`).join('')}
       </div>
       
       ${boats.filter(b => state.barcos[b.id]).map(b => {
         const days = state.barcos[b.id].qty || 1;
         const destName = b.name.split(' — ')[1] || 'General';
-        return `<div style="display:flex;align-items:center;gap:.5rem;background:rgba(174,133,96,.1);padding:.5rem .8rem;border-radius:8px;font-size:.75rem;color:rgba(253,250,246,.7);flex-wrap:wrap;margin-top:.4rem">
-          <span style="font-weight:500;color:var(--vl);min-width:80px">${destName}</span>
-          <span>Salidas:</span>
-          <button style="background:rgba(174,133,96,.3);border:none;width:20px;height:20px;cursor:pointer;color:var(--vl);font-size:.7rem;flex-shrink:0" onclick="changeBoatDays('${b.id}',-1)">−</button>
-          <span style="min-width:15px;text-align:center;flex-shrink:0">${days}</span>
-          <button style="background:rgba(174,133,96,.3);border:none;width:20px;height:20px;cursor:pointer;color:var(--vl);font-size:.7rem;flex-shrink:0" onclick="changeBoatDays('${b.id}',1)">+</button>
-          <span style="margin-left:auto;flex-shrink:0">USD $${(b.price * days).toLocaleString()}</span>
+        return `<div style="display:flex;align-items:center;gap:.6rem;background:rgba(174,133,96,.1);padding:.7rem 1rem;border-radius:8px;margin-top:.4rem">
+          <span style="font-weight:600;color:var(--vl);font-size:.82rem;min-width:90px">${destName}</span>
+          <span style="font-size:.78rem;color:rgba(253,250,246,.5)">Salidas:</span>
+          <button style="background:rgba(174,133,96,.3);border:none;width:26px;height:26px;cursor:pointer;color:var(--vl);font-size:1rem;border-radius:4px;flex-shrink:0" onclick="changeBoatDays('${b.id}',-1)">−</button>
+          <span style="min-width:18px;text-align:center;font-size:.9rem;color:var(--wh);flex-shrink:0">${days}</span>
+          <button style="background:rgba(174,133,96,.3);border:none;width:26px;height:26px;cursor:pointer;color:var(--vl);font-size:1rem;border-radius:4px;flex-shrink:0" onclick="changeBoatDays('${b.id}',1)">+</button>
+          <span style="margin-left:auto;font-size:.88rem;color:var(--vl);font-weight:600;flex-shrink:0">USD $${(b.price * days).toLocaleString()}</span>
         </div>`;
       }).join('')}
     </div>`;
@@ -4437,34 +4435,36 @@ function renderServices(){
   html += `</div>`;
 
   // ── TRASLADOS (Permitir múltiples vehículos)
-  html += secHeader('Traslados — ida + vuelta', 'Opcional · si llegás por tu cuenta podés saltearlo');
+  html += secHeader('Traslados', 'Aeropuerto de Punta Cana ↔ Casa de Campo · Precio cubre ida y vuelta');
   html += `<div style="grid-column:span 2;display:grid;grid-template-columns:1fr 1fr;gap:1rem">`;
   html += traslados.map(t => {
     const key = `traslado_${t.id}`;
     const selected = state.svcs[key] ? true : false;
     const qty = selected ? (state.svcs[key].qty || 1) : 1;
     return `<div style="border:1px solid rgba(174,133,96,.18);padding:1.2rem;border-radius:12px;background:${selected?'rgba(29,77,58,.22)':'rgba(255,255,255,.03)'};transition:all .3s">
-      <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:.8rem;cursor:pointer" onclick="toggleTransladoMulti('${t.id}','${t.name}',${t.price},'${t.pax}')">
-        <div style="width:18px;height:18px;border:1px solid rgba(174,133,96,.35);border-radius:2px;background:${selected?'var(--teal)':'transparent'};flex-shrink:0;display:flex;align-items:center;justify-content:center">
+      <div style="display:flex;align-items:flex-start;gap:.8rem;margin-bottom:.6rem;cursor:pointer" onclick="toggleTransladoMulti('${t.id}','${t.name}',${t.price},'${t.pax}')">
+        <div style="width:18px;height:18px;border:1px solid rgba(174,133,96,.35);border-radius:2px;background:${selected?'var(--teal)':'transparent'};flex-shrink:0;margin-top:.15rem;display:flex;align-items:center;justify-content:center">
           ${selected?'<span style="color:var(--bk);font-size:.8rem">✓</span>':''}
         </div>
-        <div>
-          <div style="font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.15em;color:var(--wh);text-transform:uppercase">${t.name}</div>
-          <div style="font-size:.8rem;color:rgba(253,250,246,.4)">${t.pax}</div>
+        <div style="flex:1">
+          <div style="font-family:'Cinzel',serif;font-size:.75rem;letter-spacing:.12em;color:var(--wh);text-transform:uppercase;margin-bottom:.25rem">${t.name}</div>
+          <div style="font-size:.82rem;color:rgba(253,250,246,.5);margin-bottom:.2rem">hasta ${t.pax}</div>
+          <div style="font-size:.85rem;color:var(--vl);font-weight:500">USD $${t.price.toLocaleString()} <span style="font-size:.72rem;color:rgba(253,250,246,.35);font-weight:400">ida + vuelta</span></div>
         </div>
       </div>
-      ${selected?`<div style="display:flex;align-items:center;gap:.5rem;background:rgba(174,133,96,.1);padding:.5rem .8rem;border-radius:8px;font-size:.75rem;color:rgba(253,250,246,.7)">
-        <button style="background:rgba(174,133,96,.3);border:none;width:24px;height:24px;cursor:pointer;color:var(--vl)" onclick="event.stopPropagation();changeTransladoQty('${t.id}',-1)">−</button>
-        <span style="min-width:20px;text-align:center">${qty}</span>
-        <button style="background:rgba(174,133,96,.3);border:none;width:24px;height:24px;cursor:pointer;color:var(--vl)" onclick="event.stopPropagation();changeTransladoQty('${t.id}',1)">+</button>
-        <span style="margin-left:auto">USD $${(t.price*qty).toLocaleString()}</span>
+      ${selected?`<div style="display:flex;align-items:center;gap:.6rem;background:rgba(174,133,96,.1);padding:.6rem .9rem;border-radius:8px;margin-top:.5rem">
+        <span style="font-size:.78rem;color:rgba(253,250,246,.5)">Vehículos:</span>
+        <button style="background:rgba(174,133,96,.3);border:none;width:26px;height:26px;cursor:pointer;color:var(--vl);font-size:1rem;border-radius:4px" onclick="event.stopPropagation();changeTransladoQty('${t.id}',-1)">−</button>
+        <span style="min-width:20px;text-align:center;font-size:.9rem;color:var(--wh)">${qty}</span>
+        <button style="background:rgba(174,133,96,.3);border:none;width:26px;height:26px;cursor:pointer;color:var(--vl);font-size:1rem;border-radius:4px" onclick="event.stopPropagation();changeTransladoQty('${t.id}',1)">+</button>
+        <span style="margin-left:auto;font-size:.88rem;color:var(--vl);font-weight:500">USD $${(t.price*qty).toLocaleString()}</span>
       </div>`:''}
     </div>`;
   }).join('');
   html += `</div>`;
 
   // ── CARRITOS (Permitir múltiples)
-  html += secHeader('Carritos de golf', 'Opcional · útil para moverse dentro del resort');
+  html += secHeader('Carritos de golf', 'Para moverse dentro del resort · precio por día');
   html += `<div style="grid-column:span 2;display:grid;grid-template-columns:1fr 1fr;gap:1rem">`;
   html += carritos.map(c => {
     const selected = state.svcs[c.id] ? true : false;
@@ -4489,7 +4489,7 @@ function renderServices(){
   html += `</div>`;
 
   // ── AEROPUERTO VIP (Cantidad de personas)
-  html += secHeader('Aeropuerto VIP', 'Opcional · acelera el paso por migraciones');
+  html += secHeader('Migración VIP', 'Aeropuerto de Punta Cana · Fast Track y Sala VIP · precio por persona');
   html += `<div style="grid-column:span 2;display:grid;grid-template-columns:1fr 1fr;gap:1rem">`;
   html += aeropuerto.map(a => {
     const key = `aeropuerto_${a.id}`;
@@ -4520,7 +4520,7 @@ function renderServices(){
   html += villaServices.map(s => checkCard(s.id, s.name, s.tip || '', s.price, s.unit, `toggleSvcItem('${s.id}',${s.price},'${s.name}','${s.unit}')`)).join('');
 
   // ── ACTIVIDADES — acordeón por categoría
-  html += secHeader('Actividades en el resort', 'Opcional · explorá las categorías que te interesen');
+  html += secHeader('Actividades', 'Precio por persona · abrí cada categoría para ver las opciones');
 
   const actEmojis = {
     'Golf':'', 'Ecuestre':'', 'Tenis':'', 'Pádel':'',
