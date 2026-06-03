@@ -3836,8 +3836,9 @@ const villaServices = [
   {id:'cocinera',  name:'Cocinero medio día (desayuno + almuerzo)',  price:100, unit:'día', tip:'Desayuno y almuerzo básico. No incluye ingredientes.'},
   {id:'cocinera2', name:'Cocinero día completo (desayuno + almuerzo + cena)', price:172, unit:'día', tip:'Mismo cocinero que medio día, suma la cena. No incluye ingredientes.'},
   {id:'chef',      name:'Chef privado (todas las comidas)',     price:286, unit:'día', tip:'Chef profesional con menú a medida. No incluye ingredientes.'},
-  {id:'nineraD',   name:'Niñera (día)',                         price:122, unit:'día'},
-  {id:'nineraH',   name:'Niñera (noche)',                       price:172, unit:'noche'},
+  {id:'nineraD',   name:'Niñera (día)',                         price:126, unit:'día',  tip:'Hasta 2 niños · Horario: 9:00 a.m. a 4:00 p.m.'},
+  {id:'nineraM',   name:'Niñera (Medio día)',                   price:89,  unit:'día',  tip:'Hasta 2 niños · Horario: 9:00 a.m. a 12:00 p.m. ó 1:00 p.m. a 4:00 p.m.'},
+  {id:'nineraH',   name:'Niñera (noche)',                       price:21,  unit:'hora', perHour:true, minHoras:3, maxHoras:8, tip:'Hasta 2 niños · A partir de las 4:00 p.m. hasta las 12:00 a.m. Mínimo 3 horas de cuidado nocturno, en la habitación o villa.'},
 ];
 
 // ── TRASLADOS (USD ida+vuelta)
@@ -4537,7 +4538,33 @@ function renderServices(){
 
   // ── SERVICIOS EN VILLA
   html += secHeader('Servicios en la casa', 'Opcional · cocinero, limpieza, niñera. Ninguno incluye ingredientes');
-  html += villaServices.map(s => checkCard(s.id, s.name, s.tip || '', s.price, s.unit, `toggleSvcItem('${s.id}',${s.price},'${s.name}','${s.unit}')`)).join('');
+  html += villaServices.map(s => {
+    const sel = !!state.svcs[s.id];
+    if(s.perHour){
+      const horas = sel ? (state.svcs[s.id].horas || s.minHoras || 3) : (s.minHoras || 3);
+      const subtotal = s.price * horas;
+      const hourSelector = sel ? `
+        <div onclick="event.stopPropagation()" style="margin-top:.7rem;display:flex;flex-direction:column;gap:.5rem">
+          <div style="display:flex;align-items:center;gap:.5rem">
+            <span style="font-size:.7rem;color:rgba(253,250,246,.5);min-width:60px">Horas</span>
+            <button onclick="changeNineraHoras('${s.id}',-1)" style="width:24px;height:24px;border:1px solid rgba(174,133,96,.4);background:none;color:var(--vl);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center">−</button>
+            <span style="font-family:'Cinzel',serif;font-size:.7rem;color:var(--wh);min-width:20px;text-align:center">${horas}</span>
+            <button onclick="changeNineraHoras('${s.id}',1)" style="width:24px;height:24px;border:1px solid rgba(174,133,96,.4);background:none;color:var(--vl);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center">+</button>
+          </div>
+          <div style="font-size:.7rem;color:var(--vl);margin-top:.2rem">${horas} h × USD $${s.price} = USD $${subtotal.toLocaleString()}</div>
+        </div>` : '';
+      return `<div class="svc-opt ${sel?'selected':''}" onclick="toggleSvcItem('${s.id}',${s.price},'${s.name}','${s.unit}')">
+        <div class="svc-check"></div>
+        <div style="flex:1">
+          <div class="svc-opt-name">${s.name}</div>
+          ${s.tip?`<div class="svc-opt-desc">${s.tip}</div>`:''}
+          <div class="svc-opt-price">USD $${s.price.toLocaleString()} / ${s.unit} · mínimo ${s.minHoras} h</div>
+          ${hourSelector}
+        </div>
+      </div>`;
+    }
+    return checkCard(s.id, s.name, s.tip || '', s.price, s.unit, `toggleSvcItem('${s.id}',${s.price},'${s.name}','${s.unit}')`);
+  }).join('');
 
   // ── ACTIVIDADES — acordeón por categoría
   html += secHeader('Actividades', 'Precio por persona · abrí cada categoría para ver las opciones');
@@ -4715,7 +4742,21 @@ function changeAeropuertoQty(id,delta){
 }
 function toggleSvcItem(id,price,name,unit){
   if(state.svcs[id]){delete state.svcs[id];}
-  else{state.svcs[id]={price,name,unit,perNight:unit==='día'||unit==='noche'};}
+  else{
+    const svc = villaServices.find(s=>s.id===id) || {};
+    if(svc.perHour){
+      state.svcs[id]={price,name,unit,perHour:true,horas:svc.minHoras||3,minHoras:svc.minHoras||3,maxHoras:svc.maxHoras||8};
+    } else {
+      state.svcs[id]={price,name,unit,perNight:unit==='día'||unit==='noche'};
+    }
+  }
+  renderServices();
+}
+function changeNineraHoras(id, delta){
+  if(!state.svcs[id]) return;
+  const s = state.svcs[id];
+  const min = s.minHoras || 3, max = s.maxHoras || 8;
+  s.horas = Math.max(min, Math.min(max, (s.horas || min) + delta));
   renderServices();
 }
 function toggleActiv(id,price,name,unit){
@@ -4857,7 +4898,8 @@ function renderSummary(){
       label+=` × ${v.qty}`;
       amt=v.price*v.qty;
     }
-    if(v.perPerson){amt=v.price*guests;label+=` (${guests} pers.)`}
+    if(v.perHour){const h=v.horas||v.minHoras||3;amt=v.price*h;label+=` (${h} h)`}
+    else if(v.perPerson){amt=v.price*guests;label+=` (${guests} pers.)`}
     else if(v.perNight){amt=v.price*nights;label+=` (${nights} ${nights===1?'noche':'noches'})`}
     else if(k.startsWith('aeropuerto_')){amt=v.price*v.qty;label+=` × ${v.qty} personas`}
     extrasTotal+=amt;
@@ -4973,13 +5015,16 @@ function buildPresupuestoData(){
 
   // Servicios villa
   villaServices.forEach(s=>{
-    if(state.svcs[s.id]) items.push({
-      categoria:'Servicio Villa',
-      descripcion:s.name,
-      display: s.name,
-      cantidad:1,
-      unidad:s.unit
-    });
+    if(state.svcs[s.id]){
+      const sv = state.svcs[s.id];
+      items.push({
+        categoria:'Servicio Villa',
+        descripcion:s.name,
+        display: s.name,
+        cantidad: sv.perHour ? (sv.horas || s.minHoras || 3) : 1,
+        unidad:s.unit
+      });
+    }
   });
 
   // Actividades seleccionadas
