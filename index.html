@@ -7617,5 +7617,43 @@ document.addEventListener('DOMContentLoaded', setupScrollReveal);
 <button id="scrollTopBtn" aria-label="Volver arriba" style="position:fixed;bottom:90px;right:20px;width:42px;height:42px;border-radius:50%;background:rgba(28,30,23,.88);backdrop-filter:blur(12px);border:1px solid rgba(174,133,96,.28);color:rgba(253,250,246,.65);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:898;opacity:0;pointer-events:none;transition:all .4s cubic-bezier(.25,.46,.45,.94)">
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="18 15 12 9 6 15"/></svg>
 </button>
+<!-- ── GOOGLE ANALYTICS — Seguimiento de conversiones ── -->
+<script>
+(function(){
+  // Envía un evento a GA4 de forma segura (nunca rompe el flujo del sitio)
+  function track(name, params){
+    try { if (typeof gtag === 'function') gtag('event', name, params || {}); }
+    catch(e){ /* si Analytics no está, seguimos sin interrumpir nada */ }
+  }
+
+  // 1) Click en cualquier botón "Armá tu presupuesto" (lleva al configurador)
+  document.addEventListener('click', function(e){
+    var a = e.target.closest('a[href*="#tu-experiencia"]');
+    if (a) {
+      var label = (a.textContent || '').replace(/\s+/g,' ').trim().slice(0,60);
+      track('armar_presupuesto_click', { boton: label || 'CTA presupuesto' });
+    }
+  }, true);
+
+  // 2) Apertura del chatbot Valentina
+  if (typeof window.openAsistente === 'function') {
+    var _openAsistente = window.openAsistente;
+    window.openAsistente = function(){
+      track('chatbot_abierto');
+      return _openAsistente.apply(this, arguments);
+    };
+  }
+
+  // 3) Lead capturado (cliente verificado) — conversión principal
+  if (typeof window.guardarContactoParcial === 'function') {
+    var _guardarContacto = window.guardarContactoParcial;
+    window.guardarContactoParcial = function(){
+      track('generate_lead', { metodo: 'configurador_web' });
+      return _guardarContacto.apply(this, arguments);
+    };
+  }
+})();
+</script>
+
 </body>
 </html>
