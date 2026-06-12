@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="description" content="Tu hogar en el Caribe. Sin itinerarios, sin apuros. Una casa privada en Casa de Campo Resort con todo lo que necesitás — a tu manera.">
-<title>MG Experiences — Casa de Campo, República Dominicana</title>
+<meta name="description" content="Villas privadas, embarcaciones, traslados premium y experiencias a medida en Casa de Campo Resort, República Dominicana. Tu hogar en el Caribe, sin itinerarios.">
+<title>MG Experiences — Villas privadas en Casa de Campo, República Dominicana</title>
 
 <!-- Meta Pixel Code -->
 <script>
@@ -1849,6 +1849,15 @@ nav.solid{background:rgba(28,30,23,.85);backdrop-filter:saturate(180%) blur(20px
 /* Panels */
 .cpanel{display:none;animation:fadePanel .5s ease both;background:rgba(255,255,255,.02);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(174,133,96,.08);border-radius:16px;padding:2rem}
 .cpanel.active{display:block}
+/* En modo resumen: todo se oculta menos el nav y el configurador */
+body.showing-summary > *:not(nav):not(#tu-experiencia):not(.nav-mobile):not(script) {
+  display: none !important;
+}
+body.showing-summary #tu-experiencia {
+  min-height: 100vh;
+  padding-top: 1rem;
+}
+#panel5.active{min-height:80vh;}
 @keyframes fadePanel{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 
 .cpanel-title{font-family:'Playfair Display',serif;font-style:italic;font-size:1.5rem;color:var(--wh);margin-bottom:.6rem;text-align:center}
@@ -2335,6 +2344,9 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
             </select>
           </div>
         </div>
+        <!-- HONEYPOT: campo trampa para bots — NO mover ni hacer visible -->
+        <input type="text" name="website" id="hpField" tabindex="-1" autocomplete="off"
+          style="position:absolute;left:-9999px;opacity:0;height:0;width:0;pointer-events:none" aria-hidden="true">
         <div class="gate-error" id="gateErrorA"></div>
         <button class="gate-btn" type="submit" id="gateBtnA">Recibir código →</button>
       </form>
@@ -2374,7 +2386,6 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
     <li><a href="#embarcaciones">Embarcaciones</a></li>
     <li><a href="#golf">Golf</a></li>
     <li><a href="#tu-experiencia">Diseñá tu estadía</a></li>
-    <li><a href="#casa-de-campo">Resort</a></li>
     <li><a href="#resenas">Reseñas</a></li>
     <li><a href="#nosotros">Nosotros</a></li>
 
@@ -2396,7 +2407,6 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
   <a href="#embarcaciones" onclick="toggleMobileNav()">Embarcaciones</a>
   <a href="#golf" onclick="toggleMobileNav()">Golf</a>
   <a href="#tu-experiencia" onclick="toggleMobileNav()">Diseñá tu estadía</a>
-  <a href="#casa-de-campo" onclick="toggleMobileNav()">Resort</a>
   <a href="#resenas" onclick="toggleMobileNav()">Reseñas</a>
   <a href="#nosotros" onclick="toggleMobileNav()">Nosotros</a>
 </div>
@@ -2406,13 +2416,13 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
   <div class="hbg"></div>
   <div class="hov"></div>
   <div class="hb">
-    <p class="hpre anim-up" style="animation-delay:0s">Casa de Campo · La Romana, República Dominicana</p>
+    <p class="hpre anim-up" style="animation-delay:0s;margin-top:2rem">Casa de Campo · La Romana, República Dominicana</p>
     <h1 class="hh1" style="overflow:visible">
       <span class="anim-up" style="display:block;animation-delay:.1s">Llegás.</span>
       <span class="anim-up" style="display:block;animation-delay:.3s">Todo está listo.</span>
       <em class="anim-up" style="display:block;animation-delay:.55s">El Caribe, a tu manera.</em>
     </h1>
-    <p class="hsub anim-up" style="animation-delay:.8s">Casas privadas con pileta · Golf · Playa · Marina<br><em style="font-style:italic;color:rgba(212,184,154,.7)">Todo dentro del resort más exclusivo del Caribe.</em></p>
+    <p class="hsub anim-up" style="animation-delay:.8s">Casas privadas · Golf · Playa · Marina<br><em style="font-style:italic;color:rgba(212,184,154,.7)">Todo dentro del resort más exclusivo del Caribe.</em></p>
     <div class="hbtns anim-up" style="animation-delay:.95s">
       <a href="#tu-experiencia" class="btn bf hero-primary-cta">Armá tu presupuesto ✦</a>
     </div>
@@ -2681,6 +2691,63 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
 </div>
 
 <!-- CASA DE CAMPO: EDITORIAL EXPERIENCE -->
+
+<!-- EMBARCACIONES -->
+<section class="boats rv" id="embarcaciones">
+  <div class="bbg"></div>
+  <div class="bb">
+    <div>
+      <span class="lbl">Un día en el agua</span>
+      <h2 class="bigt">Sin otros<br><em>pasajeros</em></h2>
+      <div class="rule"></div>
+      <p class="prose" style="font-size:1rem;color:rgba(253,250,246,.55)">El barco es tuyo. Elegís destino, horario y ritmo.</p>
+      <div class="ibox">
+        <div class="ibt">Incluido en toda salida</div>
+        <div class="ibg">
+          <div class="ii">Capitán y Marinero</div>
+          <div class="ii">Aguas y Refrescos</div>
+          <div class="ii">Cervezas</div>
+          <div class="ii">Bolsas de Hielo</div>
+        </div>
+      </div>
+      <p style="font-size:.76rem;color:rgba(253,250,246,.32);font-style:italic;margin-top:1rem">9:00 hs a 18:00 hs · Saona, Palmillas, Isla Catalina</p>
+    </div>
+    <div>
+      <div class="fleet">
+        <div class="frow"><div><div class="fn">Azimuth Flybridge 55</div><div class="fs2">Flybridge · Motor</div></div><div class="fc">16 pas.</div></div>
+        <div class="frow"><div><div class="fn">Tiara 38 LS</div><div class="fs2">Sport Cruiser</div></div><div class="fc">12 pas.</div></div>
+        <div class="frow"><div><div class="fn">Boston Whaler Conquest 305</div><div class="fs2">Open Sport</div></div><div class="fc">9 pas.</div></div>
+      </div>
+      <div style="margin-top:1.8rem"><a href="#tu-experiencia" class="btn bf">Reservar salida</a></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- GOLF -->
+<section class="golf rv" id="golf">
+  <div class="gbg"></div>
+  <div class="gbody">
+    <span class="lbl" style="text-align:center;display:block">Para los que lo saben apreciar</span>
+    <div class="rule rc"></div>
+    <blockquote class="gq">"Teeth of the Dog es uno de los mejores campos que jugué en mi vida. No es solo un campo — es una experiencia."</blockquote>
+    <p class="gattr">— Jack Nicklaus</p>
+    <div class="gcs">
+      <div class="gc" data-reveal data-delay="1"><div class="gcn">Teeth of the Dog</div><div class="gcd">Campo de 18 hoyos diseñado por Pete Dye, conocido por sus vistas impresionantes del Mar Caribe y su desafiante diseño con siete hoyos que juegan directamente a lo largo de la costa. Consistentemente clasificado como uno de los mejores del Caribe y del mundo.</div></div>
+      <div class="gc" data-reveal data-delay="2"><div class="gcn">Dye Fore</div><div class="gcd">Campo de clase mundial diseñado por Pete Dye con espectaculares vistas panorámicas al río Chavón y al Mar Caribe. Con 7.740 yardas y 27 hoyos distintos, incorpora bunkers profundos y lagos estratégicamente ubicados que ponen a prueba las habilidades de cualquier jugador.</div></div>
+      <div class="gc" data-reveal data-delay="3"><div class="gcn">Links</div><div class="gcd">Campo de 18 hoyos de estilo links diseñado por Pete Dye, conocido por su desafiante diseño que incorpora dunas naturales, búnkeres profundos y vientos del Mar Caribe. Ha sido sede de numerosos eventos internacionales y aclamado por golfistas de todo el mundo.</div></div>
+    </div>
+    <div class="gam">
+      <div class="gai"><div class="gdot"></div><div><div class="gan">Caddies</div><div class="gat">Equipo experto para mejorar tu juego</div></div></div>
+      <div class="gai"><div class="gdot"></div><div><div class="gan">Alquiler de Equipos</div><div class="gat">Palos y carritos reconocidas</div></div></div>
+      <div class="gai"><div class="gdot"></div><div><div class="gan">Clases</div><div class="gat">Para todos los niveles</div></div></div>
+      <div class="gai"><div class="gdot"></div><div><div class="gan">Práctica</div><div class="gat">Putting, chipping y tiro completo</div></div></div>
+      <div class="gai"><div class="gdot"></div><div><div class="gan">Pro Shop</div><div class="gat">Equipos y ropa seleccionada</div></div></div>
+      <div class="gai"><div class="gdot"></div><div><div class="gan">Restaurantes</div><div class="gat">Cada campo con su propio bar y comedor</div></div></div>
+    </div>
+  </div>
+</section>
+
 <section id="casa-de-campo" class="cdc-experience">
   
   <!-- === ACT I: THE OPENING === -->
@@ -2698,14 +2765,14 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
     </h1>
     
     <p class="cdc-tagline">
-      <em>Siete mil acres</em> de silencio caribeño,<br>
+      <em>Tres mil hectáreas</em> de silencio caribeño,<br>
       esculpidos para quienes <em>buscan más</em>.
     </p>
     
     <div class="cdc-quick-stats">
       <div class="cdc-qs-item">
-        <span class="cdc-qs-n">7,000</span>
-        <span class="cdc-qs-l">Acres</span>
+        <span class="cdc-qs-n">3.000</span>
+        <span class="cdc-qs-l">Hectáreas</span>
       </div>
       <div class="cdc-qs-divider"></div>
       <div class="cdc-qs-item">
@@ -3014,7 +3081,7 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
 <section id="asistente" class="rv" style="padding:8rem 4rem;background:linear-gradient(135deg, var(--bk) 0%, rgba(20,30,25,1) 100%);overflow:hidden;position:relative">
   <div style="max-width:820px;margin:0 auto;text-align:center" data-reveal>
     <span class="lbl" style="color:var(--vl)">Disponible 24/7 para ti</span>
-    <h2 class="bigt" style="margin-bottom:1.5rem;color:var(--wh)">Tu<br><em style="color:var(--vl)">Asistente Virtual</em></h2>
+    <h2 class="bigt" style="margin-bottom:1.5rem;color:var(--wh)"><em style="color:var(--vl)">Asistente Virtual</em></h2>
     <div class="rule rc" style="margin:0 auto 2rem;background:var(--v)"></div>
     <p class="prose" style="margin:0 auto 2.5rem;max-width:580px;color:rgba(253,250,246,.75)">Responde preguntas sobre villas, servicios, disponibilidad y precios en tiempo real. Te guía paso a paso para armar tu presupuesto — sin formularios, sin esperas, sin complicaciones.</p>
     <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
@@ -3195,10 +3262,10 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
       <div class="fct">Servicios</div>
       <ul class="flinks">
         <li><a href="#villas">Villas</a></li>
-        <li><a href="#embarcaciones">Embarcaciones</a></li>
-        <li><a href="#golf">Green Fee</a></li>
-        <li><a href="#traslados">Traslados</a></li>
-        <li><a href="#vip">Migración VIP</a></li>
+        <li><a href="#tu-experiencia">Embarcaciones</a></li>
+        <li><a href="#tu-experiencia">Green Fee</a></li>
+        <li><a href="#tu-experiencia">Traslados</a></li>
+        <li><a href="#tu-experiencia">Migración VIP</a></li>
         <li><a href="#tu-experiencia">Armá tu estadía</a></li>
       </ul>
     </div>
@@ -3566,8 +3633,48 @@ async function loadVillasFromSheet() {
 
       if(!nombre) continue;
 
-      const precioK = parseFloat((r[10] || '').replace(/[^0-9.,]/g,'').replace(',','.')) || 0;
-      const precioI = parseFloat((r[8]  || '').replace(/[^0-9.,]/g,'').replace(',','.')) || 0;
+      // ✅ FIX: parseo robusto de precios
+      // Maneja formatos: "$5,176", "$5.176", "5176", "5176.00", "$5,176.50"
+      function parsePrice(s) {
+        if (!s) return 0;
+        // Eliminar todo excepto dígitos, comas y puntos
+        let cleaned = String(s).replace(/[^0-9.,]/g,'').trim();
+        if (!cleaned) return 0;
+        // Si tiene tanto coma como punto, el último es el decimal
+        const lastComma = cleaned.lastIndexOf(',');
+        const lastDot   = cleaned.lastIndexOf('.');
+        if (lastComma > -1 && lastDot > -1) {
+          // Ambos presentes: el último carácter es el decimal real
+          if (lastComma > lastDot) {
+            // formato europeo: "5.176,50" → 5176.50
+            cleaned = cleaned.replace(/\./g,'').replace(',','.');
+          } else {
+            // formato US: "5,176.50" → 5176.50
+            cleaned = cleaned.replace(/,/g,'');
+          }
+        } else if (lastComma > -1) {
+          // Solo coma: puede ser separador de miles "5,176" o decimal "5,50"
+          // Heurística: si después de la coma hay 3 dígitos exactos, es separador de miles
+          const afterComma = cleaned.substring(lastComma+1);
+          if (afterComma.length === 3 && /^\d{3}$/.test(afterComma)) {
+            cleaned = cleaned.replace(/,/g,'');
+          } else {
+            cleaned = cleaned.replace(',','.');
+          }
+        } else if (lastDot > -1) {
+          // Solo punto: puede ser separador de miles "5.176" o decimal "5.50"
+          // Heurística: si después del último punto hay 3 dígitos exactos, es separador de miles
+          const afterDot = cleaned.substring(lastDot+1);
+          if (afterDot.length === 3 && /^\d{3}$/.test(afterDot)) {
+            cleaned = cleaned.replace(/\./g,'');
+          }
+          // si no, dejarlo como está (es decimal)
+        }
+        const n = parseFloat(cleaned);
+        return isNaN(n) ? 0 : n;
+      }
+      const precioK = parsePrice(r[10]);
+      const precioI = parsePrice(r[8]);
       const precio  = precioK > 0 ? precioK : precioI;
 
       const habM  = detalle.match(/(\d+)\s*hab/i);
@@ -3725,12 +3832,13 @@ loadVillasFromSheet();
 
 // ── SERVICIOS EN VILLA (USD/día)
 const villaServices = [
-  {id:'limpieza',  name:'Limpieza + Desayuno',  price:79,  unit:'día'},
-  {id:'cocinera',  name:'Cocinera',             price:100, unit:'día'},
-  {id:'cocinera2', name:'Cocinera + Nocturno',  price:172, unit:'día'},
-  {id:'chef',      name:'Chef completo',        price:286, unit:'día'},
-  {id:'nineraD',   name:'Niñera (día)',         price:122, unit:'día'},
-  {id:'nineraH',   name:'Niñera (noche)',       price:172, unit:'noche'},
+  {id:'limpieza',  name:'Limpieza + Desayuno',                  price:79,  unit:'día', tip:'Desayuno simple incluido. No incluye ingredientes.'},
+  {id:'cocinera',  name:'Cocinero medio día (desayuno + almuerzo)',  price:100, unit:'día', tip:'Desayuno y almuerzo básico. No incluye ingredientes.'},
+  {id:'cocinera2', name:'Cocinero día completo (desayuno + almuerzo + cena)', price:172, unit:'día', tip:'Mismo cocinero que medio día, suma la cena. No incluye ingredientes.'},
+  {id:'chef',      name:'Chef privado (todas las comidas)',     price:286, unit:'día', tip:'Chef profesional con menú a medida. No incluye ingredientes.'},
+  {id:'nineraD',   name:'Niñera (día)',                         price:126, unit:'día',  tip:'Hasta 2 niños · Horario: 9:00 a.m. a 4:00 p.m.'},
+  {id:'nineraM',   name:'Niñera (Medio día)',                   price:89,  unit:'día',  tip:'Hasta 2 niños · Horario: 9:00 a.m. a 12:00 p.m. ó 1:00 p.m. a 4:00 p.m.'},
+  {id:'nineraH',   name:'Niñera (noche)',                       price:21,  unit:'hora', perHour:true, minHoras:3, maxHoras:8, tip:'Hasta 2 niños · A partir de las 4:00 p.m. hasta las 12:00 a.m. Mínimo 3 horas de cuidado nocturno, en la habitación o villa.'},
 ];
 
 // ── TRASLADOS (USD ida+vuelta)
@@ -3750,13 +3858,24 @@ const carritos = [
 
 // ── EMBARCACIONES (USD/salida)
 const barcos = [
-  {id:'bw305palm', name:'Boston Whaler 305 — Palmillas', pax:'hasta 9',  price:1553, display:'Boston Whaler 305 | Palmillas'},
-  {id:'bw305cat',  name:'Boston Whaler 305 — Catalina',  pax:'hasta 9',  price:1553, display:'Boston Whaler 305 | Catalina'},
-  {id:'bw305saon', name:'Boston Whaler 305 — Saona',     pax:'hasta 9',  price:2259, display:'Boston Whaler 305 | Saona'},
-  {id:'tiara38p',  name:'Tiara 38LS — Palmillas',        pax:'10 a 12',  price:1765, display:'Tiara 38LS | Palmillas'},
-  {id:'tiara38s',  name:'Tiara 38LS — Saona',            pax:'10 a 12',  price:2942, display:'Tiara 38LS | Saona'},
-  {id:'azimuth',   name:'Azimuth Flybridge 55',          pax:'13 a 16',  price:4706, display:'Azimuth Flybridge 55 | Salida general'},
-  {id:'catamaran', name:'Catamarán',                     pax:'17 a 35',  price:2589, display:'Catamaran | Salida general'},
+  {id:'bw305palm', name:'Boston Whaler 305 — Palmillas', pax:'hasta 9',  price:1553, display:'Boston Whaler 305 | Palmillas',
+   tipo:'Open sport · cubierta descubierta', destDesc:'Banco de arena natural · aguas poco profundas · ideal para relajarse · dentro del Parque Nacional del Este', duracion:'~30 min'},
+  {id:'bw305cat',  name:'Boston Whaler 305 — Catalina',  pax:'hasta 9',  price:1553, display:'Boston Whaler 305 | Catalina',
+   tipo:'Open sport · cubierta descubierta', destDesc:'Isla virgen · aguas cristalinas · fondo de coral · playa blanca', duracion:'~25 min'},
+  {id:'bw305saon', name:'Boston Whaler 305 — Saona',     pax:'hasta 9',  price:2259, display:'Boston Whaler 305 | Saona',
+   tipo:'Open sport · cubierta descubierta', destDesc:'Isla Saona · playa remota · aguas turquesas · reserva natural protegida', duracion:'~1 hora'},
+  {id:'tiara38p',  name:'Tiara 38LS — Palmillas',        pax:'10 a 12',  price:1765, display:'Tiara 38LS | Palmillas',
+   tipo:'Sport cruiser · cabina con aire acondicionado', destDesc:'Banco de arena natural · aguas poco profundas · ideal para relajarse · dentro del Parque Nacional del Este', duracion:'~30 min'},
+  {id:'tiara38s',  name:'Tiara 38LS — Saona',            pax:'10 a 12',  price:2942, display:'Tiara 38LS | Saona',
+   tipo:'Sport cruiser · cabina con aire acondicionado', destDesc:'Isla Saona · playa remota · aguas turquesas · reserva natural protegida', duracion:'~1 hora'},
+  {id:'azimuthp',  name:'Azimuth Flybridge 55 — Palmillas', pax:'13 a 16', price:4706, display:'Azimuth Flybridge 55 | Palmillas',
+   tipo:'Flybridge de lujo · cubierta superior · sombra amplia', destDesc:'Banco de arena natural · aguas poco profundas · ideal para relajarse · dentro del Parque Nacional del Este', duracion:'~30 min'},
+  {id:'azimuthc',  name:'Azimuth Flybridge 55 — Catalina',  pax:'13 a 16', price:4706, display:'Azimuth Flybridge 55 | Catalina',
+   tipo:'Flybridge de lujo · cubierta superior · sombra amplia', destDesc:'Isla virgen · aguas cristalinas · fondo de coral · playa blanca', duracion:'~25 min'},
+  {id:'catamaranp',name:'Catamarán — Palmillas',          pax:'17 a 35',  price:2589, display:'Catamaran | Palmillas',
+   tipo:'Catamarán · cubierta amplia · ideal grupos grandes', destDesc:'Banco de arena natural · aguas poco profundas · ideal para relajarse · dentro del Parque Nacional del Este', duracion:'~30 min'},
+  {id:'catamaranc',name:'Catamarán — Catalina',           pax:'17 a 35',  price:2589, display:'Catamaran | Catalina',
+   tipo:'Catamarán · cubierta amplia · ideal grupos grandes', destDesc:'Isla virgen · aguas cristalinas · fondo de coral · playa blanca', duracion:'~25 min'},
 ];
 
 // ── ACTIVIDADES — organizadas por subcategoría
@@ -4064,7 +4183,7 @@ function trackPresupuestoCompleto(montoTotal) {
 }
 
 // ── STATE
-let state = {step:1, nights:0, guests:8, villaId:null, svcs:{}, barcoId:null, golfId:null, aeropuertoId:null, openAccordion:null};
+let state = {step:1, nights:0, guests:8, villaId:null, svcs:{}, barcoId:null, barcos:{}, golfId:null, aeropuertoId:null, openAccordion:null};
 
 // ── VILLA CATALOG: select and jump to configurator
 function selectVillaAndGo(villaId){
@@ -4110,7 +4229,20 @@ function goStep(n){
     trackViewConfigurador();
   }
   
-  document.getElementById('tu-experiencia').scrollIntoView({behavior:'smooth',block:'start'});
+  // Clase en body para ocultar secciones y fijar el configurador arriba
+  if(n===5){
+    document.body.classList.add('showing-summary');
+    // Doble requestAnimationFrame: garantiza que el DOM se repintó con display:none
+    // antes de hacer el scroll, evitando que se vea la sección de villas
+    requestAnimationFrame(()=>{
+      requestAnimationFrame(()=>{
+        window.scrollTo({ top: 0, behavior:'instant' });
+      });
+    });
+  } else {
+    document.body.classList.remove('showing-summary');
+    document.getElementById('tu-experiencia').scrollIntoView({behavior:'smooth',block:'start'});
+  }
 }
 
 function selectIntent(type){
@@ -4152,10 +4284,14 @@ function renderVillas(){
 
   // Filter: only villas that fit the group, sorted cheapest first
   const allVillas=getVillas();
+  const getPrice = v => {
+    const p = Number(v.precio_noche || v.price || 0);
+    return isNaN(p) ? 999999 : p; // las villas sin precio van al final
+  };
   const suitable=allVillas
-    .filter(v=>v.guests>=g)
-    .sort((a,b)=>(a.precio_noche||a.price||0)-(b.precio_noche||b.price||0));
-  const toShow=suitable.length>0?suitable:allVillas.sort((a,b)=>(a.precio_noche||a.price||0)-(b.precio_noche||b.price||0));
+    .filter(v=>Number(v.guests||v.huespedes||0)>=g)
+    .sort((a,b)=>getPrice(a)-getPrice(b));
+  const toShow=suitable.length>0?suitable:[...allVillas].sort((a,b)=>getPrice(a)-getPrice(b));
 
   if(suitable.length>0){
     note.textContent=`${suitable.length} casa${suitable.length>1?'s':''} sugerida${suitable.length>1?'s':''} para ${g} personas — confirmamos disponibilidad para tus fechas`;
@@ -4219,9 +4355,10 @@ function renderServices(){
   const cdcTotal=feeCDC*guests*nights;
 
   // Helper: section header
-  const secHeader = (label) =>
+  const secHeader = (label, hint) =>
     `<div style="grid-column:span 2;margin:1.4rem 0 .6rem;padding-bottom:.6rem;border-bottom:.5px solid rgba(174,133,96,.18)">
       <span style="font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.3em;color:rgba(212,184,154,.55);text-transform:uppercase">${label}</span>
+      ${hint?`<div style="font-size:.78rem;color:rgba(253,250,246,.4);font-style:italic;margin-top:.3rem">${hint}</div>`:''}
     </div>`;
 
   // Helper: radio-style card (single select)
@@ -4265,75 +4402,90 @@ function renderServices(){
   let html = '';
 
   // ── EMBARCACIONES (Grouped by boat type, responsive layout)
-  html += secHeader('Un día en el agua');
+  html += secHeader('Embarcaciones', 'El barco es exclusivo para tu grupo · 9 a 18 hs · Capitán, marinero, aguas y cervezas incluidos');
   html += `<div style="grid-column:span 2;display:grid;grid-template-columns:1fr;gap:1rem">`;
   
-  // Group boats by name (same boat, different beaches)
   const boatGroups = {};
   barcos.forEach(b => {
-    const boatType = b.name.split(' — ')[0]; // Get boat name without beach
+    const boatType = b.name.split(' — ')[0];
     if(!boatGroups[boatType]) boatGroups[boatType] = [];
     boatGroups[boatType].push(b);
   });
   
   Object.entries(boatGroups).forEach(([boatType, boats]) => {
-    const selected = state.barcoId && boats.some(b => b.id === state.barcoId);
-    const selectedBoat = selected ? boats.find(b => b.id === state.barcoId) : null;
-    const days = state.svcs['barco_dias'] || 1;
+    const anySelected = boats.some(b => state.barcos[b.id]);
+    const rep = boats[0]; // datos del barco (mismo para todos los destinos)
     
-    html += `<div style="border:1px solid rgba(174,133,96,.18);padding:1.2rem;border-radius:12px;background:${selected?'rgba(29,77,58,.22)':'rgba(255,255,255,.03)'};transition:all .3s">
-      <div style="margin-bottom:.8rem">
-        <div style="font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.15em;color:var(--wh);text-transform:uppercase;margin-bottom:.5rem">${boatType}</div>
-        <div style="font-size:.8rem;color:rgba(253,250,246,.5)">${boats[0].pax} pasajeros · 9 a 18 hs</div>
+    html += `<div style="border:1px solid rgba(174,133,96,.18);padding:1.4rem;border-radius:12px;background:${anySelected?'rgba(29,77,58,.22)':'rgba(255,255,255,.03)'};transition:all .3s">
+      <div style="margin-bottom:1rem">
+        <div style="font-family:'Cinzel',serif;font-size:.8rem;letter-spacing:.15em;color:var(--wh);text-transform:uppercase;margin-bottom:.3rem">${boatType}</div>
+        <div style="font-size:.82rem;color:rgba(253,250,246,.55);margin-bottom:.25rem">${rep.tipo||''}</div>
+        <div style="font-size:.8rem;color:rgba(253,250,246,.4)">hasta ${rep.pax} pasajeros</div>
+      </div>
+
+      <div style="font-size:.78rem;color:rgba(253,250,246,.38);margin-bottom:.9rem;font-style:italic">Elegí destino — podés sumar más de uno</div>
+
+      <div style="display:grid;grid-template-columns:${boats.length === 1 ? '1fr' : boats.length === 2 ? '1fr 1fr' : 'repeat(auto-fit,minmax(130px,1fr))'};gap:.7rem;margin-bottom:${anySelected?'1rem':'0'}">
+        ${boats.map(b => {
+          const destName = b.name.split(' — ')[1] || 'General';
+          const sel = state.barcos[b.id];
+          return `<button style="padding:.9rem .7rem;text-align:left;background:${sel?'var(--vl)':'rgba(174,133,96,.1)'};color:${sel?'var(--bk)':'rgba(253,250,246,.8)'};border:1px solid ${sel?'var(--vl)':'rgba(174,133,96,.22)'};border-radius:10px;cursor:pointer;transition:all .2s;line-height:1.5" onclick="selectBarco('${b.id}')">
+            <div style="font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.35rem">${destName}</div>
+            <div style="font-size:.72rem;opacity:.75;margin-bottom:.4rem">${b.destDesc||''}</div>
+            <div style="font-size:.7rem;opacity:.6;margin-bottom:.5rem">⏱ ${b.duracion||''} desde el resort</div>
+            <div style="font-size:.82rem;font-weight:600;${sel?'':'color:var(--vl)'}">USD $${b.price.toLocaleString()}<span style="font-size:.65rem;font-weight:400;opacity:.7"> /salida</span></div>
+          </button>`;
+        }).join('')}
       </div>
       
-      <div style="display:grid;grid-template-columns:${boats.length === 1 ? '1fr' : boats.length === 2 ? '1fr 1fr' : 'repeat(auto-fit,minmax(120px,1fr))'};gap:.6rem;margin-bottom:${selected?'.8rem':'0'}">
-        ${boats.map(b => `<button style="padding:.6rem .4rem;background:${state.barcoId === b.id?'var(--vl)':'rgba(174,133,96,.15)'};color:${state.barcoId === b.id?'var(--bk)':'rgba(253,250,246,.7)'};border:.5px solid ${state.barcoId === b.id?'var(--vl)':'rgba(174,133,96,.3)'};border-radius:8px;font-size:.7rem;cursor:pointer;transition:all .2s;text-transform:uppercase;letter-spacing:.08em;word-break:break-word" onclick="selectBarco('${b.id}')">
-          ${b.name.split(' — ')[1] || 'General'}<br><span style="font-size:.6rem;opacity:.8">USD $${b.price.toLocaleString()}</span>
-        </button>`).join('')}
-      </div>
-      
-      ${selected?`<div style="display:flex;align-items:center;gap:.5rem;background:rgba(174,133,96,.1);padding:.5rem .8rem;border-radius:8px;font-size:.75rem;color:rgba(253,250,246,.7);flex-wrap:wrap">
-        <span>Salidas:</span>
-        <button style="background:rgba(174,133,96,.3);border:none;width:20px;height:20px;cursor:pointer;color:var(--vl);font-size:.7rem;flex-shrink:0" onclick="changeBoatDays(-1)">−</button>
-        <span style="min-width:15px;text-align:center;flex-shrink:0">${days}</span>
-        <button style="background:rgba(174,133,96,.3);border:none;width:20px;height:20px;cursor:pointer;color:var(--vl);font-size:.7rem;flex-shrink:0" onclick="changeBoatDays(1)">+</button>
-        <span style="margin-left:auto;flex-shrink:0">USD $${(selectedBoat.price * days).toLocaleString()}</span>
-      </div>`:''}
+      ${boats.filter(b => state.barcos[b.id]).map(b => {
+        const days = state.barcos[b.id].qty || 1;
+        const destName = b.name.split(' — ')[1] || 'General';
+        return `<div style="display:flex;align-items:center;gap:.6rem;background:rgba(174,133,96,.1);padding:.7rem 1rem;border-radius:8px;margin-top:.4rem">
+          <span style="font-weight:600;color:var(--vl);font-size:.82rem;min-width:90px">${destName}</span>
+          <span style="font-size:.78rem;color:rgba(253,250,246,.5)">Salidas:</span>
+          <button style="background:rgba(174,133,96,.3);border:none;width:26px;height:26px;cursor:pointer;color:var(--vl);font-size:1rem;border-radius:4px;flex-shrink:0" onclick="changeBoatDays('${b.id}',-1)">−</button>
+          <span style="min-width:18px;text-align:center;font-size:.9rem;color:var(--wh);flex-shrink:0">${days}</span>
+          <button style="background:rgba(174,133,96,.3);border:none;width:26px;height:26px;cursor:pointer;color:var(--vl);font-size:1rem;border-radius:4px;flex-shrink:0" onclick="changeBoatDays('${b.id}',1)">+</button>
+          <span style="margin-left:auto;font-size:.88rem;color:var(--vl);font-weight:600;flex-shrink:0">USD $${(b.price * days).toLocaleString()}</span>
+        </div>`;
+      }).join('')}
     </div>`;
   });
   
   html += `</div>`;
 
   // ── TRASLADOS (Permitir múltiples vehículos)
-  html += secHeader('Traslados — ida + vuelta');
+  html += secHeader('Traslados', 'Aeropuerto de Punta Cana ↔ Casa de Campo · Precio cubre ida y vuelta');
   html += `<div style="grid-column:span 2;display:grid;grid-template-columns:1fr 1fr;gap:1rem">`;
   html += traslados.map(t => {
     const key = `traslado_${t.id}`;
     const selected = state.svcs[key] ? true : false;
     const qty = selected ? (state.svcs[key].qty || 1) : 1;
     return `<div style="border:1px solid rgba(174,133,96,.18);padding:1.2rem;border-radius:12px;background:${selected?'rgba(29,77,58,.22)':'rgba(255,255,255,.03)'};transition:all .3s">
-      <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:.8rem;cursor:pointer" onclick="toggleTransladoMulti('${t.id}','${t.name}',${t.price},'${t.pax}')">
-        <div style="width:18px;height:18px;border:1px solid rgba(174,133,96,.35);border-radius:2px;background:${selected?'var(--teal)':'transparent'};flex-shrink:0;display:flex;align-items:center;justify-content:center">
+      <div style="display:flex;align-items:flex-start;gap:.8rem;margin-bottom:.6rem;cursor:pointer" onclick="toggleTransladoMulti('${t.id}','${t.name}',${t.price},'${t.pax}')">
+        <div style="width:18px;height:18px;border:1px solid rgba(174,133,96,.35);border-radius:2px;background:${selected?'var(--teal)':'transparent'};flex-shrink:0;margin-top:.15rem;display:flex;align-items:center;justify-content:center">
           ${selected?'<span style="color:var(--bk);font-size:.8rem">✓</span>':''}
         </div>
-        <div>
-          <div style="font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.15em;color:var(--wh);text-transform:uppercase">${t.name}</div>
-          <div style="font-size:.8rem;color:rgba(253,250,246,.4)">${t.pax}</div>
+        <div style="flex:1">
+          <div style="font-family:'Cinzel',serif;font-size:.75rem;letter-spacing:.12em;color:var(--wh);text-transform:uppercase;margin-bottom:.25rem">${t.name}</div>
+          <div style="font-size:.82rem;color:rgba(253,250,246,.5);margin-bottom:.2rem">hasta ${t.pax}</div>
+          <div style="font-size:.85rem;color:var(--vl);font-weight:500">USD $${t.price.toLocaleString()} <span style="font-size:.72rem;color:rgba(253,250,246,.35);font-weight:400">ida + vuelta</span></div>
         </div>
       </div>
-      ${selected?`<div style="display:flex;align-items:center;gap:.5rem;background:rgba(174,133,96,.1);padding:.5rem .8rem;border-radius:8px;font-size:.75rem;color:rgba(253,250,246,.7)">
-        <button style="background:rgba(174,133,96,.3);border:none;width:24px;height:24px;cursor:pointer;color:var(--vl)" onclick="event.stopPropagation();changeTransladoQty('${t.id}',-1)">−</button>
-        <span style="min-width:20px;text-align:center">${qty}</span>
-        <button style="background:rgba(174,133,96,.3);border:none;width:24px;height:24px;cursor:pointer;color:var(--vl)" onclick="event.stopPropagation();changeTransladoQty('${t.id}',1)">+</button>
-        <span style="margin-left:auto">USD $${(t.price*qty).toLocaleString()}</span>
+      ${selected?`<div style="display:flex;align-items:center;gap:.6rem;background:rgba(174,133,96,.1);padding:.6rem .9rem;border-radius:8px;margin-top:.5rem">
+        <span style="font-size:.78rem;color:rgba(253,250,246,.5)">Vehículos:</span>
+        <button style="background:rgba(174,133,96,.3);border:none;width:26px;height:26px;cursor:pointer;color:var(--vl);font-size:1rem;border-radius:4px" onclick="event.stopPropagation();changeTransladoQty('${t.id}',-1)">−</button>
+        <span style="min-width:20px;text-align:center;font-size:.9rem;color:var(--wh)">${qty}</span>
+        <button style="background:rgba(174,133,96,.3);border:none;width:26px;height:26px;cursor:pointer;color:var(--vl);font-size:1rem;border-radius:4px" onclick="event.stopPropagation();changeTransladoQty('${t.id}',1)">+</button>
+        <span style="margin-left:auto;font-size:.88rem;color:var(--vl);font-weight:500">USD $${(t.price*qty).toLocaleString()}</span>
       </div>`:''}
     </div>`;
   }).join('');
   html += `</div>`;
 
   // ── CARRITOS (Permitir múltiples)
-  html += secHeader('Carritos de golf');
+  html += secHeader('Carritos de golf', 'Para moverse dentro del resort · precio por día');
   html += `<div style="grid-column:span 2;display:grid;grid-template-columns:1fr 1fr;gap:1rem">`;
   html += carritos.map(c => {
     const selected = state.svcs[c.id] ? true : false;
@@ -4358,7 +4510,7 @@ function renderServices(){
   html += `</div>`;
 
   // ── AEROPUERTO VIP (Cantidad de personas)
-  html += secHeader('Aeropuerto VIP');
+  html += secHeader('Migración VIP', 'Aeropuerto de Punta Cana · Fast Track y Sala VIP · precio por persona');
   html += `<div style="grid-column:span 2;display:grid;grid-template-columns:1fr 1fr;gap:1rem">`;
   html += aeropuerto.map(a => {
     const key = `aeropuerto_${a.id}`;
@@ -4385,11 +4537,37 @@ function renderServices(){
   html += `</div>`;
 
   // ── SERVICIOS EN VILLA
-  html += secHeader('Servicios en la casa');
-  html += villaServices.map(s => checkCard(s.id, s.name, '', s.price, s.unit, `toggleSvcItem('${s.id}',${s.price},'${s.name}','${s.unit}')`)).join('');
+  html += secHeader('Servicios en la casa', 'Opcional · cocinero, limpieza, niñera. Ninguno incluye ingredientes');
+  html += villaServices.map(s => {
+    const sel = !!state.svcs[s.id];
+    if(s.perHour){
+      const horas = sel ? (state.svcs[s.id].horas || s.minHoras || 3) : (s.minHoras || 3);
+      const subtotal = s.price * horas;
+      const hourSelector = sel ? `
+        <div onclick="event.stopPropagation()" style="margin-top:.7rem;display:flex;flex-direction:column;gap:.5rem">
+          <div style="display:flex;align-items:center;gap:.5rem">
+            <span style="font-size:.7rem;color:rgba(253,250,246,.5);min-width:60px">Horas</span>
+            <button onclick="changeNineraHoras('${s.id}',-1)" style="width:24px;height:24px;border:1px solid rgba(174,133,96,.4);background:none;color:var(--vl);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center">−</button>
+            <span style="font-family:'Cinzel',serif;font-size:.7rem;color:var(--wh);min-width:20px;text-align:center">${horas}</span>
+            <button onclick="changeNineraHoras('${s.id}',1)" style="width:24px;height:24px;border:1px solid rgba(174,133,96,.4);background:none;color:var(--vl);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center">+</button>
+          </div>
+          <div style="font-size:.7rem;color:var(--vl);margin-top:.2rem">${horas} h × USD $${s.price} = USD $${subtotal.toLocaleString()}</div>
+        </div>` : '';
+      return `<div class="svc-opt ${sel?'selected':''}" onclick="toggleSvcItem('${s.id}',${s.price},'${s.name}','${s.unit}')">
+        <div class="svc-check"></div>
+        <div style="flex:1">
+          <div class="svc-opt-name">${s.name}</div>
+          ${s.tip?`<div class="svc-opt-desc">${s.tip}</div>`:''}
+          <div class="svc-opt-price">USD $${s.price.toLocaleString()} / ${s.unit} · mínimo ${s.minHoras} h</div>
+          ${hourSelector}
+        </div>
+      </div>`;
+    }
+    return checkCard(s.id, s.name, s.tip || '', s.price, s.unit, `toggleSvcItem('${s.id}',${s.price},'${s.name}','${s.unit}')`);
+  }).join('');
 
   // ── ACTIVIDADES — acordeón por categoría
-  html += secHeader('Actividades en el resort');
+  html += secHeader('Actividades', 'Precio por persona · abrí cada categoría para ver las opciones');
 
   const actEmojis = {
     'Golf':'', 'Ecuestre':'', 'Tenis':'', 'Pádel':'',
@@ -4399,17 +4577,46 @@ function renderServices(){
 
   Object.entries(actividades).forEach(([cat, items]) => {
     html += accHeader(cat, cat, actEmojis[cat]||'');
+    const isGolfCat = cat === 'Golf';
     const bodyHtml = items.map(a => {
       const sel = !!state.svcs[a.id];
-      const qty = sel ? (state.svcs[a.id].cantidad || 1) : 1;
-      const qtySelector = sel ? `
-        <div onclick="event.stopPropagation()" style="display:flex;align-items:center;gap:.5rem;margin-top:.5rem">
-          <button onclick="changeActivCantidad('${a.id}',-1)" style="width:24px;height:24px;border:1px solid rgba(174,133,96,.4);background:none;color:var(--vl);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;line-height:1">−</button>
-          <span id="actqty-${a.id}" style="font-family:'Cinzel',serif;font-size:.65rem;color:var(--wh);min-width:20px;text-align:center">${qty}</span>
-          <button onclick="changeActivCantidad('${a.id}',1)" style="width:24px;height:24px;border:1px solid rgba(174,133,96,.4);background:none;color:var(--vl);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;line-height:1">+</button>
-          <span style="font-size:.72rem;color:rgba(253,250,246,.4)">${a.unit}</span>
-        </div>` : '';
-      return `<div class="svc-opt ${sel?'selected':''}" onclick="toggleActiv('${a.id}',${a.price},'${a.name.replace(/'/g,"\\'")}','${a.unit}')">
+      const isGolfItem = isGolfCat && a.unit === 'persona';
+
+      let qtySelector = '';
+      if(sel && isGolfItem){
+        const personas = state.svcs[a.id].golfPersonas || 1;
+        const dias     = state.svcs[a.id].golfDias     || 1;
+        const subtotal = a.price * personas * dias;
+        qtySelector = `
+          <div onclick="event.stopPropagation()" style="margin-top:.7rem;display:flex;flex-direction:column;gap:.5rem">
+            <div style="display:flex;align-items:center;gap:.5rem">
+              <span style="font-size:.7rem;color:rgba(253,250,246,.5);min-width:60px">Personas</span>
+              <button onclick="changeGolfPersonas('${a.id}',-1)" style="width:24px;height:24px;border:1px solid rgba(174,133,96,.4);background:none;color:var(--vl);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center">−</button>
+              <span style="font-family:'Cinzel',serif;font-size:.7rem;color:var(--wh);min-width:20px;text-align:center">${personas}</span>
+              <button onclick="changeGolfPersonas('${a.id}',1)" style="width:24px;height:24px;border:1px solid rgba(174,133,96,.4);background:none;color:var(--vl);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center">+</button>
+            </div>
+            <div style="display:flex;align-items:center;gap:.5rem">
+              <span style="font-size:.7rem;color:rgba(253,250,246,.5);min-width:60px">Días</span>
+              <button onclick="changeGolfDias('${a.id}',-1)" style="width:24px;height:24px;border:1px solid rgba(174,133,96,.4);background:none;color:var(--vl);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center">−</button>
+              <span style="font-family:'Cinzel',serif;font-size:.7rem;color:var(--wh);min-width:20px;text-align:center">${dias}</span>
+              <button onclick="changeGolfDias('${a.id}',1)" style="width:24px;height:24px;border:1px solid rgba(174,133,96,.4);background:none;color:var(--vl);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center">+</button>
+            </div>
+            <div style="font-size:.7rem;color:var(--vl);margin-top:.2rem">
+              ${personas} pers. × ${dias} día${dias>1?'s':''} = USD $${subtotal.toLocaleString()}
+            </div>
+          </div>`;
+      } else if(sel){
+        const qty = state.svcs[a.id].cantidad || 1;
+        qtySelector = `
+          <div onclick="event.stopPropagation()" style="display:flex;align-items:center;gap:.5rem;margin-top:.5rem">
+            <button onclick="changeActivCantidad('${a.id}',-1)" style="width:24px;height:24px;border:1px solid rgba(174,133,96,.4);background:none;color:var(--vl);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;line-height:1">−</button>
+            <span id="actqty-${a.id}" style="font-family:'Cinzel',serif;font-size:.65rem;color:var(--wh);min-width:20px;text-align:center">${qty}</span>
+            <button onclick="changeActivCantidad('${a.id}',1)" style="width:24px;height:24px;border:1px solid rgba(174,133,96,.4);background:none;color:var(--vl);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;line-height:1">+</button>
+            <span style="font-size:.72rem;color:rgba(253,250,246,.4)">${a.unit}</span>
+          </div>`;
+      }
+
+      return `<div class="svc-opt ${sel?'selected':''}" onclick="toggleActiv('${a.id}',${a.price},'${a.name.replace(/'/g,"\'")}','${a.unit}')">
         <div class="svc-check"></div>
         <div style="flex:1">
           <div class="svc-opt-name">${a.name}</div>
@@ -4434,27 +4641,30 @@ function renderServices(){
 // Selectors para opciones únicas (radio-style)
 function selectBarco(id){
   const b=barcos.find(x=>x.id===id);
-  if(state.barcoId===id){state.barcoId=null;delete state.svcs['_barco'];delete state.svcs['barco_dias'];}
-  else{
-    state.barcoId=id;
-    const days = state.svcs['barco_dias'] || 1;
-    state.svcs['_barco']={price:b.price, name:b.name, qty:days};  // NO perNight!
-    if(!state.svcs['barco_dias']) state.svcs['barco_dias'] = 1;
+  if(!b) return;
+  // Toggle: si ya está seleccionado este destino exacto, lo quitamos
+  if(state.barcos[id]){
+    delete state.barcos[id];
+    delete state.svcs['_barco_'+id];
+  } else {
+    // Permitir múltiples barcos (uno por destino)
+    state.barcos[id] = { qty: 1, price: b.price, name: b.name };
+    state.svcs['_barco_'+id] = { price: b.price, name: b.name, qty: 1 };
   }
+  // Mantener state.barcoId apuntando al último seleccionado (legacy)
+  const ids = Object.keys(state.barcos);
+  state.barcoId = ids.length > 0 ? ids[ids.length-1] : null;
   renderServices();
 }
 
-function changeBoatDays(delta){
-  if(state.barcoId){
+function changeBoatDays(boatId, delta){
+  if(state.barcos[boatId]){
     const maxDays = state.nights || 1;
-    const newDays = Math.max(1, Math.min(maxDays, (state.svcs['barco_dias'] || 1) + delta));
-    state.svcs['barco_dias'] = newDays;
-    
-    // Update barco price with new qty
-    const b = barcos.find(x => x.id === state.barcoId);
-    if(b) {
-      state.svcs['_barco'] = {price: b.price, name: b.name, qty: newDays};  // NO perNight!
-    }
+    const cur = state.barcos[boatId].qty || 1;
+    const newDays = Math.max(1, Math.min(maxDays, cur + delta));
+    state.barcos[boatId].qty = newDays;
+    const b = barcos.find(x => x.id === boatId);
+    if(b) state.svcs['_barco_'+boatId] = { price: b.price, name: b.name, qty: newDays };
     renderServices();
   }
 }
@@ -4532,7 +4742,21 @@ function changeAeropuertoQty(id,delta){
 }
 function toggleSvcItem(id,price,name,unit){
   if(state.svcs[id]){delete state.svcs[id];}
-  else{state.svcs[id]={price,name,unit,perNight:unit==='día'||unit==='noche'};}
+  else{
+    const svc = villaServices.find(s=>s.id===id) || {};
+    if(svc.perHour){
+      state.svcs[id]={price,name,unit,perHour:true,horas:svc.minHoras||3,minHoras:svc.minHoras||3,maxHoras:svc.maxHoras||8};
+    } else {
+      state.svcs[id]={price,name,unit,perNight:unit==='día'||unit==='noche'};
+    }
+  }
+  renderServices();
+}
+function changeNineraHoras(id, delta){
+  if(!state.svcs[id]) return;
+  const s = state.svcs[id];
+  const min = s.minHoras || 3, max = s.maxHoras || 8;
+  s.horas = Math.max(min, Math.min(max, (s.horas || min) + delta));
   renderServices();
 }
 function toggleActiv(id,price,name,unit){
@@ -4546,9 +4770,12 @@ function toggleActiv(id,price,name,unit){
   if(state.svcs[id]){
     delete state.svcs[id];
   } else {
-    // Default cantidad: number of guests for person-based, 1 otherwise
     const defaultQty = ['persona','adulto','niño'].includes(unit) ? state.guests : 1;
-    state.svcs[id]={price,name,unit,perPerson:false,cantidad:defaultQty};
+    // Para golf: guardar personas y dias separados
+    const isGolf = unit === 'persona' && (id==='teeth'||id==='dye'||id==='links');
+    state.svcs[id]={price,name,unit,perPerson:false,cantidad:defaultQty,
+      ...(isGolf ? {golfPersonas: defaultQty, golfDias: 1} : {})
+    };
   }
   renderServices();
 }
@@ -4557,13 +4784,48 @@ function changeActivCantidad(id, delta){
   const current = state.svcs[id].cantidad || 1;
   const newVal = Math.max(1, current + delta);
   state.svcs[id].cantidad = newVal;
-  // Update display inline without full re-render
   const el = document.getElementById('actqty-'+id);
   if(el) el.textContent = newVal;
+}
+function changeGolfPersonas(id, delta){
+  if(!state.svcs[id]) return;
+  const cur = state.svcs[id].golfPersonas || 1;
+  const newVal = Math.max(1, cur + delta);
+  state.svcs[id].golfPersonas = newVal;
+  state.svcs[id].cantidad = newVal * (state.svcs[id].golfDias || 1);
+  renderServices();
+}
+function changeGolfDias(id, delta){
+  if(!state.svcs[id]) return;
+  const maxDias = state.nights || 1;
+  const cur = state.svcs[id].golfDias || 1;
+  const newVal = Math.max(1, Math.min(maxDias, cur + delta));
+  state.svcs[id].golfDias = newVal;
+  state.svcs[id].cantidad = (state.svcs[id].golfPersonas || 1) * newVal;
+  renderServices();
 }
 function toggleAccordion(key){
   state.openAccordion = state.openAccordion===key ? null : key;
   renderServices();
+}
+
+// Nav links: llevar al configurador y abrir sección específica
+function navToSection(seccion){
+  const el = document.getElementById('tu-experiencia');
+  if(!el) return;
+  el.scrollIntoView({behavior:'smooth', block:'start'});
+  // Si ya tiene fechas y villa, ir directo al paso de servicios
+  if(state.dateIn && state.dateOut && state.nights > 0 && state.villaId){
+    setTimeout(()=>{
+      window.goStep(4);
+      setTimeout(()=>{
+        // Abrir el accordion correspondiente
+        if(seccion === 'Golf') state.openAccordion = 'Golf';
+        else if(seccion === 'Embarcaciones') state.openAccordion = null; // embarcaciones siempre visible
+        renderServices();
+      }, 300);
+    }, 400);
+  }
 }
 // Legacy compatibility
 function toggleSvc(el,key,price){
@@ -4595,7 +4857,7 @@ function renderSummary(){
   if(villa){
     html+=`<div class="summary-line"><span class="sl-name">${villa.name}</span><span class="sl-val" style="color:var(--vl)">≈ $${villa.price.toLocaleString()}/noche</span></div>`;
   }
-  html+=`<div class="summary-line"><span class="sl-name">Gestión Casa de Campo</span><span class="sl-val" style="color:var(--vl)">≈ $${cdcTotal.toLocaleString()}</span></div>`;
+  html+=`<div class="summary-line"><span class="sl-name">Fee Casa de Campo Resort<br><span style="font-size:.7rem;color:rgba(253,250,246,.4);font-style:italic">Tarifa que cobra el resort a inquilinos · USD $${feeCDC}/persona/día</span></span><span class="sl-val" style="color:var(--vl)">≈ $${cdcTotal.toLocaleString()}</span></div>`;
 
   let extrasTotal=0;
   const extras=[];
@@ -4623,11 +4885,21 @@ function renderSummary(){
     if(k.startsWith('traslado_')||k.startsWith('barco_dias')||!v.price) return;
     let amt=v.price;
     let label=v.name;
-    if(v.qty && v.qty>1){
+    // Golf: tiene golfPersonas y golfDias
+    if(v.golfPersonas && v.golfDias){
+      const personas = v.golfPersonas;
+      const dias = v.golfDias;
+      amt = v.price * personas * dias;
+      label += ` (${personas} pers. × ${dias} día${dias>1?'s':''})`;
+    } else if(v.cantidad && v.cantidad>1){
+      label+=` (${v.cantidad} ${v.unit||''})`;
+      amt=v.price*v.cantidad;
+    } else if(v.qty && v.qty>1){
       label+=` × ${v.qty}`;
       amt=v.price*v.qty;
     }
-    if(v.perPerson){amt=v.price*guests;label+=` (${guests} pers.)`}
+    if(v.perHour){const h=v.horas||v.minHoras||3;amt=v.price*h;label+=` (${h} h)`}
+    else if(v.perPerson){amt=v.price*guests;label+=` (${guests} pers.)`}
     else if(v.perNight){amt=v.price*nights;label+=` (${nights} ${nights===1?'noche':'noches'})`}
     else if(k.startsWith('aeropuerto_')){amt=v.price*v.qty;label+=` × ${v.qty} personas`}
     extrasTotal+=amt;
@@ -4644,13 +4916,20 @@ function renderSummary(){
   const total=villaTotal+cdcTotal+extrasTotal;
   const perPerson=guests>0?Math.round(total/guests):0;
   html+=`<div style="height:1px;background:rgba(174,133,96,.15);margin:1.2rem 0"></div>`;
-  html+=`<div class="summary-total">
-    <div>
-      <div class="st-label">Presupuesto aproximado</div>
-      <div class="st-note">USD $${perPerson.toLocaleString()} por persona · Antes de impuestos y ajustes finales</div>
+
+  html+=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.2rem">
+    <div style="background:rgba(29,77,58,.25);border:1px solid rgba(29,77,58,.4);border-radius:12px;padding:1.2rem;text-align:center">
+      <div style="font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.2em;color:rgba(212,184,154,.6);text-transform:uppercase;margin-bottom:.5rem">Total estadía</div>
+      <div style="font-family:'Cinzel',serif;font-size:1.5rem;color:var(--vl);font-weight:400">USD $${total.toLocaleString()}</div>
+      <div style="font-size:.72rem;color:rgba(253,250,246,.35);margin-top:.3rem">${nights} noche${nights!==1?'s':''} · ${guests} persona${guests!==1?'s':''}</div>
     </div>
-    <div class="st-val">USD $${total.toLocaleString()}</div>
-  </div>`;
+    <div style="background:rgba(174,133,96,.12);border:1px solid rgba(174,133,96,.25);border-radius:12px;padding:1.2rem;text-align:center">
+      <div style="font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.2em;color:rgba(212,184,154,.6);text-transform:uppercase;margin-bottom:.5rem">Por persona</div>
+      <div style="font-family:'Cinzel',serif;font-size:1.5rem;color:var(--vl);font-weight:400">USD $${perPerson.toLocaleString()}</div>
+      <div style="font-size:.72rem;color:rgba(253,250,246,.35);margin-top:.3rem">todo incluido · aprox.</div>
+    </div>
+  </div>
+  <div style="font-size:.72rem;color:rgba(253,250,246,.28);font-style:italic;text-align:center">Precios referenciales · confirmamos disponibilidad, tarifas exactas y detalles en la conversación</div>`;
   document.getElementById('summaryBox').innerHTML=html;
 }
 
@@ -4709,17 +4988,18 @@ function buildPresupuestoData(){
     });
   });
 
-  // Barco
-  if(state.barcoId){
-    const b=barcos.find(x=>x.id===state.barcoId);
-    if(b) items.push({
+  // Barcos — soporta múltiples destinos
+  Object.keys(state.barcos || {}).forEach(barcoId => {
+    const b=barcos.find(x=>x.id===barcoId);
+    const sel = state.barcos[barcoId];
+    if(b && sel) items.push({
       categoria:'Embarcación',
       descripcion:b.name,
       display: b.display || b.name,
-      cantidad:1,
+      cantidad: sel.qty || 1,
       unidad:'salida'
     });
-  }
+  });
 
   // Aeropuerto VIP → segunda fila de Traslados en el sheet Base
   if(state.aeropuertoId){
@@ -4735,25 +5015,37 @@ function buildPresupuestoData(){
 
   // Servicios villa
   villaServices.forEach(s=>{
-    if(state.svcs[s.id]) items.push({
-      categoria:'Servicio Villa',
-      descripcion:s.name,
-      display: s.name,
-      cantidad:1,
-      unidad:s.unit
-    });
+    if(state.svcs[s.id]){
+      const sv = state.svcs[s.id];
+      items.push({
+        categoria:'Servicio Villa',
+        descripcion:s.name,
+        display: s.name,
+        cantidad: sv.perHour ? (sv.horas || s.minHoras || 3) : 1,
+        unidad:s.unit
+      });
+    }
   });
 
   // Actividades seleccionadas
   Object.entries(actividades).forEach(([cat,actList])=>{
     actList.forEach(act=>{
-      if(state.svcs[act.id]) items.push({
-        categoria:'Actividad',
-        descripcion:act.name,
-        display: act.display || act.name,
-        cantidad: state.svcs[act.id].cantidad || 1,
-        unidad:act.unit
-      });
+      if(state.svcs[act.id]){
+        const svc = state.svcs[act.id];
+        // Para golf: cantidad = personas × días, y el display lo aclara
+        const isGolf = svc.golfPersonas && svc.golfDias;
+        const cantidad = isGolf
+          ? svc.golfPersonas * svc.golfDias
+          : (svc.cantidad || 1);
+        const displayName = act.display || act.name; // siempre nombre simple, la cantidad ya va aparte
+        items.push({
+          categoria:'Actividad',
+          descripcion: act.name,
+          display: displayName,
+          cantidad,
+          unidad: act.unit
+        });
+      }
     });
   });
 
@@ -4768,30 +5060,34 @@ function buildPresupuestoData(){
 }
 
 // ── Guarda contacto en el log apenas se verifica (antes de completar presupuesto)
+// Fire-and-forget — no debe bloquear el flujo de verificación
 async function guardarContactoParcial(){
-  const u = gateState.userData;
-  if(!u) return;
-  const villa = getVillas().find(v=>v.id===state.villaId);
-  const clientData = {
-    nombre:   u.nombre,
-    apellido: u.apellido,
-    email:    u.email,
-    pais:     u.pais,
-    telefono: u.tel
-  };
-  const nota = villa ? `Villa de interés: ${villa.name}` : 'No completó el presupuesto';
   try {
+    const u = gateState.userData;
+    if(!u) return;
+    const villa = getVillas().find(v=>v.id===state.villaId);
+    const clientData = {
+      nombre:   u.nombre,
+      apellido: u.apellido,
+      email:    u.email,
+      pais:     u.pais,
+      telefono: u.tel
+    };
+    const nota = villa ? `Villa de interés: ${villa.name}` : 'No completó el presupuesto';
     const params = new URLSearchParams();
     params.append('action', 'guardarContacto');
     params.append('cliente', JSON.stringify(clientData));
     params.append('nota', nota);
+    // mode:'no-cors' evita problemas CORS — no necesitamos leer la respuesta
     fetch(APPS_SCRIPT_URL, {
       method:'POST',
       headers:{'Content-Type':'application/x-www-form-urlencoded'},
       body: params.toString(),
-      mode:'cors'
-    });
-  } catch(_){}
+      mode:'no-cors'
+    }).catch(err => console.warn('[guardarContacto] error no crítico:', err));
+  } catch(err){
+    console.warn('[guardarContacto] error capturado:', err);
+  }
 }
 
 // ── Envía la consulta al Apps Script (flujo completo)
@@ -4847,6 +5143,8 @@ async function enviarConsulta(){
     document.getElementById('summaryBox').style.display='none';
     document.querySelector('#panel5 .cnav').style.display='none';
     document.querySelector('#panel5 .cpanel-sub').style.display='none';
+    // Restaurar secciones ocultas durante el resumen
+    document.body.classList.remove('showing-summary');
 
     // Construir pantalla de confirmación con valores reales si los hay
     const nombre = gateState.userData?.nombre || '';
@@ -4890,10 +5188,63 @@ async function enviarConsulta(){
   }
 }
 // ══════════════════════════════════════════
-// SISTEMA DE VERIFICACIÓN — Google Apps Script
-// ══════════════════════════════════════════
+// SISTEMA DE VERIFICACIÓN — Google Apps Script (VERSIÓN SEGURA v2)
+// ══════════════════════════════════════════════════════════════════
 
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyOmyl7RCsJg92nL1FBuR4Y37hP2OVHxDj3NguqeQcoeuNYuM_g7YD3SNQw3HLxNFfqLw/exec';
+
+// VERSION TAG — para confirmar en consola qué HTML está activo
+console.log('%c[MG] HTML version: 2026-05-26-v3 con JSONP + parser de precios', 'color:#AE8560;font-weight:bold');
+
+// ─── JSONP HELPER ────────────────────────────────────────────────────────────
+// Apps Script redirige a script.googleusercontent.com que no devuelve headers CORS.
+// JSONP usa un <script> tag dinámico que no tiene la restricción CORS.
+function jsonpRequest(params, timeoutMs) {
+  return new Promise((resolve, reject) => {
+    const cbName = 'jsonp_cb_' + Date.now() + '_' + Math.floor(Math.random()*100000);
+    const script = document.createElement('script');
+    let timer;
+    let resolved = false;
+
+    const cleanup = () => {
+      if(timer) clearTimeout(timer);
+      try { delete window[cbName]; } catch(e) { window[cbName] = undefined; }
+      if(script.parentNode) script.parentNode.removeChild(script);
+    };
+
+    window[cbName] = (data) => {
+      if(resolved) return;
+      resolved = true;
+      console.log('[JSONP] callback ejecutado:', data);
+      cleanup();
+      resolve(data);
+    };
+
+    timer = setTimeout(() => {
+      if(resolved) return;
+      resolved = true;
+      cleanup();
+      console.error('[JSONP] timeout — Apps Script no devolvió callback. Verificar que la versión deployada tenga jsonResponse(obj, e.parameter.callback) y soporte JSONP');
+      reject(new Error('Timeout: el servidor tardó demasiado o no soporta JSONP'));
+    }, timeoutMs || 20000);
+
+    const allParams = new URLSearchParams(params);
+    allParams.set('callback', cbName);
+    const finalUrl = APPS_SCRIPT_URL + '?' + allParams.toString();
+    console.log('[JSONP] enviando request:', params.action || '?');
+
+    script.src = finalUrl;
+    script.onerror = (e) => {
+      if(resolved) return;
+      resolved = true;
+      cleanup();
+      console.error('[JSONP] error de red:', e);
+      reject(new Error('Error de red al contactar el servidor'));
+    };
+    document.body.appendChild(script);
+  });
+}
+
 
 // ── STATE de verificación
 let gateState = {
@@ -4904,6 +5255,60 @@ let gateState = {
   codeExpiry: null,
 };
 
+// ── RATE LIMITING — máx 3 envíos por sesión, bloqueo 10 min
+const RATE_LIMIT_KEY  = 'mg_rl';
+const RATE_LIMIT_MAX  = 3;
+const RATE_LIMIT_WAIT = 10 * 60 * 1000;
+
+function getRateLimit(){
+  try{
+    const raw=sessionStorage.getItem(RATE_LIMIT_KEY);
+    return raw?JSON.parse(raw):{count:0,resetAt:0};
+  }catch(e){return{count:0,resetAt:0};}
+}
+
+function incrementRateLimit(){
+  const rl=getRateLimit();
+  const now=Date.now();
+  if(now>rl.resetAt){
+    sessionStorage.setItem(RATE_LIMIT_KEY,JSON.stringify({count:1,resetAt:now+RATE_LIMIT_WAIT}));
+  } else {
+    sessionStorage.setItem(RATE_LIMIT_KEY,JSON.stringify({count:rl.count+1,resetAt:rl.resetAt}));
+  }
+}
+
+function isRateLimited(){
+  const rl=getRateLimit();
+  if(Date.now()>rl.resetAt) return false;
+  return rl.count>=RATE_LIMIT_MAX;
+}
+
+function rateLimitMinutesLeft(){
+  const rl=getRateLimit();
+  return Math.ceil((rl.resetAt-Date.now())/60000);
+}
+
+// ── VALIDACIÓN DE NOMBRE — detecta strings aleatorios de bots
+function isNameValid(nombre,apellido){
+  if(nombre.length<2||apellido.length<2) return false;
+  const nameRegex=/^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑàèìòùÀÈÌÒÙ\s'-]+$/;
+  if(!nameRegex.test(nombre)||!nameRegex.test(apellido)) return false;
+  if(nombre.length>20&&!/\s/.test(nombre)) return false;
+  // Detectar patrón bot: alternancia excesiva mayúscula/minúscula
+  let alt=0;
+  for(let i=1;i<nombre.length;i++){
+    const p=nombre[i-1],c=nombre[i];
+    if((p.match(/[a-z]/)&&c.match(/[A-Z]/)) || (p.match(/[A-Z]/)&&c.match(/[a-z]/))) alt++;
+  }
+  if(alt/nombre.length>0.7) return false;
+  return true;
+}
+
+// ── VALIDACIÓN EMAIL básica
+function isEmailValid(email){
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+}
+
 // ── Mostrar / cerrar gate
 function openGate(){
   document.getElementById('gateOverlay').classList.add('show');
@@ -4913,70 +5318,107 @@ function closeGate(){
   document.getElementById('gateOverlay').classList.remove('show');
 }
 
-// ── Generar código de 6 dígitos
-function generateCode(){
-  return String(Math.floor(100000 + Math.random() * 900000));
-}
-
 // ── STEP A: Enviar código via Apps Script (Gmail)
 async function sendCode(e){
   e.preventDefault();
-  const btn    = document.getElementById('gateBtnA');
-  const errEl  = document.getElementById('gateErrorA');
-  errEl.textContent = '';
-  btn.disabled = true;
-  btn.textContent = 'Enviando...';
+  const btn   =document.getElementById('gateBtnA');
+  const errEl =document.getElementById('gateErrorA');
+  errEl.textContent='';
 
-  const nombre   = document.getElementById('gNombre').value.trim();
-  const apellido = document.getElementById('gApellido').value.trim();
-  const email    = document.getElementById('gEmail').value.trim();
-  const tel      = document.getElementById('gTel').value.trim();
-  const pais     = document.getElementById('gPais').value;
-
-  if(!nombre || !apellido || !email || !tel || !pais){
-    errEl.textContent = 'Por favor completá todos los campos.';
-    btn.disabled = false;
-    btn.textContent = 'Recibir código →';
+  // ── HONEYPOT: si el bot llenó el campo trampa, simular éxito sin enviar nada
+  const hp=document.getElementById('hpField');
+  if(hp&&hp.value.trim()!==''){
+    btn.disabled=true;
+    btn.textContent='Enviando...';
+    await new Promise(r=>setTimeout(r,2000));
+    document.getElementById('gateEmailDisplay').textContent=document.getElementById('gEmail').value.trim();
+    document.getElementById('gateStepA').style.display='none';
+    document.getElementById('gateStepB').style.display='block';
     return;
   }
 
-  const code = generateCode();
-  gateState.code      = code;
+  // ── RATE LIMIT CHECK
+  if(isRateLimited()){
+    const mins=rateLimitMinutesLeft();
+    errEl.textContent=`Demasiados intentos. Esperá ${mins} minuto${mins!==1?'s':''} antes de intentar nuevamente.`;
+    return;
+  }
+
+  const nombre   =document.getElementById('gNombre').value.trim();
+  const apellido =document.getElementById('gApellido').value.trim();
+  const email    =document.getElementById('gEmail').value.trim();
+  const tel      =document.getElementById('gTel').value.trim();
+  const pais     =document.getElementById('gPais').value;
+
+  if(!nombre||!apellido||!email||!tel||!pais){
+    errEl.textContent='Por favor completá todos los campos.';
+    return;
+  }
+
+  // ── VALIDACIÓN NOMBRE
+  if(!isNameValid(nombre,apellido)){
+    errEl.textContent='Por favor ingresá tu nombre real (solo letras).';
+    return;
+  }
+
+  // ── VALIDACIÓN EMAIL
+  if(!isEmailValid(email)){
+    errEl.textContent='El email no tiene un formato válido.';
+    return;
+  }
+
+  btn.disabled=true;
+  btn.textContent='Enviando...';
+
+  // ✅ SEGURO: El código lo genera y guarda el SERVIDOR (Apps Script)
+  // El browser NUNCA ve el código — elimina el bypass por consola
+  gateState.code      = null; // no se usa más en client-side
   gateState.attempts  = 0;
-  gateState.codeExpiry = Date.now() + 5 * 60 * 1000; // 5 minutos
-  gateState.userData  = { nombre, apellido, email, tel, pais };
+  gateState.codeExpiry= null;
+  gateState.userData  = {nombre,apellido,email,tel,pais};
 
-  // Llamada al Apps Script
-  try {
-    const params = new URLSearchParams({
-      action:  'sendCode',
-      email:   email,
-      nombre:  nombre,
-      code:    code,
-    });
+  // Incrementar rate limit client-side (doble capa: server también valida)
+  incrementRateLimit();
 
-    const res = await fetch(APPS_SCRIPT_URL + '?' + params.toString(), {
-      method: 'GET',
-      mode:   'no-cors', // Apps Script requiere no-cors
-    });
+  try{
+    // Usar JSONP — Apps Script + fetch CORS no funciona por redirect 302
+    let data;
+    try {
+      data = await jsonpRequest({
+        action: 'sendOTP',
+        email:  email,
+        name:   nombre,
+      });
+    } catch(err) {
+      console.error('Error JSONP sendOTP:', err);
+      errEl.textContent='No pudimos conectar con el servidor. Reintentá en unos segundos.';
+      btn.disabled=false;
+      btn.textContent='Recibir código →';
+      return;
+    }
 
-    // no-cors siempre devuelve opaque — asumimos éxito si no hay error
-    document.getElementById('gateEmailDisplay').textContent = email;
-    document.getElementById('gateStepA').style.display = 'none';
-    document.getElementById('gateStepB').style.display = 'block';
-    document.getElementById('gateErrorB').textContent = '';
+    if(!data.ok){
+      errEl.textContent = data.error || 'No pudimos enviar el código. Intentá de nuevo.';
+      btn.disabled=false;
+      btn.textContent='Recibir código →';
+      return;
+    }
+
+    document.getElementById('gateEmailDisplay').textContent=email;
+    document.getElementById('gateStepA').style.display='none';
+    document.getElementById('gateStepB').style.display='block';
+    document.getElementById('gateErrorB').textContent='';
     document.getElementById('c0').focus();
-    btn.disabled = false;
-    btn.textContent = 'Recibir código →';
-    
-    // Track lead capturado
-    const totalPresupuesto = calculateTotal();
-    trackLeadCapturado(email, nombre, totalPresupuesto);
+    btn.disabled=false;
+    btn.textContent='Recibir código →';
 
-  } catch(err) {
-    errEl.textContent = 'No pudimos enviar el código. Revisá tu conexión e intentá de nuevo.';
-    btn.disabled = false;
-    btn.textContent = 'Recibir código →';
+    const totalPresupuesto=calculateTotal();
+    trackLeadCapturado(email,nombre,totalPresupuesto);
+
+  }catch(err){
+    errEl.textContent='No pudimos enviar el código. Revisá tu conexión e intentá de nuevo.';
+    btn.disabled=false;
+    btn.textContent='Recibir código →';
   }
 }
 
@@ -4986,64 +5428,132 @@ function codeInput(idx){
   const val=el.value.replace(/\D/g,'');
   el.value=val;
   if(val&&idx<5) document.getElementById('c'+(idx+1)).focus();
-  // Auto-verify when all 6 filled
   if(idx===5&&val) verifyCode();
 }
 
-// ── STEP B: Verificar código
-function verifyCode(){
-  const entered = [0,1,2,3,4,5].map(i => document.getElementById('c'+i).value).join('');
-  const errEl   = document.getElementById('gateErrorB');
+// Guard global para evitar doble verificación (auto al completar dígito 6 + click manual)
+let _verifyInProgress = false;
+let _verifyLastCode = null;
 
-  if(entered.length < 6){ errEl.textContent = 'Ingresá los 6 dígitos.'; return; }
+// ── STEP B: Verificar código — verificación 100% server-side
+async function verifyCode(){
+  const entered=[0,1,2,3,4,5].map(i=>document.getElementById('c'+i).value).join('');
+  const errEl  =document.getElementById('gateErrorB');
+  const btn    =document.getElementById('gateBtnB');
 
-  // Verificar vencimiento (5 minutos)
-  if(Date.now() > gateState.codeExpiry){
-    errEl.textContent = 'El código venció. Pedí uno nuevo.';
-    [0,1,2,3,4,5].forEach(i=>{ document.getElementById('c'+i).value=''; });
-    gateState.code = null;
+  // Guard: si ya hay una verificación en curso, ignorar
+  if(_verifyInProgress) {
+    console.log('[Verify] verificación en curso, ignorando llamada duplicada');
+    return;
+  }
+  // Guard: si el código ya fue intentado (mismo código), ignorar
+  if(entered === _verifyLastCode) {
+    console.log('[Verify] código ya intentado, ignorando');
     return;
   }
 
-  gateState.attempts++;
+  if(entered.length<6){errEl.textContent='Ingresá los 6 dígitos.';return;}
+  if(!/^\d{6}$/.test(entered)){errEl.textContent='Solo números.';return;}
 
-  if(entered === gateState.code){
-    // ✅ Verificado
-    gateState.verified = true;
-    errEl.innerHTML = '<span class="gate-success">✓ Verificado correctamente</span>';
+  // Guard: si por alguna razón userData no tiene email, recuperarlo del sessionStorage
+  if(!gateState.userData || !gateState.userData.email){
+    const saved=sessionStorage.getItem('mg_user');
+    if(saved) gateState.userData=JSON.parse(saved);
+    if(!gateState.userData || !gateState.userData.email){
+      errEl.textContent='Sesión expirada. Recargá la página e intentá de nuevo.';
+      return;
+    }
+  }
 
-    // Guardar en sessionStorage
-    sessionStorage.setItem('mg_verified', '1');
-    sessionStorage.setItem('mg_user', JSON.stringify(gateState.userData));
+  _verifyInProgress = true;
+  _verifyLastCode = entered;
+  btn.disabled=true;
+  btn.textContent='Verificando...';
 
-    // Guardar contacto en el log inmediatamente (antes de que complete el presupuesto)
-    guardarContactoParcial();
-    
-    // Track presupuesto completado
-    const totalPresupuesto = calculateTotal();
-    trackPresupuestoCompleto(totalPresupuesto);
+  try{
+    // ✅ SEGURO: El servidor compara el código — no es bypasseable desde consola
+    // Usar JSONP — Apps Script + fetch CORS no funciona por redirect 302
+    let data;
+    try {
+      data = await jsonpRequest({
+        action: 'verifyOTP',
+        email:  gateState.userData.email,
+        otp:    entered,
+      });
+    } catch(err) {
+      console.error('Error JSONP verifyOTP:', err);
+      errEl.textContent='No pudimos conectar con el servidor. Reintentá en unos segundos.';
+      btn.disabled=false;
+      btn.textContent='Verificar →';
+      return;
+    }
 
-    setTimeout(() => {
-      closeGate();
-      unlockPrices();
-      showUnlockedBadge();
-    }, 900);
+    if(data.ok){
+      // ✅ SEGURO: Guardar token firmado por el servidor en lugar de mg_verified=1
+      try {
+        gateState.verified=true;
+        gateState.sessionToken=data.token; // token firmado con hash MD5
+        errEl.innerHTML='<span class="gate-success">✓ Verificado correctamente</span>';
 
-  } else if(gateState.attempts >= 3){
-    errEl.textContent = 'Demasiados intentos. Pedí un nuevo código.';
-    [0,1,2,3,4,5].forEach(i=>{ document.getElementById('c'+i).value=''; });
-    document.getElementById('c0').focus();
-    gateState.code = null;
-  } else {
-    const restantes = 3 - gateState.attempts;
-    errEl.textContent = `Código incorrecto. Te ${restantes === 1 ? 'queda' : 'quedan'} ${restantes} intento${restantes !== 1 ? 's' : ''}.`;
-    [0,1,2,3,4,5].forEach(i=>{ document.getElementById('c'+i).value=''; });
-    document.getElementById('c0').focus();
+        sessionStorage.setItem('mg_verified','1');
+        sessionStorage.setItem('mg_token', data.token || '');
+        sessionStorage.setItem('mg_user',JSON.stringify(gateState.userData));
+
+        // Fire-and-forget — no debe bloquear ni romper el flujo
+        try { guardarContactoParcial(); } catch(e) { console.warn('guardarContactoParcial:', e); }
+        try {
+          const totalPresupuesto=calculateTotal();
+          trackPresupuestoCompleto(totalPresupuesto);
+        } catch(e) { console.warn('tracking error:', e); }
+
+        setTimeout(()=>{
+          try {
+            closeGate();
+            unlockPrices();
+            showUnlockedBadge();
+            _origGoStep(4); // ✅ BUG FIX: avanzar al paso de servicios después de verificar
+          } catch(e) { console.error('error post-verify:', e); }
+        },900);
+      } catch(innerErr) {
+        // Si algo crashea acá, el usuario YA está verificado en sessionStorage
+        // Solo loggeamos y continuamos
+        console.error('[Verify] error post-success (verificación OK, error secundario):', innerErr);
+        setTimeout(()=>{ try { closeGate(); _origGoStep(4); } catch(_){} }, 500);
+      }
+
+    } else {
+      // El servidor maneja el contador de intentos internamente
+      const msg = data.error || 'Código incorrecto.';
+      errEl.textContent = msg;
+      [0,1,2,3,4,5].forEach(i=>{document.getElementById('c'+i).value='';});
+      document.getElementById('c0').focus();
+      btn.disabled=false;
+      btn.textContent='Verificar →';
+      _verifyInProgress = false;
+      // No resetear _verifyLastCode: ese código ya fue rechazado
+    }
+
+  } catch(err){
+    console.error('[Verify] error:', err);
+    errEl.textContent='Error de conexión. Revisá tu internet e intentá de nuevo.';
+    btn.disabled=false;
+    btn.textContent='Verificar →';
+    _verifyInProgress = false;
+    _verifyLastCode = null; // permitir reintentar con el mismo código si fue error de red
   }
 }
 
 // ── Reenviar código
 function resendCode(){
+  if(isRateLimited()){
+    const mins=rateLimitMinutesLeft();
+    document.getElementById('gateErrorB').textContent=
+      `Límite alcanzado. Esperá ${mins} minuto${mins!==1?'s':''}.`;
+    return;
+  }
+  // Resetear guards al pedir nuevo código
+  _verifyInProgress = false;
+  _verifyLastCode = null;
   document.getElementById('gateStepB').style.display='none';
   document.getElementById('gateStepA').style.display='block';
   document.getElementById('gateErrorA').textContent='';
@@ -7022,6 +7532,40 @@ document.addEventListener('DOMContentLoaded', setupScrollReveal);
 }
 /* Hide when configurator is in viewport */
 #floatingBudgetBtn.in-config{opacity:0!important;pointer-events:none!important}
+
+/* ── EMBARCACIONES SECTION ── */
+.boats{min-height:90vh;display:flex;align-items:center;position:relative;overflow:hidden;padding:8rem 4rem}
+.bbg{position:absolute;inset:0;background:url('https://img1.wsimg.com/isteam/ip/28e700c9-c37b-485d-b636-01fcfc9acb86/blob-d80dc22.png') center/cover no-repeat;filter:brightness(.28)}
+.bb{position:relative;z-index:2;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center}
+.fleet{display:flex;flex-direction:column;gap:1px;background:rgba(253,250,246,.07)}
+.frow{background:rgba(253,250,246,.04);padding:1.4rem 1.8rem;display:flex;justify-content:space-between;align-items:center;transition:background .3s}
+.frow:hover{background:rgba(253,250,246,.09)}
+.fn{font-family:'Playfair Display',serif;font-style:italic;font-size:1.15rem;color:var(--wh)}
+.fs2{font-size:.73rem;color:rgba(253,250,246,.38);margin-top:.12rem}
+.fc{font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.2em;color:var(--teal);text-transform:uppercase}
+.ibox{margin-top:2.2rem;padding:1.6rem;border:1px solid rgba(109,195,205,.18)}
+.ibt{font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.28em;color:var(--teal);text-transform:uppercase;margin-bottom:.9rem}
+.ibg{display:grid;grid-template-columns:1fr 1fr;gap:.45rem}
+.ii{font-size:.8rem;color:rgba(253,250,246,.48);display:flex;align-items:center;gap:.45rem}
+.ii::before{content:'';width:3px;height:3px;background:var(--teal);border-radius:50%;flex-shrink:0}
+@media(max-width:768px){.bb{grid-template-columns:1fr}.boats{padding:5rem 1.5rem}}
+
+/* ── GOLF SECTION ── */
+.golf{position:relative;padding:8rem 4rem;background:#0a1510;overflow:hidden}
+.gbg{position:absolute;inset:0;background:url('https://img1.wsimg.com/isteam/ip/28e700c9-c37b-485d-b636-01fcfc9acb86/iStock-475654823.jpg') center/cover no-repeat;opacity:.09}
+.gbody{position:relative;z-index:2;max-width:1200px;margin:0 auto}
+.gq{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(1.05rem,2vw,1.8rem);color:rgba(253,250,246,.75);max-width:760px;line-height:1.75;margin:0 auto 1rem;text-align:center}
+.gattr{font-family:'Cinzel',serif;font-size:.54rem;letter-spacing:.3em;color:var(--v);text-transform:uppercase;text-align:center;margin-bottom:3.5rem}
+.gcs{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:3.5rem}
+.gc{border-top:1px solid rgba(174,133,96,.35);padding-top:1.8rem}
+.gcn{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.18em;color:var(--wh);text-transform:uppercase;margin-bottom:.7rem}
+.gcd{font-size:.84rem;color:rgba(253,250,246,.45);line-height:1.85}
+.gam{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem;margin-top:3rem;padding-top:3rem;border-top:.5px solid rgba(253,250,246,.07)}
+.gai{display:flex;gap:.7rem}
+.gdot{width:4px;height:4px;background:var(--v);border-radius:50%;margin-top:.45rem;flex-shrink:0}
+.gan{font-family:'Cinzel',serif;font-size:.56rem;letter-spacing:.15em;color:var(--wh);text-transform:uppercase;margin-bottom:.2rem}
+.gat{font-size:.76rem;color:rgba(253,250,246,.38);line-height:1.6}
+@media(max-width:768px){.gcs,.gam{grid-template-columns:1fr}.golf{padding:5rem 1.5rem}}
 </style>
 
 <script>
