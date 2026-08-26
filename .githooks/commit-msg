@@ -1,0 +1,56 @@
+#!/bin/sh
+# Valida el formato del mensaje de commit (ver CONTRIBUTING.md).
+# Activar una sola vez por clon:  git config core.hooksPath .githooks
+#
+# Saltear puntualmente:  git commit --no-verify
+
+msg_file="$1"
+
+# Primera línea que no sea comentario ni esté vacía.
+subject=$(grep -v '^#' "$msg_file" | sed '/^[[:space:]]*$/d' | head -1 | tr -d '\r')
+
+# Los merges y reverts los genera git; no se validan.
+case "$subject" in
+  "Merge "*|"Revert "*|"fixup!"*|"squash!"*) exit 0 ;;
+esac
+
+tipos='feat|fix|a11y|perf|seo|content|style|refactor|build|docs|chore'
+
+fail() {
+  echo ""
+  echo "  ✗ Mensaje de commit rechazado"
+  echo ""
+  echo "    $subject"
+  echo ""
+  echo "  $1"
+  echo ""
+  echo "  Formato:  <tipo>(<alcance>): <resumen en imperativo>"
+  echo "  Tipos:    $(echo "$tipos" | tr '|' ' ')"
+  echo ""
+  echo "  Ejemplo:  fix(configurador): no permitir salida anterior a la entrada"
+  echo ""
+  echo "  Detalle en CONTRIBUTING.md · saltear con git commit --no-verify"
+  echo ""
+  exit 1
+}
+
+[ -z "$subject" ] && fail "El mensaje está vacío."
+
+echo "$subject" | grep -qE "^($tipos)(\([a-z0-9-]+\))?: .+" \
+  || fail "No arranca con un tipo válido seguido de ': '."
+
+echo "$subject" | grep -qE "^($tipos)(\([a-z0-9-]+\))?: [A-ZÁÉÍÓÚÑ]" \
+  && fail "El resumen tiene que empezar en minúscula."
+
+echo "$subject" | grep -qE '\.$' \
+  && fail "El resumen no lleva punto final."
+
+largo=$(printf '%s' "$subject" | wc -m | tr -d ' ')
+[ "$largo" -gt 72 ] \
+  && fail "El resumen tiene $largo caracteres; el máximo es 72."
+
+# El resumen tiene que decir algo. "update index.html" no dice nada.
+echo "$subject" | grep -qiE ': *(update|actualizar|cambios?|fix|arreglos?|varios|wip|test)( +[a-z0-9._/-]+)? *$' \
+  && fail "El resumen es genérico: decí qué cambió, no qué archivo tocaste."
+
+exit 0

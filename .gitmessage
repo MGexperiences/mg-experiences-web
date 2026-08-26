@@ -1,0 +1,29 @@
+# <tipo>(<alcance opcional>): <resumen en imperativo, minúscula, sin punto final>
+#
+# Cuerpo: qué cambió y POR QUÉ. El cómo ya está en el diff.
+# Envolver a 72 columnas. Dejar una línea en blanco antes del cuerpo.
+#
+# Si el cambio se verificó de alguna forma (navegador, consola, medición),
+# decir cómo. Un commit que dice cómo se probó vale el doble dentro de un año.
+#
+# Tipos:
+#   feat      funcionalidad nueva visible para el usuario
+#   fix       corrección de un bug
+#   a11y      accesibilidad
+#   perf      performance (peso, carga, render)
+#   seo       metadatos, structured data, indexación
+#   content   textos, precios, fotos, datos del tarifario
+#   style     solo presentación (CSS, espaciado); sin cambio de lógica
+#   refactor  reorganización sin cambio de comportamiento
+#   build     dependencias, deploy, configuración del repo
+#   docs      documentación
+#   chore     tareas varias que no encajan arriba
+#
+# Alcances habituales:
+#   configurador, verificacion, tarifario, lightbox, galeria, nav,
+#   reviews, asistente, hero, seo, deploy
+#
+# Ejemplos:
+#   fix(configurador): no permitir salida anterior a la entrada
+#   content(tarifario): actualizar precios de embarcaciones a junio 2026
+#   perf(hero): servir la imagen del hero desde img/ en vez de wsimg.com

@@ -1,0 +1,5 @@
+# El repo guarda los archivos con finales de línea CRLF y core.autocrlf no
+# está seteado, así que hoy git no convierte nada. Se declara explícito para
+# que no dependa de la config local de cada máquina: sin esto, alguien con
+# core.autocrlf=input generaría un diff del archivo entero en su próximo commit.
+* -text
