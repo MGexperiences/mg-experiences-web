@@ -1870,6 +1870,44 @@ body.showing-summary #tu-experiencia {
   padding-top: 1rem;
 }
 #panel5.active{min-height:80vh;}
+/* ══ MODO PRESUPUESTO — pantalla completa separada de la web ══ */
+.cfg-topbar{display:none}
+.cfg-launch{display:flex;flex-direction:column;align-items:center;gap:1rem}
+.cfg-launch-note{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;color:rgba(253,250,246,.7);text-align:center}
+body:not(.cfg-mode) #tu-experiencia .steps-bar,
+body:not(.cfg-mode) #tu-experiencia .cpanel{display:none !important}
+html.cfg-mode,body.cfg-mode{overflow:hidden !important;height:100%}
+body.cfg-mode #tu-experiencia{
+  position:fixed !important;inset:0;z-index:450;
+  overflow-y:auto !important;overflow-x:hidden !important;
+  -webkit-overflow-scrolling:touch;overscroll-behavior:contain;
+  opacity:1 !important;transform:none !important;
+  padding:0 1.2rem 140px !important;min-height:0;
+  background:var(--bk);
+}
+body.cfg-mode .cfg-launch,
+body.cfg-mode #tu-experiencia .config-head{display:none !important}
+body.cfg-mode .cfg-topbar{
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  position:sticky;top:0;z-index:5;
+  margin:0 -1.2rem 2rem;padding:1rem 1.4rem;
+  background:rgba(18,20,15,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(174,133,96,.18);
+}
+.cfg-topbar-logo{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.22em;color:var(--wh);text-transform:uppercase}
+.cfg-topbar-title{font-family:'Playfair Display',serif;font-style:italic;font-size:1rem;color:var(--vl)}
+.cfg-topbar-close{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(253,250,246,.8);background:none;border:1px solid rgba(174,133,96,.35);border-radius:999px;padding:.55rem 1rem;cursor:pointer}
+.cfg-topbar-close:hover{color:var(--vl);border-color:var(--vl)}
+body.cfg-mode #floatingBudgetBtn,
+body.cfg-mode #scrollTopBtn{display:none !important}
+body.cfg-mode .unlocked-badge{z-index:460}
+@media(max-width:768px){
+  .cfg-topbar-title{display:none}
+  .cfg-topbar-close span{display:none}
+  body.cfg-mode .cfg-topbar{padding:.9rem 1.2rem;margin-bottom:1.4rem}
+  body.cfg-mode #tu-experiencia .steps-bar{margin-bottom:1.6rem}
+}
+
 @keyframes fadePanel{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 
 .cpanel-title{font-family:'Playfair Display',serif;font-style:italic;font-size:1.5rem;color:var(--wh);margin-bottom:.6rem;text-align:center}
@@ -2862,6 +2900,12 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
      CONFIGURADOR DE EXPERIENCIA
 ════════════════════════════════════════ -->
 <section class="config rv" id="tu-experiencia">
+  <!-- Barra superior del modo presupuesto (solo visible en pantalla completa) -->
+  <div class="cfg-topbar">
+    <span class="cfg-topbar-logo">MG Experiences</span>
+    <span class="cfg-topbar-title">Tu presupuesto</span>
+    <button type="button" class="cfg-topbar-close" onclick="cfgClose()" aria-label="Salir del presupuesto">✕ <span>Salir</span></button>
+  </div>
   <div class="config-inner">
     <div class="config-head" data-reveal>
       <span class="lbl">Rápido · Personalizado · Sin obligaciones</span>
@@ -2873,6 +2917,12 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
         <span class="ctb"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Verificamos disponibilidad</span>
         <span class="ctb"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Sin compromiso</span>
       </div>
+    </div>
+
+    <!-- Lanzador: en la página solo se ve este botón; el configurador abre en pantalla completa -->
+    <div class="cfg-launch">
+      <button type="button" class="cbtn-next cfg-launch-btn" id="cfgLaunchBtn" onclick="cfgOpen()">Armá tu presupuesto →</button>
+      <div class="cfg-launch-note" id="cfgLaunchNote">5 pasos · menos de 2 minutos</div>
     </div>
 
     <!-- Progress bar -->
@@ -4203,7 +4253,7 @@ let state = {step:1, nights:0, guests:8, villaId:null, svcs:{}, barcoId:null, ba
 // ── VILLA CATALOG: select and jump to configurator
 function selectVillaAndGo(villaId){
   state.villaId = villaId;
-  document.getElementById('tu-experiencia').scrollIntoView({behavior:'smooth', block:'start'});
+  cfgOpen();
   // If already past step 1, jump to step 3
   if(state.dateIn && state.dateOut && state.nights > 0){
     setTimeout(()=>{ goStep(3); renderVillas(); }, 600);
@@ -4244,20 +4294,10 @@ function goStep(n){
     trackViewConfigurador();
   }
   
-  // Clase en body para ocultar secciones y fijar el configurador arriba
-  if(n===5){
-    document.body.classList.add('showing-summary');
-    // Doble requestAnimationFrame: garantiza que el DOM se repintó con display:none
-    // antes de hacer el scroll, evitando que se vea la sección de villas
-    requestAnimationFrame(()=>{
-      requestAnimationFrame(()=>{
-        window.scrollTo({ top: 0, behavior:'instant' });
-      });
-    });
-  } else {
-    document.body.classList.remove('showing-summary');
-    document.getElementById('tu-experiencia').scrollIntoView({behavior:'smooth',block:'start'});
-  }
+  // Modo presupuesto: pantalla completa separada del resto de la web.
+  // Cada paso arranca arriba, sin saltos de scroll (ej. después del OTP).
+  document.body.classList.remove('showing-summary');
+  if(typeof cfgOpen==='function') cfgOpen();
 }
 
 function selectIntent(type){
@@ -4828,7 +4868,7 @@ function toggleAccordion(key){
 function navToSection(seccion){
   const el = document.getElementById('tu-experiencia');
   if(!el) return;
-  el.scrollIntoView({behavior:'smooth', block:'start'});
+  cfgOpen();
   // Si ya tiene fechas y villa, ir directo al paso de servicios
   if(state.dateIn && state.dateOut && state.nights > 0 && state.villaId){
     setTimeout(()=>{
@@ -5195,6 +5235,7 @@ async function enviarConsulta(){
 
     document.getElementById('confirmBox').innerHTML = confirmHtml;
     document.getElementById('confirmBox').style.display='block';
+    try{ cfgScrollTop(); }catch(_){}
 
   } catch(err) {
     btn.disabled=false;
@@ -5745,7 +5786,7 @@ function openResortModal(zoneId) {
       </div>
 
       <div class="rm-ctas">
-        <button class="rm-cta-main" onclick="closeResortModal();document.getElementById('tu-experiencia').scrollIntoView({behavior:'smooth',block:'start'})">
+        <button class="rm-cta-main" onclick="closeResortModal();cfgOpen()">
           Armá tu estadía ✦
         </button>
       </div>
@@ -6431,7 +6472,7 @@ function selectVillaFromModal(id) {
   state.villaId = id;
   // Scroll to configurator
   const conf = document.getElementById('tu-experiencia');
-  if(conf) conf.scrollIntoView({behavior:'smooth', block:'start'});
+  if(conf) cfgOpen();
   setTimeout(()=>{
     if(state.dateIn && state.dateOut && state.nights > 0){
       // Dates set → go straight to villa step
@@ -7659,5 +7700,88 @@ document.addEventListener('DOMContentLoaded', setupScrollReveal);
 })();
 </script>
 
+
+<!-- ══ MODO PRESUPUESTO — abrir/cerrar, atrás del navegador, links ══ -->
+<script>
+(function(){
+  var savedY = 0, pushed = false, tracked = false;
+  var sec = function(){ return document.getElementById('tu-experiencia'); };
+  var isOpen = function(){ return document.body.classList.contains('cfg-mode'); };
+  var hashUrl = function(h){ return location.pathname + location.search + (h || ''); };
+
+  window.cfgScrollTop = function(){
+    var el = sec(); if(!el) return;
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){ el.scrollTop = 0; }); });
+  };
+
+  window.cfgOpen = function(){
+    if(!isOpen()){
+      savedY = window.scrollY || 0;
+      document.documentElement.classList.add('cfg-mode');
+      document.body.classList.add('cfg-mode');
+      try { history.pushState({mgCfg:1}, '', hashUrl('#presupuesto')); pushed = true; } catch(_){}
+      if(!tracked){ tracked = true; try { trackViewConfigurador(); } catch(_){} }
+    }
+    window.cfgScrollTop();
+  };
+
+  window.cfgClose = function(){
+    if(!isOpen()) return;
+    try { closeGate(); } catch(_){}
+    document.documentElement.classList.remove('cfg-mode');
+    document.body.classList.remove('cfg-mode');
+    window.scrollTo({top: savedY, behavior: 'instant'});
+    cfgUpdateLauncher();
+    if(pushed){ pushed = false; try { history.back(); } catch(_){} }
+  };
+
+  // Botón del lanzador: "Continuar" si ya avanzó
+  window.cfgUpdateLauncher = function(){
+    var btn = document.getElementById('cfgLaunchBtn');
+    var note = document.getElementById('cfgLaunchNote');
+    if(!btn || typeof state === 'undefined') return;
+    if(state.step > 1){
+      btn.textContent = 'Continuar mi presupuesto →';
+      if(note) note.textContent = 'Tenés un presupuesto en curso · paso ' + state.step + ' de 5';
+    }
+  };
+
+  // Atrás del navegador / gesto del iPhone: retrocede un paso dentro del presupuesto
+  window.addEventListener('popstate', function(){
+    if(!isOpen()) return;
+    var cb = document.getElementById('confirmBox');
+    var confirmado = cb && cb.style.display === 'block';
+    if(typeof state !== 'undefined' && state.step > 1 && !confirmado){
+      try { window.goStep(state.step - 1); } catch(_){}
+      try { history.pushState({mgCfg:1}, '', hashUrl('#presupuesto')); pushed = true; } catch(_){}
+    } else {
+      pushed = false;
+      window.cfgClose();
+    }
+  });
+
+  // Escape cierra el presupuesto (si no hay otro modal abierto)
+  document.addEventListener('keydown', function(e){
+    if(e.key !== 'Escape' || !isOpen()) return;
+    var gate = document.getElementById('gateOverlay');
+    if(gate && gate.classList.contains('show')) return;
+    window.cfgClose();
+  });
+
+  // Todos los botones "Armá tu presupuesto" abren el modo presupuesto
+  document.addEventListener('click', function(e){
+    var a = e.target.closest && e.target.closest('a[href="#tu-experiencia"], a[href="#presupuesto"]');
+    if(!a) return;
+    e.preventDefault();
+    window.cfgOpen();
+  });
+
+  // Link directo (ej. anuncios): mg-experiences.com/#presupuesto
+  if(location.hash === '#presupuesto' || location.hash === '#tu-experiencia'){
+    try { history.replaceState(null, '', hashUrl('')); } catch(_){}
+    setTimeout(window.cfgOpen, 300);
+  }
+})();
+</script>
 </body>
 </html>
