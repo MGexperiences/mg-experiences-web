@@ -5954,8 +5954,10 @@ async function sendCode(e){
   const apellido =document.getElementById('gApellido').value.trim();
   const email    =document.getElementById('gEmail').value.trim();
   const pais     =document.getElementById('gPais').value;
-  const tel      =normalizarTel(document.getElementById('gTel').value, pais);
-  document.getElementById('gTel').value = tel; // que vea cómo quedó
+  const telFmt   =normalizarTel(document.getElementById('gTel').value, pais);
+  document.getElementById('gTel').value = telFmt; // que vea cómo quedó
+  // Al Sheet y al servidor van solo dígitos con código de país (un "+" al inicio lo rompe: Sheets lo lee como fórmula)
+  const tel      =telFmt.replace(/\D/g,'');
 
   if(!nombre||!apellido||!email||!tel||!pais){
     errEl.textContent='Por favor completá todos los campos.';
