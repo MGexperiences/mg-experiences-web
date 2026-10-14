@@ -3131,6 +3131,57 @@ body.presupuesto-page .steps-bar{margin-bottom:2.2rem}
 .nav-volver:hover{color:var(--vl)}
 </style>
 
+
+<style>
+/* ── Barra de total (pasos casa y servicios) ── */
+.total-bar{position:fixed;left:0;right:0;bottom:0;z-index:350;transform:translateY(110%);transition:transform .4s cubic-bezier(.25,.46,.45,.94);
+  background:rgba(28,30,23,.92);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-top:1px solid rgba(174,133,96,.3);
+  padding:.8rem 1.2rem calc(.8rem + env(safe-area-inset-bottom))}
+.total-bar.show{transform:translateY(0)}
+.total-bar-in{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:1rem}
+.total-bar-lbl{font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(212,184,154,.65)}
+.total-bar-amt{font-family:'Cinzel',serif;font-size:1.25rem;color:var(--vl);line-height:1.1}
+.total-bar-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.9rem;color:rgba(253,250,246,.55)}
+.total-bar-btn{margin-left:auto;font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--bk);background:var(--vl);border:none;border-radius:100px;padding:.85rem 1.5rem;cursor:pointer;white-space:nowrap;transition:all .3s}
+.total-bar-btn:hover{background:var(--wh)}
+body.has-total-bar #val-btn{bottom:92px!important}
+body.has-total-bar #scrollTopBtn{bottom:150px!important}
+body.has-total-bar .config{padding-bottom:7rem}
+@media(max-width:768px){
+  .total-bar{padding:.7rem 1rem calc(.7rem + env(safe-area-inset-bottom))}
+  .total-bar-amt{font-size:1.05rem}
+  .total-bar-btn{padding:.75rem 1.1rem;font-size:.56rem}
+  .total-bar-sub{display:none}
+}
+
+/* ── Tarjetas de casa con foto ── */
+.villa-opt{padding:0;overflow:hidden;text-align:left}
+.vo-photo{position:relative;width:100%;aspect-ratio:16/10;background:#1a2a1a;overflow:hidden}
+.vo-photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s}
+.villa-opt:hover .vo-photo img{transform:scale(1.04)}
+.vo-photo-empty{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:rgba(174,133,96,.4);font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.2em;text-transform:uppercase}
+.vo-gal{position:absolute;right:.6rem;bottom:.6rem;background:rgba(28,30,23,.75);border:1px solid rgba(253,250,246,.25);color:var(--wh);border-radius:100px;padding:.35rem .8rem;font-family:'Cormorant Garamond',serif;font-size:.85rem;cursor:pointer;backdrop-filter:blur(8px);transition:all .25s;display:flex;align-items:center;gap:.35rem}
+.vo-gal:hover{background:var(--vl);color:var(--bk);border-color:var(--vl)}
+.vo-body{padding:1rem 1.1rem 1.1rem}
+.vo-name{font-family:'Playfair Display',serif;font-size:1.15rem;letter-spacing:0;text-transform:none;color:var(--wh);margin-bottom:.2rem}
+.vo-spec{font-size:.92rem;color:rgba(253,250,246,.65);margin-bottom:.35rem}
+.vo-price{font-size:1.02rem}
+.villa-opt.selected::after{top:.6rem;left:.6rem;right:auto;width:26px;height:26px;border-radius:50%;background:var(--g);color:var(--wh);display:flex;align-items:center;justify-content:center;font-size:.75rem}
+
+/* ── Tarjetas de opciones (servicios) más legibles ── */
+.svc-opt-name{font-family:'Playfair Display',serif;font-size:1.08rem;letter-spacing:0;text-transform:none;color:var(--wh);margin-bottom:.25rem;line-height:1.25}
+.svc-opt-desc{font-size:.95rem;color:rgba(253,250,246,.65)}
+.svc-opt-price{font-size:.98rem}
+.boat-title{font-family:'Playfair Display',serif;font-size:1.25rem;color:var(--wh);margin-bottom:.25rem}
+.boat-sub{font-family:'Cormorant Garamond',serif;font-size:1rem;color:rgba(253,250,246,.7)}
+.boat-dest-name{font-family:'Playfair Display',serif;font-size:1.02rem;margin-bottom:.3rem}
+
+/* ── Botón WhatsApp en confirmación ── */
+.wa-btn{display:inline-flex;align-items:center;gap:.6rem;background:#25D366;color:#0b1f12;border:none;border-radius:100px;padding:1rem 1.8rem;font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;cursor:pointer;transition:all .3s;margin:.4rem .3rem}
+.wa-btn:hover{background:#4ae389;transform:translateY(-1px)}
+.wa-btn svg{width:18px;height:18px}
+@media(max-width:768px){ .boat-dests{grid-template-columns:1fr!important} }
+</style>
 </head>
 <body class="presupuesto-page">
 
@@ -3523,6 +3574,18 @@ body.presupuesto-page .steps-bar{margin-bottom:2.2rem}
   </div>
   <div class="fcopy">© 2025 MG Experiences · Casa de Campo, República Dominicana · Todos los derechos reservados</div>
 </footer>
+
+<!-- Barra de total (visible en pasos casa y servicios) -->
+<div class="total-bar" id="totalBar" aria-live="polite">
+  <div class="total-bar-in">
+    <div>
+      <div class="total-bar-lbl">Tu estadía · aprox.</div>
+      <div class="total-bar-amt" id="totalBarAmt">USD $0</div>
+    </div>
+    <div class="total-bar-sub" id="totalBarSub"></div>
+    <button type="button" class="total-bar-btn" id="totalBarBtn" onclick="goStep(5)">Ver resumen →</button>
+  </div>
+</div>
 
 <script>
 // ── NAV
@@ -4102,9 +4165,9 @@ const barcos = [
   {id:'tiara38s',  name:'Tiara 38LS — Saona',            pax:'10 a 12',  price:2942, display:'Tiara 38LS | Saona',
    tipo:'Sport cruiser · cabina con aire acondicionado', destDesc:'Isla Saona · playa remota · aguas turquesas · reserva natural protegida', duracion:'~1 hora'},
   {id:'azimuthp',  name:'Azimuth Flybridge 55 — Palmillas', pax:'13 a 16', price:4706, display:'Azimuth Flybridge 55 | Palmillas',
-   tipo:'Flybridge de lujo · cubierta superior · sombra amplia', destDesc:'Banco de arena natural · aguas poco profundas · ideal para relajarse · dentro del Parque Nacional del Este', duracion:'~30 min'},
+   tipo:'Flybridge · cubierta superior · sombra amplia', destDesc:'Banco de arena natural · aguas poco profundas · ideal para relajarse · dentro del Parque Nacional del Este', duracion:'~30 min'},
   {id:'azimuthc',  name:'Azimuth Flybridge 55 — Catalina',  pax:'13 a 16', price:4706, display:'Azimuth Flybridge 55 | Catalina',
-   tipo:'Flybridge de lujo · cubierta superior · sombra amplia', destDesc:'Isla virgen · aguas cristalinas · fondo de coral · playa blanca', duracion:'~25 min'},
+   tipo:'Flybridge · cubierta superior · sombra amplia', destDesc:'Isla virgen · aguas cristalinas · fondo de coral · playa blanca', duracion:'~25 min'},
   {id:'catamaranp',name:'Catamarán — Palmillas',          pax:'17 a 35',  price:2589, display:'Catamaran | Palmillas',
    tipo:'Catamarán · cubierta amplia · ideal grupos grandes', destDesc:'Banco de arena natural · aguas poco profundas · ideal para relajarse · dentro del Parque Nacional del Este', duracion:'~30 min'},
   {id:'catamaranc',name:'Catamarán — Catalina',           pax:'17 a 35',  price:2589, display:'Catamaran | Catalina',
@@ -4544,12 +4607,24 @@ function renderVillas(){
     note.textContent='Mostrando todas las casas — nos contactamos para confirmar qué está disponible';
   }
 
+  const esc = x => String(x||'').replace(/'/g,"\\'");
   grid.innerHTML=toShow.map(v=>`
     <div class="villa-opt ${v.id===state.villaId?'selected':''} ${v.guests<g?'villa-opt-insuf':''}"
          onclick="selectVilla('${v.id}')">
-      <div class="vo-name">${v.name}</div>
-      <div class="vo-spec">${v.hab} hab · hasta ${v.guests} pers.</div>
-      <div class="vo-price">desde USD $${(v.precio_noche||v.price||0).toLocaleString()}/noche</div>
+      <div class="vo-photo">
+        ${v.foto_url
+          ? `<img src="${v.foto_url}" alt="${v.name}" loading="lazy">`
+          : `<div class="vo-photo-empty">${v.name}</div>`}
+        ${(v.foto_url||v.carpeta_url)
+          ? `<button type="button" class="vo-gal" onclick="event.stopPropagation();openVillaGallery('${v.id}','${esc(v.name)}','${esc(v.carpeta_url)}','${esc(v.foto_url)}')">
+               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.5"/><path d="M21 16l-5-5-8 8"/></svg> Ver fotos</button>`
+          : ''}
+      </div>
+      <div class="vo-body">
+        <div class="vo-name">${v.name}</div>
+        <div class="vo-spec">${v.hab} hab · hasta ${v.guests} pers.</div>
+        <div class="vo-price">desde USD $${(v.precio_noche||v.price||0).toLocaleString()}/noche</div>
+      </div>
     </div>`).join('');
 
   // Scroll to preselected villa if coming from modal
@@ -4666,7 +4741,7 @@ function renderServices(){
   let html = secNav;
 
   // ── EMBARCACIONES (Grouped by boat type, responsive layout)
-  html += secHeader('Embarcaciones', 'El barco es exclusivo para tu grupo · 9 a 18 hs · Capitán, marinero, aguas y cervezas incluidos');
+  html += secHeader('Embarcaciones', 'El barco es solo para tu grupo · 9 a 18 hs · Capitán, marinero, aguas y cervezas incluidos');
   html += `<div style="grid-column:span 2;display:grid;grid-template-columns:1fr;gap:1rem">`;
   
   const boatGroups = {};
@@ -4682,22 +4757,21 @@ function renderServices(){
     
     html += `<div style="border:1px solid rgba(174,133,96,.18);padding:1.4rem;border-radius:12px;background:${anySelected?'rgba(29,77,58,.22)':'rgba(255,255,255,.03)'};transition:all .3s">
       <div style="margin-bottom:1rem">
-        <div style="font-family:'Cinzel',serif;font-size:.8rem;letter-spacing:.15em;color:var(--wh);text-transform:uppercase;margin-bottom:.3rem">${boatType}</div>
-        <div style="font-size:.82rem;color:rgba(253,250,246,.7);margin-bottom:.25rem">${rep.tipo||''}</div>
-        <div style="font-size:.8rem;color:rgba(253,250,246,.55)">${rep.pax} pasajeros</div>
+        <div class="boat-title">${boatType}</div>
+        <div class="boat-sub">${rep.tipo||''}${rep.tipo?' · ':''}${rep.pax} pasajeros</div>
       </div>
 
       <div style="font-size:.78rem;color:rgba(253,250,246,.53);margin-bottom:.9rem;font-style:italic">Elegí destino — podés sumar más de uno</div>
 
-      <div style="display:grid;grid-template-columns:${boats.length === 1 ? '1fr' : boats.length === 2 ? '1fr 1fr' : 'repeat(auto-fit,minmax(130px,1fr))'};gap:.7rem;margin-bottom:${anySelected?'1rem':'0'}">
+      <div class="boat-dests" style="display:grid;grid-template-columns:${boats.length === 1 ? '1fr' : boats.length === 2 ? '1fr 1fr' : 'repeat(auto-fit,minmax(130px,1fr))'};gap:.7rem;margin-bottom:${anySelected?'1rem':'0'}">
         ${boats.map(b => {
           const destName = b.name.split(' — ')[1] || 'General';
           const sel = state.barcos[b.id];
           return `<button style="padding:.9rem .7rem;text-align:left;background:${sel?'var(--vl)':'rgba(174,133,96,.1)'};color:${sel?'var(--bk)':'rgba(253,250,246,.8)'};border:1px solid ${sel?'var(--vl)':'rgba(174,133,96,.22)'};border-radius:10px;cursor:pointer;transition:all .2s;line-height:1.5" onclick="selectBarco('${b.id}')">
-            <div style="font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.35rem">${destName}</div>
-            <div style="font-size:.72rem;opacity:.75;margin-bottom:.4rem">${b.destDesc||''}</div>
-            <div style="font-size:.7rem;opacity:.6;margin-bottom:.5rem">⏱ ${b.duracion||''} desde el resort</div>
-            <div style="font-size:.82rem;font-weight:600;${sel?'':'color:var(--vl)'}">USD $${b.price.toLocaleString()}<span style="font-size:.65rem;font-weight:400;opacity:.7"> /salida</span></div>
+            <div class="boat-dest-name">${destName}</div>
+            <div style="font-size:.88rem;opacity:.8;margin-bottom:.4rem;line-height:1.45">${b.destDesc||''}</div>
+            <div style="font-size:.82rem;opacity:.65;margin-bottom:.5rem">⏱ ${b.duracion||''} desde el resort</div>
+            <div style="font-size:.95rem;font-weight:600;${sel?'':'color:var(--vl)'}">USD $${b.price.toLocaleString()}<span style="font-size:.72rem;font-weight:400;opacity:.7"> /salida</span></div>
           </button>`;
         }).join('')}
       </div>
@@ -5361,12 +5435,12 @@ async function enviarConsulta(){
   if(!btn||btn.disabled) return;
 
   // Necesita usuario verificado
-  if(!gateState.verified && sessionStorage.getItem('mg_verified')!=='1'){
+  if(!gateState.verified && mgStore.get('mg_verified')!=='1'){
     openGate(); return;
   }
   // Recuperar userData de sesión si hace falta
   if(!gateState.userData){
-    const saved=sessionStorage.getItem('mg_user');
+    const saved=mgStore.get('mg_user');
     if(saved) gateState.userData=JSON.parse(saved);
     else { openGate(); return; }
   }
@@ -5440,6 +5514,21 @@ async function enviarConsulta(){
         </div>`;
     }
 
+    // ── Seguir por WhatsApp con el mensaje ya armado
+    try {
+      const waLink = buildWhatsAppLink();
+      if (waLink) {
+        confirmHtml += `
+        <div style="margin-top:.6rem">
+          <a class="wa-btn" href="${waLink}" target="_blank" rel="noopener" onclick="try{if(typeof gtag==='function')gtag('event','whatsapp_click',{origen:'confirmacion'})}catch(_){}">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 12 12 0 0 0 4.6 4c1.7.7 2.3.6 2.7.5a2.6 2.6 0 0 0 1.7-1.2c.2-.6.2-1 .1-1.2z"/></svg>
+            Seguir por WhatsApp
+          </a>
+          <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.95rem;color:rgba(253,250,246,.55);margin-top:.5rem">Te abre el chat con tu presupuesto ya escrito.</div>
+        </div>`;
+      }
+    } catch(e) { console.warn('wa link:', e); }
+
     confirmHtml += `
         </div>`;
 
@@ -5455,6 +5544,28 @@ async function enviarConsulta(){
 // ══════════════════════════════════════════
 // SISTEMA DE VERIFICACIÓN — Google Apps Script (VERSIÓN SEGURA v2)
 // ══════════════════════════════════════════════════════════════════
+
+// ── WhatsApp de MG Experiences (solo dígitos, con código de país; vacío = no se muestra el botón)
+const MG_WHATSAPP = '';
+
+function buildWhatsAppLink(){
+  if(!MG_WHATSAPP) return '';
+  const u = gateState.userData || {};
+  const villa = getVillas().find(v=>v.id===state.villaId);
+  const fmt = d => d ? new Date(d+'T12:00:00').toLocaleDateString('es-AR',{day:'numeric',month:'long'}) : '';
+  let total = 0; try { total = calculateTotal(); } catch(_){}
+  const partes = [];
+  partes.push(`Hola, soy ${u.nombre||''}${u.apellido?' '+u.apellido:''}.`.replace('soy .','soy'));
+  partes.push(`Acabo de armar un presupuesto en la web para ${state.guests} persona${state.guests!==1?'s':''}, del ${fmt(state.dateIn)} al ${fmt(state.dateOut)} (${state.nights} noche${state.nights!==1?'s':''}).`);
+  if(villa) partes.push(`Casa: ${villa.name}.`);
+  const extras = Object.values(state.svcs||{}).map(v=>v.name).filter(Boolean);
+  const barcos = Object.keys(state.barcos||{}).map(id=>{ const b=(typeof barcos!=='undefined'?barcos:[]).find(x=>x.id===id); return b?b.name:null; }).filter(Boolean);
+  const todo = [...barcos, ...extras];
+  if(todo.length) partes.push(`Servicios: ${todo.slice(0,6).join(', ')}${todo.length>6?' y más':''}.`);
+  if(total>0) partes.push(`Total aproximado: USD ${Math.round(total).toLocaleString('en-US')}.`);
+  partes.push('¿Me confirman disponibilidad?');
+  return 'https://wa.me/' + MG_WHATSAPP.replace(/\D/g,'') + '?text=' + encodeURIComponent(partes.join(' '));
+}
 
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyOmyl7RCsJg92nL1FBuR4Y37hP2OVHxDj3NguqeQcoeuNYuM_g7YD3SNQw3HLxNFfqLw/exec';
 
@@ -5534,6 +5645,25 @@ function jsonpRequestScript(params, timeoutMs) {
 }
 
 
+// ── Almacenamiento de la verificación: 7 días en localStorage (antes se perdía al cerrar el navegador)
+const mgStore = {
+  TTL: 7*24*3600*1000,
+  _k: k => 'mgv_' + k,
+  get(k){
+    try{
+      const raw = localStorage.getItem(this._k(k));
+      if(!raw) return sessionStorage.getItem(k); // compatibilidad con sesiones viejas
+      const d = JSON.parse(raw);
+      if(!d || Date.now() > d.exp){ localStorage.removeItem(this._k(k)); return null; }
+      return d.v;
+    }catch(_){ try{ return sessionStorage.getItem(k); }catch(__){ return null; } }
+  },
+  set(k,v){
+    try{ localStorage.setItem(this._k(k), JSON.stringify({v, exp: Date.now()+this.TTL})); }catch(_){}
+    try{ sessionStorage.setItem(k, v); }catch(_){}
+  }
+};
+
 // ── STATE de verificación
 let gateState = {
   verified: false,
@@ -5575,6 +5705,44 @@ function isRateLimited(){
 function rateLimitMinutesLeft(){
   const rl=getRateLimit();
   return Math.ceil((rl.resetAt-Date.now())/60000);
+}
+
+// ── TELÉFONO: lo dejamos siempre como +CC número (ej. +54 9 11 6438 8699)
+const TEL_CC = {'Argentina':'54','Uruguay':'598','Chile':'56','Brasil':'55','Colombia':'57','Perú':'51','México':'52','Ecuador':'593','Estados Unidos':'1','España':'34'};
+function normalizarTel(raw, pais){
+  let d = String(raw||'').replace(/\D/g,'');
+  if(!d) return String(raw||'').trim();
+  if(d.startsWith('00')) d = d.slice(2);
+  const cc = TEL_CC[pais] || '';
+  const tienePlus = String(raw).trim().startsWith('+');
+  let rest;
+  if(tienePlus || (cc && d.startsWith(cc) && d.length > cc.length + 7)){
+    // ya trae código de país
+    const c = cc && d.startsWith(cc) ? cc : (Object.values(TEL_CC).find(x=>d.startsWith(x)) || cc);
+    if(!c) return '+' + d;
+    rest = d.slice(c.length).replace(/^0+/, '');
+    if(c==='54' && !rest.startsWith('9') && rest.length===10) rest = '9' + rest;
+    return formatearTel(c, rest);
+  }
+  if(!cc) return '+' + d;
+  rest = d.replace(/^0+/, '');
+  if(cc==='54'){
+    rest = rest.replace(/^15/, '');          // "15" local
+    if(!rest.startsWith('9') && rest.length===10) rest = '9' + rest; // celular sin el 9
+  }
+  return formatearTel(cc, rest);
+}
+function formatearTel(cc, rest){
+  if(cc==='54' && rest.startsWith('9') && rest.length===11){
+    return `+54 9 ${rest.slice(1,3)} ${rest.slice(3,7)} ${rest.slice(7)}`;
+  }
+  if(rest.length===10) return `+${cc} ${rest.slice(0,3)} ${rest.slice(3,6)} ${rest.slice(6)}`;
+  if(rest.length===9)  return `+${cc} ${rest.slice(0,2)} ${rest.slice(2,5)} ${rest.slice(5)}`;
+  // agrupar de a 4 desde el final
+  const grupos=[]; let r=rest;
+  while(r.length>4){ grupos.unshift(r.slice(-4)); r=r.slice(0,-4); }
+  if(r) grupos.unshift(r);
+  return `+${cc} ${grupos.join(' ')}`.trim();
 }
 
 // ── VALIDACIÓN DE NOMBRE — detecta strings aleatorios de bots
@@ -5640,8 +5808,9 @@ async function sendCode(e){
   const nombre   =document.getElementById('gNombre').value.trim();
   const apellido =document.getElementById('gApellido').value.trim();
   const email    =document.getElementById('gEmail').value.trim();
-  const tel      =document.getElementById('gTel').value.trim();
   const pais     =document.getElementById('gPais').value;
+  const tel      =normalizarTel(document.getElementById('gTel').value, pais);
+  document.getElementById('gTel').value = tel; // que vea cómo quedó
 
   if(!nombre||!apellido||!email||!tel||!pais){
     errEl.textContent='Por favor completá todos los campos.';
@@ -5750,7 +5919,7 @@ async function verifyCode(){
 
   // Guard: si por alguna razón userData no tiene email, recuperarlo del sessionStorage
   if(!gateState.userData || !gateState.userData.email){
-    const saved=sessionStorage.getItem('mg_user');
+    const saved=mgStore.get('mg_user');
     if(saved) gateState.userData=JSON.parse(saved);
     if(!gateState.userData || !gateState.userData.email){
       errEl.textContent='Sesión expirada. Recargá la página e intentá de nuevo.';
@@ -5788,9 +5957,9 @@ async function verifyCode(){
         gateState.sessionToken=data.token; // token firmado con hash MD5
         errEl.innerHTML='<span class="gate-success">✓ Verificado correctamente</span>';
 
-        sessionStorage.setItem('mg_verified','1');
-        sessionStorage.setItem('mg_token', data.token || '');
-        sessionStorage.setItem('mg_user',JSON.stringify(gateState.userData));
+        mgStore.set('mg_verified','1');
+        mgStore.set('mg_token', data.token || '');
+        mgStore.set('mg_user',JSON.stringify(gateState.userData));
 
         // Fire-and-forget — no debe bloquear ni romper el flujo
         try { guardarContactoParcial(); } catch(e) { console.warn('guardarContactoParcial:', e); }
@@ -5880,13 +6049,13 @@ function showUnlockedBadge(){
 // ── Interceptar paso 4 del configurador para pedir verificación
 const _origGoStep=goStep;
 window.goStep=function(n){
-  if(n===4&&!gateState.verified&&sessionStorage.getItem('mg_verified')!=='1'){
+  if(n===4&&!gateState.verified&&mgStore.get('mg_verified')!=='1'){
     openGate();
     return;
   }
-  if(sessionStorage.getItem('mg_verified')==='1'&&!gateState.verified){
+  if(mgStore.get('mg_verified')==='1'&&!gateState.verified){
     gateState.verified=true;
-    const saved=sessionStorage.getItem('mg_user');
+    const saved=mgStore.get('mg_user');
     if(saved) gateState.userData=JSON.parse(saved);
   }
   _origGoStep(n);
@@ -5896,9 +6065,9 @@ window.goStep=function(n){
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeGate();});
 
 // ── Verificar si ya tenía sesión activa
-if(sessionStorage.getItem('mg_verified')==='1'){
+if(mgStore.get('mg_verified')==='1'){
   gateState.verified=true;
-  const saved=sessionStorage.getItem('mg_user');
+  const saved=mgStore.get('mg_user');
   if(saved) gateState.userData=JSON.parse(saved);
 }
 </script>
@@ -7055,7 +7224,7 @@ setupScrollReveal();
     if(!d) return;
     applySaved(d);
     syncButtons();
-    const verificado = sessionStorage.getItem('mg_verified')==='1';
+    const verificado = mgStore.get('mg_verified')==='1';
     let target = Math.max(1, Math.min(5, d.step||1));
     if(target>=4 && !verificado) target = 3;           // sin verificar, lo llevamos a la casa y de ahí pide datos
     if(target>=3 && !(state.dateIn && state.dateOut)) target = 1;
@@ -7071,7 +7240,26 @@ setupScrollReveal();
   const _prevSelectCalDay = window.selectCalDay;
   window.selectCalDay = function(){ _prevSelectCalDay.apply(this, arguments); syncButtons(); saveProgress(); };
   const _prevSelectVilla = window.selectVilla;
-  window.selectVilla = function(){ _prevSelectVilla.apply(this, arguments); syncButtons(); saveProgress(); };
+  window.selectVilla = function(){ _prevSelectVilla.apply(this, arguments); syncButtons(); saveProgress(); setTimeout(updateTotalBar,50); };
+
+  // ── Barra de total: visible en casa (3) y servicios (4) cuando hay casa elegida
+  function updateTotalBar(){
+    const bar=document.getElementById('totalBar'); if(!bar) return;
+    const confirmado = document.getElementById('confirmBox') && document.getElementById('confirmBox').style.display==='block';
+    const show = (state.step===3 || state.step===4) && !!state.villaId && !confirmado;
+    if(show){
+      let total=0; try{ total=calculateTotal(); }catch(_){}
+      document.getElementById('totalBarAmt').textContent = 'USD $' + Math.round(total).toLocaleString();
+      const n = Object.keys(state.svcs||{}).filter(k=>!k.startsWith('_')).length + Object.keys(state.barcos||{}).length;
+      document.getElementById('totalBarSub').textContent = `${state.nights} noche${state.nights!==1?'s':''} · ${state.guests} personas` + (n?` · ${n} servicio${n!==1?'s':''}`:'');
+      document.getElementById('totalBarBtn').textContent = state.step===3 ? 'Continuar →' : 'Ver resumen →';
+      document.getElementById('totalBarBtn').onclick = state.step===3 ? ()=>goStep(4) : ()=>goStep(5);
+    }
+    bar.classList.toggle('show', show);
+    document.body.classList.toggle('has-total-bar', show);
+  }
+  window.updateTotalBar = updateTotalBar;
+  ['click','change','input'].forEach(ev=>conf.addEventListener(ev, ()=>setTimeout(updateTotalBar,80), {passive:true}));
 
   // ── Envolver goStep (después del wrapper del gate) para actualizar guía y guardar
   const _prevGoStep = window.goStep;
@@ -7080,6 +7268,7 @@ setupScrollReveal();
     updateGuia();
     syncButtons();
     saveProgress();
+    setTimeout(updateTotalBar, 50);
     if(state.step===n) window.scrollTo({top:0, behavior:'smooth'});
   };
 
@@ -7111,6 +7300,7 @@ setupScrollReveal();
     window.enviarConsulta = async function(){
       const r = await _prevEnviar.apply(this, arguments);
       try{ localStorage.removeItem(SAVE_KEY); }catch(_){}
+      try{ updateTotalBar(); }catch(_){}
       return r;
     };
   }
