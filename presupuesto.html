@@ -4124,7 +4124,44 @@ function renderVillaGridFallback() {
   setTimeout(setupScrollReveal, 150);
 }
 
-loadVillasFromSheet();
+loadVillasFromSheet().then(aplicarPortadas).catch(e=>console.warn('portadas:', e));
+
+// ── PORTADAS: busca en la carpeta de cada villa un archivo cuyo nombre contenga "portada"
+//    y lo usa como foto de tapa (en el catálogo, el modal y el configurador). Cache 24 h.
+async function aplicarPortadas(){
+  const KEY = (typeof DRIVE_KEY_GALLERY !== 'undefined' && DRIVE_KEY_GALLERY) || (typeof DRIVE_KEY !== 'undefined' && DRIVE_KEY) || '';
+  if(!KEY || !Array.isArray(villasFromSheet) || !villasFromSheet.length) return;
+  const folderIdDe = u => { const m = String(u||'').match(/folders\/([a-zA-Z0-9_-]{10,})/); return m ? m[1] : null; };
+  const cacheGet = fid => { try { const d = JSON.parse(localStorage.getItem('mg_portada_'+fid)||'null'); return d && Date.now() < d.exp ? d : null; } catch(_) { return null; } };
+  const cacheSet = (fid, id) => { try { localStorage.setItem('mg_portada_'+fid, JSON.stringify({id, exp: Date.now()+24*3600*1000})); } catch(_){} };
+  let cambios = 0;
+  await Promise.all(villasFromSheet.map(async v => {
+    const fid = folderIdDe(v.carpeta_url);
+    if(!fid) return;
+    let id;
+    const c = cacheGet(fid);
+    if(c) id = c.id;
+    else {
+      try {
+        const q = encodeURIComponent(`'${fid}' in parents and mimeType contains 'image/' and name contains 'portada'`);
+        const url = `https://www.googleapis.com/drive/v3/files?q=${q}&fields=files(id,name)&pageSize=5&key=${KEY}`;
+        const data = await fetch(url).then(r=>r.json());
+        const f = (data.files||[]).find(x=>/portada/i.test(x.name)) || null;
+        id = f ? f.id : '';
+      } catch(e) { return; }
+      cacheSet(fid, id);
+    }
+    if(!id) return;
+    const nueva = 'https://drive.google.com/thumbnail?id=' + id + '&sz=w1200';
+    if(v.foto_url !== nueva){ v.foto_url = nueva; cambios++; }
+    if(villaDataFromSheet[v.id]) villaDataFromSheet[v.id].foto_url = nueva;
+  }));
+  if(cambios){
+    try { renderVillaGrid(); } catch(_){}
+    try { if(typeof renderVillas==='function' && state && state.step===3) renderVillas(); } catch(_){}
+    console.log('[MG] portadas aplicadas:', cambios);
+  }
+}
 
 // ── SERVICIOS EN VILLA (USD/día)
 const villaServices = [
