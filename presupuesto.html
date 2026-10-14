@@ -3182,6 +3182,65 @@ body.has-total-bar .config{padding-bottom:7rem}
 .wa-btn svg{width:18px;height:18px}
 @media(max-width:768px){ .boat-dests{grid-template-columns:1fr!important} }
 </style>
+
+<style>
+/* ══ PÚBLICO REAL: 99% celular, mayoría 45+ y 65+ ══ */
+.wa-inline{display:inline-flex;align-items:center;gap:.5rem;background:#25D366;color:#0b1f12;border:none;border-radius:100px;padding:.9rem 1.5rem;font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;cursor:pointer;transition:all .3s}
+.wa-inline:hover{background:#4ae389;transform:translateY(-1px)}
+.wa-inline svg{width:18px;height:18px;flex-shrink:0}
+.wa-ghost{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;width:100%;margin-top:.9rem;padding:.85rem 1rem;border-radius:100px;border:1px solid rgba(37,211,102,.45);background:rgba(37,211,102,.08);color:#9fe6b8;font-family:'Cormorant Garamond',serif;font-size:1.05rem;text-decoration:none;transition:all .25s}
+.wa-ghost:hover{background:rgba(37,211,102,.16);color:#c6f5d5}
+.wa-ghost svg{width:18px;height:18px}
+@media(max-width:768px){
+  html{font-size:17.5px}
+  body{-webkit-text-size-adjust:100%}
+  /* textos de ayuda sin cursiva: a los 65+ les cuesta leer itálica chica */
+  .cpanel-sub,.guia-m,.guia-nudge,.filter-note,.cal-hint,.gate-sub,.retomar-txt,.svc-sec-hint,.svc-acc-sub,.vo-price,.svc-opt-price,.total-bar-sub{font-style:normal!important}
+  .cpanel-sub{font-size:1.05rem!important;line-height:1.6!important;color:rgba(253,250,246,.8)!important}
+  .guia-m{font-size:1.12rem!important;line-height:1.55!important}
+  .guia-t{font-size:.66rem!important}
+  .cpanel-title{font-size:1.7rem!important}
+  /* controles grandes (mínimo 52px de alto) */
+  .cbtn-next,.gate-btn,.total-bar-btn,.btn.bf,.retomar button,.cbtn-wa{min-height:52px!important;font-size:.72rem!important;padding:.9rem 1.6rem!important}
+  .cbtn-back{min-height:48px!important;font-size:.74rem!important}
+  .cnav{gap:.8rem;flex-wrap:wrap}
+  .cal-field{min-height:64px}
+  .cal-fval{font-size:1.15rem!important}
+  .cal-day{height:48px!important;font-size:1.12rem!important}
+  .cal-nav-btn{width:44px!important;height:44px!important;font-size:1.3rem!important}
+  .cal-month-label{font-size:1.05rem!important}
+  .guest-btn{width:68px!important;height:68px!important;font-size:1.9rem!important}
+  .guest-num{font-size:3.4rem!important}
+  .guest-label{font-size:1rem!important}
+  .svc-opt{padding:1.1rem 1.1rem!important;gap:.9rem!important}
+  .svc-check{width:26px!important;height:26px!important;border-radius:6px!important;margin-top:.1rem!important}
+  .svc-check::after{width:13px!important;height:8px!important}
+  .svc-opt-name{font-size:1.15rem!important}
+  .svc-opt-desc{font-size:1rem!important}
+  .svc-opt-price{font-size:1.05rem!important}
+  .svc-chip{font-size:1rem!important;padding:.5rem 1rem!important;min-height:44px}
+  .svc-acc{min-height:64px}
+  .svc-acc-title{font-size:1.18rem!important}
+  .svc-acc-plus{width:36px!important;height:36px!important;font-size:1.5rem!important}
+  .vo-name{font-size:1.25rem!important}
+  .vo-spec{font-size:1rem!important}
+  .vo-gal{font-size:.95rem!important;padding:.5rem 1rem!important}
+  /* gate: inputs a 16px+ (iOS no hace zoom) y altos */
+  .gate-input,.gate-select{font-size:1.1rem!important;padding:.9rem 1rem!important;min-height:54px!important;border-radius:10px}
+  .gate-label{font-size:.66rem!important}
+  .gate-btn{width:100%}
+  .gate-title{font-size:1.7rem!important}
+  .gate-sub{font-size:1.05rem!important;line-height:1.55!important}
+  .code-digit{width:46px!important;height:60px!important;font-size:1.6rem!important}
+  .code-inputs{gap:.4rem!important}
+  .steps-bar{margin-bottom:1.6rem!important}
+  .step-dot{width:32px!important;height:32px!important;font-size:.62rem!important}
+  .step-label{font-size:.58rem!important}
+  .total-bar-amt{font-size:1.2rem!important}
+  .summary-line{font-size:1.02rem}
+  .sl-name,.sl-val{font-size:1rem!important}
+}
+</style>
 </head>
 <body class="presupuesto-page">
 
@@ -3194,7 +3253,7 @@ body.has-total-bar .config{padding-bottom:7rem}
     <div id="gateStepA">
       <div class="gate-logo">MG Experiences</div>
       <h2 class="gate-title">Para ver los precios,<br>necesitamos conocerte</h2>
-      <p class="gate-sub">Ingresá tus datos y te enviamos un código de verificación. Sin spam — solo para confirmar que sos una persona real.</p>
+      <p class="gate-sub">Dejanos tus datos y te mandamos un código por email para confirmar que sos una persona real. Sin spam. Te atendemos en español, por WhatsApp.</p>
       <form class="gate-form" onsubmit="sendCode(event)" autocomplete="on">
         <div class="gate-row">
           <div class="gate-group">
@@ -3213,13 +3272,13 @@ body.has-total-bar .config{padding-bottom:7rem}
         <div class="gate-row">
           <div class="gate-group">
             <label class="gate-label">Teléfono / WhatsApp</label>
-            <input class="gate-input" id="gTel" name="tel" type="tel" placeholder="+54 11 1234 5678" autocomplete="tel" inputmode="tel" required>
+            <input class="gate-input" id="gTel" name="tel" type="tel" placeholder="+54 9 11 1234 5678" autocomplete="tel" inputmode="tel" required>
           </div>
           <div class="gate-group">
             <label class="gate-label">País</label>
             <select class="gate-select" id="gPais" name="country-name" autocomplete="country-name" required>
               <option value="">Seleccioná...</option>
-              <option>Argentina</option>
+              <option selected>Argentina</option>
               <option>Uruguay</option>
               <option>Chile</option>
               <option>Brasil</option>
@@ -3242,6 +3301,7 @@ body.has-total-bar .config{padding-bottom:7rem}
         <div class="gate-error" id="gateErrorA"></div>
         <button class="gate-btn" type="submit" id="gateBtnA">Recibir código →</button>
       </form>
+      <a class="wa-ghost" href="https://wa.me/5491164388699?text=Hola%20MG%20Experiences%2C%20quiero%20informaci%C3%B3n%20para%20una%20estad%C3%ADa%20en%20Casa%20de%20Campo." target="_blank" rel="noopener" onclick="try{if(typeof gtag==='function')gtag('event','whatsapp_click',{origen:'gate'})}catch(_){}"><svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 12 12 0 0 0 4.6 4c1.7.7 2.3.6 2.7.5a2.6 2.6 0 0 0 1.7-1.2c.2-.6.2-1 .1-1.2z"/></svg> Prefiero que me escriban por WhatsApp</a>
     </div>
 
     <!-- STEP B: Verificación de código -->
@@ -3314,7 +3374,7 @@ body.has-total-bar .config{padding-bottom:7rem}
       <span class="lbl">2 minutos · Personalizado · Sin obligaciones</span>
       <h2 class="bigt">Tu presupuesto,<br><em>en 5 pasos</em></h2>
       <div class="rule rc"></div>
-      <p class="prose" style="margin:0 auto;max-width:520px">Elegís fechas, casa y servicios. Te mostramos un presupuesto aproximado y lo confirmamos con vos en menos de 2 horas. Tu avance queda guardado por si querés seguir después.</p>
+      <p class="prose" style="margin:0 auto;max-width:520px">Elegís fechas, casa y servicios. Te mostramos un presupuesto aproximado y lo confirmamos con vos por WhatsApp en menos de 2 horas. Tu avance queda guardado por si querés seguir después.</p>
       <div class="config-trust-badges">
         <span class="ctb"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Presupuesto personalizado</span>
         <span class="ctb"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Verificamos disponibilidad</span>
@@ -5583,7 +5643,7 @@ async function enviarConsulta(){
 // ══════════════════════════════════════════════════════════════════
 
 // ── WhatsApp de MG Experiences (solo dígitos, con código de país; vacío = no se muestra el botón)
-const MG_WHATSAPP = '';
+const MG_WHATSAPP = '5491164388699';
 
 function buildWhatsAppLink(){
   if(!MG_WHATSAPP) return '';
