@@ -2303,29 +2303,29 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
       <div class="gate-logo">MG Experiences</div>
       <h2 class="gate-title">Para ver los precios,<br>necesitamos conocerte</h2>
       <p class="gate-sub">Ingresá tus datos y te enviamos un código de verificación. Sin spam — solo para confirmar que sos una persona real.</p>
-      <form class="gate-form" onsubmit="sendCode(event)">
+      <form class="gate-form" onsubmit="sendCode(event)" autocomplete="on">
         <div class="gate-row">
           <div class="gate-group">
             <label class="gate-label">Nombre</label>
-            <input class="gate-input" id="gNombre" type="text" placeholder="Luciano" required>
+            <input class="gate-input" id="gNombre" name="given-name" type="text" placeholder="Luciano" autocomplete="given-name" required>
           </div>
           <div class="gate-group">
             <label class="gate-label">Apellido</label>
-            <input class="gate-input" id="gApellido" type="text" placeholder="García" required>
+            <input class="gate-input" id="gApellido" name="family-name" type="text" placeholder="García" autocomplete="family-name" required>
           </div>
         </div>
         <div class="gate-group">
           <label class="gate-label">Email</label>
-          <input class="gate-input" id="gEmail" type="email" placeholder="luciano@email.com" required>
+          <input class="gate-input" id="gEmail" name="email" type="email" placeholder="luciano@email.com" autocomplete="email" inputmode="email" required>
         </div>
         <div class="gate-row">
           <div class="gate-group">
             <label class="gate-label">Teléfono / WhatsApp</label>
-            <input class="gate-input" id="gTel" type="tel" placeholder="+54 11 1234 5678" required>
+            <input class="gate-input" id="gTel" name="tel" type="tel" placeholder="+54 11 1234 5678" autocomplete="tel" inputmode="tel" required>
           </div>
           <div class="gate-group">
             <label class="gate-label">País</label>
-            <select class="gate-select" id="gPais" required>
+            <select class="gate-select" id="gPais" name="country-name" autocomplete="country-name" required>
               <option value="">Seleccioná...</option>
               <option>Argentina</option>
               <option>Uruguay</option>
@@ -2344,8 +2344,8 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
             </select>
           </div>
         </div>
-        <!-- HONEYPOT: campo trampa para bots — NO mover ni hacer visible -->
-        <input type="text" name="website" id="hpField" tabindex="-1" autocomplete="off"
+        <!-- HONEYPOT: campo trampa para bots — nombre sin significado para que el browser NO lo autocomplete -->
+        <input type="text" name="xq_ref_k7" id="hpField" tabindex="-1" autocomplete="off"
           style="position:absolute;left:-9999px;opacity:0;height:0;width:0;pointer-events:none" aria-hidden="true">
         <div class="gate-error" id="gateErrorA"></div>
         <button class="gate-btn" type="submit" id="gateBtnA">Recibir código →</button>
@@ -2385,7 +2385,7 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
     <li><a href="#villas">Villas</a></li>
     <li><a href="#embarcaciones">Embarcaciones</a></li>
     <li><a href="#golf">Golf</a></li>
-    <li><a href="#tu-experiencia">Diseñá tu estadía</a></li>
+    <li><a href="presupuesto.html">Armá tu presupuesto</a></li>
     <li><a href="#resenas">Reseñas</a></li>
     <li><a href="#nosotros">Nosotros</a></li>
 
@@ -2406,7 +2406,7 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
   <a href="#villas" onclick="toggleMobileNav()">Villas</a>
   <a href="#embarcaciones" onclick="toggleMobileNav()">Embarcaciones</a>
   <a href="#golf" onclick="toggleMobileNav()">Golf</a>
-  <a href="#tu-experiencia" onclick="toggleMobileNav()">Diseñá tu estadía</a>
+  <a href="presupuesto.html" onclick="toggleMobileNav()">Armá tu presupuesto</a>
   <a href="#resenas" onclick="toggleMobileNav()">Reseñas</a>
   <a href="#nosotros" onclick="toggleMobileNav()">Nosotros</a>
 </div>
@@ -2424,7 +2424,7 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
     </h1>
     <p class="hsub anim-up" style="animation-delay:.8s">Casas privadas · Golf · Playa · Marina<br><em style="font-style:italic;color:rgba(212,184,154,.7)">Todo dentro del resort más exclusivo del Caribe.</em></p>
     <div class="hbtns anim-up" style="animation-delay:.95s">
-      <a href="#tu-experiencia" class="btn bf hero-primary-cta">Armá tu presupuesto ✦</a>
+      <a href="presupuesto.html" class="btn bf hero-primary-cta">Armá tu presupuesto ✦</a>
     </div>
     <div class="hero-social-proof anim-up" style="animation-delay:1.2s">
       <span class="hero-sp-stars">★★★★★</span>
@@ -2448,200 +2448,31 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
 <!-- ════════════════════════════════════════
      CONFIGURADOR DE EXPERIENCIA
 ════════════════════════════════════════ -->
-<section class="config rv" id="tu-experiencia">
-  <div class="config-inner">
-    <div class="config-head" data-reveal>
-      <span class="lbl">Rápido · Personalizado · Sin obligaciones</span>
+<section class="config rv" id="tu-experiencia" style="padding:7rem 2rem">
+  <div class="config-inner" style="max-width:820px;text-align:center">
+    <div class="config-head" data-reveal style="margin-bottom:2.4rem">
+      <span class="lbl">2 minutos · Personalizado · Sin obligaciones</span>
       <h2 class="bigt">Tu presupuesto,<br><em>en 5 pasos</em></h2>
       <div class="rule rc"></div>
-      <p class="prose" style="margin:0 auto;max-width:520px">Elegís fechas, villa y servicios. Generamos un presupuesto aproximado que verificamos en tiempo real y te enviamos personalizado.</p>
+      <p class="prose" style="margin:0 auto;max-width:520px">Elegís fechas, casa y servicios. Te mostramos un presupuesto aproximado y lo confirmamos con vos en menos de 2 horas.</p>
       <div class="config-trust-badges">
         <span class="ctb"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Presupuesto personalizado</span>
         <span class="ctb"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Verificamos disponibilidad</span>
         <span class="ctb"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Sin compromiso</span>
       </div>
     </div>
-
-    <!-- Progress bar -->
-    <div class="steps-bar">
-      <div class="step-item">
-        <div class="step-dot active" id="dot0">1</div>
-        <span class="step-label active" id="lbl0">Fechas</span>
-      </div>
+    <div class="steps-bar" data-reveal style="margin-bottom:2.6rem">
+      <div class="step-item"><div class="step-dot done">1</div><span class="step-label done">Fechas</span></div>
       <div class="step-line"></div>
-      <div class="step-item">
-        <div class="step-dot" id="dot1">2</div>
-        <span class="step-label" id="lbl1">Personas</span>
-      </div>
+      <div class="step-item"><div class="step-dot done">2</div><span class="step-label done">Personas</span></div>
       <div class="step-line"></div>
-      <div class="step-item">
-        <div class="step-dot" id="dot2">3</div>
-        <span class="step-label" id="lbl2">Villa</span>
-      </div>
+      <div class="step-item"><div class="step-dot done">3</div><span class="step-label done">Villa</span></div>
       <div class="step-line"></div>
-      <div class="step-item">
-        <div class="step-dot" id="dot3">4</div>
-        <span class="step-label" id="lbl3">Servicios</span>
-      </div>
+      <div class="step-item"><div class="step-dot done">4</div><span class="step-label done">Servicios</span></div>
       <div class="step-line"></div>
-      <div class="step-item">
-        <div class="step-dot" id="dot4">5</div>
-        <span class="step-label" id="lbl4">Resumen</span>
-      </div>
+      <div class="step-item"><div class="step-dot done">5</div><span class="step-label done">Resumen</span></div>
     </div>
-
-    <!-- STEP 0: Intent - HIDDEN (redirect to step 1 directly) -->
-    <div class="cpanel" id="panel0" style="display:none">
-      <div class="cpanel-title">¿Qué tipo de estadía buscás?</div>
-      <p class="cpanel-sub">Elegí lo que mejor describe tu viaje — personalizamos las opciones para vos.</p>
-      <div class="intent-grid" style="display:none">
-        <button class="intent-card" onclick="selectIntent('familia')">
-          <div class="intent-icon">
-            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="14" cy="10" r="4"/><circle cx="26" cy="10" r="4"/>
-              <path d="M6 32 C6 24 10 20 14 20 C18 20 22 24 22 32"/>
-              <path d="M22 32 C22 26 24 22 26 22 C28 22 30 25 31 28"/>
-              <circle cx="20" cy="33" r="1.5" fill="currentColor"/>
-            </svg>
-          </div>
-          <div class="intent-name">Familia</div>
-          <div class="intent-desc">Con chicos · Espacios amplios · Pileta</div>
-        </button>
-        <button class="intent-card" onclick="selectIntent('amigos')">
-          <div class="intent-icon">
-            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="4"/><circle cx="20" cy="10" r="4"/><circle cx="28" cy="12" r="4"/>
-              <path d="M4 32 C4 25 8 21 12 21"/>
-              <path d="M20 20 C24 20 28 24 28 30"/>
-              <path d="M28 21 C32 21 36 25 36 32"/>
-              <path d="M12 21 C16 21 20 22 20 20"/>
-            </svg>
-          </div>
-          <div class="intent-name">Grupo de amigos</div>
-          <div class="intent-desc">Barco · Golf · Vida nocturna</div>
-        </button>
-        <button class="intent-card" onclick="selectIntent('pareja')">
-          <div class="intent-icon">
-            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="14" cy="11" r="4"/><circle cx="26" cy="11" r="4"/>
-              <path d="M6 32 C6 24 10 20 14 20 C18 20 22 24 22 32"/>
-              <path d="M26 20 C30 20 34 24 34 32"/>
-              <path d="M20 17 C20 14 23 12 26 15"/>
-            </svg>
-          </div>
-          <div class="intent-name">Pareja</div>
-          <div class="intent-desc">Privacidad · Romance · Spa</div>
-        </button>
-      </div>
-    </div>
-
-    <!-- STEP 1: Fechas -->
-    <div class="cpanel active" id="panel1">
-      <div class="cpanel-title">¿Cuándo querés viajar?</div>
-      <p class="cpanel-sub">Las fechas afectan disponibilidad y temporada. Elegí el período que te interesa.</p>
-
-      <!-- Custom date picker -->
-      <div class="cal-wrap">
-        <div class="cal-fields">
-          <div class="cal-field" id="cfIn" onclick="openCal('in')">
-            <div class="cal-flabel">Llegada</div>
-            <div class="cal-fval" id="cfInVal">Seleccioná</div>
-          </div>
-          <div class="cal-arrow">→</div>
-          <div class="cal-field" id="cfOut" onclick="openCal('out')">
-            <div class="cal-flabel">Salida</div>
-            <div class="cal-fval" id="cfOutVal">Seleccioná</div>
-          </div>
-        </div>
-
-        <!-- Calendar dropdown -->
-        <div class="cal-drop" id="calDrop">
-          <div class="cal-nav">
-            <button class="cal-nav-btn" onclick="calShift(-1)">‹</button>
-            <span class="cal-month-label" id="calMonthLabel"></span>
-            <button class="cal-nav-btn" onclick="calShift(1)">›</button>
-          </div>
-          <div class="cal-grid">
-            <div class="cal-dow">L</div><div class="cal-dow">M</div><div class="cal-dow">M</div>
-            <div class="cal-dow">J</div><div class="cal-dow">V</div>
-            <div class="cal-dow cal-dow-wk">S</div><div class="cal-dow cal-dow-wk">D</div>
-          </div>
-          <div class="cal-days" id="calDays"></div>
-          <div class="cal-hint" id="calHint">Seleccioná la fecha de llegada</div>
-        </div>
-      </div>
-
-      <div id="nights-display" style="text-align:center;font-family:'Playfair Display',serif;font-style:italic;font-size:1.2rem;color:var(--vl);min-height:1.8rem;margin-top:.5rem"></div>
-      <div class="cnav">
-        <button class="cbtn-back" style="visibility:hidden">← Volver</button>
-        <button class="cbtn-next" onclick="goStep(2)">Siguiente →</button>
-      </div>
-    </div>
-
-    <!-- STEP 2: Personas -->
-    <div class="cpanel" id="panel2">
-      <div class="cpanel-title">¿Cuántos van?</div>
-      <p class="cpanel-sub">Incluyendo chicos — así encontramos la casa que tiene el espacio justo para todos.</p>
-      <div class="guest-row">
-        <button class="guest-btn" onclick="changeGuests(-1)">−</button>
-        <div>
-          <div class="guest-num" id="guestNum">8</div>
-          <div class="guest-label">personas</div>
-        </div>
-        <button class="guest-btn" onclick="changeGuests(1)">+</button>
-      </div>
-      <div class="cnav">
-        <button class="cbtn-back" onclick="goStep(1)">← Volver</button>
-        <button class="cbtn-next" onclick="goStep(3)">Siguiente →</button>
-      </div>
-    </div>
-
-    <!-- STEP 3: Villa -->
-    <div class="cpanel" id="panel3">
-      <div class="cpanel-title">¿Qué casa te gusta?</div>
-      <p class="cpanel-sub filter-note" id="filterNote">Casas sugeridas para tu grupo</p>
-      <div class="villa-sel-grid" id="villaGrid"></div>
-      <div class="cnav">
-        <button class="cbtn-back" onclick="goStep(2)">← Volver</button>
-        <button class="cbtn-next" onclick="goStep(4)">Siguiente →</button>
-      </div>
-    </div>
-
-    <!-- STEP 4: Servicios -->
-    <div class="cpanel" id="panel4">
-      <div class="cpanel-title">Servicios adicionales</div>
-      <p class="cpanel-sub">Sumá lo que necesitás: traslados, golf, embarcaciones, chef privado. Los precios se ajustan según disponibilidad.</p>
-      <div class="svc-opts" id="svcOptsContainer" style="grid-template-columns:1fr 1fr">
-        <!-- Renderizado dinámico desde renderServices() -->
-      </div>
-      <div class="cnav">
-        <button class="cbtn-back" onclick="goStep(3)">← Volver</button>
-        <button class="cbtn-next" onclick="goStep(5)">Ver resumen →</button>
-      </div>
-    </div>
-
-    <!-- STEP 5: Summary -->
-    <div class="cpanel" id="panel5">
-      <div class="cpanel-title">Tu presupuesto aproximado</div>
-      <p class="cpanel-sub">Estos precios son referenciales según temporada. Nos contactamos para confirmar disponibilidad, tarifas exactas y detalles de tu viaje.</p>
-      <div class="summary-box" id="summaryBox"></div>
-      <div class="cnav">
-        <button class="cbtn-back" onclick="goStep(4)">← Modificar</button>
-        <button class="cbtn-wa" id="submitBtn" onclick="enviarConsulta()">
-          Confirmar presupuesto ✦
-        </button>
-      </div>
-      <!-- Pantalla de confirmación -->
-      <div id="confirmBox" style="display:none;text-align:center;padding:2.5rem 1.5rem">
-        <div style="font-size:2.4rem;margin-bottom:1.2rem">✓</div>
-        <div style="font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.25em;color:var(--vl);text-transform:uppercase;margin-bottom:1rem">Presupuesto confirmado</div>
-        <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:rgba(253,250,246,.75);line-height:1.9;margin-bottom:1.5rem">
-          Tu presupuesto fue enviado.<br>Nos contactamos en menos de 2 horas para confirmar disponibilidad, ajustar detalles y cerrar tu viaje.
-        </div>
-        <button class="btn bf" style="font-size:.65rem" onclick="openAsistente()">Hablar con tu Asistente ✦</button>
-      </div>
-    </div>
-
+    <a href="presupuesto.html" class="btn bf" data-reveal style="font-size:.72rem;padding:1.1rem 2.6rem">Empezar mi presupuesto ✦</a>
   </div>
 </section>
 
@@ -2657,7 +2488,7 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
       <div class="rule"></div>
       <p class="prose" style="font-size:1rem;color:rgba(253,250,246,.5)">Privadas · Con pileta · Dentro del resort<br><span style="font-size:.85rem;color:rgba(212,184,154,.55)">Tocá cualquier villa para ver fotos, amenities y precios</span></p>
     </div>
-    <a href="#tu-experiencia" class="btn bf rv rv2" data-reveal>Armá tu presupuesto ✦</a>
+    <a href="presupuesto.html" class="btn bf rv rv2" data-reveal>Armá tu presupuesto ✦</a>
   </div>
 
   <div class="vfilt" data-reveal>
@@ -2686,7 +2517,7 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
       <p class="cta-strip-eyebrow">¿Ya sabés qué villa te gusta?</p>
       <p class="cta-strip-title">Armá tu presupuesto en 2 minutos</p>
     </div>
-    <a href="#tu-experiencia" class="cta-strip-btn">Empezar ahora →</a>
+    <a href="presupuesto.html" class="cta-strip-btn">Empezar ahora →</a>
   </div>
 </div>
 
@@ -2718,7 +2549,7 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
         <div class="frow"><div><div class="fn">Tiara 38 LS</div><div class="fs2">Sport Cruiser</div></div><div class="fc">12 pas.</div></div>
         <div class="frow"><div><div class="fn">Boston Whaler Conquest 305</div><div class="fs2">Open Sport</div></div><div class="fc">9 pas.</div></div>
       </div>
-      <div style="margin-top:1.8rem"><a href="#tu-experiencia" class="btn bf">Reservar salida</a></div>
+      <div style="margin-top:1.8rem"><a href="presupuesto.html" class="btn bf">Reservar salida</a></div>
     </div>
   </div>
 </section>
@@ -2791,7 +2622,7 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
       </div>
     </div>
 
-    <a href="#tu-experiencia" class="cdc-hero-cta">
+    <a href="presupuesto.html" class="cdc-hero-cta">
       <span class="cdc-hero-cta-label">Diseñá tu estadía</span>
       <span class="cdc-hero-cta-sub">Presupuesto a medida en 2 minutos</span>
     </a>
@@ -3035,7 +2866,7 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
 
     <div style="margin-top:2.5rem;text-align:center" data-reveal>
       <p style="font-family:'Cinzel',serif;font-size:.45rem;letter-spacing:.2em;color:rgba(253,250,246,.2);text-transform:uppercase;margin-bottom:1.5rem">Tocá cada actividad para ver más detalles</p>
-      <a href="#tu-experiencia" class="btn bf" style="display:inline-flex;align-items:center;gap:.6rem">
+      <a href="presupuesto.html" class="btn bf" style="display:inline-flex;align-items:center;gap:.6rem">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
         Sumá actividades a tu estadía
       </a>
@@ -3072,7 +2903,7 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
     </div>
     <blockquote class="fquote">"Queremos que llegués, te instalés, y no tengas que pensar en nada más. Eso es todo."</blockquote>
     <div style="display:flex;gap:.8rem;margin-top:2rem;flex-wrap:wrap">
-      <a href="#tu-experiencia" class="btn bf" style="font-size:.62rem">Armá tu estadía con nosotros ✦</a>
+      <a href="presupuesto.html" class="btn bf" style="font-size:.62rem">Armá tu estadía con nosotros ✦</a>
     </div>
   </div>
 </div>
@@ -3238,7 +3069,7 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
       <span class="lbl" style="color:rgba(212,184,154,.5)">¿Listo para empezar?</span>
       <h2 class="bigt" style="color:var(--wh);margin:.8rem 0 1.8rem">Tu próxima estadía<br><em style="color:var(--vl)">empieza acá</em></h2>
       <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
-        <a href="#tu-experiencia" class="btn bf">Diseñá tu estadía ✦</a>
+        <a href="presupuesto.html" class="btn bf">Diseñá tu estadía ✦</a>
       </div>
     </div>
   </div>
@@ -3262,11 +3093,11 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
       <div class="fct">Servicios</div>
       <ul class="flinks">
         <li><a href="#villas">Villas</a></li>
-        <li><a href="#tu-experiencia">Embarcaciones</a></li>
-        <li><a href="#tu-experiencia">Green Fee</a></li>
-        <li><a href="#tu-experiencia">Traslados</a></li>
-        <li><a href="#tu-experiencia">Migración VIP</a></li>
-        <li><a href="#tu-experiencia">Armá tu estadía</a></li>
+        <li><a href="presupuesto.html">Embarcaciones</a></li>
+        <li><a href="presupuesto.html">Green Fee</a></li>
+        <li><a href="presupuesto.html">Traslados</a></li>
+        <li><a href="presupuesto.html">Migración VIP</a></li>
+        <li><a href="presupuesto.html">Armá tu estadía</a></li>
       </ul>
     </div>
     <div>
@@ -4182,17 +4013,25 @@ function trackPresupuestoCompleto(montoTotal) {
   }
 }
 
+// ── Total del presupuesto (usado por tracking y por el gate)
+function calculateTotal(){
+  try{
+    if(!state.dateIn||!state.dateOut||!state.villaId) return 0;
+    const box=document.getElementById('summaryBox');
+    const prev=box?box.innerHTML:null;
+    renderSummary();
+    if(box && state.step!==5) box.innerHTML=prev; // no tocar lo que se estaba viendo
+    return window._mgTotal||0;
+  }catch(e){ console.warn('calculateTotal:', e); return 0; }
+}
+
 // ── STATE
 let state = {step:1, nights:0, guests:8, villaId:null, svcs:{}, barcoId:null, barcos:{}, golfId:null, aeropuertoId:null, openAccordion:null};
 
 // ── VILLA CATALOG: select and jump to configurator
 function selectVillaAndGo(villaId){
-  state.villaId = villaId;
-  document.getElementById('tu-experiencia').scrollIntoView({behavior:'smooth', block:'start'});
-  // If already past step 1, jump to step 3
-  if(state.dateIn && state.dateOut && state.nights > 0){
-    setTimeout(()=>{ goStep(3); renderVillas(); }, 600);
-  }
+  // El configurador vive en presupuesto.html: vamos ahí con la casa ya elegida
+  window.location.href = 'presupuesto.html?villa=' + encodeURIComponent(villaId);
 }
 
 // ── VILLA FILTER
@@ -4260,8 +4099,8 @@ function updateStepBar(){
     if(!dot) continue;
     dot.classList.remove('active','done');
     lbl.classList.remove('active','done');
-    if(i<state.step){dot.classList.add('done');dot.textContent='✓';lbl.classList.add('done')}
-    else if(i===state.step){dot.classList.add('active');dot.textContent=i+1;lbl.classList.add('active')}
+    if(i<state.step-1){dot.classList.add('done');dot.textContent='✓';lbl.classList.add('done')}
+    else if(i===state.step-1){dot.classList.add('active');dot.textContent=i+1;lbl.classList.add('active')}
     else{dot.textContent=i+1}
   }
 }
@@ -4811,6 +4650,9 @@ function toggleAccordion(key){
 
 // Nav links: llevar al configurador y abrir sección específica
 function navToSection(seccion){
+  // El configurador vive en presupuesto.html
+  window.location.href = 'presupuesto.html?seccion=' + encodeURIComponent(seccion || '');
+  return;
   const el = document.getElementById('tu-experiencia');
   if(!el) return;
   el.scrollIntoView({behavior:'smooth', block:'start'});
@@ -4914,6 +4756,7 @@ function renderSummary(){
   }
 
   const total=villaTotal+cdcTotal+extrasTotal;
+  window._mgTotal=total;
   const perPerson=guests>0?Math.round(total/guests):0;
   html+=`<div style="height:1px;background:rgba(174,133,96,.15);margin:1.2rem 0"></div>`;
 
@@ -5253,6 +5096,7 @@ let gateState = {
   attempts: 0,
   userData: null,
   codeExpiry: null,
+  openedAt: null,
 };
 
 // ── RATE LIMITING — máx 3 envíos por sesión, bloqueo 10 min
@@ -5291,7 +5135,7 @@ function rateLimitMinutesLeft(){
 // ── VALIDACIÓN DE NOMBRE — detecta strings aleatorios de bots
 function isNameValid(nombre,apellido){
   if(nombre.length<2||apellido.length<2) return false;
-  const nameRegex=/^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑàèìòùÀÈÌÒÙ\s'-]+$/;
+  const nameRegex=/^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑàèìòùÀÈÌÒÙ\s'.-]+$/;
   if(!nameRegex.test(nombre)||!nameRegex.test(apellido)) return false;
   if(nombre.length>20&&!/\s/.test(nombre)) return false;
   // Detectar patrón bot: alternancia excesiva mayúscula/minúscula
@@ -5311,6 +5155,7 @@ function isEmailValid(email){
 
 // ── Mostrar / cerrar gate
 function openGate(){
+  gateState.openedAt = Date.now();
   document.getElementById('gateOverlay').classList.add('show');
   document.getElementById('gNombre').focus();
 }
@@ -5325,9 +5170,11 @@ async function sendCode(e){
   const errEl =document.getElementById('gateErrorA');
   errEl.textContent='';
 
-  // ── HONEYPOT: si el bot llenó el campo trampa, simular éxito sin enviar nada
+  // ── HONEYPOT + velocidad: solo es bot si llenó el campo trampa Y envió en menos de 3 s
+  // (el autocompletado de un humano nunca cumple las dos a la vez)
   const hp=document.getElementById('hpField');
-  if(hp&&hp.value.trim()!==''){
+  const demasiadoRapido = gateState.openedAt && (Date.now()-gateState.openedAt) < 3000;
+  if(hp&&hp.value.trim()!==''&&demasiadoRapido){
     btn.disabled=true;
     btn.textContent='Enviando...';
     await new Promise(r=>setTimeout(r,2000));
@@ -5336,6 +5183,7 @@ async function sendCode(e){
     document.getElementById('gateStepB').style.display='block';
     return;
   }
+  if(hp) hp.value=''; // si lo llenó el autocompletado, lo limpiamos y seguimos normal
 
   // ── RATE LIMIT CHECK
   if(isRateLimited()){
@@ -5730,7 +5578,7 @@ function openResortModal(zoneId) {
       </div>
 
       <div class="rm-ctas">
-        <button class="rm-cta-main" onclick="closeResortModal();document.getElementById('tu-experiencia').scrollIntoView({behavior:'smooth',block:'start'})">
+        <button class="rm-cta-main" onclick="closeResortModal();window.location.href='presupuesto.html'">
           Armá tu estadía ✦
         </button>
       </div>
@@ -6412,21 +6260,8 @@ function closeVModal() {
 
 function selectVillaFromModal(id) {
   closeVModal();
-  // Preselect villa in state
-  state.villaId = id;
-  // Scroll to configurator
-  const conf = document.getElementById('tu-experiencia');
-  if(conf) conf.scrollIntoView({behavior:'smooth', block:'start'});
-  setTimeout(()=>{
-    if(state.dateIn && state.dateOut && state.nights > 0){
-      // Dates set → go straight to villa step
-      goStep(3);
-      renderVillas();
-    } else {
-      // No dates yet → start from step 1, villa already preselected for later
-      goStep(1);
-    }
-  }, 700);
+  // El configurador vive en presupuesto.html: vamos ahí con la casa ya elegida
+  window.location.href = 'presupuesto.html?villa=' + encodeURIComponent(id);
 }
 
 document.addEventListener('keydown', e => {
@@ -7515,7 +7350,7 @@ document.addEventListener('DOMContentLoaded', setupScrollReveal);
 </script>
 
 <!-- FLOATING BUDGET CTA — Always-visible conversion driver -->
-<a href="#tu-experiencia" id="floatingBudgetBtn" aria-label="Armá tu presupuesto" style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:899;display:flex;align-items:center;gap:.7rem;padding:.95rem 1.6rem;background:linear-gradient(135deg,var(--vl) 0%,var(--v) 100%);color:var(--bk);text-decoration:none;border-radius:100px;box-shadow:0 12px 40px rgba(174,133,96,.45),0 2px 8px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.25);font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;font-weight:500;transition:all .4s cubic-bezier(.25,.46,.45,.94);opacity:0;pointer-events:none">
+<a href="presupuesto.html" id="floatingBudgetBtn" aria-label="Armá tu presupuesto" style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:899;display:flex;align-items:center;gap:.7rem;padding:.95rem 1.6rem;background:linear-gradient(135deg,var(--vl) 0%,var(--v) 100%);color:var(--bk);text-decoration:none;border-radius:100px;box-shadow:0 12px 40px rgba(174,133,96,.45),0 2px 8px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.25);font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;font-weight:500;transition:all .4s cubic-bezier(.25,.46,.45,.94);opacity:0;pointer-events:none">
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M12 2L2 7l10 5 10-5-10-5z"/>
     <path d="M2 17l10 5 10-5"/>
