@@ -5411,7 +5411,30 @@ console.log('%c[MG] HTML version: 2026-05-26-v3 con JSONP + parser de precios', 
 // ─── JSONP HELPER ────────────────────────────────────────────────────────────
 // Apps Script redirige a script.googleusercontent.com que no devuelve headers CORS.
 // JSONP usa un <script> tag dinámico que no tiene la restricción CORS.
-function jsonpRequest(params, timeoutMs) {
+async function jsonpRequest(params, timeoutMs) {
+  // 1) fetch directo (Apps Script sigue el redirect a googleusercontent y responde JSON con CORS)
+  try {
+    const qs = new URLSearchParams(params);
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), timeoutMs || 20000);
+    const res = await fetch(APPS_SCRIPT_URL + '?' + qs.toString(), { method:'GET', redirect:'follow', cache:'no-store', signal: ctrl.signal });
+    clearTimeout(t);
+    if (res.ok) {
+      const txt = await res.text();
+      const m = txt.trim().match(/^[\w$]+\((.*)\)\s*;?$/s);
+      const data = JSON.parse(m ? m[1] : txt);
+      console.log('[fetch] respuesta:', params.action || '?', data);
+      return data;
+    }
+    console.warn('[fetch] status', res.status, '— probando JSONP');
+  } catch (err) {
+    console.warn('[fetch] falló —', err && err.message, '— probando JSONP');
+  }
+  // 2) respaldo JSONP
+  return jsonpRequestScript(params, timeoutMs);
+}
+
+function jsonpRequestScript(params, timeoutMs) {
   return new Promise((resolve, reject) => {
     const cbName = 'jsonp_cb_' + Date.now() + '_' + Math.floor(Math.random()*100000);
     const script = document.createElement('script');
