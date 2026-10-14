@@ -3301,7 +3301,7 @@ body.has-total-bar .config{padding-bottom:7rem}
         <div class="gate-error" id="gateErrorA"></div>
         <button class="gate-btn" type="submit" id="gateBtnA">Recibir código →</button>
       </form>
-      <a class="wa-ghost" href="https://wa.me/5491164388699?text=Hola%20MG%20Experiences%2C%20quiero%20informaci%C3%B3n%20para%20una%20estad%C3%ADa%20en%20Casa%20de%20Campo." target="_blank" rel="noopener" onclick="try{if(typeof gtag==='function')gtag('event','whatsapp_click',{origen:'gate'})}catch(_){}"><svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 12 12 0 0 0 4.6 4c1.7.7 2.3.6 2.7.5a2.6 2.6 0 0 0 1.7-1.2c.2-.6.2-1 .1-1.2z"/></svg> Prefiero que me escriban por WhatsApp</a>
+      <a class="wa-ghost" href="https://wa.me/5491164388699?text=Hola%20MG%20Experiences%2C%20quiero%20informaci%C3%B3n%20para%20una%20estad%C3%ADa%20en%20Casa%20de%20Campo." target="_blank" rel="noopener" onclick="try{if(typeof gtag==='function')gtag('event','whatsapp_click',{origen:'gate'})}catch(_){};try{if(typeof fbq==='function')fbq('trackCustom','whatsapp_click',{origen:'gate'})}catch(_){}"><svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 12 12 0 0 0 4.6 4c1.7.7 2.3.6 2.7.5a2.6 2.6 0 0 0 1.7-1.2c.2-.6.2-1 .1-1.2z"/></svg> Prefiero que me escriban por WhatsApp</a>
     </div>
 
     <!-- STEP B: Verificación de código -->
@@ -4547,32 +4547,41 @@ function trackPresupuestoViewed(presupuestoTotal) {
   }
 }
 
+// Código enviado (dejó sus datos, todavía sin verificar) → Contact
 function trackLeadCapturado(email, nombre, presupuesto) {
   if (typeof fbq !== 'undefined') {
-    fbq('track', 'Lead', {
-      content_name: 'Lead Capturado',
-      content_type: 'lead',
-      value: presupuesto,
+    try { fbq('track', 'Contact', {
+      content_name: 'Datos cargados — código enviado',
+      value: presupuesto || 0,
       currency: 'USD'
-    });
-    
-    fbq('track', 'Contact', {
-      content_name: 'Cliente de Alto Valor',
-      value: presupuesto,
-      currency: 'USD'
-    });
+    }); } catch(_){}
   }
 }
 
+// Verificó el código → Lead real (mismo momento que generate_lead en GA4)
 function trackPresupuestoCompleto(montoTotal) {
   if (typeof fbq !== 'undefined') {
-    fbq('track', 'Purchase', {
-      content_name: 'Presupuesto Completado',
-      content_type: 'product',
-      value: montoTotal,
+    const eid = 'lead_' + Date.now() + '_' + Math.floor(Math.random()*1e6);
+    try { fbq('track', 'Lead', {
+      content_name: 'Lead verificado — configurador web',
+      content_category: 'presupuesto',
+      value: montoTotal || 0,
       currency: 'USD'
-    });
+    }, { eventID: eid }); } catch(_){}
+    try { fbq('track', 'CompleteRegistration', { content_name: 'Verificación OTP', status: 'verified' }); } catch(_){}
   }
+}
+
+// Confirmó el presupuesto → SubmitApplication (antes no se informaba a Meta)
+function trackPresupuestoEnviado(montoTotal) {
+  if (typeof fbq !== 'undefined') {
+    try { fbq('track', 'SubmitApplication', {
+      content_name: 'Presupuesto confirmado',
+      value: montoTotal || 0,
+      currency: 'USD'
+    }); } catch(_){}
+  }
+  try { if (typeof gtag === 'function') gtag('event', 'presupuesto_confirmado', { value: montoTotal || 0, currency: 'USD' }); } catch(_){}
 }
 
 // ── Total del presupuesto (usado por tracking y por el gate)
@@ -5617,7 +5626,7 @@ async function enviarConsulta(){
       if (waLink) {
         confirmHtml += `
         <div style="margin-top:.6rem">
-          <a class="wa-btn" href="${waLink}" target="_blank" rel="noopener" onclick="try{if(typeof gtag==='function')gtag('event','whatsapp_click',{origen:'confirmacion'})}catch(_){}">
+          <a class="wa-btn" href="${waLink}" target="_blank" rel="noopener" onclick="try{if(typeof gtag==='function')gtag('event','whatsapp_click',{origen:'confirmacion'})}catch(_){};try{if(typeof fbq==='function')fbq('trackCustom','whatsapp_click',{origen:'confirmacion'})}catch(_){}">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 12 12 0 0 0 4.6 4c1.7.7 2.3.6 2.7.5a2.6 2.6 0 0 0 1.7-1.2c.2-.6.2-1 .1-1.2z"/></svg>
             Seguir por WhatsApp
           </a>
@@ -5631,6 +5640,7 @@ async function enviarConsulta(){
 
     document.getElementById('confirmBox').innerHTML = confirmHtml;
     document.getElementById('confirmBox').style.display='block';
+    try { trackPresupuestoEnviado(window._mgTotal || 0); } catch(_){}
 
   } catch(err) {
     btn.disabled=false;
