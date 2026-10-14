@@ -3048,6 +3048,9 @@ footer{padding:4rem 4rem 2.5rem;background:rgba(10,12,8,1)}
 <style>
 /* ── PÁGINA PRESUPUESTO ── */
 body.presupuesto-page{background:var(--bk)}
+/* sin fundido de entrada: la pantalla aparece lista, no en negro */
+body.presupuesto-page .config.rv{opacity:1!important;transform:none!important;transition:none!important;animation:none!important}
+body.presupuesto-page .config .config-head[data-reveal]{opacity:1!important;transform:none!important;animation:none!important}
 body.presupuesto-page .config{min-height:100vh;padding-top:7.5rem}
 body.presupuesto-page .config-head{margin-bottom:2.6rem}
 body.presupuesto-page .steps-bar{margin-bottom:2.2rem}
@@ -6987,6 +6990,12 @@ setupScrollReveal();
     try{ localStorage.removeItem(SAVE_KEY); }catch(_){}
     document.getElementById('retomar').classList.remove('show');
   };
+
+  // ── Al elegir fecha en el calendario, habilitar "Siguiente" al instante
+  const _prevSelectCalDay = window.selectCalDay;
+  window.selectCalDay = function(){ _prevSelectCalDay.apply(this, arguments); syncButtons(); saveProgress(); };
+  const _prevSelectVilla = window.selectVilla;
+  window.selectVilla = function(){ _prevSelectVilla.apply(this, arguments); syncButtons(); saveProgress(); };
 
   // ── Envolver goStep (después del wrapper del gate) para actualizar guía y guardar
   const _prevGoStep = window.goStep;
